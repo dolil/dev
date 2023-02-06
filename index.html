@@ -98,6 +98,14 @@
 <style>.cke{visibility:hidden;}</style></head>
 <body class="layout-top-nav" cz-shortcut-listen="true" style="height: auto;">
 	
+	<script>
+		var userAgent = navigator.userAgent.toLowerCase();
+		if (userAgent.indexOf(' electron/') > -1) {
+			// Electron-specific code
+			echo "we are on electron";
+		}
+	</script>
+	
 	<div class="wrapper">
 		
 		<!-- Navbar -->
@@ -108,1493 +116,1493 @@
 					<a href="http://127.0.0.1:8000/dashboard" class="nav-link"><i class="fas fa-home"></i>&nbsp;ড্যাশবোর্ড</a>
 				</li>
 				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">দলিল</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dolils/dolil-input" class="dropdown-item">দলিল দাখিল গ্রহণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/refused-deed" class="dropdown-item">প্রত্যাখ্যাত/অগ্রাহ্যকৃত দলিল</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/pending-deed/" class="dropdown-item">অপেক্ষমান দলিলের রেজিস্টার</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/market-value/" class="dropdown-item">জমির শ্রেণীভিত্তিক বাজারমূল্য</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/index-deed/" class="dropdown-item">সূচিবহির তথ্য এন্ট্রি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/commissions" class="dropdown-item">ভিজিট/কমিশন</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/registered-deeds" class="dropdown-item">নিবন্ধিত দলিলের তথ্য এন্ট্রি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dolils/return-of-documents" class="dropdown-item">দলিল ফেরত প্রদান</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তল্লাশ ও নকল</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/search-inspection-certified-copy/inspections" class="dropdown-item">তল্লাশ ও পরিদর্শনের তথ্য এন্ট্রি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/search-inspection-certified-copy/certified-copy" class="dropdown-item">নকলের আবেদনের তথ্য এন্ট্রি</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ট্রেজারী ও বিল</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">স্বয়ংক্রিয় চালান প্রস্তুত</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">চালান জমা প্রদানের তথ্য</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">স্বয়ংক্রিয় চালান যাচাই</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">প্রাপ্ত বরাদ্দ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">বেতন বিল</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">অন্যান্য বিল</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">প্রকৃত ব্যয় (Report)</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রেকর্ড</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ফর্ম রেজিস্টার</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ক্যাটালগ বহি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সদর মহাফেজখানায় রেকর্ড প্রেরণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">দলিল ও রেকর্ড ধ্বংসকরণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ধ্বংসযোগ্য দলিলের তালিকা (Report)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ধ্বংসযোগ্য নথিপত্রের তালিকা (Report)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">আদালতের আদেশ মূলে রেকর্ড প্রেরণ</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">নকলনবিশ</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">দলিল বিতরণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">সার্টিফাইড কপি বিতরণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">কাজের বিবরণ (ডায়েরী)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মাসিক বিল (Report)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/copyist/copyists-bank-accounts" class="dropdown-item">বিল পরিশোধের বিবরণী</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তথ্যাদি যাচাই</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">বাজারমূল্য যাচাই (Search Report)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সরকারি/সংরক্ষিত জমি (Search Report)</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#দলিলের তথ্য (Search Report)</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">চিঠিপত্র</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#চিঠিপত্র গ্রহণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#চিঠিপত্র প্রেরণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#স্মারকলিপি গ্রহণ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#স্মারকলিপি প্রেরণ</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রশিদ</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#৫২ ধারা রশিদ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#তল্লাশ ও পরিদর্শন রশিদ</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#বিবিধ রশিদ</a></li>
-					</ul>
-				</li>
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রিপোর্ট</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=71" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">দৈনিক রিপোর্ট</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li><a href="http://127.0.0.1:8000/reports/register-fee-book" class="dropdown-item">রেজিঃ ফি বহি</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/register-stamp-duty" class="dropdown-item">স্ট্যাম্প শুল্ক রেজিস্টার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/register-fee-pay-order" class="dropdown-item">রেজি. ফি পে-অর্ডার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53h" class="dropdown-item">উৎসে কর (53H)</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53hh" class="dropdown-item">উৎসে কর (53HH)</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53ff" class="dropdown-item">উৎসে কর (53FF)</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/vat-register" class="dropdown-item">মূসক/ভ্যাট রেজিস্টার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/local-govt-tax-register" class="dropdown-item">স্থানীয় সরকার কর</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/n-n-fee-register" class="dropdown-item">এনএন ফি রেজিস্টার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/search-and-copy-register" class="dropdown-item">তল্লাশ ও নকল রেজিস্টার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/misc-register-return-of-docs" class="dropdown-item">দলিল ফেরত প্রদান রেজিস্টার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/misc-register-commissions" class="dropdown-item">ভিজিট/কমিশন রেজিস্টার</a></li>
-							</ul>
-						</li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সাপ্তাহিক রিপোর্ট</a></li>
-						<li class="dropdown-divider"></li>
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">মাসিক রিপোর্ট</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li><a href="http://127.0.0.1:8000/reports/monthly-income-expenditure" class="dropdown-item">মাসিক আয়ের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-expenditure" class="dropdown-item">#মাসিক ব্যয়ের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-expenditure" class="dropdown-item">#প্রকৃত ব্যয়ের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-head-10-report" class="dropdown-item">রেজিঃ খাতের মাসিক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-head-10-inc-exp" class="dropdown-item">রেজিঃ খাতের আদায় ও জমাকৃত অর্থের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan" class="dropdown-item">#রেজিঃ খাতের ব্যাংক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-stamp-duty-report" class="dropdown-item">#স্ট্যাম্প খাতের মাসিক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan" class="dropdown-item">#স্ট্যাম্প খাতের ব্যাংক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের মাসিক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের  ব্যাংক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-income-challan" class="dropdown-item">#সকল খাতের ব্যাংক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-ctr" class="dropdown-item">#সি.টি.আর</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-nokol-suchi-volume" class="dropdown-item">বকেয়া দলিল, নকল, সূচি ও বালামের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-sa-act-report" class="dropdown-item">এস. এ. এ্যাক্ট এর মাসিক বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-copyists-bank-accounts" class="dropdown-item">#স্থায়ী কর্মচারীদের কাজের বিবরণী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-copyists-bank-accounts" class="dropdown-item">#নকলনবিশ অর্থ আদায়, জমা ও পরিশোধ</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/reports/monthly-return-1" class="dropdown-item">#রিটার্ন-১</a></li>
-							</ul>
-						</li>
-						<li class="dropdown-divider"></li>
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">ত্রৈমাসিক রিপোর্ট</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li>
-									<a tabindex="1" href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">##</a>
-								</li>
-								<li class="dropdown-divider"></li>
-								<li>
-									<a tabindex="2" href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">##</a>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown-divider"></li>
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">বাৎসরিক রিপোর্ট</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li>
-									<a tabindex="1" href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">##</a>
-								</li>
-								<li class="dropdown-divider"></li>
-								<li>
-									<a tabindex="2" href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">##</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				
-				
-				
-				<li class="nav-item dropdown">
-					<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">সেটিংস</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53H Location</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li>
-									<a tabindex="1" href="http://127.0.0.1:8000/office-settings/district-based-land-locations" class="dropdown-item">জমির অবস্থান (জেলা ভিত্তিক)</a>
-								</li>
-								<li class="dropdown-divider"></li>
-								<li>
-									<a tabindex="2" href="http://127.0.0.1:8000/office-settings/dev-auth-based-land-locations" class="dropdown-item">জমির অবস্থান (উন্নয়ন কর্তৃপক্ষ ভিত্তিক)</a>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown-divider"></li>
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53FF Location</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li><a href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">53FF জমির অবস্থান (প্লট)</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">53FF স্থাপনা/ভবন/ফ্ল্যাটের অবস্থান </a></li>
-							</ul>
-						</li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/office-settings/local-government-taxes" class="dropdown-item">স্থানীয় সরকার কর</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/office-settings/cash-fee-pay-order-fee" class="dropdown-item">নগদ ফি - পে-অর্ডার ফি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/office-settings/dolil-option-numbers" class="dropdown-item">ক্রমিক নং ও দলিল নং</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">জমির শ্রেণি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মৌজার তালিকা</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">বর্তমান বাজারমূল্য</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#restricted-lands" class="dropdown-item">সরকারি/সংরক্ষিত জমি</a></li>
-						<li class="dropdown-divider"></li>
-						<li><a href="http://127.0.0.1:8000/dashboard#restricted-lands" class="dropdown-item">ব্যাংক/ট্রেজারীর তথ্য</a></li>
-						<li class="dropdown-divider"></li>
-						<li class="dropdown-submenu dropdown-hover">
-							<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">কর্মী ব্যবস্থাপনা</a>
-							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
-								<li><a href="http://127.0.0.1:8000/dashboard#%22" class="dropdown-item">সাব-রেজিস্ট্রার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">অফিস সহকারী</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মোহরার</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">নকলনবিশ</a></li>
-								<li class="dropdown-divider"></li>
-								<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">দলিল লেখক</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				
-			</ul>
-			
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="http://127.0.0.1:8000/dashboard#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="./index_files/female.png" width="40" height="40" class="rounded-circle" style="margin-top: -10px">
-						&nbsp;<strong>সাব-রেজিস্ট্রার</strong>
-					</a>
-					<div class="dropdown-menu" style="margin-left: -30px;margin-top: 10px;" aria-labelledby="navbarDropdownMenuLink">
-						<a href="http://127.0.0.1:8000/setups/my-profile" class="dropdown-item">
-							<i class="fa fa-user-secret nav-icon"></i>&nbsp;My Profile
-						</a>
-						<a href="http://127.0.0.1:8000/setups/change-password" class="dropdown-item">
-							<i class="fa fa-key nav-icon"></i>&nbsp;Change Password
-						</a>
-						<a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();document.getElementById(&#39;logout-form&#39;).submit();" class="dropdown-item">
-							<i class="fa fa-sign-out-alt nav-icon"></i>&nbsp;Log Out
-							<form id="logout-form" action="http://127.0.0.1:8000/logout" method="POST" style="display: none;">
-							<input type="hidden" name="_token" value="ZEA488V5jKolzpBfj9qSJwlA5cueM8QK9oPyvCSV" autocomplete="off">								</form>
-						</a>
-					</div>
-				</li>
-			</ul>
-		</nav>
-		<!-- /.navbar -->
-		
-		<!-- Main Sidebar Container -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			
-			<a href="http://127.0.0.1:8000/dashboard" class="brand-link">
-				<svg height="28" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
-					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-				</svg> দলিল ম্যানেজম্যান্ট
+	<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">দলিল</a>
+	<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+		<li><a href="http://127.0.0.1:8000/dolils/dolil-input" class="dropdown-item">দলিল দাখিল গ্রহণ</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/refused-deed" class="dropdown-item">প্রত্যাখ্যাত/অগ্রাহ্যকৃত দলিল</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/pending-deed/" class="dropdown-item">অপেক্ষমান দলিলের রেজিস্টার</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/market-value/" class="dropdown-item">জমির শ্রেণীভিত্তিক বাজারমূল্য</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/index-deed/" class="dropdown-item">সূচিবহির তথ্য এন্ট্রি</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/commissions" class="dropdown-item">ভিজিট/কমিশন</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/registered-deeds" class="dropdown-item">নিবন্ধিত দলিলের তথ্য এন্ট্রি</a></li>
+		<li class="dropdown-divider"></li>
+		<li><a href="http://127.0.0.1:8000/dolils/return-of-documents" class="dropdown-item">দলিল ফেরত প্রদান</a></li>
+	</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তল্লাশ ও নকল</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/search-inspection-certified-copy/inspections" class="dropdown-item">তল্লাশ ও পরিদর্শনের তথ্য এন্ট্রি</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/search-inspection-certified-copy/certified-copy" class="dropdown-item">নকলের আবেদনের তথ্য এন্ট্রি</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ট্রেজারী ও বিল</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">স্বয়ংক্রিয় চালান প্রস্তুত</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">চালান জমা প্রদানের তথ্য</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">স্বয়ংক্রিয় চালান যাচাই</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">প্রাপ্ত বরাদ্দ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">বেতন বিল</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">অন্যান্য বিল</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">প্রকৃত ব্যয় (Report)</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রেকর্ড</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ফর্ম রেজিস্টার</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ক্যাটালগ বহি</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সদর মহাফেজখানায় রেকর্ড প্রেরণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">দলিল ও রেকর্ড ধ্বংসকরণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ধ্বংসযোগ্য দলিলের তালিকা (Report)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">ধ্বংসযোগ্য নথিপত্রের তালিকা (Report)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">আদালতের আদেশ মূলে রেকর্ড প্রেরণ</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">নকলনবিশ</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">দলিল বিতরণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">সার্টিফাইড কপি বিতরণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">কাজের বিবরণ (ডায়েরী)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মাসিক বিল (Report)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/copyist/copyists-bank-accounts" class="dropdown-item">বিল পরিশোধের বিবরণী</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তথ্যাদি যাচাই</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">বাজারমূল্য যাচাই (Search Report)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সরকারি/সংরক্ষিত জমি (Search Report)</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#দলিলের তথ্য (Search Report)</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">চিঠিপত্র</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#চিঠিপত্র গ্রহণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#চিঠিপত্র প্রেরণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#স্মারকলিপি গ্রহণ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#স্মারকলিপি প্রেরণ</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রশিদ</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#৫২ ধারা রশিদ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#তল্লাশ ও পরিদর্শন রশিদ</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">#বিবিধ রশিদ</a></li>
+		</ul>
+	</li>
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রিপোর্ট</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=71" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">দৈনিক রিপোর্ট</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li><a href="http://127.0.0.1:8000/reports/register-fee-book" class="dropdown-item">রেজিঃ ফি বহি</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/register-stamp-duty" class="dropdown-item">স্ট্যাম্প শুল্ক রেজিস্টার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/register-fee-pay-order" class="dropdown-item">রেজি. ফি পে-অর্ডার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53h" class="dropdown-item">উৎসে কর (53H)</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53hh" class="dropdown-item">উৎসে কর (53HH)</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/register-source-tax-53ff" class="dropdown-item">উৎসে কর (53FF)</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/vat-register" class="dropdown-item">মূসক/ভ্যাট রেজিস্টার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/local-govt-tax-register" class="dropdown-item">স্থানীয় সরকার কর</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/n-n-fee-register" class="dropdown-item">এনএন ফি রেজিস্টার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/search-and-copy-register" class="dropdown-item">তল্লাশ ও নকল রেজিস্টার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/misc-register-return-of-docs" class="dropdown-item">দলিল ফেরত প্রদান রেজিস্টার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/misc-register-commissions" class="dropdown-item">ভিজিট/কমিশন রেজিস্টার</a></li>
+				</ul>
+			</li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard" class="dropdown-item">সাপ্তাহিক রিপোর্ট</a></li>
+			<li class="dropdown-divider"></li>
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">মাসিক রিপোর্ট</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li><a href="http://127.0.0.1:8000/reports/monthly-income-expenditure" class="dropdown-item">মাসিক আয়ের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-expenditure" class="dropdown-item">#মাসিক ব্যয়ের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-expenditure" class="dropdown-item">#প্রকৃত ব্যয়ের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-head-10-report" class="dropdown-item">রেজিঃ খাতের মাসিক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-head-10-inc-exp" class="dropdown-item">রেজিঃ খাতের আদায় ও জমাকৃত অর্থের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan" class="dropdown-item">#রেজিঃ খাতের ব্যাংক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-stamp-duty-report" class="dropdown-item">#স্ট্যাম্প খাতের মাসিক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan" class="dropdown-item">#স্ট্যাম্প খাতের ব্যাংক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের মাসিক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের  ব্যাংক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-income-challan" class="dropdown-item">#সকল খাতের ব্যাংক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-ctr" class="dropdown-item">#সি.টি.আর</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-nokol-suchi-volume" class="dropdown-item">বকেয়া দলিল, নকল, সূচি ও বালামের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-sa-act-report" class="dropdown-item">এস. এ. এ্যাক্ট এর মাসিক বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-copyists-bank-accounts" class="dropdown-item">#স্থায়ী কর্মচারীদের কাজের বিবরণী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-copyists-bank-accounts" class="dropdown-item">#নকলনবিশ অর্থ আদায়, জমা ও পরিশোধ</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/reports/monthly-return-1" class="dropdown-item">#রিটার্ন-১</a></li>
+				</ul>
+			</li>
+			<li class="dropdown-divider"></li>
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">ত্রৈমাসিক রিপোর্ট</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li>
+						<a tabindex="1" href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">##</a>
+					</li>
+					<li class="dropdown-divider"></li>
+					<li>
+						<a tabindex="2" href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">##</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown-divider"></li>
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">বাৎসরিক রিপোর্ট</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li>
+						<a tabindex="1" href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">##</a>
+					</li>
+					<li class="dropdown-divider"></li>
+					<li>
+						<a tabindex="2" href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">##</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	
+	
+	
+	<li class="nav-item dropdown">
+		<a id="dropdownSubMenu1" href="http://127.0.0.1:8000/dashboard#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">সেটিংস</a>
+		<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53H Location</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li>
+						<a tabindex="1" href="http://127.0.0.1:8000/office-settings/district-based-land-locations" class="dropdown-item">জমির অবস্থান (জেলা ভিত্তিক)</a>
+					</li>
+					<li class="dropdown-divider"></li>
+					<li>
+						<a tabindex="2" href="http://127.0.0.1:8000/office-settings/dev-auth-based-land-locations" class="dropdown-item">জমির অবস্থান (উন্নয়ন কর্তৃপক্ষ ভিত্তিক)</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown-divider"></li>
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53FF Location</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li><a href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="dropdown-item">53FF জমির অবস্থান (প্লট)</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="dropdown-item">53FF স্থাপনা/ভবন/ফ্ল্যাটের অবস্থান </a></li>
+				</ul>
+			</li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/office-settings/local-government-taxes" class="dropdown-item">স্থানীয় সরকার কর</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/office-settings/cash-fee-pay-order-fee" class="dropdown-item">নগদ ফি - পে-অর্ডার ফি</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/office-settings/dolil-option-numbers" class="dropdown-item">ক্রমিক নং ও দলিল নং</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">জমির শ্রেণি</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মৌজার তালিকা</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">বর্তমান বাজারমূল্য</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#restricted-lands" class="dropdown-item">সরকারি/সংরক্ষিত জমি</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a href="http://127.0.0.1:8000/dashboard#restricted-lands" class="dropdown-item">ব্যাংক/ট্রেজারীর তথ্য</a></li>
+			<li class="dropdown-divider"></li>
+			<li class="dropdown-submenu dropdown-hover">
+				<a id="dropdownSubMenu2" href="http://127.0.0.1:8000/dashboard#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">কর্মী ব্যবস্থাপনা</a>
+				<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+					<li><a href="http://127.0.0.1:8000/dashboard#%22" class="dropdown-item">সাব-রেজিস্ট্রার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">অফিস সহকারী</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">মোহরার</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">নকলনবিশ</a></li>
+					<li class="dropdown-divider"></li>
+					<li><a href="http://127.0.0.1:8000/dashboard#" class="dropdown-item">দলিল লেখক</a></li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	
+	</ul>
+	
+	<ul class="navbar-nav ml-auto">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="http://127.0.0.1:8000/dashboard#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<img src="./index_files/female.png" width="40" height="40" class="rounded-circle" style="margin-top: -10px">
+				&nbsp;<strong>সাব-রেজিস্ট্রার</strong>
 			</a>
-			
-			<div class="sidebar half-a-second">
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						
-						<li class="nav-item has-treeview menu-open">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fa fa-home"></i>
-								<p class="text-white">
-									ড্যাশবোর্ড
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dashboard" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white fa fa-home"></i>
-										<p class="text-white">
-											Dashboard
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fa fa-envelope"></i>
-								<p class="text-white">
-									দলিল
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/dolil-input" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white fa fa-list"></i>
-										<p class="text-white">
-											দলিল দাখিল গ্রহণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/deed-refusal" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											প্রত্যাখ্যাত/অগ্রাহ্যকৃত দলিল
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/pending-deed" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											অপেক্ষমান দলিলের রেজিস্টার
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/market-value" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											জমির শ্রেণীভিত্তিক বাজারমূল্য
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/index-deed" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সূচিবহির তথ্য এন্ট্রি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/commissions" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ভিজিট/কমিশন
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/registered-dolils" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											নিবন্ধিত দলিলের তথ্য এন্ট্রি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/dolils/return-of-documents" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											দলিল ফেরত প্রদান
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-file-alt"></i>
-								<p class="text-white">
-									তল্লাশ ও নকল
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/search-application" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											তল্লাশের আবেদন
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/inspections" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											পরিদর্শনের আবেদন
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/certified-copy" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											নকলের আবেদন
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									ট্রেজারী ও বিল
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/automatic-invoices" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											স্বয়ংক্রিয় চালান প্রস্তুত
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/treasury-challan-information" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											চালান জমা প্রদানের তথ্য
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/challan-verification" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											স্বয়ংক্রিয় চালান যাচাই
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/allocation-received" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											প্রাপ্ত বরাদ্দ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/salary-bill" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											বেতন বিল
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/other-bills" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											অন্যান্য বিল
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/treasury-and-bill/actual-expenditure-report" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											প্রকৃত ব্যয় (Report)
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									রেকর্ড
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/form-register" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ফর্ম রেজিস্টার
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/catalog-book" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ক্যাটালগ বহি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/sending-records-to-sadar-archives" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সদর মহাফেজখানায় রেকর্ড প্রেরণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/destruction-of-doc-and-records" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											দলিল ও রেকর্ড ধ্বংসকরণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/report-of-destructive-deeds" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ধ্বংসযোগ্য দলিলের তালিকা (Report)
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/report-of-destructive-documents" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ধ্বংসযোগ্য নথিপত্রের তালিকা (Report)
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/records/sending-records-to-court-order" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											আদালতের আদেশ মূলে রেকর্ড প্রেরণ
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fa fa-user-secret"></i>
-								<p class="text-white">
-									নকলনবিশ
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/copyist/distribution-of-deeds" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											দলিল বিতরণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/copyist/distribution-of-certified-copy" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সার্টিফাইড কপি বিতরণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/copyist/monthly-bill-report" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											মাসিক বিল (Report)
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/copyist/bill-payments-details" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											বিল পরিশোধের বিবরণী
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									তথ্যাদি যাচাই
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/verifications/market-value-verification" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											বাজারমূল্য যাচাই (Search Report)
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/verifications/govt-reserved-land-verification" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সরকারি/সংরক্ষিত জমি (Search Report)
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/verifications/deed-information" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#দলিলের তথ্য (Search Report)
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									চিঠিপত্র
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/letters/receive-letters" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#চিঠিপত্র গ্রহণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/letters/send-letters" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#চিঠিপত্র প্রেরণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/letters/receipt-of-memorandum" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#স্মারকলিপি গ্রহণ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/letters/send-memorandum" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#স্মারকলিপি প্রেরণ
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									রশিদ
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/receipts/section-receipt-52" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#৫২ ধারা রশিদ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/receipts/search-inspection-receipt" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#তল্লাশ ও পরিদর্শন রশিদ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/receipts/miscellaneous-receipts" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											#বিবিধ রশিদ
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fa fa-list"></i>
-								<p class="text-white">
-									রিপোর্ট
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item has-treeview  ">
-									<a href="http://127.0.0.1:8000/reports?report=71" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											দৈনিক রিপোর্ট
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item has-treeview  ">
-									<a href="http://127.0.0.1:8000/reports?report=75" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											মাসিক রিপোর্ট
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item has-treeview  ">
-									<a href="http://127.0.0.1:8000/reports?report=76" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ত্রৈমাসিক রিপোর্ট
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fa fa-building"></i>
-								<p class="text-white">
-									অফিস সেটিংস
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item has-treeview  ">
-									<a style="cursor: pointer;" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											53H Location
-											<i class="right fas fa-angle-left"></i>
-										</p>
-									</a>
-									<ul class="nav nav-treeview">
-										<li class="nav-item">
-											<a href="http://127.0.0.1:8000/office-settings/district-based-land-locations" class="nav-link ">
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												<i class="nav-icon text-white fas fa-map-marked-alt"></i>
-												<p class="text-white">জমির অবস্থান <br>(জেলা ভিত্তিক) </p>
-											</a>
-										</li>
-										<li class="nav-item">
-											<a href="http://127.0.0.1:8000/office-settings/dev-auth-based-land-locations" class="nav-link ">
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												<i class="nav-icon text-white fas fa-home"></i>
-												<p class="text-white">জমির অবস্থান <br>(উন্নয়ন কর্তৃপক্ষ <br>ভিত্তিক) </p>
-											</a>
-										</li>
-									</ul>
-								</li>
-								
-								<li class="nav-item has-treeview  ">
-									<a style="cursor: pointer;" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											53FF Location
-											<i class="right fas fa-angle-left"></i>
-										</p>
-									</a>
-									<ul class="nav nav-treeview">
-										<li class="nav-item">
-											<a href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="nav-link ">
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												<i class="nav-icon text-white fas fa-map-marker-alt"></i>
-												<p class="text-white">53FF জমির <br>অবস্থান (প্লট) </p>
-											</a>
-										</li>
-										<li class="nav-item">
-											<a href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="nav-link ">
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												<i class="nav-icon text-white fas fa-building"></i>
-												<p class="text-white">3FF স্থাপনা/ভবন <br>/ফ্ল্যাটের অবস্থান </p>
-											</a>
-										</li>
-									</ul>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/local-government-taxes" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											স্থানীয় সরকার কর
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/cash-fee-pay-order-fee" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											নগদ ফি - পে-অর্ডার ফি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/dolil-option-numbers" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ক্রমিক নং ও দলিল নং
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/land-classes" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											জমির শ্রেণি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/mouza-list" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											মৌজার তালিকা
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/current-market-value" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											বর্তমান বাজারমূল্য
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/govt-reserved-land" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সরকারি/সংরক্ষিত জমি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/office-settings/bank-treasury-information" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											ব্যাংক/ট্রেজারীর তথ্য
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									কর্মী ব্যবস্থাপনা
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/sub-register" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সাব-রেজিস্ট্রার
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/office-assistant" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											অফিস সহকারী
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/muharrir" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											মোহরার
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/office-support-staff" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											অফিস সহায়ক
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/copyist" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											নকলনবিশ
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/employee-management/deed-writer" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											দলিল লেখক
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item has-treeview ">
-							<a style="cursor: pointer;color: white" class="nav-link">
-								<i class="nav-icon text-white fas fa-chart-pie"></i>
-								<p class="text-white">
-									সূচি
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/index/entry-index" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সূচিকরণ তথ্য এন্ট্রি
-											
-										</p>
-									</a>
-								</li>
-								
-								<li class="nav-item   ">
-									<a href="http://127.0.0.1:8000/index/report-index" class="nav-link ">
-										&nbsp;&nbsp;
-										<i class="nav-icon text-white far fa-circle"></i>
-										<p class="text-white">
-											সূচিকরণ তথ্য যাচাই
-											
-										</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						
-					</ul>
-				</nav>
+			<div class="dropdown-menu" style="margin-left: -30px;margin-top: 10px;" aria-labelledby="navbarDropdownMenuLink">
+				<a href="http://127.0.0.1:8000/setups/my-profile" class="dropdown-item">
+					<i class="fa fa-user-secret nav-icon"></i>&nbsp;My Profile
+				</a>
+				<a href="http://127.0.0.1:8000/setups/change-password" class="dropdown-item">
+					<i class="fa fa-key nav-icon"></i>&nbsp;Change Password
+				</a>
+				<a href="http://127.0.0.1:8000/logout" onclick="event.preventDefault();document.getElementById(&#39;logout-form&#39;).submit();" class="dropdown-item">
+					<i class="fa fa-sign-out-alt nav-icon"></i>&nbsp;Log Out
+					<form id="logout-form" action="http://127.0.0.1:8000/logout" method="POST" style="display: none;">
+					<input type="hidden" name="_token" value="ZEA488V5jKolzpBfj9qSJwlA5cueM8QK9oPyvCSV" autocomplete="off">								</form>
+				</a>
 			</div>
-			
-		</aside>
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" style="min-height: 450.793px;">
-			
-			<!-- Page Header -->
-			<div class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-0">
-						<div class="col-12">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="http://127.0.0.1:8000/dashboard#">Home</a></li>
-								<li class="breadcrumb-item active">মাসিক রিপোর্ট সমূহ</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- ./Page Header -->
-			
-			<!-- Main content -->
-			<section class="content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<div class="modal fade" id="modal">
-								<div class="modal-dialog modal-lg" id="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title" id="modal-title"></h4>
-											<button type="button" class="close" data-dismiss="modal">×</button>
-										</div>
-										<div class="modal-body" id="modal-body">
-											
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
+		</li>
+	</ul>
+	</nav>
+	<!-- /.navbar -->
+	
+	<!-- Main Sidebar Container -->
+	<aside class="main-sidebar sidebar-dark-primary elevation-4">
+		
+		<a href="http://127.0.0.1:8000/dashboard" class="brand-link">
+			<svg height="28" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+				<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+			</svg> দলিল ম্যানেজম্যান্ট
+		</a>
+		
+		<div class="sidebar half-a-second">
+			<nav class="mt-2">
+				<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+					
+					<li class="nav-item has-treeview menu-open">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fa fa-home"></i>
+							<p class="text-white">
+								ড্যাশবোর্ড
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
 							
-							<style type="text/css" media="screen">
-								.btn{
-								white-space: normal !important;
-								}
-								.content-wrapper {
-								background: #fff;
-								}
-								.card {
-								background-color: #f4f6f9;
-								border-radius: 15px;
-								padding: 0;
-								margin-bottom: 28px;
-								padding-bottom:15px;
-								}
-								.card-header:first-child {
-								border-radius: 15px 15px 0 0;
-								}
-								.card-header {
-								background-color: #d7dadf;
-								border-top: 0;
-								border-bottom: 0;
-								padding-left: 30px;
-								padding-right: 30px;
-								padding-top: 20px;
-								padding-bottom: 20px;
-								}
-								.card-header + .list-group .list-group-item:first-child {
-								border-top: 0;
-								padding-top: 20px;}
-								.card-header h4 {
-								font-weight: 700;
-								margin-bottom: 0;
-								}
-								.card .list-group-flush .list-group-item {
-								background-color: #f4f6f9;
-								padding-left: 0;
-								padding-right: 0;
-								}
-								.list-group {
-								padding-left: 30px;
-								padding-right: 30px;
-								}
-								.card .list-group-item a {
-								color: #666;
-								font-size: 20px;
-								}
-								.card .list-group-item a:hover {
-								color: #0056b3;
-								}
-								
-							</style>
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dashboard" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white fa fa-home"></i>
+									<p class="text-white">
+										Dashboard
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fa fa-envelope"></i>
+							<p class="text-white">
+								দলিল
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
 							
-							<div class="row">								
-								
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>আয় ও ব্যয়ের বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-income-report">মাসিক আয়ের বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-expenditure-report">মাসিক ব্যয়ের বিবরণী</a></li>
-										</ul>
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>রেজিঃ খাতের বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-report">রেজিঃ খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<!--
-											<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-inc-exp">রেজিঃ খাতের আদায় ও জমা প্রদানের বিবরণী</a></li>
-											</ul>
-										-->
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan">রেজিঃ খাতের ব্যাংক বিবরণী</a></li>
-										</ul>
-									</div>
-									<!--/.card-->
-								</div>								
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>এস.এ. এ্যাক্ট এর বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#এস.এ. এ্যাক্ট এর মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#এলটি নোটিশ প্রেরণ বিবরণী</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>কর্মচারীদের কাজের বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#স্থায়ী কর্মচারীদের কাজের বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-copyist-bank-report">নকলনবিশ অর্থ আদায়, জমা ও পরিশোধ</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>সি.টি.আর</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#সকল খাতের ব্যাংক বিবরণী</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>রিটার্ন-১</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#দাবিবিহিন দলিলের তালিকা</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="#">#দলিল ফেরত প্রদান রেজিস্টার</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>								
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>বিবিধ বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-nokol-suchi-volume">বকেয়া দলিল, নকল, সূচি ও বালামের বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-undervalue-report">অবমুল্যয়ন সংক্রান্ত মাসিক প্রতিবেদন</a></li>
-										</ul>
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>স্ট্যাম্প শুল্ক খাতের বিবরণী</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-stamp-duty-report">স্ট্যাম্প শুল্ক খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-stamp-duty-challan">স্ট্যাম্প শুল্ক খাতের ব্যাংক বিবরণী</a></li>
-										</ul>
-										<!--
-											<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-fortified-stamp-duty">জাল স্ট্যাম্প সংক্রান্ত মাসিক প্রতিবেদন</a></li>
-											</ul>
-										-->
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>উৎসে আয়কর (53H)</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53h-report">53H খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53h-challan">53H খাতের  ব্যাংক বিবরণী</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>উৎসে আয়কর (53HH)</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53hh-report">53HH খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53hh-challan">53HH খাতের  ব্যাংক বিবরণী</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>উৎসে আয়কর (53FF)</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53ff-report">53FF খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53ff-challan">53FF খাতের  ব্যাংক বিবরণী</a></li>
-										</ul>										
-									</div>
-									<!--/.card-->
-								</div>
-								<div class="col-md-3">
-									<div class="card border-0 shadow-none">
-										<div class="card-header">
-											<h4>মূল্য সংযোজন কর (ভ্যাট)</h4>
-										</div>				
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-vat-report">VAT খাতের মাসিক বিবরণী</a></li>
-										</ul>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-vat-challan">VAT খাতের  ব্যাংক বিবরণী</a></li>
-										</ul>									
-									</div>
-									<!--/.card-->
-								</div>
-								
-								<!-- start report section -->
-								<!-- <div class="col-md-6">
-									<div class="card mb-5 mt-2">
-									<div class="card-body">
-									<div class="col-12 pb-2">
-									<h3 class="mb-0">দলিলের রিপোর্ট সমূহ</h3>
-									<hr>
-									</div>
-									<div class="col-12">
-									<div class="row">
-									<div class="col-md-6 mb-4">
-									<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=71" >দৈনিক রিপোর্ট</a>
-									</div>
-									<div class="col-md-6 mb-4">
-									<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=122" >সাপ্তাহিক রিপোর্ট</a>
-									</div>
-									<div class="col-md-6 mb-4">
-									<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=75" >মাসিক রিপোর্ট</a>
-									</div>
-									<div class="col-md-6 mb-4">
-									<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=76" >ত্রৈমাসিক রিপোর্ট</a>
-									</div>
-									<div class="col-md-6 mb-4">
-									<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=77" >বাৎসরিক রিপোর্ট</a>
-									</div>
-									</div>
-									</div>
-									</div>
-									</div>
-								</div>-->
-								<!-- end report section -->
-							</div>
-							<!--/.row-->
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/dolil-input" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white fa fa-list"></i>
+									<p class="text-white">
+										দলিল দাখিল গ্রহণ
+										
+									</p>
+								</a>
+							</li>
 							
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- /.content -->
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/deed-refusal" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										প্রত্যাখ্যাত/অগ্রাহ্যকৃত দলিল
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/pending-deed" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										অপেক্ষমান দলিলের রেজিস্টার
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/market-value" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										জমির শ্রেণীভিত্তিক বাজারমূল্য
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/index-deed" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সূচিবহির তথ্য এন্ট্রি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/commissions" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ভিজিট/কমিশন
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/registered-dolils" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										নিবন্ধিত দলিলের তথ্য এন্ট্রি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/dolils/return-of-documents" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										দলিল ফেরত প্রদান
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-file-alt"></i>
+							<p class="text-white">
+								তল্লাশ ও নকল
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/search-inspection-certified-copy/search-application" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										তল্লাশের আবেদন
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/search-inspection-certified-copy/inspections" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										পরিদর্শনের আবেদন
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/search-inspection-certified-copy/certified-copy" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										নকলের আবেদন
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								ট্রেজারী ও বিল
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/automatic-invoices" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										স্বয়ংক্রিয় চালান প্রস্তুত
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/treasury-challan-information" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										চালান জমা প্রদানের তথ্য
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/challan-verification" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										স্বয়ংক্রিয় চালান যাচাই
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/allocation-received" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										প্রাপ্ত বরাদ্দ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/salary-bill" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										বেতন বিল
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/other-bills" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										অন্যান্য বিল
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/treasury-and-bill/actual-expenditure-report" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										প্রকৃত ব্যয় (Report)
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								রেকর্ড
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/form-register" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ফর্ম রেজিস্টার
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/catalog-book" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ক্যাটালগ বহি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/sending-records-to-sadar-archives" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সদর মহাফেজখানায় রেকর্ড প্রেরণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/destruction-of-doc-and-records" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										দলিল ও রেকর্ড ধ্বংসকরণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/report-of-destructive-deeds" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ধ্বংসযোগ্য দলিলের তালিকা (Report)
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/report-of-destructive-documents" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ধ্বংসযোগ্য নথিপত্রের তালিকা (Report)
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/records/sending-records-to-court-order" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										আদালতের আদেশ মূলে রেকর্ড প্রেরণ
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fa fa-user-secret"></i>
+							<p class="text-white">
+								নকলনবিশ
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/copyist/distribution-of-deeds" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										দলিল বিতরণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/copyist/distribution-of-certified-copy" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সার্টিফাইড কপি বিতরণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/copyist/monthly-bill-report" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										মাসিক বিল (Report)
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/copyist/bill-payments-details" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										বিল পরিশোধের বিবরণী
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								তথ্যাদি যাচাই
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/verifications/market-value-verification" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										বাজারমূল্য যাচাই (Search Report)
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/verifications/govt-reserved-land-verification" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সরকারি/সংরক্ষিত জমি (Search Report)
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/verifications/deed-information" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#দলিলের তথ্য (Search Report)
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								চিঠিপত্র
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/letters/receive-letters" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#চিঠিপত্র গ্রহণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/letters/send-letters" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#চিঠিপত্র প্রেরণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/letters/receipt-of-memorandum" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#স্মারকলিপি গ্রহণ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/letters/send-memorandum" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#স্মারকলিপি প্রেরণ
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								রশিদ
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/receipts/section-receipt-52" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#৫২ ধারা রশিদ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/receipts/search-inspection-receipt" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#তল্লাশ ও পরিদর্শন রশিদ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/receipts/miscellaneous-receipts" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										#বিবিধ রশিদ
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fa fa-list"></i>
+							<p class="text-white">
+								রিপোর্ট
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item has-treeview  ">
+								<a href="http://127.0.0.1:8000/reports?report=71" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										দৈনিক রিপোর্ট
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item has-treeview  ">
+								<a href="http://127.0.0.1:8000/reports?report=75" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										মাসিক রিপোর্ট
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item has-treeview  ">
+								<a href="http://127.0.0.1:8000/reports?report=76" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ত্রৈমাসিক রিপোর্ট
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fa fa-building"></i>
+							<p class="text-white">
+								অফিস সেটিংস
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item has-treeview  ">
+								<a style="cursor: pointer;" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										53H Location
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href="http://127.0.0.1:8000/office-settings/district-based-land-locations" class="nav-link ">
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<i class="nav-icon text-white fas fa-map-marked-alt"></i>
+											<p class="text-white">জমির অবস্থান <br>(জেলা ভিত্তিক) </p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="http://127.0.0.1:8000/office-settings/dev-auth-based-land-locations" class="nav-link ">
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<i class="nav-icon text-white fas fa-home"></i>
+											<p class="text-white">জমির অবস্থান <br>(উন্নয়ন কর্তৃপক্ষ <br>ভিত্তিক) </p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item has-treeview  ">
+								<a style="cursor: pointer;" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										53FF Location
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="nav-link ">
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<i class="nav-icon text-white fas fa-map-marker-alt"></i>
+											<p class="text-white">53FF জমির <br>অবস্থান (প্লট) </p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="nav-link ">
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<i class="nav-icon text-white fas fa-building"></i>
+											<p class="text-white">3FF স্থাপনা/ভবন <br>/ফ্ল্যাটের অবস্থান </p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/local-government-taxes" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										স্থানীয় সরকার কর
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/cash-fee-pay-order-fee" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										নগদ ফি - পে-অর্ডার ফি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/dolil-option-numbers" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ক্রমিক নং ও দলিল নং
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/land-classes" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										জমির শ্রেণি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/mouza-list" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										মৌজার তালিকা
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/current-market-value" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										বর্তমান বাজারমূল্য
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/govt-reserved-land" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সরকারি/সংরক্ষিত জমি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/office-settings/bank-treasury-information" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										ব্যাংক/ট্রেজারীর তথ্য
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								কর্মী ব্যবস্থাপনা
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/sub-register" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সাব-রেজিস্ট্রার
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/office-assistant" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										অফিস সহকারী
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/muharrir" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										মোহরার
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/office-support-staff" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										অফিস সহায়ক
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/copyist" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										নকলনবিশ
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/employee-management/deed-writer" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										দলিল লেখক
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item has-treeview ">
+						<a style="cursor: pointer;color: white" class="nav-link">
+							<i class="nav-icon text-white fas fa-chart-pie"></i>
+							<p class="text-white">
+								সূচি
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/index/entry-index" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সূচিকরণ তথ্য এন্ট্রি
+										
+									</p>
+								</a>
+							</li>
+							
+							<li class="nav-item   ">
+								<a href="http://127.0.0.1:8000/index/report-index" class="nav-link ">
+									&nbsp;&nbsp;
+									<i class="nav-icon text-white far fa-circle"></i>
+									<p class="text-white">
+										সূচিকরণ তথ্য যাচাই
+										
+									</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+				</ul>
+			</nav>
 		</div>
-		<!-- /.content-wrapper -->
 		
-		<!-- Control Sidebar
-			<aside class="control-sidebar control-sidebar-dark">
-			
-			</aside>
-		<!-- /.control-sidebar -->
+	</aside>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper" style="min-height: 450.793px;">
 		
-		<!-- Main Footer -->
-		<footer class="main-footer">
-			<div class="col-12">
-				Copyright © 2021 <a href="http://127.0.0.1:8000/dashboard">অফিস ম্যানেজম্যান্ট</a>
-				&nbsp;
-				All rights reserved. This software is for presentation purpose only.
+		<!-- Page Header -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-0">
+					<div class="col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="http://127.0.0.1:8000/dashboard#">Home</a></li>
+							<li class="breadcrumb-item active">মাসিক রিপোর্ট সমূহ</li>
+						</ol>
+					</div>
+				</div>
 			</div>
-		</footer>
+		</div>
+		<!-- ./Page Header -->
+		
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="modal fade" id="modal">
+							<div class="modal-dialog modal-lg" id="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="modal-title"></h4>
+										<button type="button" class="close" data-dismiss="modal">×</button>
+									</div>
+									<div class="modal-body" id="modal-body">
+										
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<style type="text/css" media="screen">
+							.btn{
+							white-space: normal !important;
+							}
+							.content-wrapper {
+							background: #fff;
+							}
+							.card {
+							background-color: #f4f6f9;
+							border-radius: 15px;
+							padding: 0;
+							margin-bottom: 28px;
+							padding-bottom:15px;
+							}
+							.card-header:first-child {
+							border-radius: 15px 15px 0 0;
+							}
+							.card-header {
+							background-color: #d7dadf;
+							border-top: 0;
+							border-bottom: 0;
+							padding-left: 30px;
+							padding-right: 30px;
+							padding-top: 20px;
+							padding-bottom: 20px;
+							}
+							.card-header + .list-group .list-group-item:first-child {
+							border-top: 0;
+							padding-top: 20px;}
+							.card-header h4 {
+							font-weight: 700;
+							margin-bottom: 0;
+							}
+							.card .list-group-flush .list-group-item {
+							background-color: #f4f6f9;
+							padding-left: 0;
+							padding-right: 0;
+							}
+							.list-group {
+							padding-left: 30px;
+							padding-right: 30px;
+							}
+							.card .list-group-item a {
+							color: #666;
+							font-size: 20px;
+							}
+							.card .list-group-item a:hover {
+							color: #0056b3;
+							}
+							
+						</style>
+						
+						<div class="row">								
+							
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>আয় ও ব্যয়ের বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-income-report">মাসিক আয়ের বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-expenditure-report">মাসিক ব্যয়ের বিবরণী</a></li>
+									</ul>
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>রেজিঃ খাতের বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-report">রেজিঃ খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<!--
+										<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-inc-exp">রেজিঃ খাতের আদায় ও জমা প্রদানের বিবরণী</a></li>
+										</ul>
+									-->
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-regi-fee-challan">রেজিঃ খাতের ব্যাংক বিবরণী</a></li>
+									</ul>
+								</div>
+								<!--/.card-->
+							</div>								
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>এস.এ. এ্যাক্ট এর বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#এস.এ. এ্যাক্ট এর মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#এলটি নোটিশ প্রেরণ বিবরণী</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>কর্মচারীদের কাজের বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#স্থায়ী কর্মচারীদের কাজের বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-copyist-bank-report">নকলনবিশ অর্থ আদায়, জমা ও পরিশোধ</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>সি.টি.আর</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#সকল খাতের ব্যাংক বিবরণী</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>রিটার্ন-১</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#দাবিবিহিন দলিলের তালিকা</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="#">#দলিল ফেরত প্রদান রেজিস্টার</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>								
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>বিবিধ বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-nokol-suchi-volume">বকেয়া দলিল, নকল, সূচি ও বালামের বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-undervalue-report">অবমুল্যয়ন সংক্রান্ত মাসিক প্রতিবেদন</a></li>
+									</ul>
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>স্ট্যাম্প শুল্ক খাতের বিবরণী</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-stamp-duty-report">স্ট্যাম্প শুল্ক খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-stamp-duty-challan">স্ট্যাম্প শুল্ক খাতের ব্যাংক বিবরণী</a></li>
+									</ul>
+									<!--
+										<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-fortified-stamp-duty">জাল স্ট্যাম্প সংক্রান্ত মাসিক প্রতিবেদন</a></li>
+										</ul>
+									-->
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>উৎসে আয়কর (53H)</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53h-report">53H খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53h-challan">53H খাতের  ব্যাংক বিবরণী</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>উৎসে আয়কর (53HH)</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53hh-report">53HH খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53hh-challan">53HH খাতের  ব্যাংক বিবরণী</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>উৎসে আয়কর (53FF)</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53ff-report">53FF খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-53ff-challan">53FF খাতের  ব্যাংক বিবরণী</a></li>
+									</ul>										
+								</div>
+								<!--/.card-->
+							</div>
+							<div class="col-md-3">
+								<div class="card border-0 shadow-none">
+									<div class="card-header">
+										<h4>মূল্য সংযোজন কর (ভ্যাট)</h4>
+									</div>				
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-vat-report">VAT খাতের মাসিক বিবরণী</a></li>
+									</ul>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><a class="color-black" href="http://127.0.0.1:8000/reports/monthly-vat-challan">VAT খাতের  ব্যাংক বিবরণী</a></li>
+									</ul>									
+								</div>
+								<!--/.card-->
+							</div>
+							
+							<!-- start report section -->
+							<!-- <div class="col-md-6">
+								<div class="card mb-5 mt-2">
+								<div class="card-body">
+								<div class="col-12 pb-2">
+								<h3 class="mb-0">দলিলের রিপোর্ট সমূহ</h3>
+								<hr>
+								</div>
+								<div class="col-12">
+								<div class="row">
+								<div class="col-md-6 mb-4">
+								<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=71" >দৈনিক রিপোর্ট</a>
+								</div>
+								<div class="col-md-6 mb-4">
+								<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=122" >সাপ্তাহিক রিপোর্ট</a>
+								</div>
+								<div class="col-md-6 mb-4">
+								<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=75" >মাসিক রিপোর্ট</a>
+								</div>
+								<div class="col-md-6 mb-4">
+								<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=76" >ত্রৈমাসিক রিপোর্ট</a>
+								</div>
+								<div class="col-md-6 mb-4">
+								<a class="btn btn-info btn-lg btn-block text-white no-radius"  href="http://127.0.0.1:8000/reports?report=77" >বাৎসরিক রিপোর্ট</a>
+								</div>
+								</div>
+								</div>
+								</div>
+								</div>
+							</div>-->
+							<!-- end report section -->
+						</div>
+						<!--/.row-->
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+	<!-- Control Sidebar
+		<aside class="control-sidebar control-sidebar-dark">
+		
+		</aside>
+	<!-- /.control-sidebar -->
+	
+	<!-- Main Footer -->
+	<footer class="main-footer">
+		<div class="col-12">
+			Copyright © 2021 <a href="http://127.0.0.1:8000/dashboard">অফিস ম্যানেজম্যান্ট</a>
+			&nbsp;
+			All rights reserved. This software is for presentation purpose only.
+		</div>
+	</footer>
 	</div>
 	<!-- ./wrapper -->
 	
@@ -1997,4 +2005,4 @@
 	</script>
 	
 	
-</body></html>
+	</body></html>	
