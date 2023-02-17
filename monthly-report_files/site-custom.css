@@ -32,10 +32,6 @@ div.dataTables_wrapper div.dataTables_filter {
     border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.card-header h4 {
-    font-weight: 400 !important;
-}
-
 .custom-col-7 .col-md-2 {
     -ms-flex: 0 0 14.28%;
     flex: 0 0 14.28%;
