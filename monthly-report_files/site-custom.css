@@ -9,15 +9,6 @@ body {
     color: #5d646a;
 }
 
-.navbar-white {
-    background-color: #0d1939;
-}
-
-.navbar-light .navbar-nav .nav-link {
-    color: #fff !important;
-    font-size: 20px;
-}
-
 .container-fluid {
     padding-right: 30px;
     padding-left: 30px;
@@ -30,6 +21,10 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .card-header {
     border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header h4 {
+    font-weight: 400 !important;
 }
 
 .custom-col-7 .col-md-2 {
@@ -59,5 +54,31 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 
 aside.main-sidebar.sidebar-dark-primary.elevation-4 {
-    display: none;
+    /*display: none;*/
+}
+
+[class*=sidebar-dark-] {
+    background-color: rgb(11, 41, 72);
+}
+
+.os-content {
+    padding: 0 !important;
+}
+
+.nav-sidebar .nav-item>.nav-link {
+    margin-bottom: 0.3rem;
+}
+
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 1px solid #ddd;
+    color: #fff;
+}
+
+.navbar-badge {
+    font-size: .6rem;
+    font-weight: 300;
+    padding: 2px 4px;
+    position: absolute;
+    right: 5px;
+    top: 9px;
 }
