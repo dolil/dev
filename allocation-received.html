@@ -1116,9 +1116,8 @@
 							<div class="card shadow-none mb-0 border-bottom-0">
 								<div class="card-header shadow-none border-0">
 									<h4>
-										<strong>জমির শ্রেণীভিত্তিক বাজারমূল্য</strong>
-									<a class="btn btn-success btn-sm text-white" style="float: right" href="http://127.0.0.1:8000/dolils/market-value"><i class=" fa fa-plus"></i>&nbsp;বাজারমূল্য যোগ করুন</a>
-										<br><span style="font-size:16px;">[দ্রষ্টব্যঃ সম্পত্তির সর্বনিম্ন বাজার মূল্য বিধিমালা, ২০১০ (সংশোধিত ২০১২, ২০১৫)]</span>
+										<strong>প্রাপ্ত বরাদ্দের তথ্য</strong>
+										<a class="btn btn-success btn-sm text-white" href="http://127.0.0.1:8000/treasury-and-bill/allocation-received" style="float: right; cursor: pointer;"><i fill="currentColor" style="display: inline-block;"><svg fill="currentColor" height="15" width="15" viewBox="0 0 1408 1792" style="display: inline-block; vertical-align: middle;"><path d="M1408 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path></svg></i>&nbsp;বরাদ্দ যোগ করুন</a>
 									</h4>
 								</div>
 								<div class="card-body">
@@ -1137,7 +1136,7 @@
 										<div class="col-md-8">
 											<form><div class="row">
 												<div class="col-md-4 mb-3">
-													<label for="allocation_section">দলিলের প্রকার</label>
+													<label for="allocation_section">অর্থনৈতিক কোড</label>
 													<select class="custom-select select2bs4" id="allocation_section">
 														<option selected="">Choose...</option>
 														<option value="1">One</option>
@@ -1159,30 +1158,26 @@
 											<thead>
 												<tr>
 													<th class="text-center">ক্রঃ নং</th>
-													<th class="text-center">দলিলের সন</th>
-													<th class="text-center">দলিল নম্বর</th>
-													<th class="text-center">মৌজা</th>
-													<th class="text-center">জেএল নং</th>
-													<th class="text-center">দাগ নং</th>
-													<th class="text-center">জমির অবস্থান</th>
-													<th class="text-center">শ্রেণি</th>
-													<th class="text-center">জমির পরিমাণ</th>
-													<th class="text-center">জমির মূল্য</th>
+													<th class="text-center">তারিখ</th>
+													<th class="text-center">অর্থবছর</th>
+													<th class="text-center">পরিচলন কোড</th>
+													<th class="text-center">অর্থনৈতিক কোড</th>
+													<th class="text-center">খাতের নাম</th>
+													<th class="text-center">প্রাপ্ত বরাদ্দ</th>
+													<th class="text-center">মন্তব্য</th>
 													<th class="text-center"></th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
 													<td class="text-center">1</td>
-													<td class="text-center">২০২৩</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">১০১, ৫০২, ৫০৩</td>
-													<td class="text-center">পৌরসভা</td>
-													<td class="text-center">ধানী</td>	
-													<td class="text-center">০.২৫ একর</td>
-													<td class="text-center">৫,০০,০০০</td>													
+													<td class="text-center">০৭/০৩/২০২৩</td>
+													<td class="text-center">২০২২-২০২৩</td>
+													<td class="text-center">১০০১</td>
+													<td class="text-center">৩১১১৫০২১</td>
+													<td class="text-center">প্রশিক্ষণ প্রদান</td>		
+													<td class="text-center">৩৫,০০০</td>											
+													<td class="text-center"></td>													
 													<td class="text-center" style="">
 														<div class="btn-group">					
 															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
@@ -1194,15 +1189,13 @@
 												
 												<tr>
 													<td class="text-center">2</td>
-													<td class="text-center">২০২৩</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">১০১, ৫০২, ৫০৩</td>	
-													<td class="text-center">পৌরসভা</td>
-													<td class="text-center">ধানী</td>	
-													<td class="text-center">০.২৫ একর</td>
-													<td class="text-center">৫,০০,০০০</td>													
+													<td class="text-center">০৭/০৩/২০২৩</td>
+													<td class="text-center">২০২২-২০২৩</td>
+													<td class="text-center">১০০১</td>
+													<td class="text-center">৩১১১৫০২১</td>
+													<td class="text-center">প্রশিক্ষণ প্রদান</td>		
+													<td class="text-center">৩৫,০০০</td>											
+													<td class="text-center"></td>													
 													<td class="text-center" style="">
 														<div class="btn-group">					
 															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
@@ -1214,55 +1207,13 @@
 												
 												<tr>
 													<td class="text-center">3</td>
-													<td class="text-center">২০২৩</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">১০১, ৫০২, ৫০৩</td>
-													<td class="text-center">পৌরসভা</td>
-													<td class="text-center">ধানী</td>	
-													<td class="text-center">০.২৫ একর</td>
-													<td class="text-center">৫,০০,০০০</td>													
-													<td class="text-center" style="">
-														<div class="btn-group">					
-															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
-															
-															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
-														</div>
-													</td>
-												</tr>
-												
-												<tr>
-													<td class="text-center">4</td>
-													<td class="text-center">২০২৩</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">১০১, ৫০২, ৫০৩</td>
-													<td class="text-center">পৌরসভা</td>
-													<td class="text-center">ধানী</td>	
-													<td class="text-center">০.২৫ একর</td>
-													<td class="text-center">৫,০০,০০০</td>													
-													<td class="text-center" style="">
-														<div class="btn-group">					
-															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
-															
-															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
-														</div>
-													</td>
-												</tr>
-												
-												<tr>
-													<td class="text-center">5</td>
-													<td class="text-center">২০২৩</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
-													<td class="text-center">১০১, ৫০২, ৫০৩</td>	
-													<td class="text-center">পৌরসভা</td>
-													<td class="text-center">ধানী</td>	
-													<td class="text-center">০.২৫ একর</td>
-													<td class="text-center">৫,০০,০০০</td>													
+													<td class="text-center">০৭/০৩/২০২৩</td>
+													<td class="text-center">২০২২-২০২৩</td>
+													<td class="text-center">১০০১</td>
+													<td class="text-center">৩১১১৫০২১</td>
+													<td class="text-center">প্রশিক্ষণ প্রদান</td>		
+													<td class="text-center">৩৫,০০০</td>											
+													<td class="text-center"></td>													
 													<td class="text-center" style="">
 														<div class="btn-group">					
 															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
@@ -1283,8 +1234,8 @@
 					</div>
 				</div>
 			</section></div>
-			
-			<!-- /.content -->
+		
+		<!-- /.content -->
 	<div id="sidebar-overlay"></div></div>
 	<!-- /.content-wrapper -->
 	
@@ -1302,21 +1253,21 @@
 			All rights reserved. This software is for presentation purpose only.
 		</div>
 	</footer>
-	<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
-	<!-- ./wrapper -->
-	
-	
-	<script src="./other-bills_files/jquery.min.js.download"></script>
-	<script src="./other-bills_files/bootstrap.bundle.min.js.download"></script>
-	<script src="./other-bills_files/jquery.overlayScrollbars.min.js.download"></script>
-	<script src="./other-bills_files/adminlte.js.download"></script>
-	<script src="./other-bills_files/demo.js.download"></script>
-	<script src="./other-bills_files/Chart.min.js.download"></script>
-	
-	<script src="./other-bills_files/jquery-confirm.min.js.download"></script>
-	
-	<script src="./other-bills_files/select2.full.min.js.download"></script>
-	
-	<script src="./other-bills_files/wnoty.js.download"></script>
-	
+<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
+<!-- ./wrapper -->
+
+
+<script src="./other-bills_files/jquery.min.js.download"></script>
+<script src="./other-bills_files/bootstrap.bundle.min.js.download"></script>
+<script src="./other-bills_files/jquery.overlayScrollbars.min.js.download"></script>
+<script src="./other-bills_files/adminlte.js.download"></script>
+<script src="./other-bills_files/demo.js.download"></script>
+<script src="./other-bills_files/Chart.min.js.download"></script>
+
+<script src="./other-bills_files/jquery-confirm.min.js.download"></script>
+
+<script src="./other-bills_files/select2.full.min.js.download"></script>
+
+<script src="./other-bills_files/wnoty.js.download"></script>
+
 <script type="text/javascript" src="./other-bills_files/pdfmake.min.js.download"></script></body></html>
