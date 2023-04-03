@@ -1116,8 +1116,8 @@
 							<div class="card shadow-none mb-0 border-bottom-0">
 								<div class="card-header shadow-none border-0">
 									<h4>
-										<strong>জমির শ্রেণীভিত্তিক বাজারমূল্য</strong>
-									<a class="btn btn-success btn-sm text-white" style="float: right" href="http://127.0.0.1:8000/dolils/market-value"><i class=" fa fa-plus"></i>&nbsp;বাজারমূল্য যোগ করুন</a>
+										<strong>জমির শ্রেণীভিত্তিক গড় বাজারমূল্য</strong>
+										<a class="btn btn-success btn-sm text-white" style="float: right" href="http://127.0.0.1:8000/dolils/market-value"><i class=" fa fa-plus"></i>&nbsp;গড়মূল্য যোগ করুন</a>
 										<br><span style="font-size:16px;">[দ্রষ্টব্যঃ সম্পত্তির সর্বনিম্ন বাজার মূল্য বিধিমালা, ২০১০ (সংশোধিত ২০১২, ২০১৫)]</span>
 									</h4>
 								</div>
@@ -1135,18 +1135,24 @@
 											</form>
 										</div>
 										<div class="col-md-8">
-											<form><div class="row">
-												<div class="col-md-4 mb-3">
-													<label for="allocation_section">দলিলের প্রকার</label>
-													<select class="custom-select select2bs4" id="allocation_section">
-														<option selected="">Choose...</option>
-														<option value="1">One</option>
-														<option value="2">Two</option>
-														<option value="3">Three</option>
-													</select>
-												</div><!-- Load this value from Super Admin Settings-->
-												
-											<div class="col-md-3 mb-3"><label for="from">Date From</label><input type="date" name="from" id="from" class="form-control" autocomplete="off" value=""></div><div class="col-md-3 mb-3"><label for="from">Date To</label><input type="date" name="to" id="to" class="form-control" autocomplete="off" value=""></div><div class="col-md-2 d-flex align-items-end mb-3"><button type="submit" class="btn btn-block btn-success mt-0 "><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="16" width="16" viewBox="0 0 1664 1792" style="display: inline-block; vertical-align: middle;"><path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path></svg></i><span>&nbsp;Search</span></button></div></div></form>
+											<form>
+												<div class="row">
+													<div class="col-md-2 mb-3">
+														<label for="allocation_section">দলিলের প্রকার</label>
+														<select class="custom-select select2bs4" id="allocation_section">
+															<option selected="">Choose...</option>
+															<option value="1">সকল প্রকার</option>
+															<option value="2">সাফ-কবলা</option>
+															<option value="3">হেবার ঘোষণা</option>
+														</select>
+													</div><!-- Load this value from Super Admin Settings-->
+													
+													<div class="col-md-2 mb-3">
+														<label for="ledger_no">দলিল নং</label>
+														<input type="number" name="ledger_no" id="ledger_no" class="form-control" autocomplete="off">
+													</div>
+													
+												<div class="col-md-3 mb-3"><label for="from">Date From</label><input type="date" name="from" id="from" class="form-control" autocomplete="off" value=""></div><div class="col-md-3 mb-3"><label for="from">Date To</label><input type="date" name="to" id="to" class="form-control" autocomplete="off" value=""></div><div class="col-md-2 d-flex align-items-end mb-3"><button type="submit" class="btn btn-block btn-success mt-0 "><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="16" width="16" viewBox="0 0 1664 1792" style="display: inline-block; vertical-align: middle;"><path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path></svg></i><span>&nbsp;Search</span></button></div></div></form>
 										</div>
 									</div>
 								</div>
@@ -1161,8 +1167,8 @@
 													<th class="text-center">ক্রঃ নং</th>
 													<th class="text-center">দলিলের সন</th>
 													<th class="text-center">দলিল নম্বর</th>
-													<th class="text-center">মৌজা</th>
 													<th class="text-center">জেএল নং</th>
+													<th class="text-center">মৌজা</th>													
 													<th class="text-center">দাগ নং</th>
 													<th class="text-center">জমির অবস্থান</th>
 													<th class="text-center">শ্রেণি</th>
@@ -1176,8 +1182,8 @@
 													<td class="text-center">1</td>
 													<td class="text-center">২০২৩</td>
 													<td class="text-center">২৫</td>
+													<td class="text-center">১</td>
 													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
 													<td class="text-center">১০১, ৫০২, ৫০৩</td>
 													<td class="text-center">পৌরসভা</td>
 													<td class="text-center">ধানী</td>	
@@ -1196,8 +1202,8 @@
 													<td class="text-center">2</td>
 													<td class="text-center">২০২৩</td>
 													<td class="text-center">২৫</td>
+													<td class="text-center">১</td>
 													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
 													<td class="text-center">১০১, ৫০২, ৫০৩</td>	
 													<td class="text-center">পৌরসভা</td>
 													<td class="text-center">ধানী</td>	
@@ -1216,8 +1222,8 @@
 													<td class="text-center">3</td>
 													<td class="text-center">২০২৩</td>
 													<td class="text-center">২৫</td>
+													<td class="text-center">১</td>
 													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
 													<td class="text-center">১০১, ৫০২, ৫০৩</td>
 													<td class="text-center">পৌরসভা</td>
 													<td class="text-center">ধানী</td>	
@@ -1236,8 +1242,8 @@
 													<td class="text-center">4</td>
 													<td class="text-center">২০২৩</td>
 													<td class="text-center">২৫</td>
+													<td class="text-center">১</td>
 													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
 													<td class="text-center">১০১, ৫০২, ৫০৩</td>
 													<td class="text-center">পৌরসভা</td>
 													<td class="text-center">ধানী</td>	
@@ -1256,8 +1262,8 @@
 													<td class="text-center">5</td>
 													<td class="text-center">২০২৩</td>
 													<td class="text-center">২৫</td>
+													<td class="text-center">১</td>
 													<td class="text-center">বিশারকান্দি</td>
-													<td class="text-center">২৫</td>
 													<td class="text-center">১০১, ৫০২, ৫০৩</td>	
 													<td class="text-center">পৌরসভা</td>
 													<td class="text-center">ধানী</td>	

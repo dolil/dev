@@ -1116,125 +1116,228 @@
 							<div class="card shadow-none mb-0 border-bottom-0">
 								<div class="card-header shadow-none border-0">
 									<h4>
-										<strong>সরকারি/সংরক্ষিত জমি</strong>
+										<strong>জমির শ্রেণীভিত্তিক বাজারমূল্য</strong>
+										<br><span style="font-size:16px;">[দ্রষ্টব্যঃ সম্পত্তির সর্বনিম্ন বাজার মূল্য বিধিমালা, ২০১০ (সংশোধিত ২০১২, ২০১৫)]</span>
 									</h4>
 								</div>
-								<div class="card-body"><div class="row">
-									<div class="col-md-2 mb-3">
-										<label for="allocation_section">জরিপ</label>
-										<select class="custom-select select2bs4" id="allocation_section">
-											<option selected="">Choose...</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
-										</select>
-									</div><!-- Load this value from Super Admin Settings-->
-									
-									<div class="col-md-2 mb-3"> <!-- search dropdown-->
-										<label for="allocation_section">মৌজা</label>
-										<select class="custom-select select2bs4" id="allocation_section">
-											<option selected="">Choose...</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
-										</select>
-									</div><!-- Load this value from Super Admin Settings-->
-									
-									<div class="col-md-2 mb-3">
-									<label for="ledger_no">খতিয়ান নং</label>
-										<input type="text" name="ledger_no" id="ledger_no" class="form-control" autocomplete="off">
-									</div>
-									
-									<div class="col-md-2 mb-3">
-										<label for="spot_no">দাগ নং</label>
-										<input type="text" name="spot_no" id="spot_no" class="form-control" autocomplete="off">
-									</div>
-									
-									<div class="col-md-2 mb-3">
-										<label for="deed_year">দলিলের সন</label>
-										<select class="custom-select select2bs4" id="deed_year" required="" tabindex="0" aria-hidden="false">
-											<option selected="">Choose...</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
-										</select>
-									</div>
-									
-									<div class="col-md-2 mb-3">
-										<label for="deed_number">দলিল নং</label>
-										<select class="custom-select select2bs4" id="deed_number" required="" tabindex="0" aria-hidden="false">
-											<option selected="">Choose...</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
-										</select>
-									</div>
-									
-									<div class="col-md-3 mb-3"><label for="from">Date From</label><input type="date" name="from" id="from" class="form-control" autocomplete="off" value=""></div><div class="col-md-3 mb-3"><label for="from">Date To</label><input type="date" name="to" id="to" class="form-control" autocomplete="off" value=""></div><div class="col-md-2 d-flex align-items-end mb-3"><button type="submit" class="btn btn-block btn-success mt-0 "><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="16" width="16" viewBox="0 0 1664 1792" style="display: inline-block; vertical-align: middle;"><path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path></svg></i><span>&nbsp;Search</span></button></div></div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-3 d-flex align-items-end mb-3">
+											<form action="http://127.0.0.1:8000/dolils/registered-deeds" method="get" accept-charset="utf-8" style="width:250px;">
+												<div class="input-group">
+													<select name="year" id="year" class="form-control custom-select">
+														<option>2023</option>
+														<option>2022</option>
+													</select>
+													<button type="submit" class="btn btn-success mt-0 rounded-0"><i class="fa fa-search"></i></button>
+												</div>
+											</form>
+										</div>
+										<div class="col-md-9">
+											<form>
+												<div class="row">
+													<div class="col-md-2 mb-3">
+														<label for="mouza_name">সন</label>
+														<select class="custom-select select2bs4" id="mouza_name">
+															<option selected="">Choose...</option>
+															<option value="1">২০২৩-২০২৪</option>
+															<option value="2">২০২০-২০২২</option>
+															<option value="3">২০১৭-২০১৯</option>
+														</select>
+													</div><!-- Load this value from Office Admin Settings-->
+													
+													<div class="col-md-2 mb-3">
+														<label for="mouza_name">মৌজা</label>
+														<select class="custom-select select2bs4" id="mouza_name">
+															<option selected="">Choose...</option>
+															<option value="1">১ - বিশারকান্দি</option>
+															<option value="2">২ - আউয়ার</option>
+															<option value="3">৩ - কুন্দিহার</option>
+														</select>
+													</div><!-- Load this value from Office Admin Settings-->
+													
+													<div class="col-md-2 mb-3">
+														<label for="mouza_name">শ্রেণি</label>
+														<select class="custom-select select2bs4" id="mouza_name">
+															<option selected="">Choose...</option>
+															<option value="1">ধানী</option>
+															<option value="2">বাড়ি</option>
+															<option value="3">বাগান</option>
+														</select>
+													</div><!-- Load this value from Office Admin Settings and others class from Super Admin Settings -->
+													
+													<div class="col-md-2 mb-3">
+														<label for="mouza_name">জমির অবস্থান</label>
+														<select class="custom-select select2bs4" id="mouza_name">
+															<option selected="">Choose...</option>
+															<option value="1">Lowland</option>
+															<option value="2">Highland</option>
+															<option value="3">Urban Area</option>
+														</select>
+													</div><!-- Load this value from Office Admin Settings-->
+													
+													<div class="col-md-2 mb-3">
+														<label for="plot_no">দাগ নং</label>
+														<input type="text" name="plot_no" id="plot_no" class="form-control" autocomplete="off">
+													</div>
+													
+													<div class="col-md-2 d-flex align-items-end mb-3">
+														<button type="submit" class="btn btn-block btn-success mt-0 "><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="16" width="16" viewBox="0 0 1664 1792" style="display: inline-block; vertical-align: middle;"><path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path></svg></i><span>&nbsp;Search</span></button>
+													</div>
+												</div>
+											</form>
+										</div>
 									</div>
 								</div>
-								
-								<div class="card shadow-none border-0" style="margin-bottom: 25px;">
-									<div class="card-body p-0">	
-										<div class="table-responsive">
-											<table class="table table-bordered table-striped table-hover mb-0">
-												<thead>
-													<tr>
-														<th class="text-center">ক্রঃ নং</th>
-														<th class="text-center">জরিপ</th>
+							</div>
+							
+							<div class="card shadow-none border-0" style="margin-bottom: 25px;">
+								<div class="card-body p-0">	
+									<div class="table-responsive">
+										<table class="table table-bordered table-striped table-hover mb-0">
+											<thead>
+												<tr>
+													<th class="text-center">#</th>
+													<th class="text-center">সন</th>													
+													<th class="text-center">জেএল নং</th>
 													<th class="text-center">মৌজা</th>
-													<th class="text-center">খতিয়ান নং</th>
+													<th class="text-center">জমির একক</th>
+													<th class="text-center">জমির অবস্থান</th>
 													<th class="text-center">দাগ নং</th>
-													<th class="text-center">পরিমাণ (একর)</th>
-													<th class="text-center">প্রকৃত শ্রেণী</th>
-													<th class="text-center">দলিলের সন</th>
-													<th class="text-center">দলিল নং</th>
-													<th class="text-center">মন্তব্য</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="text-center">1</td>
-												<td class="text-center">এসএ</td>
-												<td class="text-center">১ - বিশারকান্দি</td>
-												<td class="text-center">৫০১</td>
-												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
-												<td class="text-center">০.০৫</td>		
-												<td class="text-center">ধানী</td>											
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-											</tr>
-											
-											<tr>
-												<td class="text-center">2</td>
-												<td class="text-center">এসএ</td>
-												<td class="text-center">১ - বিশারকান্দি</td>
-												<td class="text-center">৫০১</td>
-												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
-												<td class="text-center">০.০৫</td>		
-												<td class="text-center">ধানী</td>											
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-											</tr>
-											
-											<tr>
-												<td class="text-center">3</td>
-												<td class="text-center">এসএ</td>
-												<td class="text-center">১ - বিশারকান্দি</td>
-												<td class="text-center">৫০১</td>
-												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
-												<td class="text-center">০.০৫</td>		
-												<td class="text-center">ধানী</td>											
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-												<td class="text-center">-</td>
-											</tr>
-											
-										</tbody>
-									</table>
-								</div>
+													<th class="text-center">১. নাল</th>
+													<th class="text-center">২. বাড়ি</th>
+													<th class="text-center">৩. বাগান</th>
+													<th class="text-center">৪. ভিটা</th>
+													<th class="text-center">৫. পুকুর</th>
+													<th class="text-center">৬. ডোবা</th>
+													<th class="text-center">৭. চরভূমি</th>
+													<th class="text-center"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text-center">1</td>
+													<td class="text-center">২০২৩-২০২৪</td>
+													<td class="text-center">১</td>
+													<td class="text-center">বিশারকান্দি</td>
+													<td class="text-center">শতাংশ</td>
+													<td class="text-center">-</td>
+													<td class="text-center">-</td>
+													<td class="text-center">৭,৪২৩</td>
+													<td class="text-center">২৪,৮৭৫</td>
+													<td class="text-center">১,৪৫০</td>
+													<td class="text-center">৯,২৩১</td>	
+													<td class="text-center">১১,৮০০</td>
+													<td class="text-center">২৪,১৩৮</td>
+													<td class="text-center">০</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="text-center">2</td>
+													<td class="text-center">২০২৩-২০২৪</td>
+													<td class="text-center">১</td>
+													<td class="text-center">বিশারকান্দি</td>
+													<td class="text-center">শতাংশ</td>
+													<td class="text-center">-</td>
+													<td class="text-center">-</td>
+													<td class="text-center">৭,৪২৩</td>
+													<td class="text-center">২৪,৮৭৫</td>
+													<td class="text-center">১,৪৫০</td>
+													<td class="text-center">৯,২৩১</td>	
+													<td class="text-center">১১,৮০০</td>
+													<td class="text-center">২৪,১৩৮</td>
+													<td class="text-center">০</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="text-center">3</td>
+													<td class="text-center">২০২৩-২০২৪</td>
+													<td class="text-center">১</td>
+													<td class="text-center">বিশারকান্দি</td>
+													<td class="text-center">শতাংশ</td>
+													<td class="text-center">-</td>
+													<td class="text-center">-</td>
+													<td class="text-center">৭,৪২৩</td>
+													<td class="text-center">২৪,৮৭৫</td>
+													<td class="text-center">১,৪৫০</td>
+													<td class="text-center">৯,২৩১</td>	
+													<td class="text-center">১১,৮০০</td>
+													<td class="text-center">২৪,১৩৮</td>
+													<td class="text-center">০</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="text-center">4</td>
+													<td class="text-center">২০২৩-২০২৪</td>
+													<td class="text-center">১</td>
+													<td class="text-center">বিশারকান্দি</td>
+													<td class="text-center">শতাংশ</td>
+													<td class="text-center">-</td>
+													<td class="text-center">-</td>
+													<td class="text-center">৭,৪২৩</td>
+													<td class="text-center">২৪,৮৭৫</td>
+													<td class="text-center">১,৪৫০</td>
+													<td class="text-center">৯,২৩১</td>	
+													<td class="text-center">১১,৮০০</td>
+													<td class="text-center">২৪,১৩৮</td>
+													<td class="text-center">০</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="text-center">5</td>
+													<td class="text-center">২০২৩-২০২৪</td>
+													<td class="text-center">১</td>
+													<td class="text-center">বিশারকান্দি</td>
+													<td class="text-center">শতাংশ</td>
+													<td class="text-center">-</td>
+													<td class="text-center">-</td>
+													<td class="text-center">৭,৪২৩</td>
+													<td class="text-center">২৪,৮৭৫</td>
+													<td class="text-center">১,৪৫০</td>
+													<td class="text-center">৯,২৩১</td>	
+													<td class="text-center">১১,৮০০</td>
+													<td class="text-center">২৪,১৩৮</td>
+													<td class="text-center">০</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 							
@@ -1264,7 +1367,6 @@
 	</footer>
 	<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
 	<!-- ./wrapper -->
-
 	
 	
 	<script src="./other-bills_files/jquery.min.js.download"></script>
