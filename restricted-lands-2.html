@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///F:/xampp/htdocs/dev/salary-bill.html -->
+<html lang="en" style="height: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>অফিস ম্যানেজম্যান্ট</title>
+	<link rel="stylesheet" href="./other-bills_files/all.min.css">
+	<link rel="stylesheet" href="./other-bills_files/OverlayScrollbars.min.css">
+	<link rel="stylesheet" href="./other-bills_files/adminlte.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="./other-bills_files/bootstrap.css">
+	
+	
+	
+	<link rel="stylesheet" type="text/css" href="./other-bills_files/datatables.min.css">
+	
+	
+	<link rel="stylesheet" href="./other-bills_files/jquery-confirm.min.css">
+	
+	<link rel="stylesheet" href="./other-bills_files/select2.min.css">
+	<link rel="stylesheet" href="./other-bills_files/select2-bootstrap4.min.css">
+	
+	<link rel="stylesheet" href="./other-bills_files/icheck-bootstrap.min.css">
+	
+	<link rel="stylesheet" href="./other-bills_files/bootstrap-datetimepicker.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="./other-bills_files/daterangepicker.css">
+	
+	<link rel="stylesheet" href="./other-bills_files/summernote-bs4.css">
+	<link rel="stylesheet" href="./other-bills_files/wnoty.css">
+	
+	<link href="./other-bills_files/css" rel="stylesheet">
+	<link rel="icon" href="http://127.0.0.1:8000/public/system-images/icons/1-20211106232840-143771859-1776291069.png" type="image/png">
+	
+	<style type="text/css" media="screen">@font-face {
+		font-family: solaimanLipi;
+		src: url("http://127.0.0.1:8000/public/fonts/SolaimanLipi_22-02-2012.ttf");
+		}
+		
+		body {
+		zoom: 80%;
+		font-family: solaimanLipi, Arial, sans-serif !important;
+		}
+		
+		.select2-container {
+		width: 100% !important;
+		}
+		
+		.modal-backdrop {
+		background-color: transparent;
+		}
+		
+		@media (min-width: 768px){
+		::-webkit-scrollbar {
+		width: 15px;
+		height: 10px;
+		}
+		::-webkit-scrollbar-track {
+		background: none; 
+		}
+		::-webkit-scrollbar-thumb {
+		background: #999;
+		height: 15px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+		background: #ccc; 
+		}
+		::-webkit-scrollbar-button:start {
+		height: 10px;
+		}
+		}
+		
+		.card-header h4 {
+		font-weight: 400 !important;
+		}
+		
+	</style>
+	<link rel="stylesheet" href="./other-bills_files/site-custom.css">
+	
+	<style>
+		aside.main-sidebar.sidebar-dark-primary.elevation-4 {
+		/* display: none; */
+		}
+		.navbar-expand .navbar-nav .nav-link {
+		padding-right: 1rem;
+		padding-left: 1rem;
+		}
+		.navbar-light .navbar-nav .nav-link {
+		color: rgba(0, 0, 0, .8);
+		font-size: 20px;
+		}
+		.main-header .nav-link {
+		height: auto;
+		position: relative;
+		}
+	</style>
+<style>.cke{visibility:hidden;}</style><style>.cke{visibility:hidden;}</style><style>.cke{visibility:hidden;}</style></head>
+
+<body class="sidebar-mini layout-fixed" cz-shortcut-listen="true" style="height: auto;">
+	
+	<div class="wrapper">
+		
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+			
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" data-widget="pushmenu" href="file:///F:/xampp/htdocs/dev/challan-verification.html#" role="button"><i class="fas fa-bars"></i></a>
+				</li>
+				<li class="nav-item d-none d-sm-inline-block">
+					<a href="https://jihan007.github.io/dev/" class="nav-link">Home</a>
+				</li>
+				<li class="nav-item d-none d-sm-inline-block">
+					<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="nav-link">Contact</a>
+				</li>
+			</ul>
+			
+			<ul class="navbar-nav ml-auto">
+				
+				<li class="nav-item" style="margin-top: 8px;">
+					<div class="navbar-search-block">
+						<form class="form-inline">
+							<div class="input-group input-group-sm">
+								<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+								<div class="input-group-append">
+									<button class="btn btn-navbar" type="submit">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</li>
+				
+				<li class="nav-item dropdown">
+					<a class="nav-link" data-toggle="dropdown" href="file:///F:/xampp/htdocs/dev/challan-verification.html#">
+						<i class="far fa-comments"></i>
+						<span class="badge badge-danger navbar-badge">3</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">							
+							<div class="media">
+								<img src="file:///F:/xampp/htdocs/dev/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+								<div class="media-body">
+									<h3 class="dropdown-item-title">
+										Brad Diesel
+										<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+									</h3>
+									<p class="text-sm">Call me whenever you can...</p>
+									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+								</div>
+							</div>
+							
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">
+							
+							<div class="media">
+								<img src="file:///F:/xampp/htdocs/dev/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+								<div class="media-body">
+									<h3 class="dropdown-item-title">
+										John Pierce
+										<span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+									</h3>
+									<p class="text-sm">I got your message bro</p>
+									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+								</div>
+							</div>
+							
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">
+							
+							<div class="media">
+								<img src="file:///F:/xampp/htdocs/dev/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+								<div class="media-body">
+									<h3 class="dropdown-item-title">
+										Nora Silvester
+										<span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+									</h3>
+									<p class="text-sm">The subject goes here</p>
+									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+								</div>
+							</div>
+							
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item dropdown-footer">See All Messages</a>
+					</div>
+				</li>
+				
+				<li class="nav-item dropdown">
+					<a class="nav-link" data-toggle="dropdown" href="file:///F:/xampp/htdocs/dev/challan-verification.html#">
+						<i class="far fa-bell"></i>
+						<span class="badge badge-warning navbar-badge">15</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+						<span class="dropdown-item dropdown-header">15 Notifications</span>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">
+							<i class="fas fa-envelope mr-2"></i> 4 new messages
+							<span class="float-right text-muted text-sm">3 mins</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">
+							<i class="fas fa-users mr-2"></i> 8 friend requests
+							<span class="float-right text-muted text-sm">12 hours</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item">
+							<i class="fas fa-file mr-2"></i> 3 new reports
+							<span class="float-right text-muted text-sm">2 days</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="dropdown-item dropdown-footer">See All Notifications</a>
+					</div>
+				</li>	
+				<li class="nav-item dropdown show">
+					<a class="nav-link dropdown-toggle" href="file:///F:/xampp/htdocs/dev/challan-verification.html#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<img src="./other-bills_files/male.png" width="40" height="40" class="rounded-circle" style="margin-top: -10px">
+						&nbsp;<strong>সাব-রেজিস্ট্রার</strong>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<!-- Main Sidebar Container -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			
+			<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" class="brand-link">
+				<img src="./other-bills_files/govt-logo.png" width="40" height="40" class="rounded-circle" style="">
+				&nbsp;অফিস ম্যানেজম্যান্ট
+			</a>
+			
+			<div class="sidebar half-a-second os-host os-theme-light os-host-resize-disabled os-host-transition os-host-scrollbar-vertical-hidden os-host-scrollbar-horizontal-hidden"><div class="os-resize-observer-host"><div class="os-resize-observer observed" style="left: 0px; right: auto;"></div><div class="os-resize-observer observed"></div><div class="os-resize-observer observed"></div></div><div class="os-size-auto-observer" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer observed"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 645px;"></div><div class="os-size-auto-observer" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer observed"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 645px;"></div><div class="os-size-auto-observer" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer observed"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 645px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style=""><div class="os-content" style="height: 100%; width: 100%; padding: 0px 8px;">
+				<nav class="mt-2">
+					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+						
+						<li class="nav-item has-treeview">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-home"></i>
+								<p class="text-white">
+									ড্যাশবোর্ড
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview" style="display: none;">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dashboard" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-home"></i>
+										<p class="text-white">
+											Dashboard
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-envelope"></i>
+								<p class="text-white">
+									দলিল
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview" style="display: none;">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/dolil-input" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-list"></i>
+										<p class="text-white">
+											দলিল দাখিল গ্রহণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/deed-refusal" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											অগ্রাহ্যকৃত দলিল
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/pending-deed" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											অপেক্ষমান দলিল
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/market-value" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											শ্রেণীভিত্তিক বাজারমূল্য
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/index-deed" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সূচিবহির তথ্য এন্ট্রি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/commissions" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ভিজিট/কমিশন
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/registered-dolils" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											নিবন্ধিত দলিলের তথ্য
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/dolils/return-of-documents" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দলিল ফেরত প্রদান
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-file-alt"></i>
+								<p class="text-white">
+									তল্লাশ ও নকল
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/search-application" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											তল্লাশের আবেদন
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/inspections" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											পরিদর্শনের আবেদন
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/search-inspection-certified-copy/certified-copy" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											নকলের আবেদন
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									ট্রেজারী ও বিল
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/automatic-invoices" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											স্বয়ংক্রিয় চালান প্রস্তুত
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/treasury-challan-information" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											চালান জমা প্রদানের তথ্য
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/challan-verification" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											স্বয়ংক্রিয় চালান যাচাই
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/allocation-received" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											প্রাপ্ত বরাদ্দ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/salary-bill" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											বেতন বিল
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/other-bills" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											অন্যান্য বিল
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/treasury-and-bill/actual-expenditure-report" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											প্রকৃত ব্যয় (R)
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									রেকর্ড
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/form-register" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ফর্ম রেজিস্টার
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/catalog-book" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ক্যাটালগ বহি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/sending-records-to-sadar-archives" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											মহাফেজখানায় রেকর্ড প্রেরণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/destruction-of-doc-and-records" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দলিল ও রেকর্ড ধ্বংসকরণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/report-of-destructive-deeds" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ধ্বংসযোগ্য দলিলের তালিকা (R)
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/report-of-destructive-documents" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ধ্বংসযোগ্য নথিপত্রের তালিকা (R)
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/records/sending-records-to-court-order" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											আদালতের আদেশে রেকর্ড প্রেরণ
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-user-secret"></i>
+								<p class="text-white">
+									নকলনবিশ
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/copyist/distribution-of-deeds" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দলিল বিতরণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/copyist/distribution-of-certified-copy" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সার্টিফাইড কপি বিতরণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/copyist/monthly-bill-report" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											মাসিক বিল (Report)
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/copyist/bill-payments-details" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											বিল পরিশোধের বিবরণী
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									তথ্যাদি যাচাই
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/verifications/market-value-verification" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											বাজারমূল্য যাচাই (R)
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/verifications/govt-reserved-land-verification" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সরকারি/সংরক্ষিত জমি (R)
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/verifications/deed-information" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দলিলের তথ্য (R)
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									চিঠিপত্র
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/letters/receive-letters" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											চিঠিপত্র গ্রহণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/letters/send-letters" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											চিঠিপত্র প্রেরণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/letters/receipt-of-memorandum" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											স্মারকলিপি গ্রহণ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/letters/send-memorandum" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											স্মারকলিপি প্রেরণ
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									রশিদ
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/receipts/section-receipt-52" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											#৫২ ধারা রশিদ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/receipts/search-inspection-receipt" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											তল্লাশ ও পরিদর্শন রশিদ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/receipts/miscellaneous-receipts" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											বিবিধ রশিদ
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-list"></i>
+								<p class="text-white">
+									রিপোর্ট
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview" style="display: none;">
+								
+								<li class="nav-item has-treeview  ">
+									<a href="http://127.0.0.1:8000/reports?report=71" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দৈনিক রিপোর্ট
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a href="http://127.0.0.1:8000/reports?report=75" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											মাসিক রিপোর্ট
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a href="http://127.0.0.1:8000/reports?report=76" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ত্রৈমাসিক রিপোর্ট
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-building"></i>
+								<p class="text-white">
+									অফিস সেটিংস
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview" style="display: none;">
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											53H Location
+											<i class="right fas fa-angle-right"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="http://127.0.0.1:8000/office-settings/district-based-land-locations" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fas fa-map-marked-alt"></i>
+												<p class="text-white">জমির অবস্থান <br>(জেলা ভিত্তিক) </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="http://127.0.0.1:8000/office-settings/dev-auth-based-land-locations" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fas fa-home"></i>
+												<p class="text-white">জমির অবস্থান <br>(উন্নয়ন কর্তৃপক্ষ <br>ভিত্তিক) </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											53FF Location
+											<i class="right fas fa-angle-right"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="http://127.0.0.1:8000/office-settings/plot-land-locations" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fas fa-map-marker-alt"></i>
+												<p class="text-white">53FF জমির <br>অবস্থান (প্লট) </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="http://127.0.0.1:8000/office-settings/infrastructure-locations" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fas fa-building"></i>
+												<p class="text-white">3FF স্থাপনা/ভবন <br>/ফ্ল্যাটের অবস্থান </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/local-government-taxes" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											স্থানীয় সরকার কর
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/cash-fee-pay-order-fee" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											নগদ ফি - পে-অর্ডার ফি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/dolil-option-numbers" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ক্রমিক নং ও দলিল নং
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/land-classes" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											জমির শ্রেণি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/mouza-list" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											মৌজার তালিকা
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/current-market-value" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											বর্তমান বাজারমূল্য
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/govt-reserved-land" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সরকারি/সংরক্ষিত জমি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/office-settings/bank-treasury-information" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											ব্যাংক/ট্রেজারীর তথ্য
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									কর্মী ব্যবস্থাপনা
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/sub-register" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সাব-রেজিস্ট্রার
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/office-assistant" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											অফিস সহকারী
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/muharrir" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											মোহরার
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/office-support-staff" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											অফিস সহায়ক
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/copyist" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											নকলনবিশ
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/employee-management/deed-writer" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											দলিল লেখক
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-chart-pie"></i>
+								<p class="text-white">
+									সূচি
+									<i class="right fas fa-angle-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/index/entry-index" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সূচিকরণ তথ্য এন্ট্রি
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="http://127.0.0.1:8000/index/report-index" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											সূচিকরণ তথ্য যাচাই
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+				</nav>
+			</div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
+			
+		</aside>
+		
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="min-height: 528.789px;">
+			
+			<!-- Page Header -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-0">
+						<div class="col-12">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="http://127.0.0.1:8000/treasury-and-bill/allocation-received#">Home</a></li>
+								<li class="breadcrumb-item active">Dashboard v1</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ./Page Header -->
+			
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<script src="./other-bills_files/jquery.min.js.download"></script>
+							<div class="card shadow-none mb-0 border-bottom-0">
+								<div class="card-header shadow-none border-0">
+									<h4>
+										<strong>সরকারি/সংরক্ষিত জমি</strong>
+										<a class="btn btn-success btn-sm text-white" href="https://dw.dolil.com/module/restricted-lands" style="float: right; cursor: pointer;"><i fill="currentColor" style="display: inline-block;"><svg fill="currentColor" height="15" width="15" viewBox="0 0 1408 1792" style="display: inline-block; vertical-align: middle;"><path d="M1408 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path></svg></i>&nbsp;সরকারি/সংরক্ষিত জমি যোগ করুন</a>
+									</h4>
+								</div>
+								<div class="card-body"><div class="row">
+									<div class="col-md-2 mb-3">
+										<label for="allocation_section">জরিপ</label>
+										<select class="custom-select select2bs4" id="allocation_section">
+											<option selected="">Choose...</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
+									</div><!-- Load this value from Super Admin Settings-->
+									
+									<div class="col-md-2 mb-3"> <!-- search dropdown-->
+										<label for="allocation_section">মৌজা</label>
+										<select class="custom-select select2bs4" id="allocation_section">
+											<option selected="">Choose...</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
+									</div><!-- Load this value from Super Admin Settings-->
+									
+									<div class="col-md-2 mb-3">
+									<label for="ledger_no">খতিয়ান নং<span class="text-danger">&nbsp;*</span></label>
+										<input type="text" name="ledger_no" id="ledger_no" class="form-control" autocomplete="off">
+									</div>
+									
+									<div class="col-md-2 mb-3">
+										<label for="spot_no">দাগ নং<span class="text-danger">&nbsp;*</span></label>
+										<input type="text" name="spot_no" id="spot_no" class="form-control" autocomplete="off">
+									</div>
+									
+									<div class="col-md-2 mb-3">
+										<label for="deed_year">দলিলের সন</label>
+										<select class="custom-select select2bs4" id="deed_year" required="" tabindex="0" aria-hidden="false">
+											<option selected="">Choose...</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
+									</div>
+									
+									<div class="col-md-2 mb-3">
+										<label for="deed_number">দলিল নং</label>
+										<select class="custom-select select2bs4" id="deed_number" required="" tabindex="0" aria-hidden="false">
+											<option selected="">Choose...</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
+									</div>
+									
+									<div class="col-md-3 mb-3"><label for="from">Date From</label><input type="date" name="from" id="from" class="form-control" autocomplete="off" value=""></div><div class="col-md-3 mb-3"><label for="from">Date To</label><input type="date" name="to" id="to" class="form-control" autocomplete="off" value=""></div><div class="col-md-2 d-flex align-items-end mb-3"><button type="submit" class="btn btn-block btn-success mt-0 "><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="16" width="16" viewBox="0 0 1664 1792" style="display: inline-block; vertical-align: middle;"><path d="M1152 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zM1664 1664q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"></path></svg></i><span>&nbsp;Search</span></button></div></div>
+									</div>
+								</div>
+								
+								<div class="card shadow-none border-0" style="margin-bottom: 25px;">
+									<div class="card-body p-0">	
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped table-hover mb-0">
+												<thead>
+													<tr>
+														<th class="text-center">ক্রঃ নং</th>
+														<th class="text-center">জরিপ</th>
+													<th class="text-center">মৌজা</th>
+													<th class="text-center">খতিয়ান নং</th>
+													<th class="text-center">দাগ নং</th>
+													<th class="text-center">পরিমাণ (একর)</th>
+													<th class="text-center">প্রকৃত শ্রেণী</th>
+													<th class="text-center">দলিলের সন</th>
+													<th class="text-center">দলিল নং</th>
+													<th class="text-center">মন্তব্য</th>
+													<th class="text-center"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="text-center">1</td>
+												<td class="text-center">এসএ</td>
+												<td class="text-center">১ - বিশারকান্দি</td>
+												<td class="text-center">৫০১</td>
+												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
+												<td class="text-center">০.০৫</td>		
+												<td class="text-center">ধানী</td>											
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center" style="">
+													<div class="btn-group">					
+														<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+														
+														<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+													</div>
+												</td>
+											</tr>
+											
+											<tr>
+												<td class="text-center">2</td>
+												<td class="text-center">এসএ</td>
+												<td class="text-center">১ - বিশারকান্দি</td>
+												<td class="text-center">৫০১</td>
+												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
+												<td class="text-center">০.০৫</td>		
+												<td class="text-center">ধানী</td>											
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center" style="">
+													<div class="btn-group">					
+														<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+														
+														<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+													</div>
+												</td>
+											</tr>
+											
+											<tr>
+												<td class="text-center">3</td>
+												<td class="text-center">এসএ</td>
+												<td class="text-center">১ - বিশারকান্দি</td>
+												<td class="text-center">৫০১</td>
+												<td class="text-center">৬০৪১, ৬০৪৫, ৩০০১, ৩০০২</td>
+												<td class="text-center">০.০৫</td>		
+												<td class="text-center">ধানী</td>											
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center">-</td>
+												<td class="text-center" style="">
+													<div class="btn-group">					
+														<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+														
+														<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+													</div>
+												</td>
+											</tr>
+											
+										</tbody>
+									</table>
+								</div>
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			</section></div>
+			
+			<!-- /.content -->
+	<div id="sidebar-overlay"></div></div>
+	<!-- /.content-wrapper -->
+	
+	<!-- Control Sidebar
+		<aside class="control-sidebar control-sidebar-dark">
+		
+		</aside>
+	<!-- /.control-sidebar -->
+	
+	<!-- Main Footer -->
+	<footer class="main-footer">
+		<div class="col-12">
+			Copyright © 2021 <a href="http://127.0.0.1:8000/dashboard">অফিস ম্যানেজম্যান্ট</a>
+			&nbsp;
+			All rights reserved. This software is for presentation purpose only.
+		</div>
+	</footer>
+	<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
+	<!-- ./wrapper -->
+	
+	
+	<script src="./other-bills_files/jquery.min.js.download"></script>
+	<script src="./other-bills_files/bootstrap.bundle.min.js.download"></script>
+	<script src="./other-bills_files/jquery.overlayScrollbars.min.js.download"></script>
+	<script src="./other-bills_files/adminlte.js.download"></script>
+	<script src="./other-bills_files/demo.js.download"></script>
+	<script src="./other-bills_files/Chart.min.js.download"></script>
+	
+	<script src="./other-bills_files/jquery-confirm.min.js.download"></script>
+	
+	<script src="./other-bills_files/select2.full.min.js.download"></script>
+	
+	<script src="./other-bills_files/wnoty.js.download"></script>
+	
+<script type="text/javascript" src="./other-bills_files/pdfmake.min.js.download"></script></body></html>
