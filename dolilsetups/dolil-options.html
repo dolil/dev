@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://office.dolil.com/dolilsetups/dolil-options -->
+<html lang="en" style="height: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>অফিস ম্যানেজম্যান্ট</title>
+	<link rel="stylesheet" href="./dolil-options_files/all.min.css">
+	<link rel="stylesheet" href="./dolil-options_files/OverlayScrollbars.min.css">
+	<link rel="stylesheet" href="./dolil-options_files/adminlte.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="./dolil-options_files/bootstrap.css">
+	
+	
+	
+	<link rel="stylesheet" type="text/css" href="./dolil-options_files/datatables.min.css">
+	
+	
+	<link rel="stylesheet" href="./dolil-options_files/jquery-confirm.min.css">
+	
+	<link rel="stylesheet" href="./dolil-options_files/select2.min.css">
+	<link rel="stylesheet" href="./dolil-options_files/select2-bootstrap4.min.css">
+	
+	<link rel="stylesheet" href="./dolil-options_files/icheck-bootstrap.min.css">
+	
+	<link rel="stylesheet" href="./dolil-options_files/bootstrap-datetimepicker.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="./dolil-options_files/daterangepicker.css">
+	
+	<link rel="stylesheet" href="./dolil-options_files/summernote-bs4.css">
+	<link rel="stylesheet" href="./dolil-options_files/wnoty.css">
+	
+	<link href="./dolil-options_files/css" rel="stylesheet">
+	<link rel="icon" href="https://office.dolil.com/public/system-images/icons/1-20211106232840-143771859-1776291069.png" type="image/png">
+	
+	<style type="text/css" media="screen">@font-face {
+		font-family: solaimanLipi;
+		src: url("https://office.dolil.com/public/fonts/SolaimanLipi_22-02-2012.ttf");
+		}
+		
+		body {
+		zoom: 80%;
+		font-family: solaimanLipi, Arial, sans-serif !important;
+		}
+		
+		.select2-container {
+		width: 100% !important;
+		}
+		
+		.modal-backdrop {
+		background-color: transparent;
+		}
+		
+		@media (min-width: 768px){
+		::-webkit-scrollbar {
+		width: 15px;
+		height: 10px;
+		}
+		::-webkit-scrollbar-track {
+		background: none; 
+		}
+		::-webkit-scrollbar-thumb {
+		background: #999;
+		height: 15px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+		background: #ccc; 
+		}
+		::-webkit-scrollbar-button:start {
+		height: 10px;
+		}
+		}
+		
+	</style>		
+	<link rel="stylesheet" href="./dolil-options_files/site-custom.css">
+	
+	<style>
+		aside.main-sidebar.sidebar-dark-primary.elevation-4 {
+		display: none;
+		}
+		.navbar-expand .navbar-nav .nav-link {
+		padding-right: 1rem;
+		padding-left: 1rem;
+		}
+		.navbar-light .navbar-nav .nav-link {
+		color: rgba(0, 0, 0, .8);
+		font-size: 20px;
+		}
+		.main-header .nav-link {
+		height: auto;
+		position: relative;
+		}
+	</style>
+<style>.cke{visibility:hidden;}</style></head>
+<body class="layout-top-nav" cz-shortcut-listen="true" style="height: auto;">
+	
+	<div class="wrapper">
+		
+		<!-- Navbar -->
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+			
+			<ul class="navbar-nav">					
+				<li class="nav-item" style="padding-left:12px;">
+					<a href="https://office.dolil.com/dashboard" class="nav-link"><i class="fas fa-home"></i>&nbsp;ড্যাশবোর্ড</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">দলিল</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolils/dolil-input" class="dropdown-item">দলিল দাখিল গ্রহণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/deed-refusal" class="dropdown-item">প্রত্যাখ্যাত/অগ্রাহ্যকৃত দলিল</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/pending-deed/" class="dropdown-item">অপেক্ষমান দলিলের রেজিস্টার</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/market-value/" class="dropdown-item">জমির শ্রেণীভিত্তিক বাজারমূল্য</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/index-deed/" class="dropdown-item">সূচিবহির তথ্য এন্ট্রি</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/visit-commission" class="dropdown-item">ভিজিট/কমিশন</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/registered-dolils" class="dropdown-item">নিবন্ধিত দলিলের তথ্য এন্ট্রি</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolils/return-of-documents" class="dropdown-item">দলিল ফেরত প্রদান</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তল্লাশ ও নকল</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/search-inspection-certified-copy/inspections" class="dropdown-item">তল্লাশ ও পরিদর্শনের তথ্য এন্ট্রি</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/search-inspection-certified-copy/certified-copy" class="dropdown-item">নকলের আবেদনের তথ্য এন্ট্রি</a></li>
+					</ul>
+				</li>										
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ট্রেজারী ও বিল</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">স্বয়ংক্রিয় চালান প্রস্তুত</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">চালান জমা প্রদানের তথ্য</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">স্বয়ংক্রিয় চালান যাচাই</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">প্রাপ্ত বরাদ্দ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">বেতন বিল</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">অন্যান্য বিল</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">প্রকৃত ব্যয় (Report)</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রেকর্ড</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">ফর্ম রেজিস্টার</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">ক্যাটালগ বহি</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">সদর মহাফেজখানায় রেকর্ড প্রেরণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">দলিল ও রেকর্ড ধ্বংসকরণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">ধ্বংসযোগ্য দলিলের তালিকা (Report)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">ধ্বংসযোগ্য নথিপত্রের তালিকা (Report)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">আদালতের আদেশ মূলে রেকর্ড প্রেরণ</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">নকলনবিশ</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">দলিল বিতরণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">সার্টিফাইড কপি বিতরণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">কাজের বিবরণ (ডায়েরী)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">মাসিক বিল (Report)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/copyist/copyists-bank-accounts" class="dropdown-item">বিল পরিশোধের বিবরণী</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">তথ্যাদি যাচাই</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">বাজারমূল্য যাচাই (Search Report)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">সরকারি/সংরক্ষিত জমি (Search Report)</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#দলিলের তথ্য (Search Report)</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">চিঠিপত্র</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#চিঠিপত্র গ্রহণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#চিঠিপত্র প্রেরণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#স্মারকলিপি গ্রহণ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#স্মারকলিপি প্রেরণ</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রশিদ</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#৫২ ধারা রশিদ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#তল্লাশ ও পরিদর্শন রশিদ</a></li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">#বিবিধ রশিদ</a></li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">রিপোর্ট</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">					
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/reports?report=71" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">দৈনিক রিপোর্ট</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li><a href="https://office.dolil.com/reports/register-fee-book" class="dropdown-item">রেজিঃ ফি বহি</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/register-stamp-duty" class="dropdown-item">স্ট্যাম্প শুল্ক রেজিস্টার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/register-fee-pay-order" class="dropdown-item">রেজি. ফি পে-অর্ডার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/register-source-tax-53h" class="dropdown-item">উৎসে কর (53H)</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/register-source-tax-53hh" class="dropdown-item">উৎসে কর (53HH)</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/register-source-tax-53ff" class="dropdown-item">উৎসে কর (53FF)</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/vat-register" class="dropdown-item">মূসক/ভ্যাট রেজিস্টার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/local-govt-tax-register" class="dropdown-item">স্থানীয় সরকার কর</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/n-n-fee-register" class="dropdown-item">এনএন ফি রেজিস্টার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/search-and-copy-register" class="dropdown-item">তল্লাশ ও নকল রেজিস্টার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/misc-register-return-of-docs" class="dropdown-item">দলিল ফেরত প্রদান রেজিস্টার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/misc-register-commissions" class="dropdown-item">ভিজিট/কমিশন রেজিস্টার</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options" class="dropdown-item">সাপ্তাহিক রিপোর্ট</a></li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">মাসিক রিপোর্ট</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li><a href="https://office.dolil.com/reports/monthly-income-expenditure" class="dropdown-item">মাসিক আয়ের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-expenditure" class="dropdown-item">#মাসিক ব্যয়ের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-expenditure" class="dropdown-item">#প্রকৃত ব্যয়ের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-head-10-report" class="dropdown-item">রেজিঃ খাতের মাসিক বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-head-10-inc-exp" class="dropdown-item">রেজিঃ খাতের আদায় ও জমাকৃত অর্থের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-regi-fee-challan" class="dropdown-item">#রেজিঃ খাতের অর্থ চালানের মাধ্যমে জমার বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-stamp-duty-report" class="dropdown-item">#স্ট্যাম্প খাতের মাসিক বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-regi-fee-challan" class="dropdown-item">#স্ট্যাম্প খাতের অর্থ চালানের মাধ্যমে জমার বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের মাসিক বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-source-tax-report" class="dropdown-item">#উৎসে আয়কর খাতের  অর্থ চালানের মাধ্যমে জমার বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-income-challan" class="dropdown-item">#সকল খাতের অর্থ চালানের মাধ্যমে জমার বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-ctr" class="dropdown-item">#সি.টি.আর</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-nokol-suchi-volume" class="dropdown-item">বকেয়া দলিল, নকল, সূচি ও বালামের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-sa-act-report" class="dropdown-item">এস. এ. এ্যাক্ট এর মাসিক বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-copyists-bank-accounts" class="dropdown-item">#স্থায়ী কর্মচারীদের কাজের বিবরণী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-copyists-bank-accounts" class="dropdown-item">#নকলনবিশ অর্থ আদায়, জমা ও পরিশোধ</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/reports/monthly-return-1" class="dropdown-item">#রিটার্ন-১</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">ত্রৈমাসিক রিপোর্ট</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li>
+									<a tabindex="1" href="https://office.dolil.com/office-settings/plot-land-locations" class="dropdown-item">##</a>
+								</li>
+								<li class="dropdown-divider"></li>
+								<li>
+									<a tabindex="2" href="https://office.dolil.com/office-settings/infrastructure-locations" class="dropdown-item">##</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/reports?report=75" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">বাৎসরিক রিপোর্ট</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li>
+									<a tabindex="1" href="https://office.dolil.com/office-settings/plot-land-locations" class="dropdown-item">##</a>
+								</li>
+								<li class="dropdown-divider"></li>
+								<li>
+									<a tabindex="2" href="https://office.dolil.com/office-settings/infrastructure-locations" class="dropdown-item">##</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				
+				
+				
+				<li class="nav-item dropdown">
+					<a id="dropdownSubMenu1" href="https://office.dolil.com/dolilsetups/dolil-options#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">সেটিংস</a>
+					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">					
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/dolilsetups/dolil-options#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53H Location</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li>
+									<a tabindex="1" href="https://office.dolil.com/office-settings/district-based-land-locations" class="dropdown-item">জমির অবস্থান (জেলা ভিত্তিক)</a>
+								</li>
+								<li class="dropdown-divider"></li>
+								<li>
+									<a tabindex="2" href="https://office.dolil.com/office-settings/dev-auth-based-land-locations" class="dropdown-item">জমির অবস্থান (উন্নয়ন কর্তৃপক্ষ ভিত্তিক)</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown-divider"></li>							
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/dolilsetups/dolil-options#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">53FF Location</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li><a href="https://office.dolil.com/office-settings/plot-land-locations" class="dropdown-item">53FF জমির অবস্থান (প্লট)</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/office-settings/infrastructure-locations" class="dropdown-item">53FF স্থাপনা/ভবন/ফ্ল্যাটের অবস্থান </a></li>
+							</ul>
+						</li>
+						<li class="dropdown-divider"></li>
+						<li><a href="https://office.dolil.com/office-settings/local-government-taxes" class="dropdown-item">স্থানীয় সরকার কর</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/office-settings/cash-fee-pay-order-fee" class="dropdown-item">নগদ ফি - পে-অর্ডার ফি</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/office-settings/dolil-option-numbers" class="dropdown-item">ক্রমিক নং ও দলিল নং</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">জমির শ্রেণি</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">মৌজার তালিকা</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">বর্তমান বাজারমূল্য</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#restricted-lands" class="dropdown-item">সরকারি/সংরক্ষিত জমি</a></li>
+						<li class="dropdown-divider"></li>	
+						<li><a href="https://office.dolil.com/dolilsetups/dolil-options#restricted-lands" class="dropdown-item">ব্যাংক/ট্রেজারীর তথ্য</a></li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-submenu dropdown-hover">
+							<a id="dropdownSubMenu2" href="https://office.dolil.com/dolilsetups/dolil-options#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">কর্মী ব্যবস্থাপনা</a>
+							<ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="display: none;">
+								<li><a href="https://office.dolil.com/dolilsetups/dolil-options#%22" class="dropdown-item">সাব-রেজিস্ট্রার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">অফিস সহকারী</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">মোহরার</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">নকলনবিশ</a></li>
+								<li class="dropdown-divider"></li>
+								<li><a href="https://office.dolil.com/dolilsetups/dolil-options#" class="dropdown-item">দলিল লেখক</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				
+			</ul>
+			
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="https://office.dolil.com/dolilsetups/dolil-options#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="./dolil-options_files/male.png" width="40" height="40" class="rounded-circle" style="margin-top: -10px">
+						&nbsp;<strong>Md Maksu Miah</strong>
+					</a>
+					<div class="dropdown-menu" style="margin-left: -30px;margin-top: 10px;" aria-labelledby="navbarDropdownMenuLink">
+						<a href="https://office.dolil.com/setups/my-profile" class="dropdown-item">
+							<i class="fa fa-user-secret nav-icon"></i>&nbsp;My Profile
+						</a>
+						<a href="https://office.dolil.com/setups/change-password" class="dropdown-item">
+							<i class="fa fa-key nav-icon"></i>&nbsp;Change Password
+						</a>
+						<a href="https://office.dolil.com/logout" onclick="event.preventDefault();document.getElementById(&#39;logout-form&#39;).submit();" class="dropdown-item">
+							<i class="fa fa-sign-out-alt nav-icon"></i>&nbsp;Log Out
+							<form id="logout-form" action="https://office.dolil.com/logout" method="POST" style="display: none;">
+							<input type="hidden" name="_token" value="F9Tr4gjeqcXX3Sx6vgc0ENjQm7SqUZUrDiquTVha" autocomplete="off">								</form>
+						</a>
+					</div>
+				</li>   
+			</ul>
+		</nav>
+		<!-- /.navbar -->
+		
+		<!-- Main Sidebar Container -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			
+			<a href="https://office.dolil.com/dashboard" class="brand-link">
+				<svg height="28" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+				</svg> দলিল ম্যানেজম্যান্ট
+			</a>
+			
+			<div class="sidebar half-a-second">
+				<nav class="mt-2">
+					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+						
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-home"></i>
+								<p class="text-white">
+									ড্যাশবোর্ড
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/dashboard" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-home"></i>
+										<p class="text-white">
+											Dashboard
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fas fa-cogs"></i>
+								<p class="text-white">
+									সিষ্টেম সেটিংস
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fas fa-chart-pie"></i>
+										<p class="text-white">
+											System Settings
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/setups/system-information" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fas fa-cogs"></i>
+												<p class="text-white">System Information </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fab fa-pied-piper-alt"></i>
+										<p class="text-white">
+											Role Management
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/setups/role-permissions" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fab fa-angellist"></i>
+												<p class="text-white">Role Permissions </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/setups/roles" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white fab fa-accessible-icon"></i>
+												<p class="text-white">Roles</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/setups/admins" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-user-secret"></i>
+										<p class="text-white">
+											Admins
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/setups/database-backups" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-briefcase"></i>
+										<p class="text-white">
+											Database Backups
+											
+										</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview ">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-tasks"></i>
+								<p class="text-white">
+									মডিউলসমুহ
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Area Setup
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/divisions" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Divisions</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/districts" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Districts</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/thanas" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Thanas</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/post-offices" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Post Offices </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/land-offices" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Land Offices </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Dolil Setup
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/dolil-types" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Dolil Types </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/unit-of-land" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Unit of <br>Land </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/survey-ledgers" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Survey Ledgers </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a style="cursor: pointer;" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Basic Setups
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/development-authorities" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Dev. Authorities </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/occupations" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Occupations</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/module/religions" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">Religions</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview menu-open">
+							<a style="cursor: pointer;color: white" class="nav-link">
+								<i class="nav-icon text-white fa fa-cogs"></i>
+								<p class="text-white">
+									দলিল সেটিংস
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/dolilsetups/dolil-sections" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Dolil Sections
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/dolilsetups/dolil-sub-sections" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Dolil Sub-sections
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/dolilsetups/dolil-categories" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Dolil Categories
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item   ">
+									<a href="https://office.dolil.com/dolilsetups/dolil-options" class="nav-link bg-primary text-white text-bold">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white far fa-circle"></i>
+										<p class="text-white">
+											Dolil Options
+											
+										</p>
+									</a>
+								</li>
+								
+								<li class="nav-item has-treeview  ">
+									<a href="https://office.dolil.com/dolilsetups" class="nav-link ">
+										&nbsp;&nbsp;
+										<i class="nav-icon text-white fa fa-money-check-alt"></i>
+										<p class="text-white">
+											উৎসে কর
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href="https://office.dolil.com/dolilsetups/schedule-tax-sources" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">উৎসে কর <br>(53H) </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/dolilsetups/plot-tax-sources" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">উৎসে কর <br>(53FF) (প্লট) </p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="https://office.dolil.com/dolilsetups/infrastructure-tax-sources" class="nav-link ">
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<i class="nav-icon text-white far fa-dot-circle"></i>
+												<p class="text-white">উৎসে কর <br>(53FF) (বিল্ডিং <br>/ ফ্ল্যাট/স্পেস) </p>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			
+		</aside>			
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper" style="min-height: 514.095px;">
+			
+			<!-- Page Header -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-0">
+						<div class="col-12">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="https://office.dolil.com/dolilsetups/dolil-options#">Home</a></li>
+								<li class="breadcrumb-item active">Dashboard v1</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ./Page Header -->
+			
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog modal-lg" id="modal-dialog" style="max-width:75%">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="modal-title">Fees</h4>
+											<button type="button" class="close" data-dismiss="modal">×</button>
+										</div>
+										<div class="modal-body" id="modal-body"><div class="card" style="margin-bottom: 25px;">
+											<div class="card-header bg-info text-white" style="cursor: pointer;">
+												<h4 class="mb-0">
+													<strong>সাফ-কবলা</strong>
+													
+													<a class="btn btn-success btn-sm" style="float: right" href="https://office.dolil.com/dolilsetups/dolil-options/2/edit"><i class="fa fa-edit"></i>&nbsp;Edit Fees</a>
+												</h4>
+											</div>
+											<table class="table table-bordered mb-0">
+												<thead>
+													<tr>
+														<th style="width: 20%">শুল্কের ধরন</th>
+														<th style="width: 80%">শুল্কের বিবরন</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td><strong>১। রেজিষ্ট্রেশন ফি</strong></td>
+														<td class="text-center">
+															<div class="row">
+																<div class="col-12">
+																	<ul class="text-left">
+																		<li>
+																			শূন্য থেকে 
+																			ঊর্ধ্বে 
+																			১ %
+																			
+																			(
+																			সর্বনিম্ন: ১০০ টাকা
+																			
+																			)
+																		</li>
+																	</ul>
+																</div>
+																<div class="col-12 mt-2">
+																	<p class="mb-0">
+																		ফিসের দফা : <strong>এ</strong>
+																	</p>
+																</div>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>২। স্ট্যাম্প শুল্ক</strong></td>
+														<td class="text-center">
+															<div class="row">
+																<div class="col-12">
+																	<ul class="text-left">
+																		<li>
+																			শূন্য থেকে 
+																			ঊর্ধ্বে 
+																			১.৫ %
+																			
+																			(
+																			
+																			সর্বোচ্চ: ২০০০০০০০ টাকা
+																			)
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>৩। স্থানীয় সরকার কর</strong></td>
+														<td class="text-center">
+															২%
+														</td>
+													</tr>
+													<tr>
+														<td><strong>৪। উৎসে আয়কর (53H)</strong></td>
+														<td class="text-center">
+															<div class="row">
+																<div class="col-md-4 mb-2">
+																	<ul class="text-left">
+																		<li class="mb-3">
+																			53H_A1
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 1080000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_A2
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 600000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_A3
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 360000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_A4
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 360000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_A5
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 600000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_A6
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 300000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B1
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 90000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B2
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 300000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																	</ul>
+																</div>
+																<div class="col-md-4 mb-2">
+																	<ul class="text-left">
+																		<li class="mb-3">
+																			53H_B3
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 240000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B4
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 180000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B5
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 120000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B6
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 240000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B7
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 60000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B8
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 48000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B9
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 0 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_B10
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমির ক্ষেত্রে:</strong> 4 % or 72000 Tk/katha
+																			</p>
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>স্থাপনার ক্ষেত্রে:</strong> 4 % or 600 Tk/katha
+																			</p>
+																		</li>
+																	</ul>
+																</div>
+																<div class="col-md-4 mb-2">
+																	<ul class="text-left">
+																		<li class="mb-3">
+																			53H_C1
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমি + স্থাপনার ক্ষেত্রে:</strong> 4 % or 30000 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_C2
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমি + স্থাপনার ক্ষেত্রে:</strong> 3 % or 0 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_C3
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমি + স্থাপনার ক্ষেত্রে:</strong> 3 % or 0 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_C4
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমি + স্থাপনার ক্ষেত্রে:</strong> 2 % or 0 Tk/katha
+																			</p>
+																		</li>
+																		<li class="mb-3">
+																			53H_C5
+																			<p class="pt-2 pb-0 mb-0">
+																				<strong>জমি + স্থাপনার ক্ষেত্রে:</strong> 1 % or 0 Tk/katha
+																			</p>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>৫। উৎসে আয়কর (53FF)</strong></td>
+														<td class="text-center">
+															<div class="row">
+																<div class="col-6 text-left">
+																	<h6><strong>জমি/প্লটের ক্ষেত্রেঃ</strong></h6>
+																	<ul>
+																		<li class="mb-2">53FF_B1 - 5 %</li>
+																		<li class="mb-2">53FF_B2 - 3 %</li>
+																	</ul>
+																</div>
+																<div class="col-6 text-left">
+																	<h6><strong>স্থাপনার ক্ষেত্রেঃ</strong></h6>
+																	<ul>
+																		<li class="mb-2">53FF_A1 - 1600 Tk/sqm</li>
+																		<li class="mb-2">53FF_AA1 - 6500 Tk/sqm</li>
+																		<li class="mb-2">53FF_A2 - 1500 Tk/sqm</li>
+																		<li class="mb-2">53FF_AA2 - 5000 Tk/sqm</li>
+																		<li class="mb-2">53FF_A3_A - 1000 Tk/sqm</li>
+																		<li class="mb-2">53FF_AA3_A - 3500 Tk/sqm</li>
+																		<li class="mb-2">53FF_A3_B - 700 Tk/sqm</li>
+																		<li class="mb-2">53FF_AA3_B - 2500 Tk/sqm</li>
+																		<li class="mb-2">53FF_A3_C - 300 Tk/sqm</li>
+																		<li class="mb-2">53FF_AA3_C - 1200 Tk/sqm</li>
+																	</ul>
+																</div>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>৬। ভ্যাট</strong></td>
+														<td class="text-left">
+															ক) প্লট/জমির ক্ষেত্রে 2%
+															<br>
+															খ) স্থাপনার ক্ষেত্রেঃ
+															<ul>
+																<li class="mb-2">১ - ১৬০০ বর্গফুট ২%</li>
+																<li class="mb-2">১৬০০ বর্গফুটের ঊর্ধ্বে ৪.৫%</li>
+															</ul>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>৭। হলফনামা</strong></td>
+														<td class="text-center">৩০০ টাকা</td>
+													</tr>
+													<tr>
+														<td><strong>৮। ই ফিস</strong></td>
+														<td class="text-center">১০০ টাকা</td>
+													</tr>
+													<tr>
+														<td><strong>৯। এন ফিস</strong></td>
+														<td class="text-center">
+															<p>
+																প্রতি পাতা ১৬ টাকা (বাংলা)
+															</p>
+															<p>
+																প্রতি পাতা ২৪ টাকা (ইংরেজি)
+															</p>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>১০। এন এন ফিস</strong></td>
+														<td class="text-center">
+															<p>
+																প্রতি পাতা ২৪ টাকা (বাংলা)
+															</p>
+															<p>
+																প্রতি পাতা ৩৬ টাকা (ইংরেজি)
+															</p>
+														</td>
+													</tr>
+													<tr>
+														<td><strong>১১। কোর্ট ফি</strong></td>
+														<td class="text-center">১০%</td>
+													</tr>
+												</tbody>
+											</table>
+										</div></div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script src="./dolil-options_files/jquery.min.js.download"></script>
+							<div class="card" style="margin-bottom: 25px;">
+								<div class="card-header bg-info text-white" style="cursor: pointer;">
+									<h4>
+										<strong>Dolil Options</strong>
+										
+										<a class="btn btn-success btn-sm" style="float: right" href="https://office.dolil.com/dolilsetups/dolil-options/create"><i class=" fa fa-plus"></i>&nbsp;New Dolil Option</a>
+									</h4>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-3 offset-md-2">
+											<label for="dolil_sub_section_id"><strong>Choose Sub-Section</strong></label>
+											<select class="form-control select2bs4 select2-hidden-accessible" name="dolil_sub_section_id" id="dolil_sub_section_id" onchange="getCategories()" data-select2-id="dolil_sub_section_id" tabindex="-1" aria-hidden="true">
+												<option value="0" data-select2-id="2">All Sub-Sections</option>
+												<optgroup label="দলিল শাখা">
+													<option value="1">
+														&nbsp;&nbsp;&nbsp;&nbsp;দলিল দাখিল গ্রহণ
+													</option>
+                                                    <option value="3">
+														&nbsp;&nbsp;&nbsp;&nbsp;অগ্রাহ্যকৃত দলিল
+													</option>
+                                                    <option value="4">
+														&nbsp;&nbsp;&nbsp;&nbsp;অপেক্ষমান দলিল
+													</option>
+                                                    <option value="5">
+														&nbsp;&nbsp;&nbsp;&nbsp;শ্রেণীভিত্তিক বাজারমূল্য
+													</option>
+                                                    <option value="6">
+														&nbsp;&nbsp;&nbsp;&nbsp;সূচিবহির তথ্য এন্ট্রি
+													</option>
+                                                    <option value="7">
+														&nbsp;&nbsp;&nbsp;&nbsp;ভিজিট/কমিশন
+													</option>
+                                                    <option value="8">
+														&nbsp;&nbsp;&nbsp;&nbsp;নিবন্ধিত দলিলের তথ্য
+													</option>
+                                                    <option value="9">
+														&nbsp;&nbsp;&nbsp;&nbsp;দলিল ফেরত প্রদান
+													</option>
+												</optgroup>
+												<optgroup label="রিপোর্ট সমূহ">
+													<option value="56">
+														&nbsp;&nbsp;&nbsp;&nbsp;দৈনিক রিপোর্ট
+													</option>
+                                                    <option value="57">
+														&nbsp;&nbsp;&nbsp;&nbsp;সাপ্তাহিক রিপোর্ট
+													</option>
+                                                    <option value="58">
+														&nbsp;&nbsp;&nbsp;&nbsp;মাসিক রিপোর্ট
+													</option>
+                                                    <option value="59">
+														&nbsp;&nbsp;&nbsp;&nbsp;ত্রৈমাসিক রিপোর্ট
+													</option>
+                                                    <option value="60">
+														&nbsp;&nbsp;&nbsp;&nbsp;বাৎসরিক রিপোর্ট
+													</option>
+                                                    <option value="61">
+														&nbsp;&nbsp;&nbsp;&nbsp;বিবিধ রিপোর্ট
+													</option>
+                                                    <option value="69">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="70">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="তল্লাশ ও নকল শাখা">
+													<option value="11">
+														&nbsp;&nbsp;&nbsp;&nbsp;তল্লাশের আবেদন
+													</option>
+                                                    <option value="12">
+														&nbsp;&nbsp;&nbsp;&nbsp;পরিদর্শনের আবেদন
+													</option>
+                                                    <option value="13">
+														&nbsp;&nbsp;&nbsp;&nbsp;নকলের আবেদন
+													</option>
+                                                    <option value="14">
+														&nbsp;&nbsp;&nbsp;&nbsp;তল্লাশ ও নকলের রেজিস্টার
+													</option>
+                                                    <option value="15">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="65">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="66">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="67">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="ট্রেজারী ও বিল শাখা">
+													<option value="16">
+														&nbsp;&nbsp;&nbsp;&nbsp;স্বয়ংক্রিয় চালান প্রস্তুত
+													</option>
+                                                    <option value="17">
+														&nbsp;&nbsp;&nbsp;&nbsp;চালান জমা প্রদানের তথ্য
+													</option>
+                                                    <option value="18">
+														&nbsp;&nbsp;&nbsp;&nbsp;স্বয়ংক্রিয় চালান যাচাই
+													</option>
+                                                    <option value="19">
+														&nbsp;&nbsp;&nbsp;&nbsp;প্রাপ্ত বরাদ্দ
+													</option>
+                                                    <option value="20">
+														&nbsp;&nbsp;&nbsp;&nbsp;বেতন বিল
+													</option>
+                                                    <option value="21">
+														&nbsp;&nbsp;&nbsp;&nbsp;অন্যান্য বিল
+													</option>
+                                                    <option value="22">
+														&nbsp;&nbsp;&nbsp;&nbsp;প্রকৃত ব্যয় (Report)
+													</option>
+                                                    <option value="68">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="রেকর্ড শাখা">
+													<option value="23">
+														&nbsp;&nbsp;&nbsp;&nbsp;ফর্ম রেজিস্টার
+													</option>
+                                                    <option value="24">
+														&nbsp;&nbsp;&nbsp;&nbsp;ক্যাটালগ বহি
+													</option>
+                                                    <option value="27">
+														&nbsp;&nbsp;&nbsp;&nbsp;মহাফেজখানায় রেকর্ড প্রেরণ
+													</option>
+                                                    <option value="28">
+														&nbsp;&nbsp;&nbsp;&nbsp;দলিল ও রেকর্ড ধ্বংসকরণ
+													</option>
+                                                    <option value="29">
+														&nbsp;&nbsp;&nbsp;&nbsp;ধ্বংসযোগ্য দলিলের তালিকা
+													</option>
+                                                    <option value="30">
+														&nbsp;&nbsp;&nbsp;&nbsp;ধ্বংসযোগ্য নথিপত্রের তালিকা
+													</option>
+                                                    <option value="31">
+														&nbsp;&nbsp;&nbsp;&nbsp;আদালতে রেকর্ড প্রেরণ
+													</option>
+                                                    <option value="71">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="নকলনবিশ শাখা">
+													<option value="32">
+														&nbsp;&nbsp;&nbsp;&nbsp;দলিল বিতরণ
+													</option>
+                                                    <option value="33">
+														&nbsp;&nbsp;&nbsp;&nbsp;সার্টিফাইড কপি বিতরণ
+													</option>
+                                                    <option value="36">
+														&nbsp;&nbsp;&nbsp;&nbsp;কাজের বিবরণ (ডায়েরী)
+													</option>
+                                                    <option value="37">
+														&nbsp;&nbsp;&nbsp;&nbsp;মাসিক বিল (Report)
+													</option>
+                                                    <option value="38">
+														&nbsp;&nbsp;&nbsp;&nbsp;বিল পরিশোধের বিবরণী
+													</option>
+                                                    <option value="62">
+														&nbsp;&nbsp;&nbsp;&nbsp;সূচিকরণ কাজ
+													</option>
+                                                    <option value="63">
+														&nbsp;&nbsp;&nbsp;&nbsp;বিবিধ কাজ
+													</option>
+                                                    <option value="72">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="তথ্যাদি যাচাই শাখা">
+													<option value="39">
+														&nbsp;&nbsp;&nbsp;&nbsp;বাজারমূল্য যাচাই
+													</option>
+                                                    <option value="40">
+														&nbsp;&nbsp;&nbsp;&nbsp;সরকারি/সংরক্ষিত জমি
+													</option>
+                                                    <option value="41">
+														&nbsp;&nbsp;&nbsp;&nbsp;দলিলের তথ্য যাচাই
+													</option>
+                                                    <option value="42">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="43">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="64">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="চিঠিপত্র শাখা">
+													<option value="44">
+														&nbsp;&nbsp;&nbsp;&nbsp;চিঠিপত্র গ্রহণ
+													</option>
+                                                    <option value="45">
+														&nbsp;&nbsp;&nbsp;&nbsp;চিঠিপত্র প্রেরণ
+													</option>
+                                                    <option value="46">
+														&nbsp;&nbsp;&nbsp;&nbsp;স্মারকলিপি গ্রহণ
+													</option>
+                                                    <option value="47">
+														&nbsp;&nbsp;&nbsp;&nbsp;স্মারকলিপি প্রেরণ
+													</option>
+                                                    <option value="48">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="49">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+												<optgroup label="রশিদ শাখা">
+													<option value="50">
+														&nbsp;&nbsp;&nbsp;&nbsp;৫২ ধারা রশিদ
+													</option>
+                                                    <option value="51">
+														&nbsp;&nbsp;&nbsp;&nbsp;তল্লাশ ও পরিদর্শন রশিদ
+													</option>
+                                                    <option value="52">
+														&nbsp;&nbsp;&nbsp;&nbsp;বিবিধ রশিদ
+													</option>
+                                                    <option value="53">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="54">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+                                                    <option value="55">
+														&nbsp;&nbsp;&nbsp;&nbsp;##
+													</option>
+												</optgroup>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<label for="dolil_category_id"><strong>Choose Category</strong></label>
+											<select class="form-control select2bs4 select2-hidden-accessible" name="dolil_category_id" id="dolil_category_id" data-select2-id="dolil_category_id" tabindex="-1" aria-hidden="true"><option value="0" data-select2-id="4">All Dolil Categories</option><option value="1">সম্পত্তি হস্তান্তর দলিল</option><option value="2">চুক্তি সম্পর্কিত দলিল</option><option value="3">পাওয়ার অব অ্যাটর্নি দলিল</option><option value="4">ব্যাংক মর্টগেজ সম্পর্কিত দলিল</option><option value="5">বিবিধ দলিল</option><option value="6">Open Format</option></select>
+										</div>
+										<div class="col-md-2">
+											<label>&nbsp;</label>
+											<a class="btn btn-primary btn-block btn-md text-white" onclick="Search();"><i class="fa fa-search"></i>&nbsp;Seach</a>
+										</div>
+									</div>
+								</div>
+								<div class="card-body">
+									<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+									
+																		
+									<div class="dataTables_scroll"><div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;"><div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 1764.63px; padding-right: 0px;">
+									
+									<table class="table table-bordered table-striped datatable datatable-normal dataTable no-footer" role="grid" style="margin-left: 0px; width: 1764.63px;"><thead>
+										<tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 22.0052px;" aria-sort="ascending" aria-label="SL: activate to sort column descending">SL</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 600.846px;" aria-label="Section Information: activate to sort column ascending">Section Information</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 370.725px;" aria-label="Option Information: activate to sort column ascending">Option Information</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 331.749px;" aria-label="Settings: activate to sort column ascending">Settings</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 221.115px;" aria-label="Actions: activate to sort column ascending">Actions</th></tr>
+									</thead></table></div></div><div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;"><table class="table table-bordered table-striped datatable datatable-normal dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 100%;"><thead>
+									<tr role="row" style="height: 0px;"><th class="sorting_asc" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 22.0052px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-sort="ascending" aria-label="SL: activate to sort column descending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">SL</div></th><th class="sorting" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 600.846px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Section Information: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Section Information</div></th><th class="sorting" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 370.725px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Option Information: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Option Information</div></th><th class="sorting" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 331.749px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Settings: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Settings</div></th><th class="sorting" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 221.115px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Actions: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Actions</div></th></tr>
+									</thead>
+									
+									<tbody>
+										
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+										<tr id="tr-2" role="row" class="odd">
+											<td style="width: 2%" class="sorting_1">1</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															সাফ-কবলা
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															sale-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+													<li>উৎসে কর (53H)</li>
+													<li>স্থাপনা আছে কি না?</li>
+													<li>বাণিজ্যিক কি না?</li>
+													<li>জমির পরিমাণ (কাঠা)</li>
+													<li>স্থানীয় সরকার কর</li>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/2/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;2&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/2/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;2&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-3" role="row" class="even">
+											<td style="width: 2%" class="sorting_1">2</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															এওয়াজ বা বিনিময়
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															exchange-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+													<li>উৎসে কর (53H)</li>
+													<li>স্থাপনা আছে কি না?</li>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/3/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;3&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/3/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;3&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-4" role="row" class="odd">
+											<td style="width: 2%" class="sorting_1">3</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															দানপত্র
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															gift-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+													<li>স্থানীয় সরকার কর</li>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/4/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;4&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/4/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;4&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-5" role="row" class="even">
+											<td style="width: 2%" class="sorting_1">4</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															হেবাবিল এওয়াজ
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															hebabil-ewaz-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/5/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/5/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-6" role="row" class="odd">
+											<td style="width: 2%" class="sorting_1">5</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															হেবার ঘোষণা
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															heba-declaration-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/6/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;6&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/6/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;6&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-7" role="row" class="even">
+											<td style="width: 2%" class="sorting_1">6</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															দানের ঘোষণা
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															gift-declaration-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/7/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;7&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/7/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;7&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-8" role="row" class="odd">
+											<td style="width: 2%" class="sorting_1">7</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															সম্পত্তি হস্তান্তর দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															ওয়াক্‌ফ দলিল
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															waqf-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/8/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;8&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/8/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;8&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-9" role="row" class="even">
+											<td style="width: 2%" class="sorting_1">8</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															বিবিধ দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															অছিয়তনামা দলিল
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															osiyatnama-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/9/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;9&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/9/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;9&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-10" role="row" class="odd">
+											<td style="width: 2%" class="sorting_1">9</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															চুক্তি সম্পর্কিত দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															বায়নাপত্র
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															baina-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/10/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;10&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/10/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;10&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+											</tr><tr id="tr-11" role="row" class="even">
+											<td style="width: 2%" class="sorting_1">10</td>
+											<td>
+												<ul>
+													<li>
+														Section : 
+														<strong>
+															দলিল শাখা
+														</strong>
+													</li>
+													<li>
+														Sub-Section : 
+														<strong>
+															দলিল দাখিল গ্রহণ
+														</strong>
+													</li>
+													<li>
+														Category : 
+														<strong>
+															চুক্তি সম্পর্কিত দলিল
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+												<ul>
+													<li>
+														Name : 
+														<strong>
+															বন্টননামা দলিল
+														</strong>
+													</li>
+													<li>
+														Slug : 
+														<strong>
+															partition-deed
+														</strong>
+													</li>
+												</ul>
+											</td>
+											<td>
+                                                <ul>
+												</ul>
+											</td>
+											<td class="text-center" style="width: 15%">
+												<div class="btn-group">
+													<a class="btn btn-sm btn-info text-white" onclick="Show(&#39;Fees&#39;, &#39;https://office.dolil.com/dolilsetups/dolil-options/11/fees&#39;,&#39;max-width:75%&#39;)"><i class="fa fa-list text-white"></i>&nbsp;Fees</a>
+													<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;dolil_options&#39;,&#39;11&#39;)"><i class="fa fa-check text-white"></i></a>
+													
+													<a class="btn btn-sm btn-info" href="https://office.dolil.com/dolilsetups/dolil-options/11/edit"><i class="fa fa-edit text-white"></i></a>
+													
+													<a class="btn btn-sm btn-danger" onclick="Delete(&#39;11&#39;,&#39;https://office.dolil.com/dolilsetups/dolil-options&#39;)"><i class="fa fa-trash text-white"></i></a>
+												</div>
+											</td>
+										</tr></tbody>
+									</table></div></div><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 29 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="https://office.dolil.com/dolilsetups/dolil-options#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="https://office.dolil.com/dolilsetups/dolil-options#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="https://office.dolil.com/dolilsetups/dolil-options#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="https://office.dolil.com/dolilsetups/dolil-options#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="https://office.dolil.com/dolilsetups/dolil-options#" aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div>
+								</div>
+							</div>
+							
+							<script type="text/javascript">
+								function Search() {
+									window.open("https://office.dolil.com/dolilsetups/dolil-options/"+$('#dolil_sub_section_id').val()+"&"+$('#dolil_category_id').val(), '_parent');
+								}
+								
+								getCategories();
+								function getCategories() {
+									$.ajax({
+										url: "https://office.dolil.com/dolilsetups/dolil-options/"+$('#dolil_sub_section_id').val()+"/get-categories",
+										type: 'GET',
+										dataType: 'json',
+										data: {},
+									})
+									.done(function(response) {
+										var categories = '<option value="0">All Dolil Categories</option>';
+										var dolil_category_id = "0";
+										$.each(response, function(index, val) {
+											var selected = val.id == dolil_category_id ? 'selected' : '';
+											categories += '<option value="'+(val.id)+'" '+(selected)+'>'+(val.name)+'</option>';
+										});
+										
+										$('#dolil_category_id').html(categories);
+									});
+								}
+							</script>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		
+		<!-- Control Sidebar
+			<aside class="control-sidebar control-sidebar-dark">
+			
+			</aside>
+		<!-- /.control-sidebar -->
+		
+		<!-- Main Footer -->
+		<footer class="main-footer">
+			<div class="col-12">
+				Copyright © 2021 <a href="https://office.dolil.com/dashboard">অফিস ম্যানেজম্যান্ট</a>
+				&nbsp;
+				All rights reserved. This software is for presentation purpose only.
+			</div>
+		</footer>
+	</div>
+	<!-- ./wrapper -->
+	
+	
+	<script src="./dolil-options_files/jquery.min.js.download"></script>
+	<script src="./dolil-options_files/bootstrap.bundle.min.js.download"></script>
+	<script src="./dolil-options_files/jquery.overlayScrollbars.min.js.download"></script>
+	<script src="./dolil-options_files/adminlte.js.download"></script>
+	<script src="./dolil-options_files/demo.js.download"></script>
+	<script src="./dolil-options_files/Chart.min.js.download"></script>
+	
+	<script src="./dolil-options_files/jquery-confirm.min.js.download"></script>
+	
+	<script src="./dolil-options_files/select2.full.min.js.download"></script>
+	
+	<script src="./dolil-options_files/wnoty.js.download"></script>
+	
+	<script type="text/javascript" src="./dolil-options_files/pdfmake.min.js.download"></script>
+	<script type="text/javascript" src="./dolil-options_files/vfs_fonts.js.download"></script>
+	<script type="text/javascript" src="./dolil-options_files/datatables.min.js.download"></script>
+	
+	<script src="./dolil-options_files/ckeditor.js.download"></script>
+	
+	<script src="./dolil-options_files/summernote-bs4.min.js.download"></script>
+	
+	<script src="./dolil-options_files/moment.min.js.download"></script>
+	
+	<script src="./dolil-options_files/bootstrap-datetimepicker.min.js.download"></script>
+	
+	<script type="text/javascript" src="./dolil-options_files/daterangepicker.min.js.download"></script>
+	
+	
+	
+	
+	<script type="text/javascript">
+		var base_url="https://office.dolil.com";
+		
+		$(document).ready(function() {
+			$('input').attr('autocomplete','off');
+			
+			setTimeout(function(){
+				$('.half-a-second').fadeIn();
+			},500);
+			
+			var datatable_file_name = $('#datatable-export-file-name').text();
+			$('.datatable').DataTable({
+				lengthMenu: [
+				[ 5,10, 25, 50, 100, -1 ],
+				[ '5 rows', '10 rows', '25 rows', '50 rows', '100 rows', 'Show all' ]
+				],
+				
+				iDisplayLength: 10,
+				sScrollX: "100%",
+				sScrollXInner: "100%",
+				scrollCollapse: true,
+				
+				dom: 'Bfrtip',
+				buttons: [
+				'pageLength',
+				{
+					extend: 'copy',
+					title: datatable_file_name
+				},
+				{
+					extend: 'print',
+					title: datatable_file_name
+				},
+				{
+					extend: 'csv',
+					filename: datatable_file_name
+				},
+				{
+					extend: 'excel',
+					filename: datatable_file_name
+				},
+				{
+					extend: 'pdf',
+					filename: datatable_file_name
+				},
+				]
+			});
+			
+			$('.buttons-collection').addClass('btn-sm');
+			$('.buttons-copy').removeClass('btn-secondary').addClass('btn-sm btn-warning').html('<i class="fas fa-copy"></i>');
+			$('.buttons-csv').removeClass('btn-secondary').addClass('btn-sm btn-success').html('<i class="fas fa-file-csv"></i>');
+			$('.buttons-excel').removeClass('btn-secondary').addClass('btn-sm btn-primary').html('<i class="far fa-file-excel"></i>');
+			$('.buttons-pdf').removeClass('btn-secondary').addClass('btn-sm btn-info').html('<i class="fas fa-file-pdf"></i>');
+			$('.buttons-print').removeClass('btn-secondary').addClass('btn-sm btn-dark').html('<i class="fas fa-print"></i>');
+			
+			$('.select2').select2();
+			$('.select2bs4').select2({
+				theme: 'bootstrap4'
+			});
+			
+			$('.select2-tags').select2({
+				tags: true,
+				width: '100%'
+			});
+			$('.select2bs4-tags').select2({
+				theme: 'bootstrap4',
+				tags: true,
+				width: '100%'
+			});
+			
+			$('.datetimepicker').datetimepicker();
+			
+			$('.datepicker').datetimepicker({
+				format: 'YYYY-MM-DD',
+			});
+			
+			$('.yearpicker').datetimepicker({
+				format: 'YYYY',
+			});
+			
+			$('.timepicker').datetimepicker({
+				format: 'LT'
+			});
+			
+			// $('input[name="daterange"]').daterangepicker({
+			//   autoUpdateInput: false,
+			//   locale: {
+			//     cancelLabel: 'Clear',
+			//     format: 'YYYY-MM-DD'
+			//   }
+			// });
+			
+			$('input[name="daterange"]').daterangepicker({
+				autoUpdateInput: false,
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yeasterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'Current Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+					'Current Year': [moment().startOf('year'), moment().endOf('year')],
+					'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+				},
+				locale: {
+					cancelLabel: 'Clear',
+					applyLabel: 'Ok',
+					format: 'YYYY-MM-DD'
+				}
+			});
+			
+			$('input[name="daterange"]').attr('autocomplete','off');
+			
+			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+			});
+			
+			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+				$(this).val('');
+			});
+			
+			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+			});
+			
+			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+				$(this).val('');
+			});
+			
+			
+			
+			$('.checkbox-parent').change(function() {
+				if($(this).is(':checked')){
+					$('.checkbox-child').prop('checked',true);
+					}else{
+					$('.checkbox-child').prop('checked',false);
+				}
+			});
+			
+			$('.note').summernote();
+		});
+		
+		function submitAForm(form){
+			$.ajax({
+				url: form.attr('action'),
+				type: form.attr('method'),
+				dataType: 'json',
+				data: form.serializeArray(),
+			})
+			.done(function(response) {
+				if(response.success){
+					location.reload();
+					}else{
+					notify(response.message,'danger');
+				}
+			})
+			.fail(function(response) {
+				$.each(response.responseJSON.errors, function(index, val) {
+					notify(val[0],'danger');
+				});
+			});
+		}
+		
+		function Show(title,link,style = '') {
+			$('#modal').modal();
+			$('#modal-title').html(title);
+			$('#modal-body').html('<h1 class="text-center"><strong>Please wait...</strong></h1>');
+			$('#modal-dialog').attr('style',style);
+			$.ajax({
+				url: link,
+				type: 'GET',
+				data: {},
+			})
+			.done(function(response) {
+				$('#modal-body').html(response);
+			});
+		}
+		
+		
+		function Popup(title,link) {
+			$.dialog({
+				title: title,
+				content: 'url:'+link,
+				animation: 'scale',
+				columnClass: 'large',
+				closeAnimation: 'scale',
+				backgroundDismiss: true,
+			});
+		}
+		
+		function ToggleStatus(button, table, id){
+			$.confirm({
+				title: 'Confirm!',
+				content: '<hr><div class="alert alert-danger">Are you sure ?</div><hr>',
+				buttons: {
+					yes: {
+						text: 'Yes',
+						btnClass: 'btn-success',
+						action: function(){
+							$.ajax({
+								url: "https://office.dolil.com/dashboard/toggle-status",
+								type: 'POST',
+								data: {_token: "F9Tr4gjeqcXX3Sx6vgc0ENjQm7SqUZUrDiquTVha", table:table, id:id},
+							})
+							.done(function(response) {
+								if(response.success){
+									button.removeClass(response.old_class);
+									button.addClass(response.new_class);
+									button.html(response.new_text);
+									notify(response.message,'success');
+									}else{
+									notify(response.message,'danger');
+									playTone('danger');
+								}
+							})
+							.fail(function(response){
+								notify('Something went wrong!','danger');
+								playTone('danger');
+							});
+						}
+					},
+					no: {
+						text: 'No',
+						btnClass: 'btn-default',
+						action: function(){
+							
+						}
+					}
+				}
+			});
+		}
+		
+		function Delete(id,link) {
+			$.confirm({
+				title: 'Confirm!',
+				content: '<hr><div class="alert alert-danger">Are you sure to delete ?</div><hr>',
+				buttons: {
+					yes: {
+						text: 'Yes',
+						btnClass: 'btn-danger',
+						action: function(){
+							$.ajax({
+								url: link+"/"+id,
+								type: 'DELETE',
+								data: {_token:"F9Tr4gjeqcXX3Sx6vgc0ENjQm7SqUZUrDiquTVha"},
+							})
+							.done(function(response) {
+								if(response.success){
+									$('#tr-'+id).fadeOut();
+									notify('Data has been deleted','success');
+									playTone('success');
+									}else{
+									notify('Something went wrong!','danger');
+									playTone('danger');
+								}
+							})
+							.fail(function(response){
+								notify('Something went wrong!','danger');
+								playTone('danger');
+							});
+						}
+					},
+					no: {
+						text: 'No',
+						btnClass: 'btn-default',
+						action: function(){
+							
+						}
+					}
+				}
+			});
+		}
+		
+		function notify(message,type) {
+			$.wnoty({
+				message: '<strong class="text-'+(type)+'">'+(message)+'</strong>',
+				type: type,
+				autohideDelay: 3000
+			});
+		}
+		
+		function playTone(which) {
+			var sound = "1";
+			if(sound == 1){
+				var obj = document.createElement("audio");
+				obj.src = "https://office.dolil.com/public/lte/tones/"+(which)+".mp3"; 
+				obj.play(); 
+			}
+		}
+		
+		function openLink(link,type='_parent'){
+			window.open(link,type);
+		}
+		
+		function filterNumber(number) {
+			number = number.toString();
+			number = number.replace(' ', '');
+			number = number.replace(',', '');
+			number = number.replace(',', '');
+			number = number.replace('.', '.');
+			
+			var dot_array = number.split('.');
+			number = dot_array[0];
+			number = dot_array.length > 1 ? number = dot_array[0]+'.'+dot_array[1] : number;
+			
+			
+			var english_array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+			var bangla_array = ['০','১','২','৩','৪','৫','৬','৭','৮','৯', '.'];
+			
+			var final_number='';
+			var number_array = number.split('');
+			$.each(number_array, function(index, val) {
+				if($.inArray(val, bangla_array) !== -1 || $.inArray(val, english_array) !== -1){
+					final_number+=val;
+				}
+			});
+			
+			return final_number;
+		}
+		
+		function en2bn(number){
+			number = filterNumber(number);
+			
+			let english_array = {
+				'0': '০',
+				'1': '১',
+				'2': '২',
+				'3': '৩',
+				'4': '৪',
+				'5': '৫',
+				'6': '৬',
+				'7': '৭',
+				'8': '৮',
+				'9': '৯'
+			}
+			
+			for (var x in english_array) {
+				number = number.replace(new RegExp(x, 'g'), english_array[x]);
+			}
+			
+			return number;
+		}
+		
+		function bn2en(number){
+			number = filterNumber(number);
+			
+			let bangla_array = {
+				'০': 0,
+				'১': 1,
+				'২': 2,
+				'৩': 3,
+				'৪': 4,
+				'৫': 5,
+				'৬': 6,
+				'৭': 7,
+				'৮': 8,
+				'৯': 9
+			}
+			
+			for (var x in bangla_array) {
+				number = number.replace(new RegExp(x, 'g'), bangla_array[x]);
+			}
+			
+			return number;
+		}
+	</script>
+	
+	
+</body></html>
