@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Online Dolil</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	
 	<link rel="stylesheet" href="./regi-fees_files/all.min.css">
 	<link rel="stylesheet" href="./regi-fees_files/OverlayScrollbars.min.css">
 	<link rel="stylesheet" href="./regi-fees_files/adminlte.min.css">
@@ -271,11 +274,91 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
+								
 								<div class="card-body pb-0">
 									<h4>
-										<strong>রেজিস্ট্রেশন ফিসের তালিকা</strong>					
-										<a class="btn btn-success btn-sm text-white" style="float: right" onclick="Show(&#39;নতুন মৌজা যুক্ত করুন&#39;,&#39;https://dw.dolil.com/module/mouza-list/create&#39;)"><i class=" fa fa-plus"></i>&nbsp;রেজিস্ট্রেশন ফিস যুক্ত করুন</a>
+										<strong>তল্লাশ নকল ফিসের তালিকা</strong>
+										
+										<!-- Button trigger modal -->
+										<a type="button" class="btn btn-success btn-sm text-white" style="float: right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+											<i class=" fa fa-plus"></i>&nbsp;তল্লাশ নকল ফিস যুক্ত করুন
+										</a>
 									</h4>
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">তল্লাশ নকল ফিস যুক্ত করুন</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form>
+														<div class="row">
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">F(1)(i)</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">F(1)((iii)</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">F(2)</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">G(a) Bangla</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">G(a) English</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>															
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">G(b)</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">GG Bangla</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">GG English</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+															<div class="col-md-3">
+																<div class="mb-3">
+																	<label for="exampleInputEmail1" class="form-label">Court Fee</label>
+																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+																</div>
+															</div>
+														</div>
+														<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; সংরক্ষণ করুন</button>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								<div class="card-body pl-0 pr-0">
 									<div id="_wrapper" class=" dt-bootstrap4 no-footer">
@@ -290,37 +373,47 @@
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																ফিসের প্রকৃত দফা
+																F(1)(i)
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing" style=" overflow: hidden;">
-																ফিসের সাধারণ দফা
+																F(1)((iii)
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																টাকার পরিমান শুরু হয়
+																F(2)
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																ফি-এর হার
+																G(a) Bangla
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																ফি-এর ধরন
+																G(a) English
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																সর্বনিম্ন ফি (টাকা)
+																G(b)
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																সর্বোচ্চ ফি (টাকা)
+																GG Bangla
+															</div>
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																GG English
+															</div>
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																Court Fee
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
@@ -340,6 +433,7 @@
 														<td>শতকরা হার</td>
 														<td>১০০</td>
 														<td>২৪,০০০</td>
+														<td>২৪,০০০</td>
 														<td class="text-center" style="width: 15%">
 															<div class="btn-group">
 																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
@@ -357,6 +451,7 @@
 														<td>২৪০০০</td>
 														<td>১%</td>
 														<td>শতকরা হার</td>
+														<td>২৪,০০০</td>
 														<td>২৪,০০০</td>
 														<td>-</td>
 														<td class="text-center" style="width: 15%">
@@ -378,6 +473,7 @@
 														<td>শতকরা হার</td>
 														<td>১০০</td>
 														<td>২৪,০০০</td>
+														<td>২৪,০০০</td>
 														<td class="text-center" style="width: 15%">
 															<div class="btn-group">
 																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
@@ -396,6 +492,7 @@
 														<td>৫০,০০০</td>
 														<td>টাকা</td>
 														<td>১০০</td>
+														<td>২৪,০০০</td>
 														<td>২৪,০০০</td>
 														<td class="text-center" style="width: 15%">
 															<div class="btn-group">
@@ -442,6 +539,9 @@
 	<!-- ./wrapper -->
 	
 	<script src="./regi-fees_files/jquery.min.js.download"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	
 	<script src="./regi-fees_files/bootstrap.bundle.min.js.download"></script>
 	<script src="./regi-fees_files/jquery.overlayScrollbars.min.js.download"></script>
 	<script src="./regi-fees_files/adminlte.js.download"></script>
@@ -469,281 +569,5 @@
 	<script type="text/javascript" src="./regi-fees_files/daterangepicker.min.js.download"></script>
 	
 	
-	
-	
-	<script type="text/javascript">
-		var base_url="https://dw.dolil.com";
-		
-		$(document).ready(function() {
-			$('input').attr('autocomplete','off');
-			
-			setTimeout(function(){
-				$('.half-a-second').fadeIn();
-			},500);
-			
-			var _file_name = $('#-export-file-name').text();
-			$('.').({
-				lengthMenu: [
-				[ 5,10, 25, 50, 100, -1 ],
-				[ '5 rows', '10 rows', '25 rows', '50 rows', '100 rows', 'Show all' ]
-				],
-				
-				iDisplayLength: 10,
-				sScrollX: "100%",
-				sScrollXInner: "100%",
-				scrollCollapse: true,
-				
-				dom: 'Bfrtip',
-				buttons: [
-				'pageLength',
-				{
-					extend: 'copy',
-					title: _file_name
-				},
-				{
-					extend: 'print',
-					title: _file_name
-				},
-				{
-					extend: 'csv',
-					filename: _file_name
-				},
-				{
-					extend: 'excel',
-					filename: _file_name
-				},
-				{
-					extend: 'pdf',
-					filename: _file_name
-				},
-				]
-			});
-			
-			$('.buttons-collection').addClass('btn-sm');
-			$('.buttons-copy').removeClass('btn-secondary').addClass('btn-sm btn-warning').html('<i class="fas fa-copy"></i>');
-			$('.buttons-csv').removeClass('btn-secondary').addClass('btn-sm btn-success').html('<i class="fas fa-file-csv"></i>');
-			$('.buttons-excel').removeClass('btn-secondary').addClass('btn-sm btn-primary').html('<i class="far fa-file-excel"></i>');
-			$('.buttons-pdf').removeClass('btn-secondary').addClass('btn-sm btn-info').html('<i class="fas fa-file-pdf"></i>');
-			$('.buttons-print').removeClass('btn-secondary').addClass('btn-sm btn-dark').html('<i class="fas fa-print"></i>');
-			
-			$('.select2').select2();
-			$('.select2bs4').select2({
-				theme: 'bootstrap4'
-			});
-			
-			$('.select2-tags').select2({
-				tags: true,
-				width: '100%'
-			});
-			$('.select2bs4-tags').select2({
-				theme: 'bootstrap4',
-				tags: true,
-				width: '100%'
-			});
-			
-			$('.datetimepicker').datetimepicker();
-			
-			$('.datepicker').datetimepicker({
-				format: 'YYYY-MM-DD',
-			});
-			
-			$('.yearpicker').datetimepicker({
-				format: 'YYYY',
-			});
-			
-			$('.timepicker').datetimepicker({
-				format: 'LT'
-			});
-			
-			// $('input[name="daterange"]').daterangepicker({
-			//   autoUpdateInput: false,
-			//   locale: {
-			//     cancelLabel: 'Clear',
-			//     format: 'YYYY-MM-DD'
-			//   }
-			// });
-			
-			$('input[name="daterange"]').daterangepicker({
-				autoUpdateInput: false,
-				ranges: {
-					'Today': [moment(), moment()],
-					'Yeasterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-					'Current Month': [moment().startOf('month'), moment().endOf('month')],
-					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-					'Current Year': [moment().startOf('year'), moment().endOf('year')],
-					'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-				},
-				locale: {
-					cancelLabel: 'Clear',
-					applyLabel: 'Ok',
-					format: 'YYYY-MM-DD'
-				}
-			});
-			
-			$('input[name="daterange"]').attr('autocomplete','off');
-			
-			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
-			});
-			
-			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-				$(this).val('');
-			});
-			
-			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
-			});
-			
-			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-				$(this).val('');
-			});
-			
-			
-			
-			$('.checkbox-parent').change(function() {
-				if($(this).is(':checked')){
-					$('.checkbox-child').prop('checked',true);
-					}else{
-					$('.checkbox-child').prop('checked',false);
-				}
-			});
-			
-			$('.note').summernote();
-		});
-		
-		function Show(title,link,style = '') {
-			$('#modal').modal();
-			$('#modal-title').html(title);
-			$('#modal-body').html('<h1 class="text-center"><strong>Please wait...</strong></h1>');
-			$('#modal-dialog').attr('style',style);
-			$.ajax({
-				url: link,
-				type: 'GET',
-				data: {},
-			})
-			.done(function(response) {
-				$('#modal-body').html(response);
-			});
-		}
-		
-		
-		function Popup(title,link) {
-			$.dialog({
-				title: title,
-				content: 'url:'+link,
-				animation: 'scale',
-				columnClass: 'large',
-				closeAnimation: 'scale',
-				backgroundDismiss: true,
-			});
-		}
-		
-		function ToggleStatus(button, table, id){
-			$.confirm({
-				title: 'Confirm!',
-				content: '<hr><div class="alert alert-danger">Are you sure ?</div><hr>',
-				buttons: {
-					yes: {
-						text: 'Yes',
-						btnClass: 'btn-success',
-						action: function(){
-							$.ajax({
-								url: "https://dw.dolil.com/dashboard/toggle-status",
-								type: 'POST',
-								data: {_token: "pDMTxlI3FkMsvHAZV56xcIc3Ou91cu3flkiCekWs", table:table, id:id},
-							})
-							.done(function(response) {
-								if(response.success){
-									button.removeClass(response.old_class);
-									button.addClass(response.new_class);
-									button.html(response.new_text);
-									notify(response.message,'success');
-									}else{
-									notify(response.message,'danger');
-									playTone('danger');
-								}
-							})
-							.fail(function(response){
-								notify('Something went wrong!','danger');
-								playTone('danger');
-							});
-						}
-					},
-					no: {
-						text: 'No',
-						btnClass: 'btn-default',
-						action: function(){
-							
-						}
-					}
-				}
-			});
-		}
-		
-		function Delete(id,link) {
-			$.confirm({
-				title: 'Confirm!',
-				content: '<hr><div class="alert alert-danger">Are you sure to delete ?</div><hr>',
-				buttons: {
-					yes: {
-						text: 'Yes',
-						btnClass: 'btn-danger',
-						action: function(){
-							$.ajax({
-								url: link+"/"+id,
-								type: 'DELETE',
-								data: {_token:"pDMTxlI3FkMsvHAZV56xcIc3Ou91cu3flkiCekWs"},
-							})
-							.done(function(response) {
-								if(response.success){
-									$('#tr-'+id).fadeOut();
-									notify('Data has been deleted','success');
-									playTone('success');
-									}else{
-									notify('Something went wrong!','danger');
-									playTone('danger');
-								}
-							})
-							.fail(function(response){
-								notify('Something went wrong!','danger');
-								playTone('danger');
-							});
-						}
-					},
-					no: {
-						text: 'No',
-						btnClass: 'btn-default',
-						action: function(){
-							
-						}
-					}
-				}
-			});
-		}
-		
-		function notify(message,type) {
-			$.wnoty({
-				message: '<strong class="text-'+(type)+'">'+(message)+'</strong>',
-				type: type,
-				autohideDelay: 3000
-			});
-		}
-		
-		function playTone(which) {
-			var sound = "1";
-			if(sound == 1){
-				var obj = document.createElement("audio");
-				obj.src = "https://dw.dolil.com/public/lte/tones/"+(which)+".mp3"; 
-				obj.play(); 
-			}
-		}
-		
-		function openLink(link,type='_parent'){
-			window.open(link,type);
-		}
-	</script>
-	
-	
-</body></html>
+</body>
+</html>
