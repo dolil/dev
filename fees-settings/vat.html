@@ -310,9 +310,12 @@
 														</div>
 														
 														<div class="row">
+															<div class="col-md-12 border-bottom mb-3">
+																<h5><strong>প্লট/জমির ক্ষেত্রে</strong></h5>
+															</div>
 															<div class="col-md-3">
 																<div class="mb-3">
-																	<label for="exampleInputEmail1" class="form-label">প্লট /জমির ক্ষেত্রে (%)</label>
+																	<label for="exampleInputEmail1" class="form-label">শতকরা হার (%)</label>
 																	<input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 																</div>
 															</div>
@@ -344,54 +347,16 @@
 															</div>
 															<div class="col-md-5">
 															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-md-12 mb-4">
-																<table class="table table-bordered">
-																	<thead>
-																		<tr>
-																			<th>স্থাপনার পরিমান শুরু হয় (sqft)</th>
-																			<th>ফি-এর হার</th>
-																			<th>ফি-এর ধরন</th>
-																			<th>সর্বনিম্ন ফি (টাকা)</th>
-																			<th>সর্বোচ্চ  ফি (টাকা)</th>
-																			<th></th>
-																		</tr>
-																		</thead>
-																		<tbody id="registration-fees">
-																			<tr>
-																				<td>
-																					<input type="number" step="0.01" name="fees[reg-fees][starts-from][]" value="0" class="form-control" autocomplete="off">
-																				</td>
-																				<td> 
-																					<input type="number" step="0.01" name="fees[reg-fees][fee][]" value="1" class="form-control" autocomplete="off">
-																				</td>
-																				<td>
-																					<select name="fees[reg-fees][fee-type][]" class="form-control">
-																						<option value="1" selected="">শতকরা হার</option>
-																						<option value="0">টাকা</option>
-																					</select>
-																				</td>
-																				<td>
-																					<input type="number" step="0.01" name="fees[reg-fees][min-fee][]" value="100" class="form-control" autocomplete="off">
-																				</td>
-																				<td>
-																					<input type="number" step="0.01" name="fees[reg-fees][max-fee][]" value="" class="form-control" autocomplete="off">
-																				</td>
-																				<td style="width: 5%;" class="text-center">
-																					<a class="btn btn-sm btn-danger text-white" onclick="removeRegistrationFees($(this))"><i class="fa fa-trash text-white"><!--<i--></i></a><i class="fa fa-trash text-white">
-																					</i></td>
-																			</tr>
-																		</tbody>
-																		<tfoot>
-																			<tr>
-																				<td colspan="6" class="text-center">
-																					<a class="btn btn-sm btn-success text-white" onclick="newRegistrationFees()"><i class="fa fa-plus text-white"></i>&nbsp;&nbsp;নতুন যুক্ত করুন</a>
-																				</i></td>
-																		</tr>
-																	</tfoot>
-																</table>
+															<div class="col-md-4 mb-3">
+																<label for="" class="form-label">স্থাপনা পুনঃরেজিস্ট্রেশন</label>
+																<br>
+																<label for="" class="form-label">সকল ক্ষেত্রে</label>
+															</div>
+															<div class="col-md-3 mb-3">
+																<label for="" class="form-label">ফি-এর হার (%)</label>
+																<input type="number" class="form-control" id="">
+															</div>
+															<div class="col-md-5">
 															</div>
 														</div>
 														<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; সংরক্ষণ করুন</button>
@@ -416,156 +381,156 @@
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																ফিসের সাধারণ দফা 
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing" style=" overflow: hidden;">
-																ফিসের প্রকৃত দফা
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																স্থাপনার পরিমান শুরু হয়
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																ফি-এর হার
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																ফি-এর ধরন
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																সর্বনিম্ন ফি (টাকা)
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																সর্বোচ্চ ফি (টাকা)
-															</div>
-														</th>
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing">
-																Actions
-															</div>
-														</th>
-													</tr>
-												</thead>											
-												<tbody>
-													<tr id="tr-5" role="row" class="odd">
-														<td style="width: 2%" class="sorting_1">1</td>
-														<td>এ(১)</td>
-														<td>এ</td>
-														<td>০</td>
-														<td>১%</td>
-														<td>শতকরা হার</td>
-														<td>১০০</td>
-														<td>২৪,০০০</td>
-														<td class="text-center" style="width: 15%">
-															<div class="btn-group">
-																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
-																
-																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
-																
-																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
-															</div>							
-														</td>
-													</tr>
-													<tr id="tr-5" role="row" class="odd">
-														<td style="width: 2%" class="sorting_1">1</td>
-														<td>এ(২)</td>
-														<td>এ</td>
-														<td>২৪০০০</td>
-														<td>১%</td>
-														<td>শতকরা হার</td>
-														<td>২৪,০০০</td>
-														<td>-</td>
-														<td class="text-center" style="width: 15%">
-															<div class="btn-group">
-																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
-																
-																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
-																
-																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
-															</div>							
-														</td>
-													</tr>
-													<tr id="tr-5" role="row" class="odd">
-														<td style="width: 2%" class="sorting_1">1</td>
-														<td>এ(৩)</td>
-														<td>এ</td>
-														<td>০</td>
-														<td>১%</td>
-														<td>শতকরা হার</td>
-														<td>১০০</td>
-														<td>২৪,০০০</td>
-														<td class="text-center" style="width: 15%">
-															<div class="btn-group">
-																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
-																
-																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
-																
-																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
-															</div>							
-														</td>
-													</tr>
-													<tr id="tr-5" role="row" class="odd">
-														<td style="width: 2%" class="sorting_1">1</td>
-														<td>এ(৪)</td>
-														<td>এ</td>
-														<td>০</td>
-														<td>৫০,০০০</td>
-														<td>টাকা</td>
-														<td>১০০</td>
-														<td>২৪,০০০</td>
-														<td class="text-center" style="width: 15%">
-															<div class="btn-group">
-																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
-																
-																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
-																
-																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
-															</div>							
-														</td>
-													</tr>
-													
-												</tbody>
+														<div class="s_sizing">
+															ফিসের সাধারণ দফা 
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing" style=" overflow: hidden;">
+															ফিসের প্রকৃত দফা
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															স্থাপনার পরিমান শুরু হয়
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															ফি-এর হার
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															ফি-এর ধরন
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															সর্বনিম্ন ফি (টাকা)
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															সর্বোচ্চ ফি (টাকা)
+														</div>
+													</th>
+													<th class="sorting" colspan="1" rowspan="1">
+														<div class="s_sizing">
+															Actions
+														</div>
+													</th>
+												</tr>
+											</thead>											
+											<tbody>
+												<tr id="tr-5" role="row" class="odd">
+													<td style="width: 2%" class="sorting_1">1</td>
+													<td>এ(১)</td>
+													<td>এ</td>
+													<td>০</td>
+													<td>১%</td>
+													<td>শতকরা হার</td>
+													<td>১০০</td>
+													<td>২৪,০০০</td>
+													<td class="text-center" style="width: 15%">
+														<div class="btn-group">
+															<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+															
+															<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>							
+													</td>
+												</tr>
+												<tr id="tr-5" role="row" class="odd">
+													<td style="width: 2%" class="sorting_1">1</td>
+													<td>এ(২)</td>
+													<td>এ</td>
+													<td>২৪০০০</td>
+													<td>১%</td>
+													<td>শতকরা হার</td>
+													<td>২৪,০০০</td>
+													<td>-</td>
+													<td class="text-center" style="width: 15%">
+														<div class="btn-group">
+															<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+															
+															<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>							
+													</td>
+												</tr>
+												<tr id="tr-5" role="row" class="odd">
+													<td style="width: 2%" class="sorting_1">1</td>
+													<td>এ(৩)</td>
+													<td>এ</td>
+													<td>০</td>
+													<td>১%</td>
+													<td>শতকরা হার</td>
+													<td>১০০</td>
+													<td>২৪,০০০</td>
+													<td class="text-center" style="width: 15%">
+														<div class="btn-group">
+															<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+															
+															<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>							
+													</td>
+												</tr>
+												<tr id="tr-5" role="row" class="odd">
+													<td style="width: 2%" class="sorting_1">1</td>
+													<td>এ(৪)</td>
+													<td>এ</td>
+													<td>০</td>
+													<td>৫০,০০০</td>
+													<td>টাকা</td>
+													<td>১০০</td>
+													<td>২৪,০০০</td>
+													<td class="text-center" style="width: 15%">
+														<div class="btn-group">
+															<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+															
+															<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>							
+													</td>
+												</tr>
+												
+											</tbody>
 											</table>
-											</div>
 										</div>
-										<div class="s_info pl-3 pr-3" id="_info" role="status" aria-live="polite">Showing 1 to 10 of 79 entries</div>
-										<div class="s_paginate paging_simple_numbers pl-3 pr-3" id="_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="_previous"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item disabled" id="_ellipsis"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="6" tabindex="0" class="page-link">…</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="7" tabindex="0" class="page-link">8</a></li><li class="paginate_button page-item next" id="_next"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="8" tabindex="0" class="page-link">Next</a></li></ul></div>
 									</div>
+									<div class="s_info pl-3 pr-3" id="_info" role="status" aria-live="polite">Showing 1 to 10 of 79 entries</div>
+									<div class="s_paginate paging_simple_numbers pl-3 pr-3" id="_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="_previous"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item disabled" id="_ellipsis"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="6" tabindex="0" class="page-link">…</a></li><li class="paginate_button page-item "><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="7" tabindex="0" class="page-link">8</a></li><li class="paginate_button page-item next" id="_next"><a href="https://dw.dolil.com/module/mouza-list#" aria-controls="" data-dt-idx="8" tabindex="0" class="page-link">Next</a></li></ul></div>
 								</div>
 							</div>
-							<!--/.card-->
 						</div>
-						<!--/.col-md-12-->
+						<!--/.card-->
 					</div>
-					<!--/.row-->
+					<!--/.col-md-12-->
 				</div>
-			</section>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
-		
-		<!-- Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<!-- Control sidebar content goes here -->
-		<div class="p-3 control-sidebar-content"><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>No Navbar border</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Body small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Navbar small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Footer small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav flat style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav legacy style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav child indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Main Sidebar disable hover/focus auto expand</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Brand small text</span></div><h6>Navbar Variants</h6><div class="d-flex"><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-secondary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-cyan elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-light elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-white elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div></div><h6>Accent Color Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Light Sidebar Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Brand Logo Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-secondary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-cyan elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-light elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-white elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><a href="javascript:void(0)">clear</a></div></div></aside>
-		<!-- /.control-sidebar -->
-		
-		<!-- Main Footer -->
-		<footer class="main-footer">
-			কপিরাইট © ২০২১ সর্বস্বত্ত্ব সংরক্ষিত দলিল.কম		
-		</footer>
-	<div id="sidebar-overlay"></div></div>
+				<!--/.row-->
+			</div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+	<!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+		<!-- Control sidebar content goes here -->
+	<div class="p-3 control-sidebar-content"><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>No Navbar border</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Body small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Navbar small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Footer small text</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav flat style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav legacy style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Sidebar nav child indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Main Sidebar disable hover/focus auto expand</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1" autocomplete="off"><span>Brand small text</span></div><h6>Navbar Variants</h6><div class="d-flex"><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-secondary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-cyan elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-light elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-white elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div></div><h6>Accent Color Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Light Sidebar Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-fuchsia elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-maroon elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lime elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-olive elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div></div><h6>Brand Logo Variants</h6><div class="d-flex"></div><div class="d-flex flex-wrap mb-3"><div class="bg-primary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-secondary elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-info elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-success elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-danger elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-indigo elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-purple elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-pink elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-navy elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-lightblue elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-teal elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-cyan elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray-dark elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-gray elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-light elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-warning elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-white elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><div class="bg-orange elevation-2" style="width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;"></div><a href="javascript:void(0)">clear</a></div></div></aside>
+	<!-- /.control-sidebar -->
+	
+	<!-- Main Footer -->
+	<footer class="main-footer">
+		কপিরাইট © ২০২১ সর্বস্বত্ত্ব সংরক্ষিত দলিল.কম		
+	</footer>
+<div id="sidebar-overlay"></div></div>
 <!-- ./wrapper -->
 
 <script src="./regi-fees_files/jquery.min.js.download"></script>
