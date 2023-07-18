@@ -1,0 +1,68 @@
+/**
+    * Print Stylesheet fuer Deinewebsite.de
+    * @version         1.0
+    * @lastmodified    16.06.2016
+*/
+
+@media print {
+    
+    /* Inhaltsbreite setzen, Floats und Margins aufheben */
+    /* Achtung: Die Klassen und IDs variieren von Theme zu Theme. Hier also eigene Klassen setzen */
+    #content, #page {
+        width: 100%; 
+        margin: 0; 
+        float: none;
+    }
+    
+    /** Seitenränder einstellen */       
+    @page {
+        size: landscape;
+        margin-left: 1in;
+        margin-right: .5in;
+        margin-top: 1in;
+        margin-bottom: 1in;
+    }
+    
+    /* Font auf 16px/13pt setzen, Background auf Weiß und Schrift auf Schwarz setzen.*/
+    /* Das spart Tinte */
+    body {
+        /*font: 13pt Nikosh;
+        line-height: 1.3;*/
+        background: #fff !important;
+        color: #000;
+    }
+        
+    
+    /* Alle Seitenumbrüche definieren 
+    table, pre { page-break-inside:avoid }
+    ul, ol, dl  { page-break-before:avoid }
+    
+    /* Linkfarbe und Linkverhalten darstellen */
+    a:link, a:visited, a {
+        background: transparent;
+        color: #520;
+        font-weight: bold;
+        text-decoration: underline;
+        text-align: left;
+    }
+    
+    a {
+        page-break-inside:avoid
+    }
+    
+    a[href^=http]:after {
+        content:" <" attr(href) "> ";
+    }
+    
+    $a:after > img {
+        content: "";
+    }
+    
+    article a[href^="#"]:after {
+        content: "";
+    }
+    
+    a:not(:local-link):after {
+        content:" <" attr(href) "> ";
+    }
+}
