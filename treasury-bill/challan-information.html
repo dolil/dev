@@ -30,10 +30,22 @@
 	<link rel="stylesheet" href="./treasury-challan-information_files/summernote-bs4.css">
 	<link rel="stylesheet" href="./treasury-challan-information_files/wnoty.css">
 	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+	
+	
+	
 	<link href="./treasury-challan-information_files/css" rel="stylesheet">
 	<link rel="icon" href="http://127.0.0.1:8000/public/system-images/icons/1-20211106232840-143771859-1776291069.png" type="image/png">
 	
-	<style type="text/css" media="screen">@font-face {
+	<style type="text/css" media="screen">
+		
+		iframe {
+		border: 1px solid black;
+		width: 100%; /* takes precedence over the width set with the HTML width attribute */
+		}
+		
+		
+		@font-face {
 		font-family: solaimanLipi;
 		src: url("http://127.0.0.1:8000/public/fonts/SolaimanLipi_22-02-2012.ttf");
 		}
@@ -1158,34 +1170,154 @@
 											<thead>
 												<tr>
 													<th class="text-center">#</th>
-													<th style="max-width:150px;">অর্থ আদায়ের তথ্য</th>
-													<th>জমাদানকারীর তথ্য</th>
-													<th>চালানের তারিখ</th>
-													<th>চালান নম্বর</th>
-													<th>প্রতিষ্ঠানের নাম</th>
-													<th>অর্থ জমার কোড ও খাত</th>
+													<th class="text-center" style="max-width:150px;">অর্থ আদায়ের তথ্য</th>
+													<th class="text-center">চালানের তারিখ</th>
+													<th class="text-center">চালান নম্বর</th>
+													<th class="text-center">অর্থ জমার কোড ও খাত</th>
 													<th class="text-center">টাকার পরিমান</th>
 													<th class="text-center">চালানের স্ট্যাটাস</th>
-													<th>Action</th>
+													<th class="text-center">Action</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
 													<td class="text-center">1</td>
 													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
-													<td>সাব-রেজিস্ট্রার, চাখার, বরিশাল<br>০১৭২২৪৪১৯৭২</td>
 													<td>০৮/০৩/২০২৩</td>
 													<td>১৬৪৮৭৫৪৬৯</td>
-													<td>কর অঞ্চল, বরিশাল</td>
 													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
 													<td class="text-center">
 													২৮,৬৭০.০০</td>
 													<td class="text-center">
 														<!-- Button trigger modal -->
-														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal"><span class="text-danger">Unverified</span></a>
+														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal">Click to Verify</a>
 														
 														<!-- Modal -->
 														<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-lg" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalLabel">Challan Verification</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">×</span>
+																		</button>
+																	</div>
+																	<div class="modal-body">
+																		<iframe id="inlineFrameExample"
+																		title="Inline Frame Example"
+																		width="600"
+																		height="552"
+																		frameBorder="0"
+																		src="http://103.48.16.132/echalan/VerifyChalan_new.php?bank_branch_id=18&chalan_date=%2202-07-2023%22&chalan_no=T1&trans_type=T&counter_no=&bank_id=2" style="border:0; table:display-none;">
+																		</iframe>
+																		<hr>
+																		<div class="row">
+																			<div class="col-4">
+																				<div class="form-check form-check-inline">
+																					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+																					<label class="form-check-label" for="inlineRadio1"><span class="text-success">Verified</span></label>
+																				</div>
+																			</div>
+																			<div class="col-4">
+																				<div class="form-check form-check-inline">
+																					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+																					<label class="form-check-label" for="inlineRadio2"><span class="text-danger">Unverified</span></label>
+																				</div>
+																			</div>
+																			
+																			<div class="col-4">
+																				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; সংরক্ষণ করুন</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td class="text-center">1</td>
+													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
+													<td>০৮/০৩/২০২৩</td>
+													<td>১৬৪৮৭৫৪৬৯</td>
+													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
+													<td class="text-center">
+													২৮,৬৭০.০০</td>
+													<td class="text-center">
+														<!-- Button trigger modal -->
+													<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal2">Click to Verify</a>
+														
+														<!-- Modal -->
+														<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog modal-lg" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalLabel">Challan Verification</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">×</span>
+																		</button>
+																	</div>
+																	<div class="modal-body">
+																		<iframe id="inlineFrameExample"
+																		title="Inline Frame Example"
+																		width="600"
+																		height="552"
+																		frameBorder="0"
+																		src="http://103.48.16.132/echalan/details.php?challanNo=2324-00005161331" style="border:0; table:display-none;">
+																		</iframe>
+																		<hr>
+																		<div class="row">
+																			<div class="col-4">
+																				<div class="form-check form-check-inline">
+																					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+																					<label class="form-check-label" for="inlineRadio1"><span class="text-success">Verified</span></label>
+																				</div>
+																			</div>
+																			<div class="col-4">
+																				<div class="form-check form-check-inline">
+																					<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+																					<label class="form-check-label" for="inlineRadio2"><span class="text-danger">Unverified</span></label>
+																				</div>
+																			</div>
+																			
+																			<div class="col-4">
+																				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; সংরক্ষণ করুন</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td class="text-center" style="">
+														<div class="btn-group">					
+															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
+															
+															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td class="text-center">1</td>
+													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
+													<td>০৮/০৩/২০২৩</td>
+													<td>১৬৪৮৭৫৪৬৯</td>
+													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
+													<td class="text-center">
+													২৮,৬৭০.০০</td>
+													<td class="text-center">
+														<!-- Button trigger modal -->
+														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal3"><span class="text-danger">Unverified</span></a>
+														
+														<!-- Modal -->
+														<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 															<div class="modal-dialog" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
@@ -1196,7 +1328,7 @@
 																	</div>
 																	<div class="modal-body text-left">
 																		<div class="text-danger">Challan has not been verified from echallan.gov.bd</div>
-																		<div><strong>Error Details</strong><br>
+																		<div>
 																			Error details goes here....
 																		</div>
 																	</div>
@@ -1215,24 +1347,20 @@
 														</div>
 													</td>
 												</tr>
-												
 												<tr>
-													<td class="text-center">2</td>
+													<td class="text-center">1</td>
 													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
-													<td style="word-wrap: break-word; max-width: 200px;">
-													সাব-রেজিস্ট্রার, চাখার, বরিশাল<br>০১৭২২৪৪১৯৭২</td>
 													<td>০৮/০৩/২০২৩</td>
 													<td>১৬৪৮৭৫৪৬৯</td>
-													<td>কর অঞ্চল, বরিশাল</td>
 													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
 													<td class="text-center">
 													২৮,৬৭০.০০</td>
 													<td class="text-center">
 														<!-- Button trigger modal -->
-														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal"><span class="text-success">Verified</span></a>
+														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal4"><span class="text-success">Verified</span></a>
 														
 														<!-- Modal -->
-														<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 															<div class="modal-dialog" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
@@ -1243,11 +1371,8 @@
 																	</div>
 																	<div class="modal-body text-left">
 																		<div class="text-success">Challan has been verified from echallan.gov.bd</div>
-																		<div><strong>Challan Details</strong><br>
-																			Economic Code:<br>
-																			Date:<br>
-																			Challan No: <br>
-																			Amount (Taka):<br>
+																		<div>
+																			Challan details goes here....
 																		</div>
 																	</div>
 																	<div class="modal-footer">
@@ -1266,155 +1391,7 @@
 													</td>
 												</tr>
 												
-												<tr>
-													<td class="text-center">3</td>
-													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
-													<td style="word-wrap: break-word; max-width: 200px;">
-													সাব-রেজিস্ট্রার, চাখার, বরিশাল<br>০১৭২২৪৪১৯৭২</td>
-													<td>০৮/০৩/২০২৩</td>
-													<td>১৬৪৮৭৫৪৬৯</td>
-													<td>কর অঞ্চল, বরিশাল</td>
-													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
-													<td class="text-center">
-													২৮,৬৭০.০০</td>
-													<td class="text-center">
-														<!-- Button trigger modal -->
-														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal"><span class="text-success">Verified</span></a>
-														
-														<!-- Modal -->
-														<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-															<div class="modal-dialog" role="document">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h5 class="modal-title" id="exampleModalLabel">Challan Verification</h5>
-																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																			<span aria-hidden="true">×</span>
-																		</button>
-																	</div>
-																	<div class="modal-body text-left">
-																		<div class="text-success">Challan has been verified from echallan.gov.bd</div>
-																		<div><strong>Challan Details</strong><br>
-																			Economic Code:<br>
-																			Date:<br>
-																			Challan No: <br>
-																			Amount (Taka):<br>
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</td>
-													<td class="text-center" style="">
-														<div class="btn-group">					
-															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
-															
-															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
-														</div>
-													</td>
-												</tr>
 												
-												<tr>
-													<td class="text-center">4</td>
-													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
-													<td style="word-wrap: break-word; max-width: 200px;">
-													সাব-রেজিস্ট্রার, চাখার, বরিশাল<br>০১৭২২৪৪১৯৭২</td>
-													<td>০৮/০৩/২০২৩</td>
-													<td>১৬৪৮৭৫৪৬৯</td>
-													<td>কর অঞ্চল, বরিশাল</td>
-													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
-													<td class="text-center">
-													২৮,৬৭০.০০</td>
-													<td class="text-center">
-														<!-- Button trigger modal -->
-														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal"><span class="text-success">Verified</span></a>
-														
-														<!-- Modal -->
-														<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-															<div class="modal-dialog" role="document">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h5 class="modal-title" id="exampleModalLabel">Challan Verification</h5>
-																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																			<span aria-hidden="true">×</span>
-																		</button>
-																	</div>
-																	<div class="modal-body text-left">
-																		<div class="text-success">Challan has been verified from echallan.gov.bd</div>
-																		<div><strong>Challan Details</strong><br>
-																			Economic Code:<br>
-																			Date:<br>
-																			Challan No: <br>
-																			Amount (Taka):<br>
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</td>
-													<td class="text-center" style="">
-														<div class="btn-group">					
-															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
-															
-															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
-														</div>
-													</td>
-												</tr>
-												
-												<tr>
-													<td class="text-center">5</td>
-													<td>০৭/০৩/২০২৩<br>২৮,৬৭০.০০</td>
-													<td style="word-wrap: break-word; max-width: 200px;">
-													সাব-রেজিস্ট্রার, চাখার, বরিশাল<br>০১৭২২৪৪১৯৭২</td>
-													<td>০৮/০৩/২০২৩</td>
-													<td>১৬৪৮৭৫৪৬৯</td>
-													<td>কর অঞ্চল, বরিশাল</td>
-													<td style="word-wrap: break-word; max-width: 200px;">১/১১৪১/০০০০/০১১১<br>Taxes from other than Companies</td>
-													<td class="text-center">
-													২৮,৬৭০.০০</td>
-													<td class="text-center">
-														<!-- Button trigger modal -->
-														<a href="file:///F:/xampp/htdocs/dev/challan-verification.html#" data-toggle="modal" data-target="#exampleModal"><span class="text-success">Verified</span></a>
-														
-														<!-- Modal -->
-														<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-															<div class="modal-dialog" role="document">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h5 class="modal-title" id="exampleModalLabel">Challan Verification</h5>
-																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																			<span aria-hidden="true">×</span>
-																		</button>
-																	</div>
-																	<div class="modal-body text-left">
-																		<div class="text-success">Challan has been verified from echallan.gov.bd</div>
-																		<div><strong>Challan Details</strong><br>
-																			Economic Code:<br>
-																			Date:<br>
-																			Challan No: <br>
-																			Amount (Taka):<br>
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</td>
-													<td class="text-center" style="">
-														<div class="btn-group">					
-															<a class="btn btn-sm btn-warning" href="http://127.0.0.1:8000/dolils/dolil-input/175/edit"><i class="fa fa-edit text-white"></i></a>
-															
-															<a class="btn btn-sm btn-danger" onclick="Delete(&#39;175&#39;,&#39;http://127.0.0.1:8000/dolils/dolil-input&#39;)"><i class="fa fa-trash text-white"></i></a>
-														</div>
-													</td>
-												</tr>												
 												
 											</tbody>
 										</table>
@@ -1427,8 +1404,8 @@
 					</div>
 				</div>
 			</section></div>
-		
-		<!-- /.content -->
+			
+			<!-- /.content -->
 	<div id="sidebar-overlay"></div></div>
 	<!-- /.content-wrapper -->
 	
@@ -1446,406 +1423,414 @@
 			All rights reserved. This software is for presentation purpose only.
 		</div>
 	</footer>
-<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
-<!-- ./wrapper -->
-
-
-<script src="./treasury-challan-information_files/jquery.min.js.download"></script>
-<script src="./treasury-challan-information_files/bootstrap.bundle.min.js.download"></script>
-<script src="./treasury-challan-information_files/jquery.overlayScrollbars.min.js.download"></script>
-<script src="./treasury-challan-information_files/adminlte.js.download"></script>
-<script src="./treasury-challan-information_files/demo.js.download"></script>
-<script src="./treasury-challan-information_files/Chart.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/jquery-confirm.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/select2.full.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/wnoty.js.download"></script>
-
-<script type="text/javascript" src="./treasury-challan-information_files/pdfmake.min.js.download"></script>
-<script type="text/javascript" src="./treasury-challan-information_files/vfs_fonts.js.download"></script>
-<script type="text/javascript" src="./treasury-challan-information_files/datatables.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/ckeditor.js.download"></script>
-
-<script src="./treasury-challan-information_files/summernote-bs4.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/moment.min.js.download"></script>
-
-<script src="./treasury-challan-information_files/bootstrap-datetimepicker.min.js.download"></script>
-
-<script type="text/javascript" src="./treasury-challan-information_files/daterangepicker.min.js.download"></script>
-
-
-
-
-<script type="text/javascript">
-	var base_url="http://127.0.0.1:8000";
+	<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div>
+	<!-- ./wrapper -->
 	
-	$(document).ready(function() {
-		$('input').attr('autocomplete','off');
+	
+	<script src="./treasury-challan-information_files/jquery.min.js.download"></script>
+	<script src="./treasury-challan-information_files/bootstrap.bundle.min.js.download"></script>
+	<script src="./treasury-challan-information_files/jquery.overlayScrollbars.min.js.download"></script>
+	<script src="./treasury-challan-information_files/adminlte.js.download"></script>
+	<script src="./treasury-challan-information_files/demo.js.download"></script>
+	<script src="./treasury-challan-information_files/Chart.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/jquery-confirm.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/select2.full.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/wnoty.js.download"></script>
+	
+	<script type="text/javascript" src="./treasury-challan-information_files/pdfmake.min.js.download"></script>
+	<script type="text/javascript" src="./treasury-challan-information_files/vfs_fonts.js.download"></script>
+	<script type="text/javascript" src="./treasury-challan-information_files/datatables.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/ckeditor.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/summernote-bs4.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/moment.min.js.download"></script>
+	
+	<script src="./treasury-challan-information_files/bootstrap-datetimepicker.min.js.download"></script>
+	
+	<script type="text/javascript" src="./treasury-challan-information_files/daterangepicker.min.js.download"></script>
+	
+	
+	
+	
+	<script type="text/javascript">
+		var base_url="http://127.0.0.1:8000";
 		
-		setTimeout(function(){
-			$('.half-a-second').fadeIn();
-		},500);
-		
-		var datatable_file_name = $('#datatable-export-file-name').text();
-		$('.datatable').DataTable({
-			lengthMenu: [
-			[ 5,10, 25, 50, 100, -1 ],
-			[ '5 rows', '10 rows', '25 rows', '50 rows', '100 rows', 'Show all' ]
-			],
+		$(document).ready(function() {
+			$('input').attr('autocomplete','off');
 			
-			iDisplayLength: 10,
-			sScrollX: "100%",
-			sScrollXInner: "100%",
-			scrollCollapse: true,
+			setTimeout(function(){
+				$('.half-a-second').fadeIn();
+			},500);
 			
-			dom: 'Bfrtip',
-			buttons: [
-			'pageLength',
-			{
-				extend: 'copy',
-				title: datatable_file_name
-			},
-			{
-				extend: 'print',
-				title: datatable_file_name
-			},
-			{
-				extend: 'csv',
-				filename: datatable_file_name
-			},
-			{
-				extend: 'excel',
-				filename: datatable_file_name
-			},
-			{
-				extend: 'pdf',
-				filename: datatable_file_name
-			},
-			]
-		});
-		
-		$('.buttons-collection').addClass('btn-sm');
-		$('.buttons-copy').removeClass('btn-secondary').addClass('btn-sm btn-warning').html('<i class="fas fa-copy"></i>');
-		$('.buttons-csv').removeClass('btn-secondary').addClass('btn-sm btn-success').html('<i class="fas fa-file-csv"></i>');
-		$('.buttons-excel').removeClass('btn-secondary').addClass('btn-sm btn-primary').html('<i class="far fa-file-excel"></i>');
-		$('.buttons-pdf').removeClass('btn-secondary').addClass('btn-sm btn-info').html('<i class="fas fa-file-pdf"></i>');
-		$('.buttons-print').removeClass('btn-secondary').addClass('btn-sm btn-dark').html('<i class="fas fa-print"></i>');
-		
-		$('.select2').select2();
-		$('.select2bs4').select2({
-			theme: 'bootstrap4'
-		});
-		
-		$('.select2-tags').select2({
-			tags: true,
-			width: '100%'
-		});
-		$('.select2bs4-tags').select2({
-			theme: 'bootstrap4',
-			tags: true,
-			width: '100%'
-		});
-		
-		$('.datetimepicker').datetimepicker();
-		
-		$('.datepicker').datetimepicker({
-			format: 'YYYY-MM-DD',
-		});
-		
-		$('.yearpicker').datetimepicker({
-			format: 'YYYY',
-		});
-		
-		$('.timepicker').datetimepicker({
-			format: 'LT'
-		});
-		
-		// $('input[name="daterange"]').daterangepicker({
-		//   autoUpdateInput: false,
-		//   locale: {
-		//     cancelLabel: 'Clear',
-		//     format: 'YYYY-MM-DD'
-		//   }
-		// });
-		
-		$('input[name="daterange"]').daterangepicker({
-			autoUpdateInput: false,
-			ranges: {
-				'Today': [moment(), moment()],
-				'Yeasterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-				'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-				'Current Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-				'Current Year': [moment().startOf('year'), moment().endOf('year')],
-				'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-			},
-			locale: {
-				cancelLabel: 'Clear',
-				applyLabel: 'Ok',
-				format: 'YYYY-MM-DD'
-			}
-		});
-		
-		$('input[name="daterange"]').attr('autocomplete','off');
-		
-		$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
-		});
-		
-		$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-			$(this).val('');
-		});
-		
-		$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
-		});
-		
-		$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-			$(this).val('');
-		});
-		
-		
-		
-		$('.checkbox-parent').change(function() {
-			if($(this).is(':checked')){
-				$('.checkbox-child').prop('checked',true);
-				}else{
-				$('.checkbox-child').prop('checked',false);
-			}
-		});
-		
-		$('.note').summernote();
-	});
-	
-	function submitAForm(form){
-		$.ajax({
-			url: form.attr('action'),
-			type: form.attr('method'),
-			dataType: 'json',
-			data: form.serializeArray(),
-		})
-		.done(function(response) {
-			if(response.success){
-				location.reload();
-				}else{
-				notify(response.message,'danger');
-			}
-		})
-		.fail(function(response) {
-			$.each(response.responseJSON.errors, function(index, val) {
-				notify(val[0],'danger');
-			});
-		});
-	}
-	
-	function Show(title,link,style = '') {
-		$('#modal').modal();
-		$('#modal-title').html(title);
-		$('#modal-body').html('<h1 class="text-center"><strong>Please wait...</strong></h1>');
-		$('#modal-dialog').attr('style',style);
-		$.ajax({
-			url: link,
-			type: 'GET',
-			data: {},
-		})
-		.done(function(response) {
-			$('#modal-body').html(response);
-		});
-	}
-	
-	
-	function Popup(title,link) {
-		$.dialog({
-			title: title,
-			content: 'url:'+link,
-			animation: 'scale',
-			columnClass: 'large',
-			closeAnimation: 'scale',
-			backgroundDismiss: true,
-		});
-	}
-	
-	function ToggleStatus(button, table, id){
-		$.confirm({
-			title: 'Confirm!',
-			content: '<hr><div class="alert alert-danger">Are you sure ?</div><hr>',
-			buttons: {
-				yes: {
-					text: 'Yes',
-					btnClass: 'btn-success',
-					action: function(){
-						$.ajax({
-							url: "http://127.0.0.1:8000/dashboard/toggle-status",
-							type: 'POST',
-							data: {_token: "FS2SjG4uO7OeLbi4QH1SIH8b8gA9zpqdNhKtk74s", table:table, id:id},
-						})
-						.done(function(response) {
-							if(response.success){
-								button.removeClass(response.old_class);
-								button.addClass(response.new_class);
-								button.html(response.new_text);
-								notify(response.message,'success');
-								}else{
-								notify(response.message,'danger');
-								playTone('danger');
-							}
-						})
-						.fail(function(response){
-							notify('Something went wrong!','danger');
-							playTone('danger');
-						});
-					}
+			var datatable_file_name = $('#datatable-export-file-name').text();
+			$('.datatable').DataTable({
+				lengthMenu: [
+				[ 5,10, 25, 50, 100, -1 ],
+				[ '5 rows', '10 rows', '25 rows', '50 rows', '100 rows', 'Show all' ]
+				],
+				
+				iDisplayLength: 10,
+				sScrollX: "100%",
+				sScrollXInner: "100%",
+				scrollCollapse: true,
+				
+				dom: 'Bfrtip',
+				buttons: [
+				'pageLength',
+				{
+					extend: 'copy',
+					title: datatable_file_name
 				},
-				no: {
-					text: 'No',
-					btnClass: 'btn-default',
-					action: function(){
-						
-					}
+				{
+					extend: 'print',
+					title: datatable_file_name
+				},
+				{
+					extend: 'csv',
+					filename: datatable_file_name
+				},
+				{
+					extend: 'excel',
+					filename: datatable_file_name
+				},
+				{
+					extend: 'pdf',
+					filename: datatable_file_name
+				},
+				]
+			});
+			
+			$('.buttons-collection').addClass('btn-sm');
+			$('.buttons-copy').removeClass('btn-secondary').addClass('btn-sm btn-warning').html('<i class="fas fa-copy"></i>');
+			$('.buttons-csv').removeClass('btn-secondary').addClass('btn-sm btn-success').html('<i class="fas fa-file-csv"></i>');
+			$('.buttons-excel').removeClass('btn-secondary').addClass('btn-sm btn-primary').html('<i class="far fa-file-excel"></i>');
+			$('.buttons-pdf').removeClass('btn-secondary').addClass('btn-sm btn-info').html('<i class="fas fa-file-pdf"></i>');
+			$('.buttons-print').removeClass('btn-secondary').addClass('btn-sm btn-dark').html('<i class="fas fa-print"></i>');
+			
+			$('.select2').select2();
+			$('.select2bs4').select2({
+				theme: 'bootstrap4'
+			});
+			
+			$('.select2-tags').select2({
+				tags: true,
+				width: '100%'
+			});
+			$('.select2bs4-tags').select2({
+				theme: 'bootstrap4',
+				tags: true,
+				width: '100%'
+			});
+			
+			$('.datetimepicker').datetimepicker();
+			
+			$('.datepicker').datetimepicker({
+				format: 'YYYY-MM-DD',
+			});
+			
+			$('.yearpicker').datetimepicker({
+				format: 'YYYY',
+			});
+			
+			$('.timepicker').datetimepicker({
+				format: 'LT'
+			});
+			
+			// $('input[name="daterange"]').daterangepicker({
+			//   autoUpdateInput: false,
+			//   locale: {
+			//     cancelLabel: 'Clear',
+			//     format: 'YYYY-MM-DD'
+			//   }
+			// });
+			
+			$('input[name="daterange"]').daterangepicker({
+				autoUpdateInput: false,
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yeasterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'Current Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+					'Current Year': [moment().startOf('year'), moment().endOf('year')],
+					'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+				},
+				locale: {
+					cancelLabel: 'Clear',
+					applyLabel: 'Ok',
+					format: 'YYYY-MM-DD'
 				}
-			}
+			});
+			
+			$('input[name="daterange"]').attr('autocomplete','off');
+			
+			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+			});
+			
+			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+				$(this).val('');
+			});
+			
+			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+			});
+			
+			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+				$(this).val('');
+			});
+			
+			
+			
+			$('.checkbox-parent').change(function() {
+				if($(this).is(':checked')){
+					$('.checkbox-child').prop('checked',true);
+					}else{
+					$('.checkbox-child').prop('checked',false);
+				}
+			});
+			
+			$('.note').summernote();
 		});
-	}
-	
-	function Delete(id,link) {
-		$.confirm({
-			title: 'Confirm!',
-			content: '<hr><div class="alert alert-danger">Are you sure to delete ?</div><hr>',
-			buttons: {
-				yes: {
-					text: 'Yes',
-					btnClass: 'btn-danger',
-					action: function(){
-						$.ajax({
-							url: link+"/"+id,
-							type: 'DELETE',
-							data: {_token:"FS2SjG4uO7OeLbi4QH1SIH8b8gA9zpqdNhKtk74s"},
-						})
-						.done(function(response) {
-							if(response.success){
-								$('#tr-'+id).fadeOut();
-								notify('Data has been deleted','success');
-								playTone('success');
-								}else{
+		
+		function submitAForm(form){
+			$.ajax({
+				url: form.attr('action'),
+				type: form.attr('method'),
+				dataType: 'json',
+				data: form.serializeArray(),
+			})
+			.done(function(response) {
+				if(response.success){
+					location.reload();
+					}else{
+					notify(response.message,'danger');
+				}
+			})
+			.fail(function(response) {
+				$.each(response.responseJSON.errors, function(index, val) {
+					notify(val[0],'danger');
+				});
+			});
+		}
+		
+		function Show(title,link,style = '') {
+			$('#modal').modal();
+			$('#modal-title').html(title);
+			$('#modal-body').html('<h1 class="text-center"><strong>Please wait...</strong></h1>');
+			$('#modal-dialog').attr('style',style);
+			$.ajax({
+				url: link,
+				type: 'GET',
+				data: {},
+			})
+			.done(function(response) {
+				$('#modal-body').html(response);
+			});
+		}
+		
+		
+		function Popup(title,link) {
+			$.dialog({
+				title: title,
+				content: 'url:'+link,
+				animation: 'scale',
+				columnClass: 'large',
+				closeAnimation: 'scale',
+				backgroundDismiss: true,
+			});
+		}
+		
+		function ToggleStatus(button, table, id){
+			$.confirm({
+				title: 'Confirm!',
+				content: '<hr><div class="alert alert-danger">Are you sure ?</div><hr>',
+				buttons: {
+					yes: {
+						text: 'Yes',
+						btnClass: 'btn-success',
+						action: function(){
+							$.ajax({
+								url: "http://127.0.0.1:8000/dashboard/toggle-status",
+								type: 'POST',
+								data: {_token: "FS2SjG4uO7OeLbi4QH1SIH8b8gA9zpqdNhKtk74s", table:table, id:id},
+							})
+							.done(function(response) {
+								if(response.success){
+									button.removeClass(response.old_class);
+									button.addClass(response.new_class);
+									button.html(response.new_text);
+									notify(response.message,'success');
+									}else{
+									notify(response.message,'danger');
+									playTone('danger');
+								}
+							})
+							.fail(function(response){
 								notify('Something went wrong!','danger');
 								playTone('danger');
-							}
-						})
-						.fail(function(response){
-							notify('Something went wrong!','danger');
-							playTone('danger');
-						});
-					}
-				},
-				no: {
-					text: 'No',
-					btnClass: 'btn-default',
-					action: function(){
-						
+							});
+						}
+					},
+					no: {
+						text: 'No',
+						btnClass: 'btn-default',
+						action: function(){
+							
+						}
 					}
 				}
+			});
+		}
+		
+		function Delete(id,link) {
+			$.confirm({
+				title: 'Confirm!',
+				content: '<hr><div class="alert alert-danger">Are you sure to delete ?</div><hr>',
+				buttons: {
+					yes: {
+						text: 'Yes',
+						btnClass: 'btn-danger',
+						action: function(){
+							$.ajax({
+								url: link+"/"+id,
+								type: 'DELETE',
+								data: {_token:"FS2SjG4uO7OeLbi4QH1SIH8b8gA9zpqdNhKtk74s"},
+							})
+							.done(function(response) {
+								if(response.success){
+									$('#tr-'+id).fadeOut();
+									notify('Data has been deleted','success');
+									playTone('success');
+									}else{
+									notify('Something went wrong!','danger');
+									playTone('danger');
+								}
+							})
+							.fail(function(response){
+								notify('Something went wrong!','danger');
+								playTone('danger');
+							});
+						}
+					},
+					no: {
+						text: 'No',
+						btnClass: 'btn-default',
+						action: function(){
+							
+						}
+					}
+				}
+			});
+		}
+		
+		function notify(message,type) {
+			$.wnoty({
+				message: '<strong class="text-'+(type)+'">'+(message)+'</strong>',
+				type: type,
+				autohideDelay: 3000
+			});
+		}
+		
+		function playTone(which) {
+			var sound = "1";
+			if(sound == 1){
+				var obj = document.createElement("audio");
+				obj.src = "http://127.0.0.1:8000/public/lte/tones/"+(which)+".mp3";
+				obj.play();
 			}
-		});
-	}
-	
-	function notify(message,type) {
-		$.wnoty({
-			message: '<strong class="text-'+(type)+'">'+(message)+'</strong>',
-			type: type,
-			autohideDelay: 3000
-		});
-	}
-	
-	function playTone(which) {
-		var sound = "1";
-		if(sound == 1){
-			var obj = document.createElement("audio");
-			obj.src = "http://127.0.0.1:8000/public/lte/tones/"+(which)+".mp3";
-			obj.play();
 		}
-	}
-	
-	function openLink(link,type='_parent'){
-		window.open(link,type);
-	}
-	
-	function filterNumber(number) {
-		number = number.toString();
-		number = number.replace(' ', '');
-		number = number.replace(',', '');
-		number = number.replace(',', '');
-		number = number.replace('.', '.');
 		
-		var dot_array = number.split('.');
-		number = dot_array[0];
-		number = dot_array.length > 1 ? number = dot_array[0]+'.'+dot_array[1] : number;
+		function openLink(link,type='_parent'){
+			window.open(link,type);
+		}
 		
+		function filterNumber(number) {
+			number = number.toString();
+			number = number.replace(' ', '');
+			number = number.replace(',', '');
+			number = number.replace(',', '');
+			number = number.replace('.', '.');
+			
+			var dot_array = number.split('.');
+			number = dot_array[0];
+			number = dot_array.length > 1 ? number = dot_array[0]+'.'+dot_array[1] : number;
+			
+			
+			var english_array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+			var bangla_array = ['০','১','২','৩','৪','৫','৬','৭','৮','৯', '.'];
+			
+			var final_number='';
+			var number_array = number.split('');
+			$.each(number_array, function(index, val) {
+				if($.inArray(val, bangla_array) !== -1 || $.inArray(val, english_array) !== -1){
+					final_number+=val;
+				}
+			});
+			
+			return final_number;
+		}
 		
-		var english_array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
-		var bangla_array = ['০','১','২','৩','৪','৫','৬','৭','৮','৯', '.'];
-		
-		var final_number='';
-		var number_array = number.split('');
-		$.each(number_array, function(index, val) {
-			if($.inArray(val, bangla_array) !== -1 || $.inArray(val, english_array) !== -1){
-				final_number+=val;
+		function en2bn(number){
+			number = filterNumber(number);
+			
+			let english_array = {
+				'0': '০',
+				'1': '১',
+				'2': '২',
+				'3': '৩',
+				'4': '৪',
+				'5': '৫',
+				'6': '৬',
+				'7': '৭',
+				'8': '৮',
+				'9': '৯'
 			}
-		});
+			
+			for (var x in english_array) {
+				number = number.replace(new RegExp(x, 'g'), english_array[x]);
+			}
+			
+			return number;
+		}
 		
-		return final_number;
-	}
+		function bn2en(number){
+			number = filterNumber(number);
+			
+			let bangla_array = {
+				'০': 0,
+				'১': 1,
+				'২': 2,
+				'৩': 3,
+				'৪': 4,
+				'৫': 5,
+				'৬': 6,
+				'৭': 7,
+				'৮': 8,
+				'৯': 9
+			}
+			
+			for (var x in bangla_array) {
+				number = number.replace(new RegExp(x, 'g'), bangla_array[x]);
+			}
+			
+			return number;
+		}
+	</script>
 	
-	function en2bn(number){
-		number = filterNumber(number);
-		
-		let english_array = {
-			'0': '০',
-			'1': '১',
-			'2': '২',
-			'3': '৩',
-			'4': '৪',
-			'5': '৫',
-			'6': '৬',
-			'7': '৭',
-			'8': '৮',
-			'9': '৯'
-		}
-		
-		for (var x in english_array) {
-			number = number.replace(new RegExp(x, 'g'), english_array[x]);
-		}
-		
-		return number;
-	}
+	<script type="text/javascript">
+		var cssLink = document.createElement("link");
+		cssLink.href = "style.css"; 
+		cssLink.rel = "stylesheet"; 
+		cssLink.type = "text/css"; 
+		frames['iframe1'].document.head.appendChild(cssLink);
+	</script>
 	
-	function bn2en(number){
-		number = filterNumber(number);
-		
-		let bangla_array = {
-			'০': 0,
-			'১': 1,
-			'২': 2,
-			'৩': 3,
-			'৪': 4,
-			'৫': 5,
-			'৬': 6,
-			'৭': 7,
-			'৮': 8,
-			'৯': 9
-		}
-		
-		for (var x in bangla_array) {
-			number = number.replace(new RegExp(x, 'g'), bangla_array[x]);
-		}
-		
-		return number;
-	}
-</script>
-
-
+	
 </body></html>
