@@ -1,0 +1,59 @@
+/* Custom CSS Added by Jihan
+-------------------------------------------------------	*/
+
+@import url("https://fonts.maateen.me/solaiman-lipi/font.css");
+
+body {
+    font-family: "SolaimanLipi", Arial, sans-serif !important;
+	font-size: 18px;
+    color: #5d646a;
+}
+
+.navbar-white {
+    background-color: #0d1939;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+    font-size: 20px;
+}
+
+.container-fluid {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+
+div.dataTables_wrapper div.dataTables_filter {
+    float: right;
+}
+
+.card-header {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.custom-col-7 .col-md-2 {
+    -ms-flex: 0 0 14.28%;
+    flex: 0 0 14.28%;
+    max-width: 14.28%;
+    padding-top: 20px;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: 400;
+}
+
+.btn-secondary {
+    color: #5d646a;
+    background-color: #f4f6f9;
+    border-color: #f4f6f9;
+}
+
+
+.main-footer {
+	background: transparent;
+	border-top: 0;
+	color: #869099;
+	padding: 1rem;
+	font-size: 14px;
+}
