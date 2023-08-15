@@ -295,37 +295,26 @@
 												<div class="modal-body">
 													<form>
 														<div class="row">
-															<div class="col-md-6">
+															<div class="col-md-4">
 																<div class="mb-3">
-																	<label for="" class="form-label">পদের নাম</label>
-																	<select class="custom-select" id="" required>
+																	<label for="post_name" class="form-label">পদের নাম</label>
+																	<select class="custom-select" id="post_name" required>
 																		<option selected="">Choose...</option>
 																		<option value="1">Data comes from super admin</option>
-																		<option value="2">https://office-dev.dolil.com/treasury-bill-setup/revenue-and-bills</option>
+																		<option value="2">https://jihan007.github.io/dev/organogram-setup/organogram.html</option>
 																	</select>
 																</div>
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-4">
 																<div class="mb-3">
-																	<label for="bank_name_office" class="form-label">ব্যাংকের নাম</label>
-																	<select class="custom-select" id="bank_name_office" required>
-																		<option selected="">Choose...</option>
-																		<option value="1">Data comes from super admin</option>
-																		<option value="2">Display data in this format like below option</option>
-																		<option value="2">সোনালী ব্যাংক, উজিরপুর, বরিশাল</option>
-																	</select>
+																	<label for="sanctioned_posts" class="form-label">মঞ্জুরীকৃত পদ</label>
+																	<input type="number" class="form-control" id="sanctioned_posts">
 																</div>
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-4">
 																<div class="mb-3">
-																	<label for="bank_name_office" class="form-label">Transaction Type</label>
-																	<select class="custom-select" id="bank_name_office" required>
-																		<option selected="">Choose...</option>
-																		<option value="C">Cash</option>
-																		<option value="L">Cheque</option>
-																		<option value="T">Transfer</option>
-																		<option value="E">e-Payment</option>
-																	</select>
+																	<label for="serving_posts" class="form-label">কর্মরত পদ</label>
+																	<input type="number" class="form-control" id="serving_posts">
 																</div>
 															</div>
 														</div>
@@ -355,19 +344,24 @@
 														</th>														
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing" style=" overflow: hidden;">
-																অর্থ জমা প্রদানের খাত
+																পদের নাম
 															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																ব্যাংকের নাম
+																মঞ্জুরীকৃত পদ
 															</div>
 														</th>	
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																Transaction Type
+																কর্মরত পদ
 															</div>
 														</th>	
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																শূন্য পদ
+															</div>
+														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
 																Actions
@@ -378,9 +372,26 @@
 												<tbody>
 													<tr id="tr-5" role="row" class="odd">
 														<td style="width: 2%" class="sorting_1">1</td>
-														<td>53H</td>
-														<td>53H_A1</td>
-														<td>Transfer</td>
+														<td>অফিস সহকারী</td>
+														<td>১</td>
+														<td>১</td>
+														<td>০</td>
+														<td class="text-center" style="width: 15%">
+															<div class="btn-group">
+																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+																
+																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+																
+																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+															</div>							
+														</td>
+													</tr>
+													<tr id="tr-5" role="row" class="odd">
+														<td style="width: 2%" class="sorting_1">2</td>
+														<td>মোহরার</td>
+														<td>২</td>
+														<td>১</td>
+														<td>১</td>
 														<td class="text-center" style="width: 15%">
 															<div class="btn-group">
 																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
