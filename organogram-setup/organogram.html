@@ -278,10 +278,10 @@
 								
 								<div class="card-body pb-0">
 									<h4>
-										<strong>ব্যাংক/ট্রেজারীর তথ্য</strong>										
+										<strong>সাংগঠনিক কাঠামোর তথ্য</strong>										
 										<!-- Button trigger modal -->
 										<a type="button" class="btn btn-success btn-sm text-white" style="float: right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<i class=" fa fa-plus"></i>&nbsp;ব্যাংক/ট্রেজারীর তথ্য যুক্ত করুন
+											<i class=" fa fa-plus"></i>&nbsp;সাংগঠনিক কাঠামোর তথ্য যুক্ত করুন
 										</a>
 									</h4>
 									<!-- Modal -->
@@ -289,45 +289,34 @@
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h1 class="modal-title fs-5" id="exampleModalLabel">ব্যাংক/ট্রেজারীর তথ্য যুক্ত করুন</h1>
+													<h1 class="modal-title fs-5" id="exampleModalLabel">সাংগঠনিক কাঠামোর তথ্য যুক্ত করুন</h1>
 													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
 													<form>
 														<div class="row">
-															<div class="col-md-6">
+															<div class="col-md-3">
 																<div class="mb-3">
-																	<label for="" class="form-label">অর্থ জমা প্রদানের খাত</label>
-																	<select class="custom-select" id="" required>
+																	<label for="office_type" class="form-label">অফিসের ধরণ</label>
+																	<select class="custom-select" id="office_type" required="">
 																		<option selected="">Choose...</option>
-																		<option value="1">Data comes from </option>
-																		<option value="2">https://office-dev.dolil.com/treasury-bill-setup/revenue-and-bills</option>
+																		<option value="1">get this value from super admin Office Type *</option>
+																		<option value="2">https://office-dev.dolil.com/office-admin-setup/offices/create</option>
 																	</select>
 																</div>
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-3">
 																<div class="mb-3">
-																	<label for="bank_name_office" class="form-label">ব্যাংকের নাম</label>
-																	<select class="custom-select" id="bank_name_office" required>
-																		<option selected="">Choose...</option>
-																		<option value="1">Data comes from super admin</option>
-																		<option value="2">Display data in this format like below option</option>
-																		<option value="2">সোনালী ব্যাংক, উজিরপুর, বরিশাল</option>
-																	</select>
+																	<label for="post_name" class="form-label">পদের নাম</label>
+																	<input type="text" class="form-control" id="post_name">
 																</div>
 															</div>
-															<div class="col-md-6">
+															<div class="col-md-3">
 																<div class="mb-3">
-																	<label for="bank_name_office" class="form-label">Transaction Type</label>
-																	<select class="custom-select" id="bank_name_office" required>
-																		<option selected="">Choose...</option>
-																		<option value="C">Cash</option>
-																		<option value="L">Cheque</option>
-																		<option value="T">Transfer</option>
-																		<option value="E">e-Payment</option>
-																	</select>
+																	<label for="post_name_en" class="form-label">পদের নাম ইংরেজি</label>
+																	<input type="text" class="form-control" id="post_name_en">
 																</div>
-															</div>
+															</div>														
 														</div>
 														
 														<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; সংরক্ষণ করুন</button>
@@ -352,22 +341,37 @@
 															<div class="s_sizing">
 																SL
 															</div>
-														</th>														
-														<th class="sorting" colspan="1" rowspan="1">
-															<div class="s_sizing" style=" overflow: hidden;">
-																অর্থ জমা প্রদানের খাত
-															</div>
 														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
 																ব্যাংকের নাম
 															</div>
-														</th>	
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing" style=" overflow: hidden;">
+																Bank ID
+															</div>
+														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
-																Transaction Type
+																জেলার নাম
 															</div>
-														</th>	
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																Bank District ID
+															</div>
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																শাখার নাম
+															</div>
+														</th>
+														<th class="sorting" colspan="1" rowspan="1">
+															<div class="s_sizing">
+																Bank Branch ID
+															</div>
+														</th>
 														<th class="sorting" colspan="1" rowspan="1">
 															<div class="s_sizing">
 																Actions
@@ -380,7 +384,10 @@
 														<td style="width: 2%" class="sorting_1">1</td>
 														<td>53H</td>
 														<td>53H_A1</td>
-														<td>Transfer</td>
+														<td>১%</td>
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
 														<td class="text-center" style="width: 15%">
 															<div class="btn-group">
 																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
@@ -391,6 +398,44 @@
 															</div>							
 														</td>
 													</tr>
+													<tr id="tr-5" role="row" class="odd">
+														<td style="width: 2%" class="sorting_1">1</td>
+														<td>53H</td>
+														<td>53H_A1</td>
+														<td>১%</td>
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
+														<td class="text-center" style="width: 15%">
+															<div class="btn-group">
+																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+																
+																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+																
+																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+															</div>							
+														</td>
+													</tr>
+													<tr id="tr-5" role="row" class="odd">
+														<td style="width: 2%" class="sorting_1">1</td>
+														<td>53H</td>
+														<td>53H_A1</td>
+														<td>১%</td>
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
+														<td>৬০,০০০০</td>	
+														<td class="text-center" style="width: 15%">
+															<div class="btn-group">
+																<a class="btn btn-sm btn-success" onclick="ToggleStatus($(this),&#39;mouzas&#39;,&#39;5&#39;)"><i class="fa fa-check text-white"></i></a>
+																
+																<a class="btn btn-sm btn-info" onclick="Show(&#39;Edit মৌজা&#39;,&#39;https://dw.dolil.com/module/mouza-list/5/edit&#39;)"><i class="fa fa-edit text-white"></i></a>
+																
+																<a class="btn btn-sm btn-danger" onclick="Delete(&#39;5&#39;,&#39;https://dw.dolil.com/module/mouza-list&#39;)"><i class="fa fa-trash text-white"></i></a>
+															</div>							
+														</td>
+													</tr>
+
+													
 												</tbody>
 											</table>
 											</div>
