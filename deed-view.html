@@ -17,6 +17,7 @@
     
     <link rel="stylesheet" href="https://jihan007.github.io/demo.dolil.gov.bd/fees_files/all.min.css">
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
@@ -103,10 +104,74 @@
                     
                     <div class="card rounded-0 mb-4">
                         <div class="card-body pt-0">
-                            <div class="form-group custom-col-7 row"><div class="col-md-2 pl-0 pr-0 border-end border-bottom"><div class="col-md-12 mb-4 cash-fee"><label>রেজি ফি (নগদ)</label><h5 id="cash-fees">360</h5></div><div class="col-md-12 mb-4"><span id="fees-clause">এ</span>-<span id="reg-fees">100</span>, ই-<span id="e-fees">100</span>, এন -<span id="n-fees">160</span></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-reg-fees-switch" class="form-check-input"><label title="" for="extra-reg-fees-switch" class="form-check-label">অতিরিক্ত ফিস</label></div></div></div><div class="col-md-2 pl-0 pr-0 border-end border-bottom"><div class="col-md-12 mb-4"><label>স্ট্যাম্প শুল্ক (পে-অর্ডার)</label><h5 id="pay-order-stamp-taxes">500</h5></div><div class="col-md-12 mb-4"><label for="stamp_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="stamp_pay_order_no" id="stamp_pay_order_no" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="stamp_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="stamp_pay_order_date" id="stamp_pay_order_date" class="form-control" value=""></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-stamp-fee-switch" class="form-check-input"><label title="" for="extra-stamp-fee-switch" class="form-check-label">অতিরিক্ত স্ট্যাম্প</label></div></div></div><div class="col-md-2 pl-0 pr-0  border-end border-bottom"><div class="col-md-12 mb-4"><label>স্থানীয় সরকার কর</label><h5 id="local-govt-taxes">0</h5></div><div class="col-md-12 mb-4"><label for="lg_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="lg_pay_order_no" id="lg_pay_order_no" class="form-control" disabled="" value=""></div><div class="col-md-12 mb-4"><label for="lg_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="lg_pay_order_date" id="lg_pay_order_date" class="form-control" disabled="" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end border-bottom"><div class="col-md-12 mb-4"><label>উৎসে কর (ব্যক্তি)</label><h5 id="schedule-tax-total-value">0</h5></div><div class="col-md-12 mb-4"><label for="schedule_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="schedule_pay_order_no" id="schedule_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="schedule_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="schedule_pay_order_date" id="schedule_pay_order_date" disabled="" class="form-control" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end border-bottom"><div class="col-md-12 mb-4"><label>উৎসে কর (কোম্পানি)</label><h5 id="total-plot-infrastructure-tax">0</h5></div><div class="col-md-12 mb-4"><label for="plot_infrastructure_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="plot_infrastructure_pay_order_no" id="plot_infrastructure_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="plot_infrastructure_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="plot_infrastructure_pay_order_date" id="plot_infrastructure_pay_order_date" disabled="" class="form-control" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end border-bottom"><div class="col-md-12 mb-4"><label>ভ্যাট এর পরিমাণ</label><h5 id="total-vat">0</h5></div><div class="col-md-12 mb-4"><label for="vat_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="vat_pay_order_no" id="vat_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="vat_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="vat_pay_order_date" id="vat_pay_order_date" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-re-reg-switch" class="form-check-input"><label title="" for="extra-re-reg-switch" class="form-check-label">পুনঃরেজিস্ট্রেশন</label></div></div></div><div class="col-md-2 pl-0 pr-0 border-bottom"><div class="col-md-12 mb-4"><label for="pages">বালামে পৃষ্ঠা সংখ্যা *</label><div class="input-group mb-3"><input type="number" name="pages" id="pages" min="1" class="form-control" value=""></div></div><div class="col-md-12 mb-2"><label for="pages">আদায়কৃত পৃষ্ঠা সংখ্যা *</label><div class="input-group "><div class="input-group-text "><div class=""><input class="form-check-input" type="checkbox" id="dolil-page-check"></div></div><input type="number" disabled="" name="pages" id="pages" min="1" class="form-control" value="10"></div></div><div class="col-md-12 mb-0"><span>এনএন</span> - <span id="n-n-fees">240</span>, <span>হলফনামা</span> - <span id="affidavit">300</span>, <span>কোর্ট ফি</span> - <span id="court-fees">10</span></div></div>
+                            <div class="form-group custom-col-7 row" style="line-height:1.8;">
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>রেজিস্ট্রেশন ফিস</strong></label>
+                                    <div>নগদ - ০ টাকা<br>পে-অর্ডার - ১,২৬০ টাকা<br>পে-অর্ডার নম্বরঃ k45154<br>তারিখঃ ২২/০৩/২০২৩<br>দফা অনুযায়ী ফিসঃ<br> এ - ১,০০০, ই - ১০০, এন - ১৬০ টাকা</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>স্ট্যাম্প শুল্ক (পে-অর্ডার)</strong></label>
+                                    <div>১,০০০ টাকা<br>পে-অর্ডার নম্বরঃ<br>তারিখঃ<br>দলিলে ব্যবহৃত স্ট্যাম্পঃ<br> ৫০০ টাকা</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>স্থানীয় সরকার কর</strong></label>
+                                    <div>১,০০০ টাকা<br>পে-অর্ডার নম্বরঃ<br>তারিখঃ</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>উৎসে কর (ব্যক্তি)</strong></label>
+                                    <div>১,০০০ টাকা<br>পে-অর্ডার নম্বরঃ<br>তারিখঃ</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>উৎসে কর (কোম্পানি)</strong></label>
+                                    <div>১,০০০ টাকা<br>পে-অর্ডার নম্বরঃ<br>তারিখঃ</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-end border-bottom">
+                                    <label><strong>ভ্যাট এর পরিমাণ</strong></label>
+                                    <div>১,০০০ টাকা<br>চালান নম্বরঃ<br>তারিখঃ</div>
+                                </div>
+                                
+                                <div class="col-md-2 pl-0 pr-0 border-bottom">
+                                    <label><strong>বিবিধ ফিস</strong></label>
+                                    <div>এনএন - ২৪০, <br>হলফনামা - ৩০০, <br>কোর্ট ফি - ১০, <br>ডাকটিকেট - ০</div>
+                                </div>
                                 
                                 <div class="col-12 mt-2">
-                                    <button type="submit" class="btn btn-warning float-end text-white"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1792 1792" style="display: inline-block; vertical-align: middle;"><path d="M888 1184l116-116-152-152-116 116v56h96v96h56zM1328 464q-16-16-33 1l-350 350q-17 17-1 33t33-1l350-350q17-17 1-33zM1408 1058v190q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-14 14-32 8-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-126q0-13 9-22l64-64q15-15 35-7t20 29zM1312 320l288 288-672 672h-288v-288zM1756 452l-92 92-288-288 92-92q28-28 68-28t68 28l152 152q28 28 28 68t-28 68z"></path></svg></i>&nbsp;আপডেট করুন</button>
+                                    <!-- Button trigger modal -->
+                                    <button type="submit" class="btn btn-warning float-end text-white" data-bs-toggle="modal" data-bs-target="#exampleModal"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1792 1792" style="display: inline-block; vertical-align: middle;"><path d="M888 1184l116-116-152-152-116 116v56h96v96h56zM1328 464q-16-16-33 1l-350 350q-17 17-1 33t33-1l350-350q17-17 1-33zM1408 1058v190q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-14 14-32 8-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-126q0-13 9-22l64-64q15-15 35-7t20 29zM1312 320l288 288-672 672h-288v-288zM1756 452l-92 92-288-288 92-92q28-28 68-28t68 28l152 152q28 28 28 68t-28 68z"></path></svg></i>&nbsp;আপডেট করুন</button>
+                                    
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">ফিস আপডেট</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="card rounded-0">
+                                                        <div class="card-body pt-0 pb-0">
+                                                            <div class="form-group custom-col-7 row"><div class="col-md-2 pl-0 pr-0 border-end"><div class="col-md-12 mb-4 cash-fee"><label>রেজি ফি (নগদ)</label><h5 id="cash-fees">360</h5></div><div class="col-md-12 mb-4"><span id="fees-clause">এ</span>-<span id="reg-fees">100</span>, ই-<span id="e-fees">100</span>, এন -<span id="n-fees">160</span></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-reg-fees-switch" class="form-check-input"><label title="" for="extra-reg-fees-switch" class="form-check-label">অতিরিক্ত ফিস</label></div></div></div><div class="col-md-2 pl-0 pr-0 border-end"><div class="col-md-12 mb-4"><label>স্ট্যাম্প শুল্ক (পে-অর্ডার)</label><h5 id="pay-order-stamp-taxes">500</h5></div><div class="col-md-12 mb-4"><label for="stamp_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="stamp_pay_order_no" id="stamp_pay_order_no" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="stamp_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="stamp_pay_order_date" id="stamp_pay_order_date" class="form-control" value=""></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-stamp-fee-switch" class="form-check-input"><label title="" for="extra-stamp-fee-switch" class="form-check-label">অতিরিক্ত স্ট্যাম্প</label></div></div></div><div class="col-md-2 pl-0 pr-0  border-end"><div class="col-md-12 mb-4"><label>স্থানীয় সরকার কর</label><h5 id="local-govt-taxes">0</h5></div><div class="col-md-12 mb-4"><label for="lg_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="lg_pay_order_no" id="lg_pay_order_no" class="form-control" disabled="" value=""></div><div class="col-md-12 mb-4"><label for="lg_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="lg_pay_order_date" id="lg_pay_order_date" class="form-control" disabled="" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end"><div class="col-md-12 mb-4"><label>উৎসে কর (ব্যক্তি)</label><h5 id="schedule-tax-total-value">0</h5></div><div class="col-md-12 mb-4"><label for="schedule_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="schedule_pay_order_no" id="schedule_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="schedule_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="schedule_pay_order_date" id="schedule_pay_order_date" disabled="" class="form-control" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end"><div class="col-md-12 mb-4"><label>উৎসে কর (কোম্পানি)</label><h5 id="total-plot-infrastructure-tax">0</h5></div><div class="col-md-12 mb-4"><label for="plot_infrastructure_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="plot_infrastructure_pay_order_no" id="plot_infrastructure_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="plot_infrastructure_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="plot_infrastructure_pay_order_date" id="plot_infrastructure_pay_order_date" disabled="" class="form-control" value=""></div></div><div class="col-md-2 pl-0 pr-0  border-end"><div class="col-md-12 mb-4"><label>ভ্যাট এর পরিমাণ</label><h5 id="total-vat">0</h5></div><div class="col-md-12 mb-4"><label for="vat_pay_order_no">পে-অর্ডার নম্বর</label><input type="text" name="vat_pay_order_no" id="vat_pay_order_no" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><label for="vat_pay_order_date">পে-অর্ডার তারিখ</label><input type="date" name="vat_pay_order_date" id="vat_pay_order_date" disabled="" class="form-control" value=""></div><div class="col-md-12 mb-4"><div class="form-check form-switch"><input type="checkbox" id="extra-re-reg-switch" class="form-check-input"><label title="" for="extra-re-reg-switch" class="form-check-label">পুনঃরেজিস্ট্রেশন</label></div></div></div><div class="col-md-2 pl-0 pr-0"><div class="col-md-12 mb-4"><label for="pages">বালামে পৃষ্ঠা সংখ্যা *</label><div class="input-group mb-3"><input type="number" name="pages" id="pages" min="1" class="form-control" value=""></div></div><div class="col-md-12 mb-2"><label for="pages">আদায়কৃত পৃষ্ঠা সংখ্যা *</label><div class="input-group "><div class="input-group-text "><div class=""><input class="form-check-input" type="checkbox" id="dolil-page-check"></div></div><input type="number" disabled="" name="pages" id="pages" min="1" class="form-control" value="10"></div></div><div class="col-md-12 mb-0"><span>এনএন</span> - <span id="n-n-fees">240</span>, <span>হলফনামা</span> - <span id="affidavit">300</span>, <span>কোর্ট ফি</span> - <span id="court-fees">10</span></div></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-12 mt-2">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -290,6 +355,7 @@
                                             <tr>
                                                 <td scope="col">পক্ষগণের নাম</td>
                                                 <td scope="col">পক্ষগণের ছবি</td>
+                                                <td scope="col">পক্ষগণের স্টেটমেন্ট</td>
                                                 <td scope="col">বায়োমেট্রিক (ফিঙ্গারপ্রিন্ট)</td>
                                                 <td scope="col">বায়োমেট্রিক ( রেটিনা স্ক্যান)</td>
                                                 <td scope="col">মন্তব্য</td>
@@ -303,7 +369,12 @@
                                                         <button id="startRecording" class="button start"><div class="photo-button">
                                                             <div class="circle"></div>
                                                             <div class="ring"></div>
-                                                        </div>Capture Picture</button>
+                                                        </div><i class="fas fa-camera"></i>&nbsp;Capture Picture</button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="controls">
+                                                        <button id="startRecording" class="button start">🔴 Start Recording</button>
                                                     </div>
                                                 </td>
                                                 <td><div class="controls">
@@ -327,7 +398,12 @@
                                                         <button id="startRecording" class="button start"><div class="photo-button">
                                                             <div class="circle"></div>
                                                             <div class="ring"></div>
-                                                        </div>Capture Picture</button>
+                                                        </div><i class="fas fa-camera"></i>&nbsp;Capture Picture</button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="controls">
+                                                        <button id="startRecording" class="button start">🔴 Start Recording</button>
                                                     </div>
                                                 </td>
                                                 <td><div class="controls disabled">
