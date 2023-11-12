@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System -->
+<html><head id="ibasHead" runat="server"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Integrated Budget And Accounting System</title>
+    <link rel="shortcut icon" href="https://ibas.finance.gov.bd/ibas2/Images/favicon.ico?v=1403">
+    <style type="text/css">
+        .content {
+            background-color: #eceef1;
+            border-radius: 0;
+            overflow: hidden;
+            padding: 10px 30px 30px !important;
+            position: relative;
+            width: 341px;
+        }
+
+        .info-bar {
+            font-size: 14px;
+            text-align: justify;
+        }
+
+        .menu-selection {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        #ExtraLoginRequirement .post-selection-menu {
+            line-height: 25px;
+            margin-bottom: 3px;
+            margin-top: 3px;
+            width: 200px;
+        }
+
+        .blue-madison.btn {
+            background-color: #578ebe;
+            border-radius: 0;
+            color: #ffffff;
+            width: 100px;
+        }
+
+        .post-selection-menu {
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-image: none !important;
+            border-width: 0;
+            box-shadow: none;
+            filter: none;
+            font-size: 14px;
+            outline: medium none !important;
+            padding: 7px 14px;
+            text-shadow: none;
+        }
+
+        time.timeago:before {
+            content: '•';
+            margin: 0 4px;
+        }
+
+        #shortMenuList a:visited, a:hover, a:active, a {
+            color: blue;
+        }
+
+        #ShortMenuPopUp {
+            font-size: 11px;
+        }
+
+        #IDocsPopUp {
+            font-size: 11px;
+        }
+
+        .navigation {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            line-height: 1;
+        }
+
+        .navigation ul,
+        .navigation ul li,
+        .navigation ul ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navigation ul {
+            position: relative;
+            z-index: 500;
+            float: left;
+        }
+
+        .navigation ul li {
+            float: left;
+            min-height: 0.05em;
+            line-height: 1em;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .navigation ul li.hover,
+        .navigation ul li:hover {
+            position: relative;
+            z-index: 510;
+            cursor: default;
+        }
+
+        .navigation ul ul {
+            visibility: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0px;
+            z-index: 520;
+            width: 100%;
+        }
+
+        .navigation ul ul li {
+            float: none;
+        }
+
+        .navigation ul ul ul {
+            top: 0;
+            right: 0;
+        }
+
+        .navigation ul li:hover > ul {
+            visibility: visible;
+        }
+
+        .navigation ul ul {
+            top: 0;
+            left: 99%;
+        }
+
+        .navigation ul li {
+            float: none;
+        }
+
+        .navigation ul ul {
+            margin-top: 0.05em;
+        }
+
+        .navigation {
+            background: white;
+            font-family: 'roboto', Tahoma, Arial, sans-serif;
+            zoom: 1;
+        }
+
+        .navigation:before {
+            content: '';
+            display: block;
+        }
+
+        .navigation:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .navigation a {
+            display: block;
+            padding: 1em 1.3em;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .navigation .i-docs-link {
+            text-transform: none;
+        }
+
+        .has-sub {
+            display: block;
+            padding: 1em 1.3em;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        .navigation ul ul {
+            width: 13em;
+        }
+
+        .navigation > ul > li > a {
+            color: black;
+        }
+
+        .navigation > ul > li > a:hover {
+            color: black;
+        }
+
+        .navigation > ul > li a:hover,
+        .navigation > ul > li:hover a {
+            background: #d4dbe1;
+        }
+
+        .navigation li {
+            position: relative;
+        }
+
+        .navigation ul li.has-sub > a:after {
+            position: absolute;
+            right: 1em;
+        }
+
+        .navigation ul ul li.first {
+            -webkit-border-radius: 0 3px 0 0;
+            -moz-border-radius: 0 3px 0 0;
+            border-radius: 0 3px 0 0;
+        }
+
+        .navigation ul ul li.last {
+            -webkit-border-radius: 0 0 3px 0;
+            -moz-border-radius: 0 0 3px 0;
+            border-radius: 0 0 3px 0;
+            border-bottom: 0;
+        }
+
+        .navigation ul ul {
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .navigation ul ul a {
+            color: black;
+        }
+
+        .navigation ul ul a:hover {
+            color: #ffffff;
+        }
+
+        .navigation ul ul li {
+            border-bottom: 1px solid #0F8A5F;
+        }
+
+        .navigation ul ul li:hover > a {
+            background: #4eb1ff;
+            color: #ffffff;
+        }
+
+        .navigation.align-right > ul > li > a {
+            border-right: none;
+        }
+
+        .navigation.align-right {
+            float: right;
+        }
+
+        .navigation.align-right li {
+            text-align: right;
+        }
+
+        .navigation.align-right ul li.has-sub > a:before {
+            content: '+';
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            margin-top: -6px;
+        }
+
+        .navigation.align-right ul li.has-sub > a:after {
+            content: none;
+        }
+
+        .navigation.align-right ul ul {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            z-index: 598;
+            width: 100%;
+        }
+
+        .navigation.align-right ul ul li.first {
+            -webkit-border-radius: 3px 0 0 0;
+            -moz-border-radius: 3px 0 0 0;
+            border-radius: 3px 0 0 0;
+        }
+
+        .navigation.align-right ul ul li.last {
+            -webkit-border-radius: 0 0 0 3px;
+            -moz-border-radius: 0 0 0 3px;
+            border-radius: 0 0 0 3px;
+        }
+
+        .navigation.align-right ul ul {
+            -webkit-border-radius: 3px 0 0 3px;
+            -moz-border-radius: 3px 0 0 3px;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .arrow > a:after {
+            content: '»';
+        }
+
+        .navigation ul ul li {
+            border: 1px solid #cccccc;
+        }
+
+        .fa-file-excel {
+            color: #3f65f1;
+        }
+
+        .fa-file-pdf {
+            color: crimson;
+        }
+
+        .fa-file {
+            color: green;
+        }
+
+        .fa {
+            margin-right: 10px;
+        }
+
+        .i-docs-link {
+            border-bottom: 1px solid #f5f5f5;
+        }
+    </style>
+    <style type="text/css">
+        .circular-image {
+            position: relative;
+        }
+
+        .circular-image img {
+            width: 300px;
+            height: 300px;
+            -webkit-border-radius: 150px;
+            -moz-border-radius: 150px;
+            -ms-border-radius: 150px;
+            -o-border-radius: 150px;
+            border-radius: 150px;
+        }
+
+        .notify-badge {
+            position: absolute;
+            left: 22px;
+            top: 0px;
+            background: red;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: white;
+            padding: 6px;
+            font-size: 14px;
+            line-height: 12px;
+        }
+
+        .toast-bottom-right {
+            right: 25px !important;
+            right: 20px !important;
+        }
+
+        #toast-container > div {
+            opacity: 1;
+        }
+
+        .item-marker {
+            display: inline-block;
+        }
+
+        .item-marker.selected:before {
+            content: '\2713';
+            color: red;
+            padding: 0 6px 0 0;
+        }
+
+        .item-marker.not-selected:before {
+            content: '\00a0';
+            padding: 0 12px 0 0;
+        }
+    </style>
+    <link href="./employee-service-information_files/ibas.dropdown.css" rel="stylesheet">
+    <link href="./employee-service-information_files/message.box.css" rel="stylesheet" as="style">
+    <link href="./employee-service-information_files/accordionmenu.css" rel="stylesheet">
+    <link href="./employee-service-information_files/ibas.popup.css" rel="stylesheet" as="style">
+    <link href="./employee-service-information_files/ibas.default.css" rel="stylesheet" as="style">
+    <link href="./employee-service-information_files/tipso.min.css" rel="stylesheet" as="style">
+    <link href="./employee-service-information_files/font-awesome.min.css" rel="stylesheet" as="style">
+
+    <link href="./employee-service-information_files/toastr.min.css" rel="stylesheet" as="style">
+    <link href="./employee-service-information_files/notifier.css" rel="stylesheet" as="style">
+
+
+
+    <script type="text/javascript">
+        var appRoot = '/ibas2';
+        var systemFlag = 1;
+        var notificationServiceUrl = 'https://ibasnotification.finance.gov.bd/notificationservice';
+        var redirectMenuId = '0';
+    </script>
+<link href="./employee-service-information_files/free-v4-shims.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css"><link href="./employee-service-information_files/free-v4-font-face.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css"><link href="./employee-service-information_files/free.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css"></head>
+
+<body style="background-color: rgb(187, 187, 187); position: fixed; inset: 0px; padding: 0px; margin: 0px; cursor: auto;" cz-shortcut-listen="true">
+    <div style="position: absolute; top: 0px; right: 0px; left: 0px; height: 52px; line-height: 52px;
+        vertical-align: middle; background-color: #2b3643;">
+        <img id="systemLogo" src="./employee-service-information_files/GoB_log_small_45.png" alt="Image Not Found" style="float: left; height: 45px; width: 45px; cursor: pointer;">
+        <img id="systemTitle" src="./employee-service-information_files/site_title_small.png" alt="Image Not Found" style="float: left; height: 40px; width: 336px; cursor: pointer;">
+        <div id="Logout" style="height: 100%; line-height: 52px; vertical-align: middle; font-size: 12px;
+            float: right; margin-right: 5px;" onclick="location.href=&#39;/ibas2/Security/Login/Logout&#39;">
+            <div class="circular-image" style="float: left;">
+                <img id="LogoutImage" src="./employee-service-information_files/exit.png" alt="" style="height: 40px;
+                    width: 40px; margin-top: 5px; margin-right: 5px;">
+            </div>
+            <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                text-decoration: underline;">Logout</a>
+        </div>
+
+            <div id="UserInformation" style="height: 100%; line-height: 52px; vertical-align: middle;
+                float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="UserInfoImage" src="./employee-service-information_files/no-photo.jpg" alt="" style="cursor: pointer;
+                        height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                    text-decoration: underline;">
+                    srmaksu2017 105453
+                </a>
+            </div>
+            <div id="UserInformationPopup" style="position: fixed; z-index: 2100; padding: 0px 10px 10px; border: 2px solid rgb(43, 54, 67); background-color: rgb(255, 255, 255); top: 52px; right: 100px; display: none;"><table style="border-collapse: collapse;"><tbody><tr>
+                                        <td id="accountIamge" style="padding:10px;border-right:1px solid #ddd;"><img id="realUserImage" src="./employee-service-information_files/no-photo.jpg" alt="" style="cursor:pointer;height: 120px; margin-top: 5px;"><div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Identity Status</div><div style="width:370px;line-height:20px;margin:10px 0px 10px 0px; word-wrap: break-word;"><table style="border-collapse: collapse; width:100%;"><tbody><tr><td style="width:40px;"><i class="fa fa-mobile" style="font-size:34px" aria-hidden="true"></i></td><td><span id="ProfileMobileContainer" class="content-span" title="01722441972">01722441972</span><br><span><a id="ProfileMobileVerification" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Click Here To Verify Mobile Number</a></span></td><td style="text-align:right;"><input type="button" value="Unverified" class="btn-unverified" style="background-image: url(&#39;/ibas2/Images/red-no-symbol-v1.png&#39;)"></td></tr><tr><td colspan="3" style="height:20px"></td></tr><tr><td style="width:40px;"><i class="fa fa-envelope-o" style="font-size:34px" aria-hidden="true"></i></td><td><span id="ProfileEmailContainer" class="content-span" title="srmaksu2017@gmail.com">srmaksu2017@gmail.com</span><br><span><a id="ProfileEmailVerification" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Click Here To Verify Email Address</a></span></td><td style="text-align:right;"><input type="button" value="Unverified" class="btn-unverified" style="background-image: url(&#39;/ibas2/Images/red-no-symbol-v1.png&#39;)"></td></tr></tbody></table></div><div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Login Status</div><div style="width:180px;line-height:25px;margin-bottom:5px; word-wrap: break-word;">Current Login [103.234.202.69]: <br><a class="user-login-time" style="width:200px;text-decoration: none;" data-menuid="450" href="https://ibas.finance.gov.bd/ibas2/Security/UserAccount/LoginTimeLine">12/NOV/2023 05:59:58 PM</a></div><div style="width:180px;line-height:25px;margin-bottom:5px; word-wrap: break-word;">Last Login [103.234.202.69]: <br><a class="user-login-time" style="width:200px;text-decoration: none;" data-menuid="450" href="https://ibas.finance.gov.bd/ibas2/Security/UserAccount/LoginTimeLine">12/NOV/2023 05:59:38 PM</a></div></td>
+                                        <td id="accountEdit" style="vertical-align:top;border-right:1px solid #ddd;padding-left:10px;padding-right:10px;"><div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">User Information</div><div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userpic"><a id="changeUserPhoto" name="" style="width:200px;text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System">Change Your Picture</a></div></div><div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="changeUserPwd" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="https://ibas.finance.gov.bd/ibas2/Security/UserAccount/ChangePassword">Change Password</a></div></div><div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="changeUserESignature" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System">Change E-Sginature</a></div></div><div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="enableTotp" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="https://ibas.finance.gov.bd/ibas2/security/useraccount/totpregistration">Enable TOTP</a></div></div></td>
+                                        <td id="subSystemsList" style="vertical-align:top;padding-left:10px;padding-right:10px;"><div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Subsystems</div><div style="height:25px;line-height:25px;;margin-bottom:5px;"><span class="item-marker not-selected"></span><a id="Accounting" name="2" style="width:200px;text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Accounting</a></div><div style="height:25px;line-height:25px;;margin-bottom:5px;"><span class="item-marker selected"></span><a id="Budget Execution" name="3" style="width:200px;text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Budget Execution</a></div><div style="height:25px;line-height:25px;;margin-bottom:5px;"><span class="item-marker not-selected"></span><a id="Budget Preparation" name="1" style="width:200px;text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Budget Preparation</a></div><div style="height:25px;line-height:25px;;margin-bottom:5px;"><span class="item-marker not-selected"></span><a id="Security" name="4" style="width:200px;text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Security</a></div></td>
+                                    </tr><tr style="padding:0px;mergin:0px;height:20px;line-height:20px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td id="tdClose" style="cursor:pointer;text-align:right;">[Close]</td>
+                                    </tr></tbody></table></div>
+            <div id="UserImagePopup" style="display: none; position: fixed; z-index: 2100; padding: 0px 10px 10px 10px;
+            border: 2px solid #2b3643; background-color: #fff; top: 55px; right: 520px;">
+            </div>
+            <div id="UserPayPoint" style="display: none; position: fixed; z-index: 2100; height: 400px;
+            padding: 0px 10px 10px 10px; border: 2px solid #2b3643; background-color: #fff;
+            top: 55px; right: 520px;">
+            </div>
+            <div id="Help" style="height: 100%; line-height: 52px; vertical-align: middle; float: right;font-size: 12px;
+            margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="HelpImage" src="./employee-service-information_files/help.png" alt="" style="height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                text-decoration: underline;">Help</a>
+            </div>
+            <div id="HelpPopup" style="display: none; position: fixed; z-index: 2100; padding: 0px 10px 10px 10px;
+            border: 2px solid #2b3643; background-color: #fff; top: 52px;">
+                <div style="height: 25px; margin-bottom: 5px;">
+                    <a id="HTMLHelp" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">HTML Help</a>
+                </div>
+                <div style="height: 25px; margin-bottom: 5px;">
+                    <a id="VideoHelp" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Video Help</a>
+                </div>
+                <div style="height: 25px; margin-bottom: 5px;">
+                    <a id="HelpDesk" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Help Desk</a>
+                </div>
+                <div style="height: 25px; margin-bottom: 5px;">
+                    <a id="oldtoNewCode" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Old to NewCode</a>
+                </div>
+                <div style="height: 25px; margin-bottom: 5px;">
+                    <a id="FrequentQuestion" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">FAQ</a>
+                </div>
+            </div>
+            <div id="Refresh" style="height: 100%; line-height: 52px; vertical-align: middle;font-size: 12px;
+            float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="RefreshImage" src="./employee-service-information_files/refresh.gif" alt="" style="height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                text-decoration: underline;">Refresh</a>
+            </div>
+            <div id="Status" style="height: 100%; line-height: 52px; vertical-align: middle;font-size: 12px;
+            float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="Img1" src="./employee-service-information_files/edit.png" alt="" style="height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                text-decoration: underline;">Status</a>
+            </div>
+            <div id="StatusPopUp" style="display: none; position: fixed; z-index: 2100; padding: 0px 10px 10px 10px;
+            border: 2px solid #2b3643; background-color: #fff; top: 52px;">
+                <div style="height: 25px; margin-bottom: 5px; display: none;" data-system-flag="2">
+                    <a id="tokenSummary" style="width: 200px; text-decoration: none;" href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Token Summary</a>
+                </div>
+            </div>
+            <div id="Notification" style="height: 100%; line-height: 52px; vertical-align: middle;font-size: 12px;
+            float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="Img1" src="./employee-service-information_files/notification.png" alt="" style="height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                    <span class="notify-badge" style="display:none;">0</span>
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;
+                text-decoration: underline;">Notification</a>
+            </div>
+            <div id="NotificationPopUp" class="notificationPopup" style="display: none;">
+            </div>
+            <div id="searchEcon" style="height: 100%; line-height: 52px; vertical-align: middle;font-size: 12px;
+                                                                                                                                                                                                                                                                                                                        float: right;margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="RefreshImage" src="./employee-service-information_files/search.png" alt="" style="height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer;text-decoration: underline;">Code Search</a>
+            </div>
+            <div id="ShortMenu" style="display: none;height: 100%; line-height: 52px; vertical-align: middle;float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="UserInfoImage" src="./employee-service-information_files/bcForms.png" alt="" style="cursor: pointer;height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer; text-decoration: underline;">
+                    BC-Forms
+                </a>
+            </div>
+            <div id="ShortMenuPopUp" class="navigation" style="display: none; position: fixed; z-index: 2100; border: 1px solid #2b3643; top: 52px; right: 500px;">
+                <ul>
+                    <li class="has-sub">
+                        <a href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Menu 1</a>
+                        <ul>
+                            <li class="has-sub">
+                                <a href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Submenu 1.1</a>
+                            </li>
+                            <li><a href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Submenu 1.2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="IDocs" style="height: 100%; line-height: 52px; vertical-align: middle;float: right; margin-right: 5px;">
+                <div class="circular-image" style="float: left;">
+                    <img id="iDocImage" src="./employee-service-information_files/iDocs.jpg" alt="" style="cursor: pointer;height: 30px; width: 30px; margin-top: 10px; margin-right: 5px;">
+                </div>
+                <a style="border: none; color: #fff; background-color: transparent; cursor: pointer; text-decoration: underline;">
+                    Manuals
+                </a>
+                <div id="IDocsPopUp" class="navigation" style="display: none; position: fixed; z-index: 2100; border: 1px solid #b6bdc7;">
+                    <ul>
+                        <li class="has-sub">
+                            <a href="https://ibas.finance.gov.bd/ibas2/Integrated_Budget_and_Accounting_System#">Menu 1</a>
+                            <ul></ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+    <div style="position: absolute; top: 52px; right: 0px; bottom: 0px; left: 0px;">
+        <div id="menuContainer" style="position: absolute; top: 0px; bottom: 0px; left: 0px;
+            width: 250px; background-color: #364150; overflow: auto;">
+            <img id="hideMenu" alt="No Image" src="./employee-service-information_files/sidebar.jpg" style="float: right; cursor: pointer; margin: 10px 10px 10px;">
+            <div style="position: absolute; top: 30px; bottom: 0px;">
+                <div id="acdnmenu" class="acdnmenu">
+                    <ul class="acdnTop"><li data-menuid="66242" title="Employee Bank Account Change request Entry (Self)" class="acdnSeparator"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeBankAccountChange/ChangeRequestEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Employee Bank Account Change request Entry (Self)</a></li><li data-menuid="63701" title="Pay Bill" class="acdnSeparator"><div class="acdnHeading"><div class="acdnArrowImage"></div>Pay Bill</div><ul class="acdnSub"><li data-menuid="50937" title="Online Pay Bill Submission"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Bill/EntryByOfficer" validateip="0" class="acdnLink" style="display: block;">Bill Submission</a></li><li data-menuid="4224" title="Online Festival Bill Submission"><a href="https://ibas.finance.gov.bd/ibas2/accounts/bill/otherentrybyofficer" validateip="0" class="acdnLink" style="display: block;">Festival Bill Submission</a></li><li data-menuid="3925" title="Online Pay Bill Submission"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Bill/EntryByOfficerPartial" target="_blank" validateip="0" class="acdnLink" style="display: block;">Partial Bill Submission</a></li></ul></li><li data-menuid="68888" title="TA/DA Tour Diary" class="acdnSeparator"><div class="acdnHeading"><div class="acdnArrowImage"></div>TA/DA Tour Diary</div><ul class="acdnSub"><li data-menuid="68890" title="Substantive Grade Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/accounts/EmployeeInfoChange/SubstantiveGradeChangeRequestEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Substantive Grade Entry (Self)</a></li><li data-menuid="68891" title="Tour Diary Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/accounts/Reimbursement/tourdiaryentry?type=self" validateip="0" class="acdnLink" style="display: block;">Tour Diary Entry (Self)</a></li><li data-menuid="71699" title="Local Tour Diary Entry"><a href="https://ibas.finance.gov.bd/ibas2/accounts/Reimbursement/localtourdiaryentry?type=self" validateip="0" class="acdnLink" style="display: block;">Local Tour Diary Entry</a></li><li data-menuid="68871" title="Officer TA /DA Bill Submission By DDO"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Reimbursement/PendingTourDiaryListByDDO" validateip="0" class="acdnLink" style="display: block;">Officer TA /DA Bill Submission By DDO</a></li><li data-menuid="68889" title="Tour Diary Accept"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Reimbursement/PendingTourDiaryListByCO" validateip="0" class="acdnLink" style="display: block;">Tour Diary Accept</a></li><li data-menuid="70080" title="Staff Tour Dairy Accept By DDO"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Reimbursement/PendingTourDiaryListForOtpVerifiedEmployeeByDDO" validateip="0" class="acdnLink" style="display: block;">Staff Tour Dairy Accept By DDO</a></li><li data-menuid="70101" title="Staff Substantive Grade Approve By DDO"><a href="https://ibas.finance.gov.bd/ibas2/accounts/EmployeeInfoChange/SubstantiveGradeChangeRequestApproveByDDO" validateip="0" class="acdnLink" style="display: block;">Staff Substantive Grade Approve By DDO</a></li><li data-menuid="70102" title="Staff TA /DA Bill Submission By DDO"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Reimbursement/StaffBillSubmitByDdo" validateip="0" class="acdnLink" style="display: block;">Staff TA /DA Bill Submission By DDO</a></li></ul></li><li data-menuid="1689" title="Budget Execution" class="acdnSeparator"><div class="acdnHeading acdnCurrent"><div class="acdnArrowImage"></div>Budget Execution</div><ul class="acdnSub" style="display: block;"><li data-menuid="66243" title="Bank Account Change"><div class="acdnHeading"><div class="acdnArrowImage"></div>Bank Account Change</div><ul><li data-menuid="66244" title="Employee Bank Account Change Request Entry(Staff)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeBankAccountChange/ChangeRequestEntry" validateip="0" class="acdnLink" style="display: block;">Employee Bank Account Change Request Entry(Staff)</a></li><li data-menuid="66262" title="Employee Bank Account Change Request Forward(By DDO)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeBankAccountChange/ChangeRequestForwardByDDO" validateip="0" class="acdnLink" style="display: block;">Employee Bank Account Change Request Forward(By DDO)</a></li></ul></li><li data-menuid="3967" title="Master Data"><div class="acdnHeading acdnCurrent"><div class="acdnArrowImage"></div>Master Data</div><ul style="display: block;"><li data-menuid="62961" title="GPF Info Edit in Batch"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/GPF/GPFInfoEditBatch" validateip="0" class="acdnLink" style="display: block;">GPF Info Edit in Batch</a></li><li data-menuid="58121" title="GPF Account Information Update by DDO"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/GpfManagement/EmployeeAccountInfoforDDO" validateip="0" class="acdnLink" style="display: block;">GPF Account Information Update by DDO</a></li><li data-menuid="51594" title="Staff Information Entry (New)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeSingleStep/StaffInfoEntry?type=staff" validateip="0" class="acdnLink" style="display: block;">Staff Information Entry (New)</a></li><li data-menuid="52035" title="Staff Information Approval"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeSingleStep/staffinfoapprove" validateip="0" class="acdnLink" style="display: block;">Staff Information Approval</a></li><li data-menuid="53820" title="Employee Basic Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/employee/basicinfoedit" validateip="0" class="acdnLink" style="display: block;">Employee Basic Information</a></li><li data-menuid="53821" title="Employee Service Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/employee/serviceInfoEdit" validateip="0" class="acdnLink" style="display: block;">Employee Service Information</a></li><li data-menuid="53801" title="Employee Salary Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Salary/salaryInfoEdit" validateip="0" class="acdnLink" style="display: block;">Employee Salary Information</a></li><li data-menuid="54681" title="Employee GPF Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/gpf/gpfinfoedit" validateip="0" class="acdnLink" style="display: block;">Employee GPF Information</a></li><li data-menuid="54682" title="Employee Loans and Advances Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/loansAndAdvance/loaninfoedit" validateip="0" class="acdnLink" style="display: block;">Employee Loans and Advances Information</a></li><li data-menuid="61342" title="Beneficiary Approval"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Beneficiary/BeneficiaryInfoApprovalForMinistryOfRA" validateip="0" class="acdnLink" style="display: block;">Beneficiary Approval</a></li></ul></li><li data-menuid="64342" title="Master Data (Bank Account)"><div class="acdnHeading"><div class="acdnArrowImage"></div>Master Data (Bank Account)</div><ul><li data-menuid="64362" title="Budgetary Central Government(MDAs)"><div class="acdnHeading"><div class="acdnArrowImage"></div>Budgetary Central Government(MDAs)</div><ul><li data-menuid="64344" title="Stocktaking of Bank Account -Approval"><a href="https://ibas.finance.gov.bd/ibas2/SpecialAcc/UnitOfficeBankAcc/Approval" validateip="0" class="acdnLink" style="display: block;">Stocktaking of Bank Account -Approval</a></li></ul></li></ul></li><li data-menuid="64922" title="Recepient Management"><div class="acdnHeading"><div class="acdnArrowImage"></div>Recepient Management</div><ul><li data-menuid="64942" title="Supplier"><div class="acdnHeading"><div class="acdnArrowImage"></div>Supplier</div><ul><li data-menuid="64943" title="Individual"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Supplier/SupplierInfo?type=individual" validateip="0" class="acdnLink" style="display: block;">Individual</a></li><li data-menuid="64962" title="Company"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Supplier/SupplierInfo?type=company" validateip="0" class="acdnLink" style="display: block;">Company</a></li><li data-menuid="70006" title="Supplier Approval"><a href="https://ibas.finance.gov.bd/ibas2/accounts/supplier/approval" validateip="0" class="acdnLink" style="display: block;">Supplier Approval</a></li></ul></li><li data-menuid="70913" title="Non Govt Organization"><div class="acdnHeading"><div class="acdnArrowImage"></div>Non Govt Organization</div><ul><li data-menuid="70895" title="Non Govt Organization Approval"><a href="https://ibas.finance.gov.bd/ibas2/accounts/OrganizationRecipient/NonGovernmentApproval" validateip="0" class="acdnLink" style="display: block;">Non Govt Organization Approval</a></li></ul></li><li data-menuid="70848" title="Organization"><div class="acdnHeading"><div class="acdnArrowImage"></div>Organization</div><ul><li data-menuid="70850" title="Organization Recepient Approval"><a href="https://ibas.finance.gov.bd/ibas2/accounts/organizationrecipient/approval" validateip="0" class="acdnLink" style="display: block;">Organization Recepient Approval</a></li></ul></li><li data-menuid="71217" title="General Benificiary Management"><div class="acdnHeading"><div class="acdnArrowImage"></div>General Benificiary Management</div><ul><li data-menuid="71219" title="General Beneficiary Approval"><a href="https://ibas.finance.gov.bd/ibas2/accounts/generalbeneficiary/approval" validateip="0" class="acdnLink" style="display: block;">General Beneficiary Approval</a></li></ul></li></ul></li><li data-menuid="3872" title="Online Pay Bill"><div class="acdnHeading"><div class="acdnArrowImage"></div>Online Pay Bill</div><ul><li data-menuid="50938" title="Online Pay Bill Forward"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/OnlinePayBill/BillForwardingByDdo" validateip="0" class="acdnLink" style="display: block;">Online Pay Bill Forward(Officer's Only)</a></li><li data-menuid="6624" title="Employee Pay Bill Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/StaffPayBill/Entry" validateip="0" class="acdnLink" style="display: block;">Employee Pay Bill Entry</a></li><li data-menuid="57581" title="Employee Pay Bill Entry (Partial)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/StaffPayBill/EntryPayBillPartial" validateip="0" class="acdnLink" style="display: block;">Employee Pay Bill Entry (Partial)</a></li><li data-menuid="6625" title="Employee Pay Bill Submission"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/StaffPayBill/Submit" validateip="0" class="acdnLink" style="display: block;">Employee Pay Bill Submission</a></li><li data-menuid="51193" title="Release an Employee"><a href="https://ibas.finance.gov.bd/ibas2/accounts/employeetransfer/release" validateip="0" class="acdnLink" style="display: block;">Release an Employee</a></li><li data-menuid="51955" title="Bill Group (Staff)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/StaffBillGroup/Index" validateip="0" class="acdnLink" style="display: block;">Bill Group (Staff)</a></li><li data-menuid="51141" title="Employee Joining"><a href="https://ibas.finance.gov.bd/ibas2/accounts/employeetransfer/joining" validateip="0" class="acdnLink" style="display: block;">Employee Joining</a></li><li data-menuid="50711" title="Staff Festival Bill Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeFestivalBill/Entry" validateip="0" class="acdnLink" style="display: block;">Staff Festival Bill Entry</a></li></ul></li><li data-menuid="64945" title="Bills Sanction"><div class="acdnHeading"><div class="acdnArrowImage"></div>Bills Sanction</div><ul><li data-menuid="64925" title="Sanction Approval"><a href="https://ibas.finance.gov.bd/ibas2/accounts/bill/SanctionEntryApprove" validateip="0" class="acdnLink" style="display: block;">Sanction Approval</a></li></ul></li><li data-menuid="64964" title="Payment and Expenditure Bills"><div class="acdnHeading"><div class="acdnArrowImage"></div>Payment and Expenditure Bills</div><ul><li data-menuid="64946" title="Goods, Service &amp; Others"><div class="acdnHeading"><div class="acdnArrowImage"></div>Goods, Service &amp; Others</div><ul><li data-menuid="71032" title="Goods, Works and Services (e-GP) Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Bill/entrybyddoegp" validateip="0" class="acdnLink" style="display: block;">Goods, Works and Services (e-GP) Entry</a></li><li data-menuid="64924" title="Goods &amp; Service : Submission"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/bill/viewbyddo" validateip="0" class="acdnLink" style="display: block;">Goods &amp; Service : Submission</a></li></ul></li></ul></li></ul></li><li data-menuid="56244" title="Service Stage Management" class="acdnSeparator"><div class="acdnHeading"><div class="acdnArrowImage"></div>Service Management</div><ul class="acdnSub" style="display: none;"><li data-menuid="56227" title="Attachment Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/AttachmentEntry" validateip="0" class="acdnLink" style="display: block;">Attachment Entry</a></li><li data-menuid="56245" title="Lien  Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/LienEntry" validateip="0" class="acdnLink" style="display: block;">Lien  Entry</a></li><li data-menuid="56228" title="Deputation Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/DeputationEntry" validateip="0" class="acdnLink" style="display: block;">Deputation Entry</a></li><li data-menuid="56246" title="Suspension Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/SuspensionEntry" validateip="0" class="acdnLink" style="display: block;">Suspension Entry</a></li><li data-menuid="56247" title="PRL Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/PRLEntry" validateip="0" class="acdnLink" style="display: block;">PRL Entry</a></li><li data-menuid="56229" title="Leave Entry"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Leave/LeaveEntry" validateip="0" class="acdnLink" style="display: block;">Leave Entry</a></li><li data-menuid="56301" title="Leave Approve (by DDO)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Leave/LeaveApproveByDDO" validateip="0" class="acdnLink" style="display: block;">Leave Approve(by DDO)</a></li><li data-menuid="56284" title="Service Stage Approve"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/StageApproveByDDO" validateip="0" class="acdnLink" style="display: block;">Service Stage Approve(by DDO)</a></li><li data-menuid="56461" title="Attachment Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/AttachmentEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Attachment Entry (Self)</a></li><li data-menuid="56462" title="PRL  Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/PRLEntry?type=self" validateip="0" class="acdnLink" style="display: block;">PRL  Entry (Self)</a></li><li data-menuid="56487" title="Lien Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/LienEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Lien Entry (Self)</a></li><li data-menuid="56488" title="Deputation Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/DeputationEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Deputation Entry (Self)</a></li><li data-menuid="56490" title="Leave Entry (Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/Leave/LeaveEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Leave Entry (Self)</a></li><li data-menuid="61061" title="Service Extension as Contractual Entry (self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeServiceStage/ServiceExtensionEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Service Extension as Contractual Entry (self)</a></li></ul></li><li data-menuid="70466" title="GPF Management" class="acdnSeparator"><div class="acdnHeading"><div class="acdnArrowImage"></div>GPF Management</div><ul class="acdnSub"><li data-menuid="3969" title="GPF Master Data"><div class="acdnHeading"><div class="acdnArrowImage"></div>GPF Master Data</div><ul><li data-menuid="14424" title="Subscription Configuration"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/GPF/SubscriptionConfigurationNew" validateip="0" class="acdnLink" style="display: block;">GPF Subscription Configuration</a></li><li data-menuid="70526" title="GPF Information"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/gpf/GPFInfoEntryExisting" validateip="0" class="acdnLink" style="display: block;">GPF Information</a></li></ul></li><li data-menuid="70467" title="GPF Transaction"><div class="acdnHeading"><div class="acdnArrowImage"></div>GPF Transaction</div><ul><li data-menuid="62723" title="GPF Account Opening(Self)"><a href="https://ibas.finance.gov.bd/ibas2/accounts/GpfManagement/GpfAccountOpeningScreenSelf" validateip="0" class="acdnLink" style="display: block;">GPF Account Opening(Self)</a></li><li data-menuid="62741" title="GPF Subscriber Nominee Entry(Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/GpfManagement/GpfAccountNomineeInfoEntrySelf" validateip="0" class="acdnLink" style="display: block;">GPF Subscriber Nominee Entry(Self)</a></li><li data-menuid="70507" title="GPF Account Opening(For DDO)"><a href="https://ibas.finance.gov.bd/ibas2/accounts/GpfManagement/GpfAccountOpeningScreen" validateip="0" class="acdnLink" style="display: block;">GPF Account Opening(For DDO)</a></li><li data-menuid="70527" title="GPF Subscriber Nominee Entry(For DDO)"><a href="https://ibas.finance.gov.bd/ibas2/accounts/GpfManagement/GpfAccountNomineeInfoEntry" validateip="0" class="acdnLink" style="display: block;">GPF Subscriber Nominee Entry(For DDO)</a></li></ul></li><li data-menuid="70486" title="GPF Report"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=70486" validateip="0" class="acdnLink" style="display: block;">GPF Report</a></li></ul></li><li data-menuid="70730" title="Change Request Management" class="acdnSeparator"><div class="acdnHeading"><div class="acdnArrowImage"></div>Change Request Management</div><ul class="acdnSub"><li data-menuid="70748" title="Employee Email Change Request Entry(Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeEmailChange/ChangeRequestEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Employee Email Change Request Entry(Self)</a></li><li data-menuid="66791" title="Employee Mobile No Change Request Forward(By DDO)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeMobileChange/ChangeRequestForwardByDDO" validateip="0" class="acdnLink" style="display: block;">Employee Mobile No Change Request Forward(By DDO)</a></li><li data-menuid="66789" title="Employee Mobile No Change Request(Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeMobileChange/ChangeRequestEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Employee Mobile No Change Request(Self)</a></li><li data-menuid="70731" title="Employee OTP Option Change Request Entry(Self)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeOtpOptionChange/ChangeRequestEntry?type=self" validateip="0" class="acdnLink" style="display: block;">Employee OTP Option Change Request Entry(Self)</a></li><li data-menuid="70788" title="Employee OTP Option Change Request Entry(Staff)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeOtpOptionChange/ChangeRequestEntry" validateip="0" class="acdnLink" style="display: block;">Employee OTP Option Change Request Entry(Staff)</a></li><li data-menuid="70767" title="Employee Email Change Request Froward(By DDO)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeEmailChange/ChangeRequestForwardByDDO" validateip="0" class="acdnLink" style="display: block;">Employee Email Change Request Froward(By DDO)</a></li><li data-menuid="70789" title="Employee OTP Option Change Request Froward(By DDO)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeOtpOptionChange/ChangeRequestForwardByDDO" validateip="0" class="acdnLink" style="display: block;">Employee OTP Option Change Request Froward(By DDO)</a></li><li data-menuid="66806" title="Employee Mobile No Change Request Entry(Staff)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeMobileChange/ChangeRequestEntry" validateip="0" class="acdnLink" style="display: block;">Employee Mobile No Change Request Entry(Staff)</a></li><li data-menuid="70787" title="Employee Email Change Request Entry(Staff)"><a href="https://ibas.finance.gov.bd/ibas2/Accounts/EmployeeEmailChange/ChangeRequestEntry" validateip="0" class="acdnLink" style="display: block;">Employee Email Change Request Entry(Staff)</a></li></ul></li><li data-menuid="1702" title="Reports" class=""><div class="acdnHeading"><div class="acdnArrowImage"></div>Reports</div><ul class="acdnSub"><li data-menuid="68646" title="DDO Monitoring Report"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=68646" validateip="0" class="acdnLink" style="display: block;">DDO Monitoring Report</a></li><li data-menuid="68689" title="Registers"><a href="https://ibas.finance.gov.bd/ibas2Registers?menuId=68689" validateip="0" class="acdnLink" style="display: block;">Registers-DDO</a><ul><li data-menuid="68726" title="Register 04 - Register of Payments and Recoveries (DDO wise)"><a href="https://ibas.finance.gov.bd/ibas2Payments%20and%20Recoveries%20DDO%20wise" validateip="0" class="acdnLink" style="display: block;">Register 04 - Register of Payments and Recoveries DDO wise</a></li></ul></li><li data-menuid="57821" title="Budget Utilization Reports"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=57821" validateip="0" class="acdnLink" style="display: block;">Budget Utilization Reports</a><ul><li data-menuid="60902" title="Budget Actual Summary"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60902" validateip="0" class="acdnLink" style="display: block;">Budget Actual Summary</a></li><li data-menuid="60922" title="Budget - 3 Year Comparison"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60922" validateip="0" class="acdnLink" style="display: block;">Budget - 3 Year Comparison</a></li><li data-menuid="60901" title="Ministry Fiscal Report"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60901" validateip="0" class="acdnLink" style="display: block;">Ministry Fiscal Report</a></li><li data-menuid="60903" title="Quaterly Execution - Summary"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60903" validateip="0" class="acdnLink" style="display: block;">Quaterly Execution - Summary</a></li><li data-menuid="60904" title="Quaterly-Budget Execution"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60904" validateip="0" class="acdnLink" style="display: block;">Quaterly-Budget Execution</a></li><li data-menuid="60924" title="Filed level Budget Distribution"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60924" validateip="0" class="acdnLink" style="display: block;">Filed level Budget Distribution</a></li><li data-menuid="60905" title="Budget Utilization-Detail"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60905" validateip="0" class="acdnLink" style="display: block;">Budget Utilization-Detail</a></li><li data-menuid="60925" title="Budget Execution-Project"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60925" validateip="0" class="acdnLink" style="display: block;">Budget Execution-Project</a></li><li data-menuid="60906" title="Revenue"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60906" validateip="0" class="acdnLink" style="display: block;">Revenue</a></li><li data-menuid="60907" title="Autonomous Organization"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=60907" validateip="0" class="acdnLink" style="display: block;">Autonomous Organization</a></li></ul></li><li data-menuid="59421" title="Budget User Tracking Report"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=59421" validateip="0" class="acdnLink" style="display: block;">Budget User Tracking Report</a></li><li data-menuid="68706" title="Stock Taking of Bank Accounts"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=68706" validateip="0" class="acdnLink" style="display: block;">Stock Taking of Bank Accounts</a></li><li data-menuid="3564" title="Progress Report (Budget Vs Actual)"><div class="acdnHeading"><div class="acdnArrowImage"></div>Progress Report (Budget Vs Actual)</div><ul><li data-menuid="3570" title="General Activity"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=3570" validateip="0" class="acdnLink" style="display: block;">General Activity</a></li><li data-menuid="4254" title="Special Activity"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=4254" validateip="0" class="acdnLink" style="display: block;">Special Activity</a></li><li data-menuid="3584" title="Support Activity"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=3584" validateip="0" class="acdnLink" style="display: block;">Support Activity</a><ul><li data-menuid="3591" title="Support Activity : Field Office Detail"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=3591" validateip="0" class="acdnLink" style="display: block;">Support Activity : Field Office Detail</a></li></ul></li><li data-menuid="3565" title="Development Activity"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=3565" validateip="0" class="acdnLink" style="display: block;">Development Activity</a><ul><li data-menuid="3569" title="Development : Field Office Detail"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/BudgetReport?menuId=3569" validateip="0" class="acdnLink" style="display: block;">Development : Field Office Detail</a></li></ul></li><li data-menuid="7007" title="Source Report(Detail)"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingBudgetReports?menuId=7007" validateip="0" class="acdnLink" style="display: block;">Source Report(Detail)</a><ul><li data-menuid="7008" title="Source Report(Detail)"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=7008" validateip="0" class="acdnLink" style="display: block;">Source Report(Detail)</a></li></ul></li></ul></li><li data-menuid="3978" title="Staff Bill"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3978" validateip="0" class="acdnLink" style="display: block;">Staff Bill</a><ul><li data-menuid="3980" title="Staff Bill Detail"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3980" validateip="0" class="acdnLink" style="display: block;">Staff Bill Detail</a></li><li data-menuid="6627" title="Staff Bill Detail(DDO)"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=6627" validateip="0" class="acdnLink" style="display: block;">Staff Bill Detail(DDO)</a></li><li data-menuid="3981" title="Staff GPF Deduction"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3981" validateip="0" class="acdnLink" style="display: block;">Staff GPF Deduction</a></li><li data-menuid="3983" title="Benevolent Fund Deduction"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3983" validateip="0" class="acdnLink" style="display: block;">Benevolent Fund Deduction</a></li><li data-menuid="3984" title="Gas Bill Deduction"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3984" validateip="0" class="acdnLink" style="display: block;">Gas Bill Deduction</a></li><li data-menuid="3982" title="Income Tax Deduction At Source"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3982" validateip="0" class="acdnLink" style="display: block;">Income Tax Deduction At Source</a></li><li data-menuid="3985" title="Other Taxes Deduction"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3985" validateip="0" class="acdnLink" style="display: block;">Other Taxes Deduction</a></li><li data-menuid="3986" title="House Building Advance Repayment"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3986" validateip="0" class="acdnLink" style="display: block;">House Building Advance Repayment</a></li><li data-menuid="3987" title="Motor Cycle Advance Refund"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3987" validateip="0" class="acdnLink" style="display: block;">Motor Cycle Advance Refund</a></li><li data-menuid="3988" title="House Building Advance Interest"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3988" validateip="0" class="acdnLink" style="display: block;">House Building Advance Interest</a></li><li data-menuid="3989" title="Motor Cycle Advance Interest"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3989" validateip="0" class="acdnLink" style="display: block;">Motor Cycle Advance Interest</a></li><li data-menuid="4019" title="Conveyance Fare Deduction"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=4019" validateip="0" class="acdnLink" style="display: block;">Conveyance Fare Deduction</a></li><li data-menuid="4228" title="Bank Advice"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=4228" validateip="0" class="acdnLink" style="display: block;">Bank Advice</a></li></ul></li><li data-menuid="4004" title="Employee Reports"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=4004" validateip="0" class="acdnLink" style="display: block;">Employee Reports(Staff)</a></li><li data-menuid="67948" title="House Rent Reports"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=67948" validateip="0" class="acdnLink" style="display: block;">House Rent Reports</a></li><li data-menuid="3964" title="Online Pay Bill Reports"><a href="https://ibas.finance.gov.bd/ibas2/common/reports/AccountingReports?menuId=3964" validateip="0" class="acdnLink" style="display: block;">Pay Bill Reports</a></li></ul></li></ul>
+                </div>
+            </div>
+        </div>
+        <div id="noMenuContainer" style="display: none; position: absolute; top: 0px; bottom: 0px;
+            left: 0px; width: 45px; background-color: #364150; overflow: auto;">
+            <img id="showMenu" alt="No Image" src="./employee-service-information_files/sidebar.jpg" style="float: right; cursor: pointer; margin: 10px 10px 10px;">
+        </div>
+    </div>
+    <div id="frameContainer" style="background: #fff; position: absolute; top: 62px;
+        bottom: 0px; left: 260px; right: 0px;">
+        
+        <iframe id="ibasframe" style="border: none; height: 100%; width: 100%;" src="./employee-service-information_files/serviceInfoEdit.html"></iframe>
+        <div id="ProfileIdentityVerificationTfaContainer"></div>
+    </div>
+    <div id="frameprogress" style="position: fixed; right: 0px; bottom: 0px; background-color: rgb(43, 54, 67); color: rgb(255, 255, 255); width: 300px; height: 40px; line-height: 40px; vertical-align: middle; text-align: center; display: none;">
+        Please wait while your request is in progress .......
+    </div>
+    <input name="__RequestVerificationToken" type="hidden" value="TsPdPY3VgzR70PjnBo1HRcq7k79q2Roz-y1OPpcyQWQvWDK88D0nkvipXPwFN4clfjZenXZXoK43hz4t7vqtL0MuOZiFxNIQfdhWMkiKsrW3zJOSLGlY4Na7KgonUFBbQAb1BJLUz15oZDF-cyWx5IQG2UI1">
+
+    <script src="./employee-service-information_files/jquery-1.7.2.min.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/js.cookie.js.download" type="text/javascript"></script>
+    <script src="./employee-service-information_files/jquery-migrate-1.2.1.min.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/tipso.min.js.download" type="text/javascript" defer=""></script>
+
+    <script src="./employee-service-information_files/json2.js.download" type="text/javascript" async=""></script>
+    <script src="./employee-service-information_files/jquery-ui-1.8.11.min.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/jquery.bijoy.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/jquery.phonetic.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/jquery.caret.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/accordionmenu.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.stylesetter.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.jquery.extension.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.drop.down.extension.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.dropdown.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/message.box.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/toastr.min.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.button.configuration.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.data.view.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.data.grid.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.popup.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.pager.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.abstract.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/ibas.otp.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/AppContainer.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/jquery.timeago.js.download" type="text/javascript" defer=""></script>
+    <script src="./employee-service-information_files/font-awesome.js.download" type="text/javascript" async=""></script>
+    <script src="./employee-service-information_files/appContainerSetup.js.download" type="text/javascript" defer=""></script>
+
+
+
+
+<div data-lastpass-root="" style="position: absolute !important; top: 0px !important; left: 0px !important; height: 0px !important; width: 0px !important;"></div></body></html>

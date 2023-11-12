@@ -1,0 +1,241 @@
+﻿/// <reference path="jquery-1.6.2.js" />
+/// <reference path="ibas.jquery.extension.js" />
+/// <reference path="../../../Scripts/ibas/message.box.js" />
+
+
+
+var IbasDataViewer = function () {
+    var thisInstance = this;
+
+    var _webMethod = '', _formatter;
+
+    var _tableID = null;
+
+    var OnLoadValueChanger = function (value, modelProperty) {
+        var newValue = null;
+        if ($.isFunction(thisInstance.OnLoadValueChange)) newValue = thisInstance.OnLoadValueChange(value, modelProperty);
+        if (!newValue)
+            return value;
+        else
+            return newValue;
+    };
+
+    var OnRowClickValueChanger = function (value, modelProperty) {
+        var newValue = null;
+        if ($.isFunction(thisInstance.OnRowClickValueChange)) newValue = thisInstance.OnRowClickValueChange(value, modelProperty);
+        if (!newValue)
+            return value;
+        else
+            return newValue;
+    };
+
+    this.GridRowClick = null;
+    this.AfterPopulateCallback = null;
+
+    this.OnLoadValueChange = function (value, modelProperty) { return value; };
+    this.OnRowClickValueChange = function (value, modelProperty) { return value; };
+
+    this.SortColumnIndex = 0;
+    this.DataType = { Text: 0, Number: 1 };
+    this.SortColumnDataType = thisInstance.DataType.Text;
+    var WebMethodParameter = new Object();
+
+    this.InitiateTable = function (tableID, className, toBeReplacedElementID) {
+        if (tableID == null) {
+            throw 'InitiateTable() parameter "tableID" cannot be null.';
+        }
+        if ($.trim(tableID) == '') {
+            throw 'InitiateTable() parameter "tableID" cannot be empty.';
+        }
+
+        _tableID = '#' + tableID;
+
+        BuildTableStructure(tableID, className, toBeReplacedElementID);
+    };
+
+    this.SetWebMethod = function (webMethod) {
+        _webMethod = webMethod;
+    };
+
+    this.SetDataFormatter = function (formatter) {
+        _formatter = formatter;
+    };
+
+    this.AddColumn = function (columnHeader, columnHeaderStyle, columnStyle, modelProperty) {
+        if (_tableID == null) {
+            throw 'You must call InitiateTable(...) before calling AddColumn()';
+        }
+
+        var thPart = '<th>' + columnHeader + '</th>';
+        var tdPart = '<td data-modelproperty="' + modelProperty + '"></td>';
+
+        var totalTDs = $(_tableID).find('thead tr th').length;
+
+        if (totalTDs == 0) {
+            $(_tableID).find('thead tr').append(thPart);
+            $(_tableID).find('tbody tr').append(tdPart);
+
+            if (columnHeaderStyle != null) $(_tableID).find('thead tr th:eq(0)').css(columnHeaderStyle);
+            if (columnStyle != null) $(_tableID).find('tbody tr td:eq(0)').css(columnStyle);
+        } else {
+            var lastColumnIndex = totalTDs - 1;
+            $(_tableID).find('thead tr th:eq(' + lastColumnIndex + ')').after(thPart);
+            $(_tableID).find('tbody tr td:eq(' + lastColumnIndex + ')').after(tdPart);
+
+            if (columnHeaderStyle != null) $(_tableID).find('thead tr th:eq(' + totalTDs + ')').css(columnHeaderStyle);
+            if (columnStyle != null) $(_tableID).find('tbody tr td:eq(' + totalTDs + ')').css(columnStyle);
+        }
+        BindDefaultEvents();
+    };
+
+    this.SetWebMethodParameter = function (parameterName, parameterValue) {
+        WebMethodParameter[parameterName] = parameterValue;
+    };
+
+    this.PopulateData = function () {
+        $(_tableID).ajaxWebMethod(_webMethod);
+
+        $.each(WebMethodParameter, function (key, value) {
+            $(_tableID).addParameter(key, value, ParameterTypeEnum.Text);
+            delete WebMethodParameter[key];
+        });
+
+        var totalRows = 0;
+        var serverObject = null;
+        $(_tableID).ajaxSuccessMethod(function (serverData) {
+            if (serverData.FLAG) {
+                $(serverData).processServerMessage();
+            } else {
+                for (var prop in serverData) {
+                    if (prop == 'TotalRows') {
+                        totalRows = serverData[prop];
+                    }
+                    if (typeof serverData[prop] == "string") {
+                        var data = $.parseJSON(serverData[prop]);
+                        serverObject = _formatter ? _formatter(data) : data;
+                    }
+                    if (!serverObject) {
+                        serverObject = _formatter ? _formatter(serverData) : serverData;
+                    }
+                }
+
+                serverDataBind(serverObject);
+
+                if ($.isFunction(thisInstance.AfterPopulateCallback)) {
+                    thisInstance.AfterPopulateCallback($(_tableID));
+                }
+            }
+        }).callServerMethod(false);
+        return totalRows;
+    };
+
+    this.GridDataBindToElement = function (row, elementList, excludeElements) {
+        var finalElementsToBind = new Array();
+
+        if (elementList == null) {
+            elementList = $.merge($.find('input[data-modelproperty]'), $.find('select[data-modelproperty]'));
+            elementList = $.merge(elementList, $.find('textarea[data-modelproperty]'));
+        }
+
+        if (excludeElements) {
+            $(elementList).each(function (index, item) {
+                var removeFlag = false;
+                $(excludeElements).each(function (index1, item1) {
+                    if ($(item).attr('id') == $(item1).attr('id')) {
+                        removeFlag = true;
+                    }
+                });
+                if (removeFlag == false) {
+                    finalElementsToBind = $.merge(finalElementsToBind, $(item));
+                }
+            });
+        } else {
+            finalElementsToBind = elementList;
+        }
+
+        $(finalElementsToBind).each(function (index, element) {
+            if ($(element).attr('type') == 'checkbox' || $(element).attr('type') == 'radio') {
+                if (OnRowClickValueChanger($(row).find('td[data-modelproperty="' + $(element).attr('data-modelproperty') + '"]').html(), $(element).attr('data-modelproperty')) == 'Y') {
+                    $(element).prop("checked", true);
+                } else {
+                    $(element).prop("checked", false);
+                }
+            } else {
+                $(element).val(OnRowClickValueChanger($(row).find('td[data-modelproperty="' + $(element).attr('data-modelproperty') + '"]').html(), $(element).attr('data-modelproperty')));
+                if ($(element).attr('data-trigger-change')) {
+                    $(element).trigger('change');
+                }
+            }
+        });
+    };
+
+    this.ClearView = function () {
+        $(_tableID).find('tbody tr').not(':first').remove();
+        $(_tableID).find('tbody tr:eq(0)').hide();
+    };
+
+    var serverDataBind = function (DataList) {
+        DataList.reverse();
+        $(_tableID).find('tbody tr').not(':first').remove();
+        $(_tableID).find('tbody tr:eq(0)').hide();
+        if (!DataList) return;
+
+        $.each(DataList, function (key1, value1) {
+            var tr = $(_tableID).find('tbody tr:first').clone();
+            $.each(value1, function (key2, value2) {
+                $(tr).find('td').each(function () {
+                    if (!$(this).attr('data-modelproperty')) return;
+                    if ($(this).attr('data-modelproperty').toLowerCase() == key2.toLowerCase()) {
+                        $(this).html(OnLoadValueChanger(value2, $(this).attr('data-modelproperty')));
+                        return;
+                    }
+                });
+            });
+            $(tr).css({ 'display': 'inline', 'visibility': 'visible' });
+            $(_tableID).find('tbody tr:first').after('<tr>' + $(tr).html() + '</tr>');
+        });
+        if ($(_tableID).find('tbody tr').length > 1) {
+            $(_tableID).find('tbody tr:eq(0)').css('display', 'none');
+        }
+
+        BindDefaultEvents();
+    };
+
+    var BuildTableStructure = function (tableID, className, toBeReplacedElementID) {
+        var table = '<table id="' + tableID + '" class="' + className + '  table table-bordered table-striped col-lg-9 col-md-9">';
+        var thPart = '';
+        var tdPart = '';
+        table = table + '<thead class="thead-dark"><tr>' + thPart + '</tr></thead>';
+        table = table + '<tbody><tr>' + tdPart + '</tr></tbody>';
+        table = table + '</table>';
+        $('#' + toBeReplacedElementID).replaceWith(table);
+    };
+
+    var BindDefaultEvents = function () {
+        $(_tableID).find('tbody tr').unbind('click').click(function (event) {
+            if ($.isFunction(thisInstance.GridRowClick)) thisInstance.GridRowClick(event, $(this));
+        });
+    };
+
+    this.SortDataView = function () {
+        var i = 1, j = 1;
+        var lTotalRows = $(_tableID + ' tbody tr').size();
+        for (i = 1; i < lTotalRows; i++) {
+            for (j = i + 1; j <= lTotalRows; j++) {
+                var lValue = $(_tableID + ' tbody tr:eq(' + i + ')').find('td:eq(' + thisInstance.SortColumnIndex + ')').html();
+                var lValuePlus = $(_tableID + ' tbody tr:eq(' + j + ')').find('td:eq(' + thisInstance.SortColumnIndex + ')').html();
+                if (thisInstance.SortColumnDataType == thisInstance.DataType.Number) {
+                    lValue = Number(lValue);
+                    lValuePlus = Number(lValuePlus);
+                }
+                if (lValue > lValuePlus) {
+                    var lTempRow = $(_tableID + ' tbody tr:eq(' + j + ')');
+                    $(_tableID + ' tbody tr:eq(' + j + ')').remove();
+                    $(_tableID + ' tbody tr:eq(' + i + ')').before(lTempRow);
+                }
+            }
+        }
+
+        BindDefaultEvents();
+    };
+}

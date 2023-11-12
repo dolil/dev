@@ -1,0 +1,70 @@
+﻿(function($) {
+
+    $.fn.contextMenu = function(options) {
+
+        var defaults = {
+            items: [{ caption: 'Help', url: '' }, { caption: 'Advanced Help', url: ''}]
+        };
+
+        var opt = $.extend(defaults, options);
+
+        var elem = $(this);
+
+        if (elem.data('data-attached')) {
+            return elem.data('data-attached');
+        }
+
+        $(document)[0].oncontextmenu = function() { return false; };
+
+        var highestZIndex = function (selector) {
+            return Math.max.apply(null, $(selector).map(function () {
+                var z;
+                return isNaN(z = parseInt($(this).css("z-index"), 10)) ? 0 : z;
+            }));
+        };
+
+        var itemCollection = function () {
+            var rows = '<table>';
+            $(opt.items).each(function (index, item) {
+                rows = rows + '<tr><td>' + item.caption + '</td></tr>';
+            });
+            rows = rows + '<tr><td><div id="contextMenuClose" class="contextitem">[X] Close</div></td></tr>';
+            return rows + '</table>';
+        };
+
+        var createContextMenu = function() {
+            var content = '<div id="contextMenuContainer" class="contextmenu" style="">' +
+                itemCollection() + '</div>';
+
+            $('body').append(content);
+
+            var close = '#contextMenuClose';
+            var contextMenuContainer = '#contextMenuContainer';
+            $(close).click(function () { $(contextMenuContainer).remove(); });
+        };
+
+        var showMenu = function(control, e) {
+            var posx = e.clientX + window.pageXOffset + 'px'; //Left Position of Mouse Pointer
+            var posy = e.clientY + window.pageYOffset + 'px'; //Top Position of Mouse Pointer
+            document.getElementById(control).style.position = 'absolute';
+            document.getElementById(control).style.display = 'inline';
+            document.getElementById(control).style.left = posx;
+            document.getElementById(control).style.top = posy;
+        };
+        
+        elem.mousedown(function(event) {
+            if (event.which == 3) {
+                createContextMenu();
+                showMenu('contextMenuContainer', event);
+            }
+        });
+
+        var returns = {            
+            
+        };
+
+        elem.data('data-attached', returns);
+        return returns;
+    };
+
+})(jQuery);

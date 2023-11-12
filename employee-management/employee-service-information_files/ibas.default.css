@@ -1,0 +1,1208 @@
+﻿body {
+    color: #333333;
+    font-family: "Segoe UI",Tahoma,Arial,Helvetica,sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 13px;
+    direction: ltr;
+}
+
+input, select, textarea {
+    -ms-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+}
+
+br {
+    line-height: 10px;
+}
+
+.btn {
+    background-image: none !important;
+    border-width: 0;
+    box-shadow: none;
+    filter: none;
+    font-size: 14px;
+    outline: medium none !important;
+    padding: 7px 14px;
+    text-shadow: none;
+    margin-right: 5px;
+}
+
+.btn-next {
+    background-image: none !important;
+    border-width: 0;
+    box-shadow: none;
+    filter: none;
+    font-size: 14px;
+    outline: medium none !important;
+    padding: 7px 14px;
+    text-shadow: none;
+    margin-left: -4px;
+    height: 20px;
+}
+
+
+/******************Button Grig *****************************/
+
+
+
+/******************Submit button *****************************/
+.submit.btn {
+    color: #FFFFFF;
+    background-color: #578ebe;
+    border-color: black;
+    width: 100px;
+}
+
+    .submit.btn:hover, .submit.btn:focus, .submit.btn:active {
+        color: #FFFFFF;
+        background-color: #437cae; /*width: 100px;*/
+        cursor: pointer;
+    }
+
+    .submit.btn:disabled {
+        background-color: #85B3DA;
+        cursor: no-drop;
+    }
+
+.submit.btn-next {
+    color: #FFFFFF;
+    background-color: #578ebe;
+    border-color: "";
+    width: 100px;
+}
+
+    .submit.btn-next:hover, .submit.btn-next:focus, .submit.btn-next:active {
+        color: #FFFFFF;
+        background-color: #437cae; /*width: 100px;*/
+    }
+
+    .submit.btn-next:disabled {
+        background-color: #85B3DA;
+        cursor: no-drop;
+    }
+
+/******************Delete button *****************************/
+
+.delete.btn {
+    color: #FFFFFF;
+    background-color: #578ebe;
+    border-color: "";
+    width: 100px;
+}
+
+    .delete.btn:hover, .delete.btn:focus, .delete.btn:active {
+        color: #FFFFFF;
+        background-color: #437cae;
+        width: 100px;
+    }
+
+    .delete.btn:disabled {
+        background-color: #85B3DA;
+        cursor: no-drop;
+    }
+
+/******************Cancel button *****************************/
+.cancel.btn {
+    background-color: lightgray;
+    color: #333333;
+    width: 100px;
+}
+
+    .cancel.btn:disabled {
+        background-color: #e5e5e5;
+        cursor: no-drop;
+    }
+
+.btn.cancel:hover, .btn.cancel:focus, .btn.cancel:active {
+    color: #333333;
+    background-color: #e5e5e5;
+    /*width: 100px;*/
+}
+
+/******************Clear button *****************************/
+
+.clear.btn {
+    background-color: #e5e5e5;
+    color: #333333;
+    width: 100px;
+}
+
+.btn.clear:hover, .btn.clear:focus, .btn.clear:active {
+    color: #333333;
+    background-color: lightgray;
+    /*width: 100px;*/
+}
+
+/************button divider*************/
+.divider {
+    width: 10px;
+    height: auto;
+    display: inline-block;
+}
+
+.bangla {
+    font-family: Nikosh;
+    font-size: 13px;
+}
+
+.textbox {
+    display: block;
+    height: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; /*margin-top: 20px;*/
+}
+
+    .textbox:focus {
+        border-color: #8CAEE7;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    .textbox:disabled {
+        cursor: no-drop;
+    }
+
+    .textbox.numeric {
+        text-align: right;
+    }
+
+.width50 {
+    width: 50px !important;
+}
+
+.width75 {
+    width: 75px !important;
+}
+
+.width100 {
+    width: 100px !important;
+}
+
+.width150 {
+    width: 150px !important;
+}
+
+.width200 {
+    width: 200px !important;
+}
+
+.width250 {
+    width: 250px !important;
+}
+
+.width275 {
+    width: 275px !important;
+}
+
+
+.width300 {
+    width: 300px !important;
+}
+
+.width400 {
+    width: 400px !important;
+}
+
+.height10 {
+    height: 10px !important;
+}
+
+.height25 {
+    height: 25px !important;
+}
+
+.height50 {
+    height: 50px !important;
+}
+
+.height80 {
+    height: 80px !important;
+}
+
+.height100 {
+    height: 100px !important;
+}
+
+.selectbox {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    width: 100%;
+}
+
+    .selectbox:focus {
+        border: 1px solid #8CAEE7;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    }
+
+.select30 {
+    width: 30px !important;
+}
+
+.select50 {
+    width: 55px !important;
+}
+
+.select75 {
+    width: 80px !important;
+}
+
+.select100 {
+    width: 105px !important;
+}
+
+.select150 {
+    width: 155px !important;
+}
+
+.select200 {
+    width: 205px !important;
+}
+
+.select250 {
+    width: 253px !important;
+}
+
+.select300 {
+    width: 324px !important;
+}
+
+.select400 {
+    width: 405px !important;
+}
+
+.select450 {
+    width: 455px !important;
+}
+
+.label-text {
+    vertical-align: middle;
+    text-align: right;
+    width: 30%;
+}
+
+.button-grid-separator {
+    clear: both;
+    height: 10px;
+}
+
+.entryForm {
+    clear: both; /*	float: left;*/
+    font-size: 13px;
+}
+
+    .entryForm > tbody > tr > td:first-child {
+        clear: both;
+        text-align: right;
+        vertical-align: middle;
+        margin-top: 6px;
+        padding-left: 7px;
+        white-space: nowrap;
+    }
+
+    .entryForm > tbody input[type="text"], .entryForm > tbody input[type="password"] {
+        display: block;
+        height: 20px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #AAA;
+        border-radius: 0px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        width: 300px;
+    }
+
+        .entryForm > tbody input[type="text"]:focus, .entryForm > tbody input[type="password"]:focus {
+            border-color: #8CAEE7;
+            outline: 0;
+            box-shadow: none;
+        }
+
+        .entryForm > tbody input[type="text"]:disabled {
+            border: 1px solid #999;
+            background-color: #E8E7E7;
+            cursor: no-drop;
+        }
+
+    .entryForm > tbody textarea {
+        display: block;
+        height: 80px;
+        padding: 6px 12px;
+        font-family: "Segoe UI",Tahoma,Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #AAA;
+        border-radius: 0px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        width: 300px;
+    }
+
+        .entryForm > tbody textarea:focus {
+            border-color: #8CAEE7;
+            outline: 0;
+            box-shadow: none;
+        }
+
+        .entryForm > tbody textarea:disabled {
+            border: 1px solid #999;
+            background-color: #E8E7E7;
+            cursor: no-drop;
+        }
+
+    .entryForm > tbody select {
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #AAA;
+        border-radius: 0px;
+        color: #333;
+        display: block;
+        font-size: 14px;
+        height: 34px;
+        line-height: 1.42857;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        width: 327px;
+    }
+
+        .entryForm > tbody select:focus {
+            border: 1px solid #8CAEE7;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        }
+
+        .entryForm > tbody select:disabled {
+            border: 1px solid #999;
+            background-color: #E8E7E7;
+            cursor: no-drop;
+        }
+
+    .entryForm > tbody input[type='checkbox'] {
+        margin-top: 10px;
+    }
+
+.displayspan {
+    display: block;
+    height: auto;
+    padding: 6px 3px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.42857143;
+    text-align: left;
+}
+
+.radiodiv {
+    display: inline;
+    height: 25px;
+    padding: 6px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+    .radiodiv input[type="radio"] {
+        margin-top: 10px;
+    }
+
+.headerspan {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: capitalize;
+    text-decoration: underline;
+    line-height: 35px;
+    height: 35px;
+    width: 100%;
+    display: block;
+    height: 33px;
+    vertical-align: middle;
+}
+
+    .headerspan span {
+        font-weight: bold;
+        font-size: 14px;
+        border-bottom: 1px solid #333333;
+        width: auto;
+    }
+/********************Grid CsS******************/
+
+.table-bordered {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: white;
+    margin: 0 auto;
+}
+
+    .table-bordered > tbody > tr:nth-child(even) {
+        background-color: #eeeeee;
+    }
+
+    .table-bordered > tbody > tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .table-bordered > tbody > tr:hover {
+        background-color: #FFFFDE;
+        cursor: pointer;
+    }
+
+    .table-bordered > thead tr th {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #cccccc;
+        color: black;
+        line-height: 25px;
+    }
+
+    .table-bordered > tbody > tr > td, .table-bordered > thead > tr > th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+
+/********************Grid inner CSS *****************************/
+
+.tablegrid-inner {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: white;
+    margin: 0 auto;
+}
+
+    .tablegrid-inner > tbody > tr:nth-child(even) {
+        background-color: #eeeeee;
+    }
+
+    .tablegrid-inner > tbody > tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .tablegrid-inner > thead tr th, .tablegrid-inner > tfoot tr th {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #cccccc;
+        color: black;
+        line-height: 25px;
+    }
+
+
+    .tablegrid-inner > tfoot > tr > td, .tablegrid-inner > tfoot > tr > th, .tablegrid-inner > tbody > tr > td, .tablegrid-inner > thead > tr > th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    .tablegrid-inner > tbody > tr > td {
+        white-space: normal;
+    }
+
+    .tablegrid-inner > tbody select, .tablegrid-inner > thead select {
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #AAA;
+        border-radius: 0px;
+        color: #333;
+        display: block;
+        font-size: 12px;
+        height: 22px;
+        line-height: 1.42857;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        width: 100%;
+    }
+
+        .tablegrid-inner > tbody select:focus, .tablegrid-inner > thead select:focus {
+            border: 1px solid #8CAEE7;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        }
+
+    .tablegrid-inner > tbody input[type=button], .tablegrid-inner > thead input[type=button], .tablegrid-inner > tfoot input[type=button] {
+        background-image: none !important;
+        border-width: 0;
+        box-shadow: none;
+        filter: none;
+        font-size: 12px;
+        outline: medium none !important;
+        padding: 5px 10px;
+        text-shadow: none;
+        color: #FFFFFF;
+        background-color: #578ebe;
+        border-color: "";
+        width: 50px;
+    }
+
+        .tablegrid-inner > tbody input[type=button]:hover, .tablegrid-inner > tbody input[type=button]:focus, .tablegrid-inner > tbody input[type=button]:active, .tablegrid-inner > thead input[type=button]:hover, .tablegrid-inner > thead input[type=button]:focus, .tablegrid-inner > thead input[type=button]:active, .tablegrid-inner > tfoot input[type=button]:hover, .tablegrid-inner > tfoot input[type=button]:focus, .tablegrid-inner > tfoot input[type=button]:active {
+            color: #FFFFFF;
+            background-color: #437cae;
+        }
+
+        .tablegrid-inner > tbody input[type=button]:disabled, .tablegrid-inner > thead input[type=button]:disabled, .tablegrid-inner > tfoot input[type=button]:disabled {
+            background-color: #85b3da;
+            cursor: no-drop;
+        }
+
+    .tablegrid-inner > tbody input[type=text], .tablegrid-inner > thead input[type=text], .tablegrid-inner > thead textarea, tbody textarea {
+        display: block;
+        height: 16px;
+        width: 85%;
+        padding: 3px 6px;
+        font-size: 12px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 0px;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; /*margin-top: 20px;*/
+    }
+
+        /*.tablegrid-inner > thead textarea, tbody textarea {
+    padding: 2px 1px;
+}*/
+
+        .tablegrid-inner > tbody input[type=text]:disabled, .tablegrid-inner > thead input[type=text]:disabled, .tablegrid-inner > thead textarea:disabled, .tablegrid-inner > tbody textarea:disabled {
+            display: block;
+            height: 16px;
+            width: 85%;
+            padding: 3px 6px;
+            font-size: 12px;
+            line-height: 1.42857143;
+            background-color: #E8E7E7;
+            color: #555;
+            border: 1px solid #999;
+            border-radius: 0px;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; /*margin-top: 20px;*/
+        }
+
+        .tablegrid-inner > tbody input[type=text]:focus, .tablegrid-inner > thead input[type=text]:focus {
+            border-color: #8CAEE7;
+            outline: 0;
+            box-shadow: none;
+        }
+
+.rowasheader {
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #A5A6A5;
+    color: black;
+    line-height: 25px;
+}
+
+.rowaswhite {
+    background-color: white;
+}
+/********************End of Grid inner CSS *****************************/
+
+/* AJAX PROGRESS BEGIN*/
+
+.modalajaxbackground {
+    background-color: transparent;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1001; /*filter: alpha(opacity=40);*/
+    opacity: 0.5;
+}
+
+.modalajaxprogresscontainer {
+    border: 10px solid #364150;
+    background-color: #ffffff;
+    position: fixed;
+    left: 50%;
+    margin-left: -175px;
+    top: 50%;
+    margin-top: -75px;
+    height: 150px;
+    width: 350px;
+    z-index: 2000;
+    line-height: 150px; /*opacity: 0.7;*/
+    vertical-align: middle;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; /* future proofing */
+    -khtml-border-radius: 10px; /* for old Konqueror browsers */
+}
+
+    .modalajaxprogresscontainer img {
+        position: absolute;
+        top: 50px;
+        height: 30px;
+        width: 30px;
+        left: 50%;
+        margin-left: -15px;
+    }
+
+    .modalajaxprogresscontainer div {
+        position: absolute;
+        top: 85px;
+        height: 30px;
+        width: 100%;
+        text-align: center;
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+/* AJAX PROGRESS END*/
+
+/* BEGIN POPUP CSS*/
+
+.popup {
+    width: 411px;
+    overflow: auto;
+    z-index: 1400;
+    visibility: hidden;
+    position: absolute;
+    border: 1px solid #B6B8B6;
+    background-color: #E7E7E7;
+    padding: 5px;
+}
+
+.elementDataBlock {
+    border: 1px solid #c0c0c0;
+    padding: 1px;
+    position: relative;
+}
+/* END POPUP CSS*/
+
+
+/* BEGIN PAGE CSS*/
+.pager {
+    /*margin-left:10px;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+    .pager input[type="button"] {
+        background-image: none !important;
+        border-width: 0;
+        box-shadow: none;
+        filter: none;
+        font-size: 14px;
+        outline: medium none !important;
+        padding: 7px 14px;
+        text-shadow: none;
+        margin-right: 5px;
+        color: #FFFFFF;
+        background-color: #578ebe;
+        border-color: "";
+    }
+
+        .pager input[type="button"]:hover {
+            background-image: none !important;
+            border-width: 0;
+            box-shadow: none;
+            cursor: pointer;
+            filter: none;
+            font-size: 14px;
+            outline: medium none !important;
+            padding: 7px 14px;
+            text-shadow: none;
+            margin-right: 5px;
+            color: #FFFFFF;
+            background-color: #437cae;
+            border-color: "";
+        }
+
+        .pager input[type="button"][disabled="disabled"] {
+            background-image: none !important;
+            border-width: 0;
+            box-shadow: none;
+            filter: none;
+            font-size: 14px;
+            outline: medium none !important;
+            padding: 7px 14px;
+            text-shadow: none;
+            margin-right: 5px;
+            color: #FFFFFF;
+            background-color: #85B3DA;
+            border-color: "";
+        }
+
+        .pager input[type="button"]:focus, .pager input[type="button"].active {
+            background-image: none !important;
+            border-width: 0;
+            box-shadow: none;
+            filter: none;
+            font-size: 14px;
+            outline: medium none !important;
+            padding: 7px 14px;
+            text-shadow: none;
+            margin-right: 5px;
+            color: #0a0a0a;
+            background-color: #dedede;
+            border-color: "";
+        }
+
+
+/* END PAGE CSS*/
+
+.grid-spacing {
+    margin-left: 10px;
+}
+
+
+/* *******************Alert box ***************************** */
+
+.messagebox {
+    float: left;
+    margin-top: 10px;
+}
+
+.alert {
+    border-width: 1px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 0px;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    padding-right: 35px;
+}
+
+.messagebox #td1, .messagebox #td2, .messagebox #td3 {
+    float: left;
+    margin-left: 5px;
+}
+
+    .messagebox #td1 a {
+        padding-left: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #8a6d3b;
+    }
+
+.collapsiblediv {
+    clear: both;
+    font-weight: bold;
+    text-transform: capitalize;
+    border-bottom: 2px solid #6B799C;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    background-color: #eee;
+}
+
+    .collapsiblediv div {
+        float: left;
+        border-top: 2px solid #6B799C;
+        border-left: 2px solid #6B799C;
+        border-right: 2px solid #6B799C;
+        width: 25px;
+        height: 25px;
+        line-height: 17px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+.accordiondiv {
+    clear: both;
+    font-weight: bold;
+    text-transform: capitalize;
+    border-bottom: 2px solid #6B799C;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    background-color: #eee;
+}
+
+    .accordiondiv div {
+        float: left;
+        border-top: 2px solid #6B799C;
+        border-left: 2px solid #6B799C;
+        border-right: 2px solid #6B799C;
+        width: 25px;
+        height: 25px;
+        line-height: 17px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+.coadetaildiv {
+    width: 100%;
+}
+
+    .coadetaildiv div {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .coadetaildiv span {
+        width: 200px;
+        height: 25px;
+        display: block;
+        font-size: 14px;
+    }
+
+    .coadetaildiv #btnAddSpan, .coadetaildiv #btnCancelSpan {
+        width: 10px;
+    }
+
+.caodetailtable {
+    clear: both;
+    border-collapse: collapse;
+}
+
+    .caodetailtable tbody td {
+        border: 1px solid #333;
+        width: 205px;
+        height: 25px;
+    }
+
+.subheader {
+    width: 100%;
+    background-color: #6E7C9F;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-weight: bold;
+    vertical-align: middle;
+    text-indent: 10px;
+}
+
+/* INTERNAL POPUP*/
+
+.internalpopupbackground {
+    background-color: #000;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1001; /*filter: alpha(opacity=40);*/
+    opacity: 0.5;
+}
+
+.internalpopupcontainer {
+    background-color: #FFF;
+    z-index: 9001;
+    overflow: auto;
+    position: fixed;
+}
+
+.internalpopuphead {
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    padding-left: 10px;
+    position: static;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: #6B799C;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.internalpopupcross {
+    background-color: transparent;
+    color: #FFF;
+    border: none;
+    font-size: 20px;
+    height: 100%;
+    width: 30px;
+    float: right;
+    cursor: pointer;
+}
+
+    .internalpopupcross:hover {
+        color: #000;
+    }
+
+.internalpopupbody {
+    height: auto;
+    width: auto;
+}
+
+/* INTERNAL POPUP*/
+
+.strongheader {
+    clear: both;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    background-color: #eee;
+    padding-left: 10px;
+}
+
+.overlay-sel option:hover {
+    color: #fff;
+    background-color: #3297FD;
+}
+
+.pdf {
+    background-image: url("../images/pdf-page.png");
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.download {
+    background-image: url("../images/data-transfer-download-xxl.png");
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    display: inline-block;
+    width: auto;
+    /*width: 80%; */ /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close-modal .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close-modal .close:hover,
+    .close-modal .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.printer {
+    background-image: url("../images/print.png");
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.getBudget {
+    width: 16px;
+    height: 16px;
+    background-image: url('../Images/info.png');
+    display: block;
+    background-size: contain;
+}
+
+.detailActualPopup {
+    width: 25px;
+    height: 25px;
+    background-image: url('../Images/informationicon2.svg');
+    display: block;
+    background-size: contain;
+}
+
+.accountingGrid {
+    margin-left: 0;
+    width: 1190px;
+}
+
+.accountingGrid .debit, .accountingGrid .credit {
+    width: 80px !important;
+}
+
+.accountingGrid tfoot th, .accountingGrid .number {
+    text-align: right;
+}
+
+
+/**
+    Custom checkbox start
+*/
+/* Customize the label (the chkeck-input-container) */
+.check-input-container {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    /* Hide the browser's default radio button */
+    .check-input-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+/* Create a custom checkbox button */
+.check-input-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #ddd;
+}
+
+/* On mouse-over, add a grey background color */
+.check-input-container:hover input:enabled ~ .check-input-checkbox {
+    background-color: #bbb;
+}
+
+.check-input-container input:disabled ~ .check-input-checkbox {
+    opacity: 0.5;
+}
+
+/* When the radio button is checked, add a blue background */
+.check-input-container input:checked ~ .check-input-checkbox {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.check-input-checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.check-input-container input:checked ~ .check-input-checkbox:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.check-input-container .check-input-checkbox:after {
+    left: 5px;
+    top: 3px;
+    width: 3px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+/**
+    Custom checkbox end
+*/
+
+.btn-verified {
+    background-size: 20px;
+    width: 75px;
+    height: 20px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #2ca02c;
+    border-radius: 15px;
+    background-color: #2ca02c;
+    color: #fff;
+    background-position-y: center;
+    background-position-x: 0px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.btn-unverified {
+    background-size: 20px;
+    width: 75px;
+    height: 20px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #ed1e26;
+    border-radius: 15px;
+    background-color: #ed1e26;
+    color: #fff;
+    background-position-y: center;
+    background-position-x: 0px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.content-span {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    *display: inline;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.help-icon {
+    color:#40baf3;
+    font-size:20px;
+    margin:5px;
+}
+
+#UserInformationPopup a {
+    text-decoration: none;
+}

@@ -1,0 +1,364 @@
+﻿(function ($) {
+
+    $.fn.otpHandler = function (options) {
+
+        //const OTPSessionKey = {
+        //    Testing: 0,
+        //    OnlineUserRegistrationUserIdentity: 1,
+        //    CarLoanApplicantIdentity: 2,
+        //    DdoOtherBillSubmissionIdentity: 3,
+        //    StakeholderSSNVerificationOTP: 4,
+        //    StakeholderEmailVerificationOTP: 5,
+        //    TourDiaryEntryVerificationOTP: 6
+        //};
+
+        var defaults = {
+                recepientType: 'user', // i.e. user, employee etc.
+                title: 'OTP to test current logged in user',
+                module: 'Security module',
+                process: 'OTP testing process',
+                encryptedData: '',
+                postBackData: {},
+                onVerifyClick: function (data) { alert(data.otp); },
+                onCancelClick: function () {},
+                isPopup: true
+            }
+            , email = ''
+            , mobile = '';
+
+        var opt = $.extend(defaults, options);
+
+        switch (opt.recepientType) {
+            case 'user':
+                opt.url = 'Security/Otp/ToUser';
+                break;
+
+            case 'employee':
+                opt.url = 'Security/Otp/ToEmployee';
+                break;
+            default:
+                opt.url = 'Security/Otp/ToUser';
+                break;
+        }
+
+        var container = $(this),
+            //containerId = $(this).attr('id'),
+            otpTimeCounter = undefined,
+            otpTimeHandler = null,
+            verifyBtn = undefined,
+            cancelBtn = undefined,
+            returns = {};
+
+        //if (container.data('otpHandler-attached')) return container.data('otpHandler-attached');
+
+
+        function otpTimer(timeleft) {
+
+            if (!timeleft) {
+                if (otpTimeHandler) {//cancel the previous timer.
+                    window.clearTimeout(otpTimeHandler);
+                    otpTimeHandler = null;
+                }
+                otpTimeCounter.setValue('0:00');
+                verifyBtn.disable();
+                container.find('.tfa #RsendOTP').css('cursor', 'pointer');
+                return;
+            }
+
+            var time = Math.floor(timeleft / 60000) + ':' + ('0' + timeleft / 1000 % 60).slice(-2)
+                , colorCode = +time.replace(':', '.') < 1 ? '#D8000C' : (+time.replace(':', '.') < 2 ? '#9F6000' : '#4F8A10');
+
+            otpTimeCounter.css('color', colorCode);
+            otpTimeCounter.setValue(time);
+
+            otpTimeHandler = setTimeout(function () {
+                otpTimer(timeleft - 2000);
+            },
+                2000);
+
+        };
+
+        function attachEvents() {
+
+            container.find('.tfa .digit-group').find('input[type=text]').each(function () {
+                $(this).attr('maxlength', 1);
+                $(this).unbind('click').on('click', function (e) {
+                    if (this.value.length > 0)
+                        $(this).select();
+                });
+
+                $(this).unbind('keydown').on('keydown', function (e) {
+                    var key = e.keyCode ? e.keyCode : e.charCode;
+
+                    if (!e.shiftKey && (key >= 48 && key <= 57)) {
+                        return true;
+                    } else if ((key >= 96) && (key <= 105)) {
+                        return true;
+                    } else if ((key == 8) || (key == 46) || (key == 37) || (key == 39) || (key == 9)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+
+                $(this).unbind('keyup').on('keyup', function (e) {
+                    var parent = $($(this).parent()),
+                        data = $('.digit-group').serializeObject(),
+                        otp = data['digit-1'] + data['digit-2'] + data['digit-3'] + data['digit-4'] + data['digit-5'] + data['digit-6'],
+                        key = e.keyCode ? e.keyCode : e.charCode;
+
+                    if (key === 8 || key === 37) {
+                        var prev = parent.find('input#' + $(this).data('previous'));
+
+                        if (prev.length) {
+                            $(prev).select();
+                        }
+
+                        if (otp.length != 6 || otpTimeCounter.getValue() == '0:00') {
+                            verifyBtn.disable();
+                        } else {
+                            verifyBtn.enable();
+                        }
+                    } else if ((e.shiftKey && key == 9) || key == 16) {
+                        $(this).select();
+
+                        if (otp.length != 6 || otpTimeCounter.getValue() == '0:00') {
+                            verifyBtn.disable();
+                        } else {
+                            verifyBtn.enable();
+                        }
+                    } else if (key == 9) {
+                        $(this).select();
+
+                        if (otp.length != 6 || otpTimeCounter.getValue() == '0:00') {
+                            verifyBtn.disable();
+                        } else {
+                            verifyBtn.enable();
+                        }
+
+                        //} else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+                    } else if ((!e.shiftKey && (key >= 48 && key <= 57)) || (key >= 96 && key <= 105) || key === 39) {
+                        var next = parent.find('input#' + $(this).data('next'));
+
+                        if (next.length) {
+                            $(next).select();
+                        } else {
+                            //if(parent.data('autosubmit')) {
+                            // parent.submit();
+                            //}
+                        }
+
+                        if (otp.length != 6 || otpTimeCounter.getValue() == '0:00') {
+                            verifyBtn.disable();
+                        } else {
+                            verifyBtn.enable();
+                            //verifyBtn.focus();
+                        }
+                    }
+                });
+            });
+
+            verifyBtn.unbind('click').on('click', function (e) {
+                e.preventDefault();
+
+                var $element = $(e.target).closest('.digit-group'),
+                    data = $element.serializeObject(),
+                    otp = data['digit-1'] + data['digit-2'] + data['digit-3'] + data['digit-4'] + data['digit-5'] + data['digit-6'];
+
+                if (otp.length != 6) {
+                    MessageBox("Please complete your OTP.", 'Information', 'OK', function () {
+
+                        $($element.find('input')).each(function () {
+                            if (!$(this).getValue()) {
+                                $(this).focus();
+                                return false;
+                            }
+                        });
+                    });
+                    return;
+                }
+
+                var data = {
+                    otp: otp,
+                    cachedTFAData: container.find('.tfa').data('cached-tfa')
+                };
+                //opt.postBackData.otp = otp;
+                //opt.postBackData.cachedTFAData = container.find('.tfa').data('cached-tfa');
+
+                verifyBtn.disable();
+
+                if (typeof opt.onVerifyClick === 'function')
+                    opt.onVerifyClick(data, verifyBtn, otpTimeCounter);
+            });
+
+            cancelBtn.unbind('click').on('click', function (e) {
+                e.preventDefault();
+
+                MsgBox({
+                    message: 'Are your sure you want to cancel?', messageTitle: 'Confirmation', button: 'YesNo', yesMethod: function () {
+
+                        container.html('');
+
+                        if (typeof opt.onCancelClick === 'function')
+                            opt.onCancelClick();
+
+                        return;
+                    }
+                });
+                
+            });
+
+            container.find('.tfa #RsendOTP').unbind('click').on('click', function (e) {
+                e.preventDefault();
+                if (otpTimeCounter.getValue() != '0:00') return;
+
+                verifyBtn.disable();
+
+                $.ibasAjax({
+                    data: { cachedTFAData: container.find('.tfa').data('cached-tfa') },
+                    url: 'Security/OTP/Resend',
+                    successCallback: function (sdata) {
+                        try {
+                            if (+sdata.FLAG == 0) {
+                                MessageBox(sdata.MSG, 'Information', 'OK', function () {
+                                    if (otpTimeHandler) {//cancel the previous timer.
+                                        window.clearTimeout(otpTimeHandler);
+                                        otpTimeHandler = null;
+                                    }
+                                    
+                                    container.find('.tfa').data('cached-tfa', sdata.cachedTFAData);
+                                    container.find('.tfa #RsendOTP').css('cursor', 'not-allowed');
+                                    container.find('.tfa .digit-group')[0].reset();
+                                    container.find('.tfa .digit-group').find('[name=digit-1]').focus();
+                                    otpTimer(+container.find('.tfa  #OTPState').val() * 60 * 1000);
+                                    //otpTimer(1 * 60 * 1000);
+                                });
+                            } else {
+                                $(serverData).processServerMessage();
+                            }
+                        } catch (err) {
+                            alert(!err.message ? err : err.message);
+                        }
+                    }
+                });
+            });
+
+            container.find('.tfa .info-bar .contact-info-tool-tip').tipso({
+                speed: 400,
+                position: 'right',
+                width: 300,
+                maxWidth: '',
+                offsetX: 0,
+                offsetY: 0
+            });
+
+            container.find('.tfa .digit-group').find('[name=digit-1]').focus();
+        }
+
+        returns = {
+
+            /*sessionKey: function () { return OTPSessionKey; },*/
+
+            show: function () {//otpSessionKey = OTPSessionKey.Testing
+
+                var data = {
+                    title: opt.title,
+                    module: opt.module,
+                    process: opt.process,
+                    encryptedData: opt.encryptedData
+                    //,otpSessionKey: otpSessionKey
+                }
+
+                if (email.length > 0)
+                    data.email = email;
+
+                if (mobile.length > 0)
+                    data.mobile = mobile;
+
+                $.ibasAjax({
+                    data: data,
+                    url: opt.url,
+                    dataType: 'html',
+                    successCallback: function (sdata) {
+                        if (sdata.FLAG) {
+                            MsgBox({ message: sdata.MSG });
+                            return;
+                        }
+
+                        if (opt.isPopup) {
+                            container.find('#TFAPopupBackground,#TFAPopup').remove();
+                            container.append(`<div id="TFAPopupBackground" class="ModalBackground" style="display: none;"></div>
+                                                         <div id="TFAPopup" class="MessageDiv" style="display: none;">
+                                                            <table class="MessageTable" style="width: 400px;"><tbody><tr><td style="background:#ddd;padding:0px;text-align:left;"></td></tbody></table>
+                                                         </div>`);
+                            container.find('#TFAPopup table tbody tr td').append(sdata);
+
+                            container.find('#TFAPopupBackground').show();
+                            container.find('#TFAPopup').show();
+                            container.find('.MessageTable').centerTo('TFAPopupBackground');
+                            container.find('.MessageTable').draggable();
+
+                        } else {
+                            container.html(sdata); // render partial view
+                        }
+
+                        verifyBtn = container.find('.tfa #btnVerify');
+                        cancelBtn = container.find('.tfa #btnCancel');
+                        otpTimeCounter = container.find('.tfa  .time-counter');
+
+                        if (otpTimeHandler) {//cancel the previous timer.
+                            window.clearTimeout(otpTimeHandler);
+                            otpTimeHandler = null;
+                        }
+
+                        otpTimer(+container.find('.tfa  #OTPState').val() * 60 * 1000);
+                        //otpTimer(1 * 60 * 1000);
+
+                        attachEvents();
+                    }
+                });
+            },
+
+            close: function () {
+                container.html('');
+            },
+            setEmail: function (newEmail) {
+                email = newEmail;
+
+                switch (opt.recepientType) {
+                    case 'user':
+                        opt.url = 'Security/Otp/ToUserEmail';
+                        break;
+
+                    case 'employee':
+                        opt.url = 'Security/Otp/ToEmployeeEmail';
+                        break;
+                    default:
+                        alert('Unknown recepient type.');
+                        break;
+                }
+            },
+            setMobile: function (newMobile) {
+                mobile = newMobile;
+
+                switch (opt.recepientType) {
+                    case 'user':
+                        opt.url = 'Security/Otp/ToUserMobile';
+                        break;
+
+                    case 'employee':
+                        opt.url = 'Security/Otp/ToEmployeeMobile';
+                        break;
+                    default:
+                        alert('Unknown recepient type.');
+                        break;
+                }
+            }
+        };
+
+        //container.data('otpHandler-attached', returns);
+
+        return returns;
+    };
+
+})(jQuery);

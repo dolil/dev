@@ -1,0 +1,1260 @@
+﻿(function ($) {
+
+    $.fn.accountsGridWithCurrency = function (options) {
+
+        var defaults = {
+            deleteConfirmMsg: 'Delete This Information?',
+            allowContra: true,
+            checkBudgetUrl: window.appRoot + '/accounts/AccountsBase/CheckBudgetDb',
+            checkBudget: function () {
+                return true;
+            },
+            checkBudgetArgs: function () {
+                return {
+                    documentId: -1
+                };
+            },
+            currencyInfo: null,
+            checkPurchase: false,
+            purchaseParamCallback: null,
+            sumUpContra: true,
+            codeBlockRef: null,
+            beforeAdd: function (args) {
+            },
+            afterAdd: function (args) {
+            },
+            beforeUpdate: function (args) {
+            },
+            afterUpdate: function (args) {
+            },
+            beforeRemove: function (args) {
+            },
+            afterRemove: function (args) { return true; },
+            afterContraAdd: function (args) {
+            },
+            sortIndex: [0],
+            progressText: 'Please wait...',
+            dataUrl: '',
+            makeEditable: true,
+            isDisable: true,
+            overwriteCahceException: null,
+            isAsync: true,
+            url: window.appRoot + '/Accounts/AccountsBase/LoadCodeBlockForClientCache'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var grid = $(this);
+
+        var cache = new CoaCache();
+
+        var addClick, cancelClick, editClick, updateClick, removeClick, updateSumColumns, insertRow, getBudgetClick;
+
+        var plGl = -1;
+
+        grid.find('tbody tr:eq(0) #btnUpdate').hide();
+
+        grid.find('thead tr:eq(0)').append('<th style="width: 25px;">');
+        grid.find('tbody tr:eq(0)').append('<td><span id="getBudget" class="getBudget"></span></td>');
+
+        grid.find('#footer').css({ 'font-weight': 'bold' });
+
+        var bindEditRemoveEvent = function (index) {
+            var remove = '#btnRemove';
+            var edit = '#btnEdit';
+            grid.find('tr').each(function () {
+                var r = $(this);
+                r.find(edit).unbind('click').click(editClick);
+                r.find(remove).unbind('click').click(removeClick);
+            });
+        };
+
+        if (!o.makeEditable) {
+            grid.find('thead tr:eq(0) th:last').hide();
+            grid.find('thead tr:eq(0) th:last').prev().prev().hide();
+            grid.find('tbody tr:first td:last').hide();
+            grid.find('tbody tr:first td:last').prev().prev().hide();
+            grid.find('tbody tr:last td:last').hide();
+            grid.find('tbody tr:last td:last').prev().prev().hide();
+
+            grid.find('thead tr:eq(0) th:last').prev().hide();
+            grid.find('tbody tr:first td:last').prev().hide();
+            grid.find('tbody tr:last td:last').prev().hide();
+
+            grid.find('tbody tr:first').hide();
+        }
+
+        if (o.isDisable == true) {
+            grid.find('tbody tr:eq(0) input[type="text"]').attr('disabled', 'disabled');
+            grid.find('tbody tr:eq(0) input[type="button"]').attr('disabled', 'disabled');
+        }
+
+        if (o.codeBlockRef) o.codeBlockRef.loadConfiguration(function () {
+            if (o.isDisable == true) {
+                var ssArr = o.codeBlockRef.subSegRef();
+                if (ssArr) {
+                    for (var item in ssArr) {
+                        ssArr[item].disable();
+                    }
+                }
+            }
+            updateSumColumns();
+        });
+
+        o.codeBlockRef.drCrCallback = function (enableDr, deciderId) {
+            if (enableDr == null || deciderId.selectedValue() == '-1') {
+                grid.find('#AMOUNT_DR,#AMOUNT_CR,#CUR_AMOUNT_DR,#CUR_AMOUNT_CR').attr('disabled', 'disabled').val('0.00');
+                return;
+            }
+            if (enableDr.toUpperCase() == 'D') {
+                grid.find('#AMOUNT_DR,#CUR_AMOUNT_DR').removeAttr('disabled');
+                grid.find('#AMOUNT_CR,#CUR_AMOUNT_CR').attr('disabled', 'disabled').val('0.00');
+                return;
+            }
+            if (enableDr.toUpperCase() == 'C') {
+                grid.find('#AMOUNT_CR,#CUR_AMOUNT_CR').removeAttr('disabled');
+                grid.find('#AMOUNT_DR,#CUR_AMOUNT_DR').attr('disabled', 'disabled').val('0.00');
+                return;
+            }
+            if (enableDr.toUpperCase() == 'B') {
+                grid.find('#AMOUNT_CR,#CUR_AMOUNT_CR').removeAttr('disabled');
+                grid.find('#AMOUNT_DR,#CUR_AMOUNT_DR').removeAttr('disabled');
+                return;
+            }
+            if (enableDr == true) {
+                grid.find('#AMOUNT_DR,#CUR_AMOUNT_DR').removeAttr('disabled');
+                grid.find('#AMOUNT_CR,#CUR_AMOUNT_CR').attr('disabled', 'disabled').val('0.00');
+                return;
+            }
+            if (enableDr == false) {
+                grid.find('#AMOUNT_CR,#CUR_AMOUNT_CR').removeAttr('disabled');
+                grid.find('#AMOUNT_DR,#CUR_AMOUNT_DR').attr('disabled', 'disabled').val('0.00');
+                return;
+            }
+            //updateSumColumns();
+        };
+
+        o.codeBlockRef.firstElementCallback = function (ddl) {
+            ddl.bindData(cache.GetDropdownData({ ddlId: ddl.getId() }));
+            if (o.preserveDdl)
+                o.codeBlockRef.subSegRef()[o.preserveDdl.preserveId].setValue(o.preserveDdl.preserveValue, true);
+        };
+
+        o.codeBlockRef.selectionChange = function (args) { //args properties : thisDdl,nextDdl,params
+            var nextDdl = args.nextDdl;
+            nextDdl.bindData(cache.GetDropdownData({ ddlId: args.nextDdl.getId(), params: args.params }));
+        };
+
+        var rowId = -101;
+
+        var addProgress = function () {
+            var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+            $('body').append(div);
+            var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+                + '<img id="progressimg" src="' + window.appRoot + '/Images/ajaxprogress.gif" />'
+                + '<div>' + o.progressText + '...' + '</div>'
+                + '</div>';
+            $('body').append(progress);
+        };
+
+        var removeProgress = function () {
+            var mb = '#modalajaxbackground', mbc = '#modalajaxprogresscontainer';
+            $(mb).remove();
+            $(mbc).remove();
+        };
+
+        var sortDataGrid = function () {
+            var sortColumnIndex = o.sortIndex;
+            var i, j;
+            var lTotalRows = grid.find('tbody tr').not('tr:first').not('tr:last').length;
+            for (i = 1; i < lTotalRows; i++) {
+                for (j = i + 1; j <= lTotalRows; j++) {
+                    var lValue = grid.find('tbody tr:eq(' + i + ')').find('td:eq(' + sortColumnIndex + ')').text();
+                    var lValuePlus = grid.find('tbody tr:eq(' + (j) + ')').find('td:eq(' + sortColumnIndex + ')').text();
+                    if (lValue > lValuePlus) {
+                        var lTempRow = grid.find('tbody tr:eq(' + (j) + ')');
+                        grid.find('tbody tr:eq(' + (j) + ')').remove();
+                        grid.find('tbody tr:eq(' + (i) + ')').before(lTempRow);
+                    }
+                }
+            }
+        };
+
+        var findFirstChar = function (inString) {
+            return inString.substr(0, 1);
+        };
+
+        var findLastChar = function (inString) {
+            return inString.slice(-1);
+        };
+
+        var underscoreProcess = function (inString) {
+            return inString.split('_').join('');
+        };
+
+        var getNewRowId = function () {
+            var retRowId = rowId;
+            rowId = rowId - 1;
+            return retRowId;
+        };
+
+        var checkDuplicate = function (tr) {
+            var glId = +$(tr).find('td[data-modelproperty="GeneralLedgerId"]').text();
+            var drcr = +$(tr).find('td[data-modelproperty="AmountDR"]').text() ? 'D' : 'C';
+            return grid.find('tbody tr').not(':first').not('#footer').not('[data-edit="true"]').toArray().filter(function (tr) {
+                var obj = $(tr).data('obj');
+                return obj.GENERAL_LEDGER_ID == glId && obj.DRCR == drcr;
+            }).length > 0;
+            return retVal;
+        };
+
+        var checkNoAmount = function (tr) {
+            var cr = $(tr).find('[data-modelproperty="AmountCR"]').text();
+            var dr = $(tr).find('[data-modelproperty="AmountDR"]').text();
+
+            //if (cr <= 0 && dr <= 0) {
+            //    return true;
+            //}
+            return false;
+        };
+
+        var prepareRowForAdd = function (tr, generalLedgerId) {
+
+            tr.find('[data-modelproperty="GeneralLedgerId"]').text(generalLedgerId);
+
+            var hiddenInput = '';
+
+            tr.find('td').each(function () {
+
+                var td = $(this);
+
+                if (td.find('ul').length > 0) {
+                    var ddl = o.codeBlockRef.subSegRef()[td.find('ul:eq(0)').attr('id')];
+                    hiddenInput = '<input type="hidden" value="' + ddl.selectedValue() + '" />';
+                    td.html(hiddenInput + ddl.selectedText());
+                } else if (td.find('input[type="text"]').length > 0) {
+                    td.html(td.find('input').val());
+                } else if (td.find('input[type="hidden"]').length > 0) {
+                    td.html(td.find('input').val());
+                } else if (td.find('select').length > 0) {
+                    hiddenInput = '<input type="hidden" value="' + td.find('select').val() + '" />';
+                    td.html(hiddenInput + td.find('select option:selected').html());
+                }
+
+            });
+
+            var numTd = tr.find('[data-modelproperty="AmountCR"],[data-modelproperty="CurAmountCR"],[data-modelproperty="AmountDR"],[data-modelproperty="CurAmountDR"]');
+            numTd.css('text-align', 'right');
+            numTd.each(function () { $(this).html(Number($(this).html()).toFixed(2)); });
+
+            tr.find('#btnAdd').closest('td').html('<input id="btnEdit" type="button" value="Edit" style="width: 50px;"/>');
+            tr.find('#btnCancel').closest('td').html('<input id="btnRemove" type="button" value="Remove" style="width: 50px;"/>');
+            tr.find('#getBudget').closest('td').empty();
+            var row = '<tr data-rowid="' + getNewRowId() + '">' + tr.html() + '</tr>';
+
+            return row;
+        };
+
+        var prepareForEdit = function (selectedRow) {
+
+            selectedRow.find('td').each(function () {
+                var td = $(this);
+                var indx = td.index();
+                if (grid.find('tbody tr:eq(0) td:eq(' + indx + ') ul').length > 0) {
+                    var ddl = o.codeBlockRef.subSegRef()[grid.find('tbody tr:eq(0) td:eq(' + indx + ')').find('ul:eq(0)').attr('id')];
+                    ddl.setValue(td.find('input:hidden').val(), true);
+                } else if (grid.find('tbody tr:eq(0) td:eq(' + indx + ') input[type="text"]').length > 0) {
+                    grid.find('tbody tr:eq(0) td:eq(' + indx + ')').find('input').val(td.html());
+                } else if (grid.find('tbody tr:eq(0) td:eq(' + indx + ') input[type="hidden"]').length > 0) {
+                    grid.find('tbody tr:eq(0) td:eq(' + indx + ')').find('input').val(td.html());
+                }
+            });
+
+        };
+
+        var prepareForUpdate = function (tr, generalLedgerId) {
+
+            tr.find('[data-modelproperty="GeneralLedgerId"]').text(generalLedgerId);
+
+            var hiddenInput = '';
+
+            tr.find('td').each(function () {
+
+                var td = $(this);
+
+                if (td.find('ul').length > 0) {
+                    var ddl = o.codeBlockRef.subSegRef()[td.find('ul:eq(0)').attr('id')];
+                    hiddenInput = '<input type="hidden" value="' + ddl.selectedValue() + '" />';
+                    td.html(hiddenInput + ddl.selectedText());
+                } else if (td.find('input[type="text"]').length > 0) {
+                    td.html(td.find('input').val());
+                } else if (td.find('input[type="hidden"]').length > 0) {
+                    td.html(td.find('input').val());
+                } else if (td.find('select').length > 0) {
+                    hiddenInput = '<input type="hidden" value="' + td.find('select').val() + '" />';
+                    td.html(hiddenInput + td.find('select option:selected').html());
+                }
+
+            });
+
+            var numTd = tr.find('[data-modelproperty="AmountCR"],[data-modelproperty="CurAmountCR"],[data-modelproperty="AmountDR"],[data-modelproperty="CurAmountDR"]');
+            numTd.css('text-align', 'right');
+            numTd.each(function () { $(this).html(Number($(this).html()).toFixed(2)); });
+
+            tr.find('#btnAdd').closest('td').html('<input id="btnEdit" type="button" value="Edit"/>');
+            tr.find('#btnCancel').closest('td').html('<input id="btnRemove" type="button" value="Remove"/>');
+            tr.find('#getBudget').closest('td').empty();
+
+            var row = '<tr data-rowid="' + getNewRowId() + '">' + tr.html() + '</tr>';
+
+            return row;
+        };
+
+        var clearEntryRow = function () {
+            try {
+                //commented by ferdous
+                /*var ddl = o.codeBlockRef.firstVisibleDropDown();
+                if (ddl) {
+                    o.preserveDdl = {
+                        preserveId: ddl.getId(),
+                        preserveValue: ddl.selectedValue()
+                    };
+                }*/
+
+                var tr = grid.find('tbody tr:eq(0)');
+                tr.find('td').each(function () {
+                    var td = $(this);
+                    if (td.find('ul').length > 0) {
+                        var elemId = td.find('ul:eq(0)').attr('id');
+                        o.codeBlockRef.subSegRef()[elemId].clearList();
+                    } else if (td.find('input[type="text"]').length > 0) {
+                        td.find('input[type="text"]').val('');
+                    } else if (td.find('input[type="hidden"]').length > 0) {
+                        td.find('input[type="text"]').val('');
+                    } else if (td.find('select').length > 0) {
+                        td.find('select').val('-1');
+                    }
+                });
+                $('#AMOUNT_DR,#CUR_AMOUNT_DR,#AMOUNT_CR,#CUR_AMOUNT_CR').attr('disabled', 'disabled');
+            } catch (error) {
+                alert(error.message ? error.message : error);
+            }
+        };
+
+        updateSumColumns = function () {
+            var tr = grid.find('tbody tr:eq(0)').clone();
+            tr.find('td').each(function () {
+                var td = $(this);
+                if (td.attr('data-sum')) {
+                    var indx = td.index();
+                    var sum = 0;
+                    grid.find('tbody tr').not(':first').not(':last').each(function () {
+                        sum = sum + Number($(this).find('td:eq(' + indx + ')').text());
+                    });
+                    td.html(Number(sum).toFixed(2));
+                    td.attr('style', 'text-align:right');
+                } else {
+                    td.html('');
+                }
+            });
+            tr.find('td[data-sum="true"]:eq(0)').prev().html('Total : ').attr('style', 'text-align:right');
+            grid.find('#footer').html(tr.html());
+        };
+
+        var doEditChanges = function (btn) {
+            btn.closest('tr').attr('data-edit', 'true').find('input[type="button"]').attr('disabled', 'disabled');
+            grid.find('tbody tr:eq(0) #btnAdd').hide();
+            grid.find('tbody tr:eq(0) #btnUpdate').show();
+        };
+
+        var undoEditChanges = function () {
+            grid.find('tr[data-edit="true"] input[type="button"]').removeAttr('disabled');
+            grid.find('tr[data-edit="true"]').removeAttr('data-edit');
+            grid.find('tbody tr:eq(0) #btnAdd').show();
+            grid.find('tbody tr:eq(0) #btnUpdate').hide();
+        };
+
+        var doDeleteChanges = function (btn) {
+            btn.closest('tr').attr('data-delete', 'true').find('input[type="button"]').attr('disabled', 'disabled');
+        };
+
+        var undoDeleteChanges = function () {
+            grid.find('tr[data-delete="true"] input[type="button"]').removeAttr('disabled');
+            grid.find('tr[data-delete="true"]').removeAttr('data-delete');
+        };
+
+        var checkBudget = function (generalLedgerId) {
+
+            //var doNotCheck = [26786606, 26786615, 26786634, 26786654, 26786625, 26786668, 26786620, 26786638, 26786635, 26786629, 26786674];
+            //if (doNotCheck.indexOf(generalLedgerId) > 0) return true;
+
+            var askingAmount = grid.find('tbody tr:eq(0) td[data-modelproperty="AmountDR"] input').val();
+            var addAvailable = grid.find('tbody tr[data-edit="true"]').length > 0 ?
+                grid.find('tbody tr[data-edit="true"] td[data-modelproperty="AmountDR"]').html() : 0;
+
+            if (askingAmount <= 0) return true;
+
+            var flag = true;
+
+            var budgetCheckArgs = {
+                generalLedgerId: +generalLedgerId,
+                askingAmount: +askingAmount,
+                addAvailable: +addAvailable
+            };
+
+            Object.assign(budgetCheckArgs, o.checkBudgetArgs(generalLedgerId));
+
+            var ajxurl = o.checkBudgetUrl;
+
+            var promise = $.ajax({
+                type: 'POST',
+                url: ajxurl,
+                data: { budgetCheckArgs: budgetCheckArgs },
+                dataType: 'json',
+                beforeSend: addProgress,
+                complete: removeProgress,
+                async: false
+            });
+
+            //var promise = $.ajax({
+            //    type: 'POST',
+            //    url: ajxurl,
+            //    data: data,
+            //    dataType: 'json',
+            //    beforeSend: addProgress,
+            //    complete: removeProgress,
+            //    async: false
+            //});
+
+            promise.done(function (data) {
+                if (data.FLAG != 0) {
+                    flag = false;
+                    MsgBox({ message: data.MSG });
+                    return;
+                }
+            });
+
+            promise.fail(function (err) {
+                flag = false;
+                try {
+                    alert(err ? err.responseText : err);
+                } catch (err) {
+                    alert(!err.message ? err : err.message);
+                }
+            });
+
+            return flag;
+
+        };
+
+        var getBudget = function (generalLedgerId) {
+
+            var flag = true;
+
+            var getCheckArgs = {
+                generalLedgerId: +generalLedgerId
+            };
+
+            //Object.assign(getCheckArgs, o.checkBudgetArgs());
+
+            var ajxurl = window.appRoot + '/accounts/accountsbase/getbudget';
+
+            var promise = $.ajax({
+                type: 'POST',
+                url: ajxurl,
+                data: getCheckArgs,
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: addProgress,
+                complete: removeProgress,
+                async: false
+            });
+
+            promise.done(function (data) {
+                flag = false;
+                MsgBox({ message: 'Available Budget : ' + data });
+                return;
+            });
+            return flag;
+        };
+
+        var checkPurchase = function (generalLedgerId) {
+            var amount = grid.find('tbody tr:eq(0) td[data-modelproperty="AmountDR"] input').val();
+
+            var contra = $.extend({
+                GeneralLedgerId: generalLedgerId,
+                Amount: amount
+            }, o.purchaseParamCallback());
+
+            var flag = true;
+
+            var ajxurl = window.appRoot + '/accounts/AccountsBase/CheckPurchaseOrder';
+            var promise = $.ajax({
+                type: 'POST',
+                url: ajxurl,
+                data: { contraParam: contra },
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: addProgress,
+                complete: removeProgress,
+                async: false
+            });
+
+            promise.done(function (data) {
+                if (data.FLAG != 0) {
+                    flag = false;
+                    MsgBox({ message: data.MSG });
+                    return;
+                }
+            });
+
+            promise.fail(function (err) {
+                flag = false;
+                try {
+                    alert(err ? err.responseText : err);
+                } catch (err) {
+                    alert(!err.message ? err : err.message);
+                }
+            });
+
+            return flag;
+        };
+
+        var calculateDebit = function () {
+            var debit = 0, credit = 0;
+
+            grid.find('tbody tr').not(':first').not(':last').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true') return;
+                debit = Number(debit) + Number($(row).find('td[data-modelproperty="AmountDR"]').text());
+                credit = Number(credit) + Number($(row).find('td[data-modelproperty="AmountCR"]').text());
+            });
+
+            return (credit - debit).toFixed(2);
+        };
+
+        var calculateCurDebit = function () {
+            var debit = 0, credit = 0;
+
+            grid.find('tbody tr').not(':first').not(':last').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true') return;
+                debit = Number(debit) + Number($(row).find('td[data-modelproperty="CurAmountDR"]').text());
+                credit = Number(credit) + Number($(row).find('td[data-modelproperty="CurAmountCR"]').text());
+            });
+
+            return (credit - debit).toFixed(2);
+        };
+
+        var calculateCredit = function () {
+            var debit = 0, credit = 0;
+
+            grid.find('tbody tr').not(':first').not(':last').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true') return;
+                debit = Number(debit) + Number($(row).find('td[data-modelproperty="AmountDR"]').text());
+                credit = Number(credit) + Number($(row).find('td[data-modelproperty="AmountCR"]').text());
+            });
+
+            return (debit - credit).toFixed(2);
+        };
+
+        var calculateCurCredit = function () {
+            var debit = 0, credit = 0;
+
+            grid.find('tbody tr').not(':first').not(':last').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true') return;
+                debit = Number(debit) + Number($(row).find('td[data-modelproperty="CurAmountDR"]').text());
+                credit = Number(credit) + Number($(row).find('td[data-modelproperty="CurAmountCR"]').text());
+            });
+
+            return (debit - credit).toFixed(2);
+        };
+
+        var calculatePlCredit = function () {
+            var debit = 0, credit = 0;
+
+            grid.find('tbody tr').not(':first').not(':last').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true' || +$(row).find('td[data-modelproperty="GeneralLedgerId"]').text().trim() === +plGl) return;
+                debit = Number(debit) + Number($(row).find('td[data-modelproperty="AmountDR"]').text());
+                credit = Number(credit) + Number($(row).find('td[data-modelproperty="AmountCR"]').text());
+            });
+
+            return (debit - credit).toFixed(2);
+        };
+
+        var addOrUpdateContraRow = function () {
+
+            var contraData = cache.GetContraGeneralLedgerData();
+
+            var drCrDecide = o.codeBlockRef.getDebitCreditDeciderSubsegmentId();
+            var isDebit = o.codeBlockRef.isDebit(contraData['_' + drCrDecide]);
+
+            if (isDebit.toUpperCase() === 'D') {
+                contraData.AmountDR = calculateDebit();
+                contraData.CurAmountDR = calculateCurDebit();
+                contraData.AmountCR = 0;
+                contraData.CurAmountCR = 0;
+            } else {
+                contraData.AmountDR = 0;
+                contraData.CurAmountDR = 0;
+                contraData.AmountCR = calculateCredit();
+                contraData.CurAmountCR = calculateCurCredit();
+            }
+
+            var index;
+
+            grid.find('tbody tr').each(function () {
+                var row = this;
+                if ($(row).find('td[data-modelproperty="IsContra"]').text().trim() == 'true') {
+                    index = $(row).index();
+                    return false;
+                }
+                return true;
+            });
+
+            grid.find('tbody tr:eq(' + index + ')').remove();
+
+            if (grid.find('tbody tr').not(':first').not(':last').length > 0) {
+                insertRow(contraData, grid.find('tbody tr').length - 1);
+                if ($.isFunction(o.afterContraAdd)) {
+                    o.afterContraAdd({}, grid.find('tbody tr:not(:first):not(:last)').toArray().reverse()[0]);
+                }
+            }
+        };
+
+        var addOrUpdateRowWithPlRow = function (amount) {
+
+            var plData = cache.GetPlGeneralLedgerData();
+
+            if (plData === null) return;
+
+            var requiredProp = Object.keys(plData).filter(function (item) { return item.slice(0, 1) === '_' && item.slice(-1) !== '_'; });
+
+            var ssElmPairs = [];
+
+            requiredProp.forEach(function (item) {
+                ssElmPairs.push({ SubSegmentId: item.substring(1), ElementDataId: plData[item] });
+            });
+
+            var glId = cache.GetGeneralLedgerId({ ssElmPairs: ssElmPairs });
+
+            plGl = glId;
+
+            plData.GeneralLedgerId = plGl;
+            plData.AmountDR = 0;
+            plData.AmountCR = calculatePlCredit();
+
+            var index;
+
+            grid.find('tbody tr').each(function () {
+                var row = this;
+                if (+$(row).find('td[data-modelproperty="GeneralLedgerId"]').text().trim() === +plData.GeneralLedgerId) {
+                    index = $(row).index();
+                    return false;
+                }
+                return true;
+            });
+
+            grid.find('tbody tr:eq(' + index + ')').remove();
+
+            if (grid.find('tbody tr').not(':first').not(':last').length > 0 && +plData.AmountCR > 0)
+                insertRow(plData, grid.find('tbody tr').length - 1);
+        };
+
+        addClick = function () {
+            try {
+
+                var args = { cancelDefault: false };
+                if ($.isFunction(o.beforeAdd)) o.beforeAdd(args);
+                if (args.cancelDefault == true) return;
+
+                var glId = cache.GetGeneralLedgerId({ ssElmPairs: o.codeBlockRef.selectedElements() });
+
+                if (glId == -1) {
+                    MsgBox({ message: 'General Ledger information not found.' });
+                    return;
+                }
+
+                if (o.checkBudget()) if (!checkBudget(glId)) return;
+
+                if (o.checkPurchase) if (!checkPurchase(glId)) return;
+
+                var tr = prepareRowForAdd($(this).closest('tr').clone(), glId);
+
+                if (checkDuplicate(tr)) {
+                    MsgBox({ message: 'Data for this code already exist.' });
+                    return;
+                }
+
+                if (checkNoAmount(tr)) {
+                    MsgBox({ message: 'Amount not entered.' });
+                    return;
+                }
+                var tr1 = $(tr);
+                tr1.data('obj', { GENERAL_LEDGER_ID: +tr1.find('[data-modelproperty="GeneralLedgerId"]').text(), DRCR: +tr1.find('[data-modelproperty="AmountDR"]').text() ? 'D' : 'C' });
+                grid.find('tbody tr:eq(0)').after(tr1);
+
+                addOrUpdateRowWithPlRow(+tr1.find('[data-modelproperty="AmountDR"]').text());
+
+                if (o.allowContra) addOrUpdateContraRow();
+
+                bindEditRemoveEvent(1);
+                clearEntryRow();
+                updateSumColumns();
+                o.codeBlockRef.firstElementCallback(o.codeBlockRef.getElementAtPosition(1));
+
+                if ($.isFunction(o.afterAdd)) {
+                    var argsAfter = { data: {} };
+                    grid.find('tbody tr:eq(1)').find('td').each(function () {
+                        var td = $(this);
+                        if (td.attr('data-modelproperty'))
+                            argsAfter.data[td.attr('data-modelproperty')] = td.find('input').length > 0 ? td.find('input').val() : td.html();
+                    });
+                    o.afterAdd(argsAfter, grid.find('tbody tr:eq(1)')[0]);
+                }
+
+            } catch (ex) {
+                alert(ex.message ? ex.message : ex);
+            }
+        };
+
+        editClick = function () {
+            undoEditChanges();
+            doEditChanges($(this));
+            prepareForEdit($(this).closest('tr'));
+        };
+
+        updateClick = function () {
+
+            var args = { cancelDefault: false };
+            if ($.isFunction(o.beforeUpdate)) o.beforeUpdate(args);
+            if (args.cancelDefault == true) return;
+
+            var glId = cache.GetGeneralLedgerId({ ssElmPairs: o.codeBlockRef.selectedElements() });
+
+            if (glId == -1) {
+                MsgBox({ message: 'General Ledger information not found.' });
+                return;
+            }
+
+            if (o.checkBudget()) if (!checkBudget(glId)) return;
+
+            if (o.checkPurchase) if (!checkPurchase(glId)) return;
+
+            var tr = prepareForUpdate(grid.find('tbody tr:eq(0)').clone(), glId);
+
+            if (checkDuplicate(tr)) {
+                MsgBox({ message: 'Data for this code already exist.' });
+                return;
+            }
+
+            if (checkNoAmount(tr)) {
+                MsgBox({ message: 'Amount not entered.' });
+                return;
+            }
+
+            var index = grid.find('tbody tr[data-edit="true"]').index();
+            // grid.find('tbody tr[data-edit="true"]').replaceWith(tr);
+            var tr1 = $(tr);
+            tr1.data('obj', { GENERAL_LEDGER_ID: +tr1.find('[data-modelproperty="GeneralLedgerId"]').text(), DRCR: +tr1.find('[data-modelproperty="AmountDR"]').text() ? 'D' : 'C' });
+            grid.find('tbody tr[data-edit="true"]').replaceWith(tr1);
+
+            addOrUpdateRowWithPlRow(+tr1.find('[data-modelproperty="AmountDR"]').text());
+
+            if (o.allowContra) addOrUpdateContraRow();
+            bindEditRemoveEvent(index);
+
+            undoEditChanges();
+            clearEntryRow();
+            updateSumColumns();
+            o.codeBlockRef.firstElementCallback(o.codeBlockRef.getElementAtPosition(1));
+
+            if ($.isFunction(o.afterUpdate)) {
+                var argsAfter = { data: {} };
+                grid.find('tbody tr:eq(' + index + ')').find('td').each(function () {
+                    var td = $(this);
+                    if (td.attr('data-modelproperty'))
+                        argsAfter.data[td.attr('data-modelproperty')] = td.find('input').length > 0 ? td.find('input').val() : td.html();
+                });
+                o.afterUpdate(argsAfter, grid.find('tbody tr:eq(' + index + ')')[0]);
+            }
+        };
+
+        cancelClick = function () {
+            undoEditChanges();
+            clearEntryRow();
+            updateSumColumns();
+            o.codeBlockRef.firstElementCallback(o.codeBlockRef.getElementAtPosition(1));
+        };
+
+        getBudgetClick = function () {
+            var glId = cache.GetGeneralLedgerId({ ssElmPairs: o.codeBlockRef.selectedElements() });
+
+            if (glId == -1) {
+                MsgBox({ message: 'Please enter accounting code.' });
+                return;
+            }
+
+            if (o.checkBudget()) {
+                return getBudget(glId);
+            } else {
+                MsgBox({ message: 'Budget Checking disabled for this Operation.' });
+                return;
+            }
+
+            //if (o.checkPurchase) if (!checkPurchase(glId)) {
+            //    MsgBox({ message: 'Budget Checking disabled for this Operation.' });
+            //    return;
+            //};
+        };
+
+        removeClick = function () {
+            undoEditChanges();
+            doDeleteChanges($(this));
+            MsgBox({
+                message: o.deleteConfirmMsg,
+                messageTitle: 'Confirmation',
+                button: 'YesNo',
+                yesMethod: function () {
+                    var tr1 = grid.find('tbody tr[data-delete="true"]').clone();
+                    grid.find('tbody tr[data-delete="true"]').remove();
+                    addOrUpdateRowWithPlRow(+tr1.find('[data-modelproperty="AmountDR"]').text());
+                    if (o.allowContra) addOrUpdateContraRow();
+                    updateSumColumns();
+                },
+                noMethod: function () { undoDeleteChanges(); }
+            });
+        };
+
+        grid.find('tbody tr:eq(0) #btnAdd').unbind('click').click(addClick);
+
+        grid.find('tbody tr:eq(0) #btnUpdate').unbind('click').click(updateClick);
+
+        grid.find('tbody tr:eq(0) #btnCancel').unbind('click').click(cancelClick);
+
+        grid.find('tbody tr:eq(0) #getBudget').unbind('click').click(getBudgetClick);
+
+        insertRow = function (obj, insertAt) {
+
+            if (!insertAt) insertAt = 1;
+
+            var tr = grid.find('tbody tr:eq(0)').clone();
+
+            for (var prop in obj) {
+
+                var key = underscoreProcess(prop).toUpperCase();
+
+                if (findFirstChar(prop) != '_' && findLastChar(prop) != '_') {
+                    tr.find('td').each(function () {
+                        var td = $(this);
+                        if (td.attr('data-modelproperty')) {
+                            if (key != "ISCONTRA") {
+                                if (td.attr('data-modelproperty').toUpperCase() == key) {
+                                    td.html(obj[prop]);
+                                    return false;
+                                }
+                            } else {
+                                if (td.attr('data-modelproperty').toUpperCase() == key) {
+                                    td.html(obj[prop] == 'Y' ? 'true' : 'false');
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
+                    });
+                } else if (findFirstChar(prop) == '_' && findLastChar(prop) != '_') {
+
+                    tr.find('td').each(function () {
+                        var td = $(this);
+                        if (td.attr('data-modelproperty')) {
+                            if (td.attr('data-modelproperty').toUpperCase() == underscoreProcess(prop).toUpperCase()) {
+                                var hiddenInput = '<input type="hidden" value="' + obj[prop] + '" />';
+                                td.html(hiddenInput + obj[prop + '_']);
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+
+            var isContra = !obj.IS_CONTRA ? obj.IsContra : obj.IS_CONTRA;
+
+            if ((!isContra || isContra == 'N') && +obj.GeneralLedgerId !== +plGl) {
+                tr.find('#btnAdd').closest('td').html('<input id="btnEdit" type="button" value="Edit"/>');
+                tr.find('#btnCancel').closest('td').html('<input id="btnRemove" type="button" value="Remove"/>');
+            } else if (isContra == 'Y' || +obj.GeneralLedgerId === +plGl) {
+                tr.find('#btnAdd').remove();
+                tr.find('#btnCancel').remove();
+                tr.find('#btnUpdate').remove();
+                tr.find('#getBudget').remove();
+
+                tr.css('font-weight', 'bold');
+                //tr.find('[data-modelproperty="19"],[data-modelproperty="AmountCR"],[data-modelproperty="AmountDR"]').css('font-weight', 'bold');
+            }
+
+            var numTd = tr.find('[data-modelproperty="AmountCR"],[data-modelproperty="CurAmountCR"],[data-modelproperty="AmountDR"],[data-modelproperty="CurAmountDR"]');
+            numTd.css('text-align', 'right');
+            numTd.each(function () { $(this).html(Number($(this).html()).toFixed(2)); });
+
+            var rId = getNewRowId();
+
+            tr.attr('data-rowid', rId);
+            tr.data('obj', { GENERAL_LEDGER_ID: obj.GENERATL_LEDGER_ID, DRCR: obj.DEBIT_AMOUNT ? 'D' : 'C' });
+            tr.show();
+            // grid.find('tbody tr').eq(insertAt - 1).after('<tr data-rowid="' + rId + '">' + tr.html() + '</tr>');
+            grid.find('tbody tr').eq(insertAt - 1).after(tr);
+
+        };
+
+        var bindServerData = function (data) {
+
+            grid.returns.clearGridData();
+
+            if ($(data).length > 0) {
+
+                try {
+                    data = cache.AddElementInfo(data);
+                } catch (e) {
+                    MsgBox({ message: e });
+                    return;
+                }
+
+                data = spreadData(data);
+                data = data.sort(sortData);
+
+                $(data.reverse()).each(function () {
+                    insertRow(this);
+                });
+            }
+            //            sortDataGrid();
+            updateSumColumns();
+
+        };
+
+        var sortData = function (a, b) {
+            if ((a.AMOUNT_DR == 0 && b.AMOUNT_DR == 0) || (a.AMOUNT_CR == 0 && b.AMOUNT_CR == 0)) {
+                if (a.IS_CONTRA == b.IS_CONTRA) {
+                    if (a._19_.substr(0, 7) == b._19_.substr(0, 7))
+                        return 0;
+                    return a._19_.substr(0, 7) - b._19_.substr(0, 7);
+                }
+                if (a.IS_CONTRA < b.IS_CONTRA) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            } else {
+                return b.AMOUNT_DR - a.AMOUNT_DR;
+            }
+            //if (a.IS_CONTRA > b.IS_CONTRA) return 1;
+            //if (a.IS_CONTRA < b.IS_CONTRA) return -1;
+            //return a._19_.split('-')[0] - b._19_.split('-')[0];
+        };
+
+        var spreadData = function (data) {
+            var ret = data.reduce(function (acc, curr) {
+                var temp;
+                if (!acc[curr.GENERAL_LEDGER_ID]) {
+                    acc[curr.GENERAL_LEDGER_ID] = [];
+                }
+                if (+curr.AMOUNT_DR) {
+                    temp = Object.assign({}, curr);
+                    temp.AMOUNT_CR = 0;
+                    acc[curr.GENERAL_LEDGER_ID].push(temp);
+                }
+                if (+curr.AMOUNT_CR) {
+                    temp = Object.assign({}, curr);
+                    temp.AMOUNT_DR = 0;
+                    acc[curr.GENERAL_LEDGER_ID].push(temp);
+                }
+                return acc;
+            }, {});
+            return [].concat(...Object.values(ret));
+        };
+
+        grid.returns = {
+
+            disable: function () {
+                undoEditChanges();
+                clearEntryRow(grid.find('tbody tr:eq(0)'));
+                updateSumColumns();
+
+                grid.find('tbody tr:eq(0) input[type="text"]').attr('disabled', 'disabled');
+                grid.find('tbody input[type="button"]').attr('disabled', 'disabled');
+
+                var ssArr = o.codeBlockRef.subSegRef();
+                if (ssArr)
+                    for (var item in ssArr) {
+                        if (ssArr.hasOwnProperty(item)) {
+                            ssArr[item].disable();
+                        }
+                    }
+            },
+
+            enable: function () {
+                grid.find('tbody tr:eq(0) input[type="text"]').removeAttr('disabled');
+                grid.find('tbody input[type="button"]').removeAttr('disabled');
+                var ssArr = o.codeBlockRef.subSegRef();
+                if (ssArr)
+                    for (var item in ssArr) {
+                        if (ssArr.hasOwnProperty(item)) {
+                            ssArr[item].enable();
+                        }
+                    }
+            },
+
+            displayFooter: function () {
+                updateSumColumns();
+            },
+
+            getModelIndex: function (modelProperty) {
+                return grid.find('tbody tr:eq(0)').find('td[data-modelproperty="' + modelProperty + '"]').index(0);
+            },
+
+            getData: function () {
+                var arr = [];
+                var data;
+                grid.find('tbody tr:gt(0)').not('#footer').each(function () {
+                    var obj = {};
+                    var tr = $(this);
+                    tr.find('td').each(function () {
+                        var td = $(this);
+                        if (td.attr('data-modelproperty')) {
+                            obj[td.attr('data-modelproperty')] = td.find('input').length > 0 ? td.find('input').val() : td.html();
+                        }
+                    });
+                    data = defaults.currencyInfo ? defaults.currencyInfo(obj) : { currencyId: 0, amountDr: 0, amountCr: 0 };
+                    obj.CurrencyId = +data.currencyId;
+                    obj.CurAmountDR = +data.amountDr;
+                    obj.CurAmountCR = +data.amountCr;
+                    arr.push(obj);
+                });
+
+                var data = this.groupBy(arr, 'GeneralLedgerId');
+
+                var data1 = [];
+
+                for (var k in data) {
+                    if (data.hasOwnProperty(k)) {
+                        var r = Object.assign({}, data[k][0]);
+                        r.AmountDR = 0;
+                        r.CurAmountDR = 0;
+                        r.AmountCR = 0;
+                        r.CurAmountCR = 0;
+                        for (var i = 0; i < data[k].length; i++) {
+                            r.AmountDR = this.add(r.AmountDR, +data[k][i].AmountDR);
+                            r.CurAmountDR = this.add(r.CurAmountDR, +data[k][i].CurAmountDR);
+                            r.AmountCR = this.add(r.AmountCR, +data[k][i].AmountCR);
+                            r.CurAmountCR = this.add(r.CurAmountCR, +data[k][i].CurAmountCR);
+                        }
+                        r.AmountDR = "" + r.AmountDR;
+                        r.CurAmountDR = "" + r.CurAmountDR;
+                        r.AmountCR = "" + r.AmountCR;
+                        r.CurAmountCR = "" + r.CurAmountCR;
+                        data1.push(r);
+                    }
+                }
+                return data1;
+            },
+
+            getDataWithoutGroup: function () {
+                var arr = [];
+                var data;
+                grid.find('tbody tr:gt(0)').not('#footer').each(function () {
+                    var obj = {};
+                    var tr = $(this);
+                    tr.find('td').each(function () {
+                        var td = $(this);
+                        if (td.attr('data-modelproperty')) {
+                            obj[td.attr('data-modelproperty')] = td.find('input').length > 0 ? td.find('input').val() : td.html();
+                        }
+                    });
+                    data = defaults.currencyInfo(obj);
+                    obj.CurrencyId = +data.currencyId;
+                    obj.CurAmountDR = +data.amountDr;
+                    obj.CurAmountCR = +data.amountCr;
+                    arr.push(obj);
+                });
+                return arr;
+            },
+
+            groupBy: function (xs, key) {
+                return xs.reduce(function (rv, x) {
+                    (rv[x[key]] = rv[x[key]] || []).push(x);
+                    return rv;
+                }, {});
+            },
+
+            clearGridData: function () {
+                clearEntryRow();
+                grid.find('tbody tr:gt(0)').not('#footer').remove();
+                updateSumColumns();
+            },
+
+            clearRowData: function () {
+                grid.find('tbody tr:gt(0)').not('#footer').remove();
+                updateSumColumns();
+            },
+
+            refreshData: function (parameters, callback) {
+                var ajxurl = window.appRoot + '/' + (o.dataUrl ? o.dataUrl : '');
+
+                var promise = $.ajax({
+                    type: 'POST',
+                    url: ajxurl,
+                    data: parameters ? parameters : null,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    beforeSend: addProgress,
+                    complete: removeProgress,
+                    async: o.isAsync
+                });
+
+                promise.done(function (data) {
+                    if (data.FLAG) {
+                        if (callback) callback(data);
+                        return;
+                    }
+                    bindServerData(data);
+                    o.codeBlockRef.firstElementCallback(o.codeBlockRef.getElementAtPosition(1));
+                    if (callback) callback(data);
+                    bindEditRemoveEvent();
+                });
+
+                promise.fail(function (err) {
+                    try {
+                        alert(err ? err.responseText : err);
+                    } catch (err) {
+                        alert(!err.message ? err : err.message);
+                    }
+                });
+
+            },
+
+            bindData: function (data, callback) {
+                bindServerData(data);
+                o.codeBlockRef.firstElementCallback(o.codeBlockRef.getElementAtPosition(1));
+                if (callback) callback();
+                bindEditRemoveEvent();
+            },
+
+            rowCount: function () {
+                return grid.find('tbody tr:gt(0)').not('#footer').length;
+            },
+
+            totalDebitAmount: function () {
+                var debitAmount = 0;
+                grid.find('tbody tr').not(':first').not(':last').each(function () {
+                    var tr = $(this);
+                    debitAmount = Number(debitAmount) + Number(tr.find('[data-modelproperty="AmountDR"]').text());
+                });
+                return Number(debitAmount).toFixed(2);
+            },
+
+            totalCreditAmount: function () {
+                var creditAmount = 0;
+                grid.find('tbody tr').not(':first').not(':last').each(function () {
+                    var tr = $(this);
+                    creditAmount = Number(creditAmount) + Number(tr.find('[data-modelproperty="AmountCR"]').text());
+                });
+                return Number(creditAmount).toFixed(2);
+            },
+
+            totalContraAmount: function () {
+                var contraAmount = 0;
+
+                grid.find('tbody tr').not(':first').not(':last').each(function () {
+                    var tr = $(this);
+                    if (tr.find('td[data-modelproperty="IsContra"]').text() == 'true') {
+                        if (tr.find('td[data-modelproperty="AmountDR"]').text() > 0) {
+                            contraAmount = Number(contraAmount) + Number(tr.find('td[data-modelproperty="AmountDR"]').text());
+                        } else {
+                            contraAmount = Number(contraAmount) + Number(tr.find('td[data-modelproperty="AmountCR"]').text());
+                        }
+                    }
+                });
+
+                return Number(contraAmount).toFixed(2);
+            },
+
+            updateSum: function () {
+                updateSumColumns();
+            },
+
+            loadClientCache: function (param, callback) {
+
+                var def = {
+                    DdoId: 0,
+                    FiscalYearId: 0,
+                    DocumentTypeDetId: 0,
+                    DocumentStatusId: 0,
+                    ForceLoad: true,
+                    alwaysExecuteCallback: false
+                };
+
+                var req = $.extend(def, param);
+
+                if (req.ForceLoad == false) {
+                    if (cache.IsCacheDataExists()) return;
+                }
+
+                var promise = $.ajax({
+                    type: 'POST',
+                    url: Object.prototype.toString.call(o.url) !== '[object Function]' ? o.url : o.url(),
+                    data: { cacheParam: req },
+                    contentType: 'application/x-www-form-urlencoded',
+                    beforeSend: addProgress,
+                    complete: removeProgress,
+                    dataType: 'json',
+                    async: false
+                });
+
+                promise.done(function (svrData) {
+                    if (o.overwriteCahceException == null) {
+                        if (svrData.hasOwnProperty('FLAG')) {
+                            MsgBox({ message: svrData.MSG });
+                            if (req.alwaysExecuteCallback === true) if (callback) callback(svrData);
+                            return;
+                        }
+                    } else {
+                        o.overwriteCahceException(svrData);
+                        if (req.alwaysExecuteCallback === true) if (callback) callback(svrData);
+                        return;
+                    }
+                    if (param.filter && Object.prototype.toString.call(param.filter, svrData) == '[object Function]') {
+                        svrData = param.filter(svrData);
+                    }
+                    cache.SetCacheData(svrData, req.FiscalYearId);
+                    if (callback) callback(svrData);
+                });
+
+                promise.fail(function (err) {
+                    try {
+                        alert(err ? err.responseText : err);
+                    } catch (er) {
+                        alert(!er.message ? er : er.message);
+                    }
+                });
+
+            },
+
+            add: function (a, b) {
+                //var tens,
+                //    la = String(a).length - String(a).indexOf('.') - 1,
+                //    lb = String(b).length - String(b).indexOf('.') - 1;
+                //tens = Math.pow(10, Math.max(la, lb));
+                //return +(((a * tens) + (b * tens)) / tens).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+                var x = Math.pow(10, 2);
+                return (parseInt(Math.round(a * x)) + parseInt(Math.round(b * x))) / x;
+            }
+
+        };
+
+        return grid.returns;
+    };
+
+})(jQuery);

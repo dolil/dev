@@ -1,0 +1,197 @@
+﻿(function ($) {
+
+    $.fn.instantGrid = function (options) {
+
+        var defaults = {
+            saveCallback: function(args) { return args; },
+            //deleteCallback: function(args) { return args; },
+            progressText: 'Please Wait',
+            allowPager: false,
+            pagerId: 'pg',
+            pagerReferenceTable: '',
+            pagerCssClassName: 'pager',
+            pagerPopulateCallback: null,
+            pagerRowsPerPage: 15,
+            pagerPagePerScreen: 15,
+            events:[],
+            async: true
+        };
+
+        var o = $.extend(defaults, options);
+
+        var grid = $(this);
+
+        if (grid.data('data-instantGrid-attached')) return grid.data('data-instantGrid-attached');
+
+        var pager = new IbasPager();
+
+        function arrangeGridLayout() {
+            var deleteIndex = grid.find('tbody tr:eq(0)').find('td').length - 1;
+            var editIndex = deleteIndex - 1;
+
+            grid.find('tbody tr:eq(0) td').eq(editIndex).html('<input data-id="instantEdit" class="btn btn-secondary btn-sm" type="button" value="Edit" style="width:auto;" />');
+            grid.find('tbody tr:eq(0) td').eq(deleteIndex).html('<input data-id="instantCancel" class="btn btn-secondary btn-sm" disabled="disabled" type="button" value="Cancel" style="width:auto;" />');
+
+            grid.find('tbody tr:eq(1) td').eq(editIndex).html('<input data-id="instantSave" class="btn btn-secondary btn-sm" type="button" value="Save" style="width:auto;" />');
+            grid.find('tbody tr:eq(1) td').eq(deleteIndex).html('<input data-id="instantCancel" class="btn btn-secondary btn-sm" type="button" value="Cancel" style="width:auto;" />');
+
+            grid.find('tbody tr:eq(0) td:last').css({ 'text-align': 'center' });
+
+            grid.find('tbody tr:eq(0)').css({ 'display': 'none' });
+            grid.find('tbody tr:eq(1)').css({ 'display': 'none' });
+        }
+
+        function initiatePager() {
+            pager.InitiatePager(o.pagerId, o.pagerReferenceTable, o.pagerRowsPerPage, o.pagerPagePerScreen, o.pagerCssClassName);
+            pager.DataPopulationCallback = o.pagerPopulateCallback;
+        }
+
+        function initialState() {
+            grid.find('tbody tr[data-mode="edit"]').show();
+            grid.find('tbody tr[data-mode="edit"]').removeAttr('data-mode');
+            grid.find('tbody tr[data-mode="save"]').remove();
+        }
+
+        function bindEditDeleteEvent() {
+            grid.find('[data-id="instantEdit"]').each(function () {
+                var btn = $(this);
+                btn.unbind('click').click(function () {
+                    initialState();
+                    var thisTr = $(this).closest('tr');
+                    var newTr = grid.find('#editTemplate').clone();
+                    thisTr.attr('data-mode', 'edit');
+                    thisTr.hide();
+                    grid.find('tr[data-mode="edit"]').after('<tr data-mode="save">' + newTr.html() + '</tr>');
+
+                    grid.find('tr[data-mode="save"]').find('td').each(function () {
+                        var thisTd = $(this);
+                        var mp = thisTd.attr('data-modelproperty');
+                        var data = grid.find('tr[data-mode="edit"]').find('td[data-modelproperty="' + mp + '"]').html();
+                        if (thisTd.find('*').length > 0) {
+                            thisTd.find('input:text').eq(0).setValue(data);
+                            if (o.events.hasOwnProperty(mp)) {
+                                thisTd.find('input:text').bind(o.events[mp]);
+                            }
+                        } else {
+                            thisTd.setValue(data);
+                        }
+                    });
+
+                    bindSaveCancelEvent();
+                });
+                
+            });
+
+            grid.find('[data-id="instantDelete"]').each(function () {
+//                var btn = $(this);
+//                btn.unbind('click').click(function () {
+//                    MsgBox({
+//                        message: 'Remove this information?',
+//                        button: 'YesNo',
+//                        yesMethod: function () {
+//                            var args = { data: getObject(), cancelEvent: false };
+//                            args = o.deleteCallback(args);
+//                            if (args.cancelEvent == false) btn.closest('tr').remove();
+//                        }
+//                    });
+//                });
+            });
+        }
+
+        function bindSaveCancelEvent() {
+            grid.find('[data-id="instantSave"]').each(function() {
+                var btn = $(this);
+                btn.unbind('click').click(function () {
+                    var args = {
+                        data: getObject(),
+                        cancelEvent: false
+                    };
+                    //args = o.saveCallback(args);
+                    o.saveCallback(args);
+                    if (args.cancelEvent == false) {
+                        var tr = grid.find('tr[data-mode="edit"]');
+                        for (var prop in args.data) {
+                            if (args.data.hasOwnProperty(prop)) {
+                                tr.find('td[data-modelproperty="' + prop + '"]').html(args.data[prop]);
+                            }
+                        }
+                        initialState();
+                    }
+                });
+            });
+
+            grid.find('[data-id="instantCancel"]').each(function () {
+                var btn = $(this);
+                btn.unbind('click').click(function() {
+                    initialState();
+                });
+            });
+        }
+
+        function getObject() {
+            var obj = {};
+            grid.find('tr[data-mode="save"]').find('td').each(function () {
+                var td = $(this);
+                if (td.attr('data-modelproperty')) {
+                    obj[td.attr('data-modelproperty')] = td.find('input').length > 0 ? td.find('input').val() : td.html();
+                }
+            });
+            return obj;
+        }
+
+        arrangeGridLayout();
+
+        if (o.allowPager) initiatePager();
+
+        var undo = '#instantUndo';
+
+        $(undo).unbind('click').click(function() {
+            initialState();
+        });
+
+        var returns = {
+            setData: function (data, callback) {
+
+                returns.clearData();
+
+                $.each(data, function (index, item) {
+                    var tr = grid.find('tbody tr:eq(0)').clone();
+                    for (var prop in item) {
+                        if (item.hasOwnProperty(prop)) {
+                            tr.find('td[data-modelproperty="' + prop + '"]').html(item[prop]);
+                        }
+                    }
+                    grid.append('<tr>' + tr.html() + '</tr>');
+                });
+
+                bindEditDeleteEvent();
+
+                if (callback) callback();
+            },
+
+            setTotalRows: function (totalRows) { pager.SetTotalRows(totalRows); },
+
+            refreshGrid: function (params, callback) {
+            },
+
+            clearData: function () { grid.find('tbody tr:gt(1)').remove(); },
+
+            disableEditWithProperty: function (propName, propValue) {
+                grid.find('tr').each(function () {
+                    var tr = $(this);
+
+                    let pVal = tr.find('td[data-modelproperty="' + propName + '"]').getValue();
+                    if (pVal == propValue) {
+                        tr.find('td input[data-id="instantEdit"]').attr('disabled', true);
+                    }
+                });
+                
+            }
+        };
+
+        grid.data('data-instantGrid-attached', returns);
+
+        return returns;
+    };
+
+})(jQuery);

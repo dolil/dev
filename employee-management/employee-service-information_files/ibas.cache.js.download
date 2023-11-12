@@ -1,0 +1,215 @@
+﻿
+var CoaCache = function (options) {
+
+    var me = this;
+
+    var cacheData = null;
+
+    var fiscalYearId = 0;
+
+    var beginsWith = function (str, prefix) {
+        return (str.substr(0, prefix.length) === prefix);
+    };
+
+    var endsWith = function (str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    };
+
+    this.SetCacheData = function (data, fyId) {
+
+        var arrObj = [];
+
+        fiscalYearId = fyId;
+
+        cacheData = null;
+
+        $.each(data, function (i, cb) {
+
+            if (cb.SEG1_SUB_SEGMENT_ID == 4)
+                cb.SEG1_SUB_SEGMENT_ID = 5;
+            if (cb.SEG2_SUB_SEGMENT_ID == 47)
+                cb.SEG2_SUB_SEGMENT_ID = 9;
+
+
+            var obj = {};
+
+            $.each(cb, function (k) {
+
+                if (endsWith(k, "ELEMENT_DATA_ID")) return;
+
+                if (endsWith(k, "ELEMENT_DATA_DESC")) return;
+
+                if (endsWith(k, "SUB_SEGMENT_ID")) {
+                    var pre = k.substr(0, 5);
+                    var ssId = cb[pre + "SUB_SEGMENT_ID"];
+                    obj["_" + ssId] = cb[pre + "ELEMENT_DATA_ID"];
+                    obj["_" + ssId + "_"] = cb[pre + "ELEMENT_DATA_DESC"];
+                    return;
+
+                }
+
+                if (k === "CODING_BLOCK_ID") {
+                    obj.CodingBlockId = cb[k]; // v2.Value;
+                    return;
+                }
+
+                if (k === "GENERAL_LEDGER_ID") {
+                    obj.GeneralLedgerId = cb[k]; // v2.Value;
+                    return;
+                }
+
+                if (k === "CONTRA_FLAG") {
+                    obj.IsContra = cb[k]; // v2.Value;
+                    return;
+                }
+            });
+
+            arrObj.push(obj);
+
+        });
+
+        cacheData = arrObj;
+
+    };
+
+    this.AddElementInfo = function (data) {
+
+        $(data).each(function (index, item) {
+
+            var code;
+            $.ajax({
+                type: 'POST',
+                url: window.appRoot + '/coa/codingblock/GetCodingBlockCodeByGlId',
+                data: { glId: item.GENERAL_LEDGER_ID },
+                async: false,
+                success: function (res) {
+                    if (!res[0]) {
+                        MsgBox({ message: 'Coding block information not found.' });
+                        return -1;
+                    }
+                    code = res[0];
+                }
+            });
+
+            var cacheItem = $.grep(cacheData, function (d, i) {
+                if (Number(d.GeneralLedgerId) === Number(item.GENERAL_LEDGER_ID))
+                    return true;
+                if (d._5_ && d._9_ && code.CODING_BLOCK_CODE == d._5_.split('-')[0] + '-' + d._9_.split('-')[0] + '-' + d._13_.split('-')[0] + '-' + d._19_.split('-')[0] + '-' + d._20_.split('-')[0]) {
+                    d.GeneralLedgerId = item.GENERAL_LEDGER_ID;
+                    d.CodingBlcokId = code.CODING_BLOCK_ID;
+                    return true;
+                }
+                return false;
+            })[0];
+
+            if (!cacheItem) {
+                $.ibasAjax({
+                    url: 'accounts/AccountsBase/getcodingblock',
+                    isAsync: false,
+                    data: { generalLedgerId: item.GENERAL_LEDGER_ID },
+                    successCallback: function (cb) {
+                        throw "DDO-coding block mapping not found: " + cb.CodingBlockCode;
+                    }
+                });
+            }
+
+            for (var prop in cacheItem) {
+                if (cacheItem.hasOwnProperty(prop)) {
+                    item[prop] = cacheItem[prop];
+                }
+            }
+        });
+
+        return data;
+    };
+
+    this.GetDropdownData = function (args) {
+
+        var cache = $.grep(cacheData, function (item) { return item.IsContra == 'N'; });
+
+        if (args.params) {
+            $.each(args.params, function (index, item) {
+                cache = $.grep(cache, function (v1) { return v1['_' + item.SubSegmentId] == item.ElementDataId; });
+            });
+        }
+
+        var data = [];
+
+        $(cache).each(function (index, item) {
+            var check = $.grep(data, function (v1) { return v1["VALUEMEMBER"] == item[args.ddlId]; });
+            if ($(check).size() > 0) return;
+            var obj = {};
+            obj["VALUEMEMBER"] = item[args.ddlId];
+            obj["DISPLAYMEMBER"] = item[args.ddlId + '_'];
+            data.push(obj);
+        });
+
+        return data;
+    };
+
+    this.GetGeneralLedgerId = function (args) {
+        var ourItem = null;
+
+        $(cacheData).each(function (index, item) {
+
+            var flag = true;
+
+            $(args.ssElmPairs).each(function (i1, v1) {
+                if (item['_' + v1.SubSegmentId] != v1.ElementDataId) {
+                    flag = false;
+                    return false;
+                }
+                return true;
+            });
+
+            if (flag) {
+                ourItem = item;
+                return false;
+            }
+
+            return true;
+        });
+
+        if (ourItem == null) return -1;
+
+        if (ourItem.GeneralLedgerId == -1) {
+            $.ajax({
+                type: 'POST',
+                url: window.appRoot + '/coa/codingblock/GetCbAndGlIdByCodeBlockCode',
+                data: $.param({ fiscalYearId: fiscalYearId, code: ourItem._5_.split('-')[0] + '-' + ourItem._9_.split('-')[0] + '-' + ourItem._13_.split('-')[0] + '-' + ourItem._19_.split('-')[0] + '-' + ourItem._20_.split('-')[0] }),
+                async: false,
+                success: function (res) {
+                    if (!res[0]) {
+                        MsgBox({ message: 'Coding block information not found.' });
+                        return -1;
+                    }
+                    ourItem.CodingBlcokId = res[0].CODING_BLOCK_ID;
+                    ourItem.GeneralLedgerId = res[0].GENERAL_LEDGER_ID;
+                }
+            });
+        }
+        return ourItem.GeneralLedgerId;
+    };
+
+    this.GetContraGeneralLedgerData = function () {
+        var cache = $.grep(cacheData, function (item) { return item.IsContra == 'Y'; })[0];
+        if (!cache) return null;
+        delete cache['CodingBlockId'];
+        cache.AmountDR = 0;
+        cache.AmountCR = 0;
+        return cache;
+    };
+
+    this.GetPlGeneralLedgerData = function () {
+        var cache = $.grep(cacheData, function (item) { return item.IsContra == 'P'; })[0];
+        if (!cache) return null;        
+        cache.AmountDR = 0;
+        cache.AmountCR = 0;
+        return cache;
+    };
+
+    this.IsCacheDataExists = function () {
+        if (cacheData) if ($(cacheData).size() > 1) return true;
+        return false;
+    };
+};

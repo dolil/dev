@@ -1,0 +1,1042 @@
+﻿
+/// <reference path="../../../Scripts/ibas/message.box.js" />
+
+$(function () {
+
+    var showHideSpeed = 200;
+
+    function loadUrlInIframe(url) {
+        $('#frameContainer iframe').attr('src', url);
+        $('#frameprogress').show();
+    }
+
+    function encodeImage(src, callback) {
+        var canvas = document.createElement('canvas'),
+            ctx = canvas.getContext('2d'),
+            img = new Image();
+
+        img.onload = function () {
+            if (AspectRatioFit(img.width, img.height) > 1.5) {
+                MessageBox("Picture ratio not correct", "Error", 'OK', null, null, null);
+                return;
+            }
+            else {
+                var dtr = calculateAspectRatioFit(img.width, img.height, 300, 300);
+                canvas.height = dtr.height;
+                canvas.width = dtr.width;
+                ctx.drawImage(img, 0, 0, dtr.width, dtr.height);
+                callback(canvas.toDataURL());
+
+            }
+        };
+        img.src = src;;
+    }
+
+    function AspectRatioFit(srcWidth, srcHeight) {
+        return (srcWidth / srcHeight);
+    }
+
+    function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+        var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+        return { width: srcWidth * ratio, height: srcHeight * ratio };
+    }
+
+    function btnSubSystemSelection_Click(me) {
+        try {
+            $.post(window.appRoot + '/Security/Login/SetSelectedSubSystem',
+                {
+                    SubSystemID: me.name
+                },
+                SubSystemSelection_Success);
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function SubSystemSelection_Success(data) {
+        try {
+
+            if (!data.FLAG) {
+                var content = $(data)
+                    , popup = new PopUpBox(
+                        "<div class='masterdiv'><div class='scpSelection'></div></div>",
+                        $('<div/>').append(content).find('.login-post-selection').length ? "Post Selection" : ($('<div/>').append(content).find('.tfa').length ? "Two Factor Authentication" : "System Control Point Selection"),
+                        null,
+                        true
+                    );
+                content.find('.form-title').remove();
+                popup.elem.find(".scpSelection").append(content);
+                popup.elem.find(".masterdiv").parent("td").css("padding", 0);
+                popup.elem.find(".popUpButtons").remove();
+                $('#UserInformationPopup').hide(showHideSpeed);
+                popup.show();
+                popup.center();
+            } else {
+                if (data.FLAG == 0) {
+                    window.location.href = data.MSG;
+                } else {
+                    $(data).processServerMessage();
+                }
+            }
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function btnSCcpSelection_Click(scpId) {
+        try {
+            $.post(window.appRoot + '/Security/Login/SetSelectedSystemControlPoint',
+                {
+                    scpId: scpId,
+                    returnUrl: $('#returnUrl').val()
+                },
+                ScpSelection_Success);
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function ScpSelection_Success(data) {
+        try {
+            if (!data.FLAG) {
+                var content = $(data)
+                    , popup = new PopUpBox(
+                        "<div class='masterdiv'><div class='tfaContainer'></div></div>",
+                        $('<div/>').append(content).find('.login-post-selection').length ? "Post Selection" : "Two Factor Authentication",
+                        null,
+                        true
+                    );
+                content.find('.form-title').remove();
+                popup.elem.find(".tfaContainer").append(content);
+                popup.elem.find(".masterdiv").parent("td").css("padding", 0);
+                popup.elem.find(".popUpButtons").remove();
+                $('#UserInformationPopup').hide(showHideSpeed);
+                popup.show();
+                popup.center();
+            } else {
+                if (data.FLAG == 0) {
+                    window.location.href = data.MSG;
+                } else {
+                    $(data).processServerMessage();
+                }
+            }
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function btnTFAOTPVerify_Click(e) {
+        try {
+            e.preventDefault();
+            var $element = $(e.target).closest('.digit-group'),
+                data = $element.serializeObject(),
+                otp = data['digit-1'] + data['digit-2'] + data['digit-3'] + data['digit-4'] + data['digit-5'] + data['digit-6'];
+
+            if (otp.length != 6) {
+                MessageBox("Please complete your OTP.", 'Information', 'OK', function () {
+
+                    $($element.find('input')).each(function () {
+                        if (!$(this).getValue()) {
+                            $(this).focus();
+                            return false;
+                        }
+                    });
+                });
+                return;
+            }
+
+            $.post(window.appRoot + '/Security/Login/VerifyTwoFactorAuthenticationOTP',
+                {
+                    otp: otp,
+                    returnUrl: $('#returnUrl').val()
+                },
+                TFAOTPVerify_Success);
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function TFAOTPVerify_Success(serverData) {
+        try {
+            if (!serverData.FLAG) {
+                var popup = new PopUpBox(
+                    "<div class='masterdiv'><div class='postSelection'></div></div>",
+                    "Post Selection",
+                    null,
+                    true),
+                    content = $(serverData);
+                content.find('.form-title').remove();
+                popup.elem.find(".postSelection").append(content);
+                popup.elem.find(".masterdiv").parent("td").css("padding", 0);
+                popup.elem.find(".popUpButtons").remove();
+                $('#UserInformationPopup').hide(showHideSpeed);
+                popup.show();
+                popup.center();
+            } else {
+                if (serverData.FLAG == 0)
+                    window.location.href = serverData.MSG;
+                else
+                    $(serverData).processServerMessage();
+            }
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function btnPostSelection_Click(postId) {
+        try {
+            debugger;
+            $.post(window.appRoot + '/Security/Login/SetSelectedPost', {
+                PostID: postId,
+                returnUrl: $('#returnUrl').val()
+            }, PostSelection_Success);
+        } catch (err) {
+            MessageBox(err.Message, 'Exception Error', 'OK', null, null, null);
+        }
+    }
+
+    function PostSelection_Success(serverData) {
+        try {
+            if (serverData.FLAG) {
+                if (serverData.FLAG == 0) {
+                    window.location.href = serverData.MSG;
+                }
+            }
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+        }
+    }
+
+    function ShowHideShortMenu() {
+        $(this).ajaxWebMethod('Security/Home/GetSelectedSubSystemId')
+            .ajaxSuccessMethod(function (serverData) {
+                $("#ShortMenu").hide();
+                if (serverData == 2) { // accounting
+                    $("#ShortMenu").show();
+                    $("#ShortMenu a").html("Accounting");
+                }
+                else if (serverData == 1) {
+                    $("#ShortMenu").show();
+                    $("#ShortMenu a").html("BC Forms");
+                }
+            })
+            //.ajaxFailedMethod(function (err) {
+            //    window.reload();
+            //})
+            .callServerMethod(true, '__noprogress__');
+    }
+
+    window.btnSubSystemSelection_Click = btnSubSystemSelection_Click;
+    window.btnTFAOTPVerify_Click = btnTFAOTPVerify_Click;
+    window.btnSCcpSelection_Click = btnSCcpSelection_Click;
+    window.btnPostSelection_Click = btnPostSelection_Click;
+
+    $('#acdnmenu').accordionMenu();
+
+
+    //$('.acdnHeading, .acdnLink').tipso({
+    //    background: '#2574A9',
+    //    position: 'bottom-right',
+    //    onBeforeShow: function (ele, tipso) {
+    //        ele.tipso('update', 'content', ele.text());
+    //    }
+    //});
+
+    $('#systemLogo,#systemTitle').click(function () {
+        $('#frameContainer iframe').attr('src', window.appRoot + '/Security/Home/Index');
+    });
+
+    $('#Refresh').click(function () {
+        $('#frameContainer iframe').attr('src', $('#frameContainer iframe').attr('src'));
+        $('#frameprogress').show();
+    });
+
+    $('#userpic').live('click', function (event) {
+        var cols = '<table style="border-collapse: collapse;">' +
+            '<tr><td  style="padding:10px;"></td>' +
+            '<img id="imgpreview" alt="image preview" width="300" height="300" /><td></td></br>Size less than 512KB and recommended resulation width 300 pixel, height 240 pixel<td </td></tr>' +
+            '<tr style="padding:0px;mergin:0px;height:20px;line-height:20px;"><td>User Image:</td><td><input type="file" id="userpicFile" accept="image/png, image/gif, image/jpeg"  > </td><td  style="cursor:pointer;text-align:right;"></td></tr>' +
+            '<tr style="padding:0px;mergin:0px;height:20px;line-height:20px;"><td></td><td><input type="submit" class="submit btn" id="btnSubmit" value="Upload" > </td><td id="ItdClose" style="cursor:pointer;text-align:right;">[Close]</td></tr>' +
+            '</table>';
+
+        $('#UserImagePopup').html(cols);
+
+        if ($('#UserImagePopup').css('display').toUpperCase() == 'NONE') {
+            $('#UserImagePopup').show(showHideSpeed);
+        } else {
+            $('#UserImagePopup').hide(showHideSpeed);
+        }
+
+        $('#userpicFile').live('change', function () {
+            try {
+                var filesSelected = document.getElementById("userpicFile").files;
+                if (filesSelected.length > 0) {
+
+                    var img = filesSelected.item(0).size;
+                    var imgsize = Math.round(img / 1024);
+                    if (imgsize > 512) {
+                        MessageBox("Picture size too large", "Error", 'OK', null, null, null);
+                        return;
+                    }
+                    var file = window.URL.createObjectURL(filesSelected[0]);
+                    encodeImage(file, function (encodedImage) {
+                        $('#imgpreview')[0].src = encodedImage;
+                    });
+                }
+            } catch (err) {
+                MessageBox("Error occour to upload picture", "Error", 'OK', null, null, null);
+            }
+
+        });
+        $('#UserImagePopup #ItdClose').click(function () {
+            $('#UserImagePopup').hide(showHideSpeed);
+        });
+        event.preventDefault();
+    });
+
+    $('#btnSubmit').live('click', function () {
+        if ($('#imgpreview')[0].src.length < 1) {
+            MessageBox("Please Select valid image", "Error", 'OK', null, null, null);
+            return;
+        }
+
+        $('#btnSubmit').ajaxWebMethod('Common/Common/UploadImage')
+            .ajaxSuccessMethod(function (serverData) {
+                try {
+                    if (serverData.FLAG == 0) {
+                        $('#UserInfoImage')[0].src = $('#imgpreview')[0].src;
+                        $('#realUserImage')[0].src = $('#imgpreview')[0].src;
+                    }
+                    $(serverData).processServerMessage();
+                } catch (ex) {
+                    alert(ex.message);
+                }
+            })
+            .addParameter('imagedata', $('#imgpreview')[0].src, window.ParameterTypeEnum.Text)
+            .ajaxFailedMethod(function (err) {
+                alert(err);
+            })
+            .callServerMethod(true, '__noprogress__');
+    });
+
+    $('#IDocs').click(function () {
+        $('#HelpPopup').hide(showHideSpeed);
+        $('#NotificationPopUp').hide(showHideSpeed);
+
+        $(this).ajaxWebMethod('Security/Home/GetSelectedSubSystemId')
+            .ajaxSuccessMethod(function (serverData2) {
+                $(this).ajaxWebMethod('Security/Home/GetIbasDocumentList')
+                    .addParameter('subsystemId', serverData2, ParameterTypeEnum.Number)
+                    .ajaxSuccessMethod(function (serverData) {
+                        if (serverData.FLAG) {
+                            console.log(serverData);
+                            return;
+                        }
+
+                        var data = serverData.Table1;
+
+                        if (data.length <= 0)
+                            return;
+
+                        try {
+                            var html = "";
+                            function getChildren(menuItemId) {
+                                var child = [];
+                                return child;
+                                /*
+                                for (let k = 0; k < data.length; k++) {
+                                    if (menuItemId == data[k].SUBSYSTEM_ID) {
+                                        child.push(data[k]);
+                                    }
+                                }
+        
+                                return child;
+                                */
+                            }
+
+
+                            function printMenu(menu) {
+                                if (menu.length == 0)
+                                    return "";
+                                var str = "";
+                                for (let i = 0; i < menu.length; i++) {
+                                    var children = getChildren(menu[i].DOCUMENTS_ID);
+                                    var fileType = "";
+
+                                    if (children.length > 0)
+                                        str += '<li class="has-sub arrow">' +
+                                            '<a>' + menu[i].SHORT_NAME + '</a>' +
+                                            "<ul>" + printMenu(children) + "</ul>" +
+                                            '</li>';
+                                    else
+                                        fileType = menu[i].LINK.split('.').pop();
+
+                                    var fontAwesomeStyle = "";
+                                    if (fileType.includes("pdf")) {
+                                        fontAwesomeStyle = "fas fa-file-pdf fa-lg";
+                                    } else if (fileType.includes("xlsx")) {
+                                        fontAwesomeStyle = "fas fa-file-excel";
+                                    }
+                                    else {
+                                        fontAwesomeStyle = "fas fa-file";
+                                    }
+
+                                    str += '<li class="has-sub">' +
+                                        '<a class="i-docs-link" target="_blank" href="' + window.appRoot + '/' + menu[i].LINK + '">' +
+                                        '<i class="' + fontAwesomeStyle + ' " aria-hidden="true" style="' +
+                                        'margin-right: 10px;' +
+                                        '"></i>' +
+                                        menu[i].SHORT_NAME + '</a>' +
+                                        '</li>';
+                                }
+                                return str;
+                            };
+
+                            for (let x = 0; x < data.length; x++) {
+                                var item = [];
+                                item.push(data[x]);
+                                html += printMenu(item);
+                                //var label = data[x].SHORT_NAME.substring(8, 11);
+                                //if (label == "001") {
+                                //    var parent = [];
+                                //    parent.push(data[x]);
+                                //}
+                            }
+
+                            $('#IDocsPopUp ul').html(html);
+
+                            $('#IDocsPopUp #tdClose').click(function () {
+                                $('#IDocsPopUp').hide(showHideSpeed);
+                            });
+
+                            if ($('#IDocsPopUp').css('display').toUpperCase() == 'NONE') {
+                                $('#IDocsPopUp').show(showHideSpeed);
+                            } else {
+                                $('#IDocsPopUp').hide(showHideSpeed);
+                            }
+                        } catch (ex) {
+                            console.log(ex.message);
+                        }
+                    })
+                    //.ajaxFailedMethod(function (err) {
+                    //    //window.reload();
+                    //})
+                    .callServerMethod(true, '__noprogress__');
+            })
+            //.ajaxFailedMethod(function (err) {
+            //    //window.reload();
+            //})
+            .callServerMethod(true, '__noprogress__');
+    });
+
+    $('#ShortMenu').mouseenter(function () {
+        $('#ShortMenu').click();
+    });
+
+    $('#ShortMenu').mouseleave(function () { }).mouseleave();
+
+    $('#ShortMenu').click(function () {
+        $('#HelpPopup').hide(showHideSpeed);
+        $('#NotificationPopUp').hide(showHideSpeed);
+        $(this).ajaxWebMethod('Security/Home/GetMenuList')
+            .ajaxSuccessMethod(function (serverData) {
+                var data = serverData;
+
+                if (data.length <= 0)
+                    return;
+
+                try {
+                    var html = "";
+                    function getChildren(menuItemId) {
+                        var child = [];
+
+                        for (let k = 0; k < data.length; k++) {
+                            if (menuItemId == data[k].PARENT_NAV_MENU_ID) {
+                                child.push(data[k]);
+                            }
+                        }
+
+                        return child;
+                    }
+
+
+                    function printMenu(menu) {
+                        if (menu.length == 0)
+                            return "";
+                        var str = "";
+                        for (let i = 0; i < menu.length; i++) {
+                            var children = getChildren(menu[i].NAV_MENU_ID);
+
+                            var menuUrl = menu[i].MENU_ITEM_URL;
+
+                            if (menu[i].IS_REPORT == 'Y')
+                                menuUrl = menu[i].NAV_MENU_ITEM_URL;
+
+                            if (children.length > 0)
+                                str += '<li class="has-sub arrow">' +
+                                    '<a>' + menu[i].NAV_MENU_NAME_EN.substring(12) + '</a>' +
+                                    "<ul>" + printMenu(children) + "</ul>" +
+                                    '</li>';
+                            else
+                                str += '<li class="has-sub">' +
+                                    '<a href="' + window.appRoot.slice(0, -1) + menuUrl + '">' + menu[i].NAV_MENU_NAME_EN.substring(12) + '</a>' +
+                                    '</li>';
+                        }
+                        return str;
+                    };
+
+                    for (let x = 0; x < data.length; x++) {
+                        var label = data[x].NAV_MENU_NAME_EN.substring(8, 11);
+                        if (label == "001") {
+                            var parent = [];
+                            parent.push(data[x]);
+                            html += printMenu(parent);
+                        }
+                    }
+
+                    $('#ShortMenuPopUp ul').html(html);
+
+                    $("#ShortMenuPopUp a").click(function (event) {
+                        event.preventDefault();
+
+                        var urlstr = $(this).attr('href');
+
+                        $('#frameContainer iframe').attr('src', urlstr);
+                        $('#frameprogress').show();
+                        $('#Help').data('menuid', $(this).closest("li").data("menuid"));
+
+                        //$("#tdClose").click();
+                        $('#ShortMenuPopUp').hide(showHideSpeed);
+
+                        return false;
+                    }
+                    );
+
+                    $('#ShortMenuPopUp #tdClose').click(function () {
+                        $('#ShortMenuPopUp').hide(showHideSpeed);
+                    });
+
+                    if ($('#ShortMenuPopUp').css('display').toUpperCase() == 'NONE') {
+                        $('#ShortMenuPopUp').show(showHideSpeed);
+                    } else {
+                        $('#ShortMenuPopUp').hide(showHideSpeed);
+                    }
+
+                } catch (ex) {
+                    console.log(ex.message);
+                }
+            })
+            //.ajaxFailedMethod(function (err) {
+            //    window.reload();
+            //})
+            .callServerMethod(true, '__noprogress__');
+    });
+
+    $('#UserInformation').click(function () {
+        $('#HelpPopup').hide(showHideSpeed);
+        $('#NotificationPopUp').hide(showHideSpeed);
+        $(this).ajaxWebMethod('Security/Home/GetUserSubSystemByUser')
+            .ajaxSuccessMethod(function (serverData) {
+                try {
+                    var cols = '<table style="border-collapse: collapse;">' +
+                        `<tr>
+                                        <td id="accountIamge" style="padding:10px;border-right:1px solid #ddd;"></td>
+                                        <td id="accountEdit" style="vertical-align:top;border-right:1px solid #ddd;padding-left:10px;padding-right:10px;"></td>
+                                        <td id="subSystemsList"  style="vertical-align:top;padding-left:10px;padding-right:10px;"></td>
+                                    </tr>` +
+                        `<tr style="padding:0px;mergin:0px;height:20px;line-height:20px;">
+                                        <td></td>
+                                        <td></td>
+                                        <td id="tdClose" style="cursor:pointer;text-align:right;">[Close]</td>
+                                    </tr>` +
+                        '</table>';
+
+                    $('#UserInformationPopup').html(cols);
+
+                    $('#UserInformationPopup #accountIamge').append('<img id="realUserImage" src="' + $('#UserInfoImage').attr('src') + '" alt="" style="cursor:pointer;height: 120px; margin-top: 5px;" />');
+                    $('#UserInformationPopup #accountEdit').append('<div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">User Information</div>');
+                    $('#UserInformationPopup #accountEdit').append('<div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userpic"><a id="changeUserPhoto" name="" style="width:200px;text-decoration: none;" href="">Change Your Picture</a></div></div>');
+                    $('#UserInformationPopup #accountEdit').append('<div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="changeUserPwd" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="' + window.appRoot + '/Security/UserAccount/ChangePassword' + '">Change Password</a></div></div>');
+                    $('#UserInformationPopup #accountEdit').append('<div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="changeUserESignature" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="">Change E-Sginature</a></div></div>');
+                    $('#UserInformationPopup #accountEdit').append('<div style="height:25px;line-height:25px;;margin-bottom:5px;text-align:left;"><div id="userPwd"><a id="enableTotp" name="" style="width:200px;text-decoration: none;" data-menuid="450" href="' + window.appRoot + '/security/useraccount/totpregistration' + '">Enable TOTP</a></div></div>');
+                    $('#UserInformationPopup #subSystemsList').append('<div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Subsystems</div>');
+                    
+                    $('#UserInformationPopup #accountIamge').append('<div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Identity Status</div>');
+                    $.each(serverData.userIdentifier, function (index, item) {
+                        var   regExpEmail = /^\w+(\.?\w+)*@\w+([.]\w+)+$/
+                            , regExpMobile = /^(01)[3456789][0-9]{8}$/
+                            , userIdentityStr = '<div style="width:370px;line-height:20px;margin:10px 0px 10px 0px; word-wrap: break-word;">'
+                                                    + '<table style="border-collapse: collapse; width:100%;">';
+                        
+                        if (item.IsMobileVerified == 'Y') {
+                            userIdentityStr += '<tr>'
+                                                    + '<td style="width:40px;"><i class="fa fa-mobile" style="font-size:34px"></i></td>'
+                                                    + '<td><span class="content-span" title="' + item.Mobile + '">' + item.Mobile + '</span><br/><span><a class="add-or-change-mobile" data-menuid="66789" href="' + window.appRoot + '/Accounts/EmployeeContactChange/ChangeRequestEntry?type=self" >Change Mobile Number</a></span></td>'
+                                                    + '<td style="text-align:right;"><input type="button" value="Verified" class="btn-verified" style="background-image: url(\'' + window.appRoot + '/Images/green-yes-symbol-v1.png\')"/></td>'
+                                               + '</tr>';
+                                //`<i class="fa fa-envelope-o" style="font-size:24px"></i><input type="button" value="Verified" class="btn-verified" style="background-image: url(\'' + window.appRoot + '/Images/green-yes-symbol-v1.png\')"/><span class="content-span">' + item.Mobile + '</span></div>'
+                        } else {
+                            userIdentityStr += '<tr>'
+                                                    + '<td style="width:40px;"><i class="fa fa-mobile" style="font-size:34px"></i></td>'
+                                                    + '<td>' + (item.Mobile.match(regExpMobile) == null ? '<a class="add-or-change-mobile" data-menuid="66789" href="' + window.appRoot + '/Accounts/EmployeeMobileChange/ChangeRequestEntry?type=self" >Click Here To Add Your Mobile Number</a>' : '<span id="ProfileMobileContainer" class="content-span" title="' + item.Mobile + '">' + item.Mobile + '</span><br/><span><a id="ProfileMobileVerification" href="#">Click Here To Verify Mobile Number</a></span>') + '</td>'
+                                                    + '<td style="text-align:right;"><input type="button" value="Unverified" class="btn-unverified" style="background-image: url(\'' + window.appRoot + '/Images/red-no-symbol-v1.png\')"/></td>'
+                                                + '</tr>';
+                            //mobile = '<div style="width:300px;line-height:25px;margin-bottom:5px; word-wrap: break-word;"><input type="button" value="Unverified" id="MobileVerification" class="btn-unverified" style="background-image: url(\'' + window.appRoot + '/Images/red-no-symbol-v1.png\')" /><span class="content-span">' + item.Mobile + '</span></div>';
+                        }
+
+                        userIdentityStr += '<tr><td colspan="3" style="height:20px"></td></tr>'
+
+                        if (item.IsEmailVerified == 'Y') {
+                            userIdentityStr += '<tr>'
+                                                    + '<td><i class="fa fa-envelope-o" style="font-size:34px"></i></td>'
+                                                    + '<td><span class="content-span" title="' + item.Email + '">' + item.Email + '</span><br/><span><a class="add-or-change-email" data-menuid="70748" href="' + window.appRoot + '/Accounts/EmployeeEmailChange/ChangeRequestEntry?type=self" >Change Email Address</a></span></td>'
+                                                    + '<td style="text-align:right;"><input type="button" value="Verified" class="btn-verified" style="background-image: url(\'' + window.appRoot + '/Images/green-yes-symbol-v1.png\')"/></td>'
+                                               + '</tr>';
+
+                            //email = '<div style="width:300px;line-height:25px;margin-bottom:5px; word-wrap: break-word;"><input type="button" value="Verified" class="btn-verified" style="background-image: url(\'' + window.appRoot + '/Images/green-yes-symbol-v1.png\')"/><span class="content-span">' + item.Email + '</span></div>'
+                        } else {
+                            userIdentityStr += '<tr>'
+                                                    + '<td style="width:40px;"><i class="fa fa-envelope-o" style="font-size:34px"></i></td>'
+                                                    + '<td>' + (item.Email.match(regExpEmail) == null ? '<a class="add-or-change-email" data-menuid="70748" href="' + window.appRoot + '/Accounts/EmployeeEmailChange/ChangeRequestEntry?type=self" >Click Here To Add Email Address</a>' : '<span id="ProfileEmailContainer" class="content-span" title="' + item.Email + '">' + item.Email + '</span><br/><span><a id="ProfileEmailVerification" href="#" >Click Here To Verify Email Address</a></span>') + '</td>'
+                                                    + '<td style="text-align:right;"><input type="button" value="Unverified" class="btn-unverified" style="background-image: url(\'' + window.appRoot + '/Images/red-no-symbol-v1.png\')"/></td>'
+                                                + '</tr>';
+                            //email = '<div style="width:300px;line-height:25px;margin-bottom:5px; word-wrap: break-word;"><input type="button" value="Unverified" id="EmailVerification" class="btn-unverified" style="background-image: url(\'' + window.appRoot + '/Images/red-no-symbol-v1.png\')" /><span class="content-span">' + item.Email + '</span></div>';
+                        }
+
+                        userIdentityStr +=          '</table>'
+                                            + '</div>';
+
+                        $('#UserInformationPopup #accountIamge').append(userIdentityStr);
+                        //$('#UserInformationPopup #accountIamge').append(email);
+                    });
+
+                    $('#UserInformationPopup #accountIamge').append('<div style="border-bottom:1px solid #ddd;height:35px;line-height:35px;font-weight:bold;font-size:15px;">Login Status</div>');
+                    $.each(serverData.userLast2LoginTimes, function (index, item) {
+                        var ancr = '<div style="width:180px;line-height:25px;margin-bottom:5px; word-wrap: break-word;">' + (index == 0 ? 'Current Login [' + item.IP + ']: <br/>' : 'Last Login [' + item.IP + ']: <br/>') + '<a class="user-login-time" style="width:200px;text-decoration: none;" data-menuid="450" href="' + window.appRoot + '/Security/UserAccount/LoginTimeLine">' + item.LoginTime + '</a></div>';
+                        $('#UserInformationPopup #accountIamge').append(ancr);
+                    });
+
+                    $.each(serverData.subSystems, function (index, item) {
+                        var ancr = '<div style="height:25px;line-height:25px;;margin-bottom:5px;">' + (item.IsCurrent == "Y" ? '<span class="item-marker selected"></span>' : '<span class="item-marker not-selected"></span>') + '<a id="' + item.SubSystemDesc + '" name="' + item.SubSystemID + '" style="width:200px;text-decoration: none;" href="#">' + item.SubSystemDesc + '</a></div>';
+                        $('#UserInformationPopup #subSystemsList').append(ancr);
+                    });
+
+                    $('#UserInformationPopup #subSystemsList a').each(function () {
+                        $(this).unbind('click').click(function (e) {
+                            e.preventDefault();
+                            //                            if ($(this).attr('name') == "8") {
+
+                            //                                MessageBox(
+                            //                                    "০১-০৭-২০১৮ ইনক্রিমেন্ট নবায়ন ও ডাটা মাইগ্রেশন এর জন্য আগামী ২৮-০৬-২০১৮ তারিখ বেতন নির্ধারণ অপসন বন্ধ থাকবে।  ০১-০৭-২০১৮ তারিখ হতে পুনরায় বেতন নির্ধারণ  করা যাবে।",
+                            //                                    "হিসাবরক্ষণ কার্যালয়",
+                            //                                    "OK",
+                            //                                    null,
+                            //                                    function() {
+                            //                                        return;
+                            //                                    },
+                            //                                    function() { return false; });
+                            //                            } else {
+                            //$.post(window.appRoot + '/Security/Login/SetSelectedSubSystem',
+                            //    { 'SubSystemID': $(this).attr('name') },
+                            //    function (data) {
+                            //        if (!data.FLAG) {
+                            //            var popup = new PopUpBox(
+                            //                "<div class='masterdiv'><div class='scpSelection'></div></div>",
+                            //                "System Control Point Selection",
+                            //                null,
+                            //                true),
+                            //                content = $(data);
+                            //            content.find('.form-title').remove();
+                            //            popup.elem.find(".scpSelection").append(content);
+                            //            popup.elem.find(".masterdiv").parent("td").css("padding", 0);
+                            //            popup.elem.find(".popUpButtons").remove();
+                            //            $('#UserInformationPopup').hide(showHideSpeed);
+                            //            popup.show();
+                            //            popup.center();
+                            //        } else {
+                            //            if (data.FLAG == 0) {
+                            //                window.location.href = data.MSG;
+                            //            } else {
+                            //                $(data).processServerMessage();
+                            //            }
+                            //        }
+                            //    });
+                            // }
+                            btnSubSystemSelection_Click(this);
+                        });
+                    });
+
+                    $('#UserInformationPopup #accountIamge a#ProfileMobileVerification, a#ProfileEmailVerification').unbind('click').click(function (e) {
+                        e.preventDefault();
+
+                        var isEmailVerification = $(this).attr('id') == 'ProfileEmailVerification' ? 'Y' : 'N';
+                        
+                        profileIdentityVerificationOtpHandler = $("#ProfileIdentityVerificationTfaContainer").otpHandler({
+                            recepientType: 'user',
+                            title: 'OTP',
+                            module: 'Security',
+                            process: (isEmailVerification == 'Y' ? 'Existing email verification' : 'Existing mobile verification'),
+                            onVerifyClick: profileIdentityVerificationOtpHandlerClick,
+                            isPopup: true
+                        });
+
+                        if (isEmailVerification == 'Y')
+                            profileIdentityVerificationOtpHandler.setEmail($('#UserInformationPopup #accountIamge span#ProfileEmailContainer').getValue());
+                        else
+                            profileIdentityVerificationOtpHandler.setMobile($('#UserInformationPopup #accountIamge span#ProfileMobileContainer').getValue());
+
+                        profileIdentityVerificationOtpHandler.show();
+
+                        function profileIdentityVerificationOtpHandlerClick(data, elm, counter) {
+
+                            var url = '';
+                            if (isEmailVerification == 'Y') {
+                                url = 'Accounts/EmployeeEmailChange/VerifyExistingEmail';
+                                data.email = $('#UserInformationPopup #accountIamge span#ProfileEmailContainer').getValue();
+                            } else {
+                                url = 'Accounts/EmployeeMobileChange/VerifyExistingMobile';
+                                data.mobile = $('#UserInformationPopup #accountIamge span#ProfileMobileContainer').getValue();
+                            }
+
+                            $.ibasAjax({
+                                data: data,
+                                url: url,
+                                successCallback: function (sdata) {
+
+                                    if (sdata.hasOwnProperty('FLAG') && sdata.FLAG != '0') {
+                                        MsgBox({
+                                            message: sdata.MSG, messageTitle: 'Error', okMethod: function () {
+                                                if (counter.getValue() != '0:00')
+                                                    elm.enable();
+                                            }
+                                        });
+
+                                        return;
+                                    }
+
+                                    MsgBox({
+                                        message: sdata.MSG, messageTitle: 'Success', okMethod: function () {
+                                            profileIdentityVerificationOtpHandler.close();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+
+                        $('#UserInformationPopup').hide(showHideSpeed);
+
+                    });
+
+                    $('#UserInformationPopup #tdClose').click(function () {
+                        $('#UserInformationPopup').hide(showHideSpeed);
+                    });
+
+                    if ($('#UserInformationPopup').css('display').toUpperCase() == 'NONE') {
+                        $('#UserInformationPopup').show(showHideSpeed);
+                    } else {
+                        $('#UserInformationPopup').hide(showHideSpeed);
+                    }
+
+                } catch (ex) {
+                    alert(ex.message);
+                }
+            })
+            //.ajaxFailedMethod(function (err) {
+            //    window.reload();
+            //})
+            .callServerMethod(true, '__noprogress__');
+    });
+
+    $('#Help').click(function () {
+        $('#UserInformationPopup').hide(showHideSpeed);
+        $('#NotificationPopUp').hide(showHideSpeed);
+        if ($('#HelpPopup').css('display').toUpperCase() == 'NONE') {
+            $('#HelpPopup').css({ 'right': $('#Logout').width() + $('#UserInformation').width(), 'min-width': '100px' });
+            $('#HelpPopup').show(showHideSpeed);
+        } else {
+            $('#HelpPopup').hide(showHideSpeed);
+        }
+    });
+
+    $('#StatusPopUp div[data-system-flag!=' + systemFlag + ']').hide();
+
+    $('#Status').click(function () {
+        $('#UserInformationPopup').hide(showHideSpeed);
+        if ($('#StatusPopUp').css('display').toUpperCase() == 'NONE') {
+            $('#StatusPopUp').css({ 'right': $('#Refresh').width() + $('#Help').width() + $('#Logout').width() + $('#UserInformation').width(), 'min-width': '100px' });
+            $('#StatusPopUp').show(showHideSpeed);
+        } else {
+            $('#StatusPopUp').hide(showHideSpeed);
+        }
+    });
+
+    $('#HTMLHelp').click(function (e) {
+        var menuId = $('#Help').data('menuid');
+        e.preventDefault();
+        if (menuId)
+            window.open(window.appRoot + '/HelpDocuments/help/help.htm?menuid=' + menuId, 'newwindow', "toolbar=no,menubar=no,status=0,title=0,height=840,width=960,scrollbars=1");
+        $('#HelpPopup').hide(200);
+    });
+
+    $('#VideoHelp').click(function (e) {
+        window.open(window.appRoot + '/HelpDocuments/VideoHelp.htm', 'newwindow', "toolbar=no,menubar=no,status=0,title=0,height=840,width=960,scrollbars=1");
+        $('#HelpPopup').hide(200);
+    });
+    $('#oldtoNewCode').click(function (e) {
+        window.open(window.appRoot + '/COA/COAElementToElementLink/OldToNewCodeMapping', 'newwindow', "toolbar=no,menubar=no,status=0,title=0,height=840,width=960,scrollbars=1");
+        $('#HelpPopup').hide(300);
+    });
+
+    $('#FrequentQuestion').click(function (e) {
+        window.open(window.appRoot + "/HelpDocuments/FAQ.pdf", "_blank");
+        //window.open(window.appRoot + '/HelpDocuments/faq.htm', 'newwindow', "toolbar=no,menubar=no,status=0,title=0,height=840,width=960,scrollbars=1");
+        $('#HelpPopup').hide(200);
+    });
+
+    $('#searchEcon').click(function (e) {
+        window.open(window.appRoot + '/COA/COAElementToElementLink/CodeAndNameDetails', 'newwindow', "toolbar=no,menubar=no,status=0,title=0,height=840,width=960,scrollbars=1");
+        $('#HelpPopup').hide(300);
+    });
+
+    $('#tokenSummary').click(function (e) {
+        e.preventDefault();
+        $('#frameContainer iframe').attr('src', window.appRoot + '/accounts/statusreport/tokensummary');
+        $('#frameprogress').show();
+        $('#StatusPopUp').hide(300);
+
+        //        function loadStack(libs) {
+        //            return new Promise(function (res, rej) {
+        //                var injectLibFromStack = function () {
+        //                    if (libs.length > 0) {
+
+        //                        //grab the next item on the stack
+        //                        var nextLib = libs.shift();
+        //                        var headTag = document.getElementsByTagName('head')[0];
+
+        //                        //create a script tag with this library
+        //                        var scriptTag = document.createElement('script');
+        //                        scriptTag.src = nextLib;
+
+        //                        //when successful, inject the next script
+        //                        scriptTag.onload = function (e) {
+        //                            injectLibFromStack();
+        //                        };
+
+        //                        scriptTag.onerror = function (e) {
+        //                            console.log("---> error: " + e.target.src);
+        //                            injectLibFromStack();
+        //                        };
+
+        //                        //append the script tag to the <head></head>
+        //                        try {
+        //                            headTag.appendChild(scriptTag);
+        //                        } catch (e) {
+        //                            console.log(e);
+        //                        }
+        //                    } else res(true);
+        //                }
+
+        //                //start script injection
+        //                injectLibFromStack();
+        //            });
+        //        };
+
+        //        function loadFile(path, type) {
+        //            var fileref = null;
+        //            if (type == "js") {
+        //                fileref = document.createElement('script');
+        //                fileref.setAttribute("type", "text/javascript");
+        //                fileref.setAttribute("class", "extrasource");
+        //                fileref.setAttribute("src", path);
+        //            }
+        //            else if (type == "css") {
+        //                fileref = document.createElement("link");
+        //                fileref.setAttribute("rel", "stylesheet");
+        //                fileref.setAttribute("type", "text/css");
+        //                fileref.setAttribute("class", "extrasource");
+        //                fileref.setAttribute("href", path);
+        //            }
+        //            else if (type == "inline") {
+        //                fileref = document.createElement('script');
+        //                fileref.setAttribute("type", "text/javascript");
+        //                fileref.setAttribute("class", "extrasource");
+        //                fileref.innerHTML = path;
+        //            }
+        //            fileref && document.getElementsByTagName("head")[0].appendChild(fileref);
+        //        }
+
+        //        var appSourceFileload = function(data) {
+        //            if (data.inlines && data.inlines.length) {
+        //                for (var i = 0; i < data.inlines.length; i++) {
+        //                    if (!data.inlines[i].isBody)
+        //                        loadFile(data.inlines[i].text, 'inline');
+        //                }
+        //            }
+        //            loadStack(data.scripts)
+        //                .then(function() {
+        //                    if (data.inlines && data.inlines.length) {
+        //                        for (var i = 0; i < data.inlines.length; i++) {
+        //                            if (data.inlines[i].isBody)
+        //                                loadFile(data.inlines[i].text, 'inline');
+        //                        }
+        //                    }
+        //                    if (data.styles && data.styles.length) {
+        //                        for (var i = 0; i < data.styles.length; i++) {
+        //                            loadFile(data.styles[i], 'css');
+        //                        }
+        //                    }
+        //                });
+        //        };
+
+        //        $.get(window.appRoot + '/accounts/graphreport/tokensummary', function() {})
+        //            .done(function(data) {
+        //                // context.app.swap(data.template);
+        //                var div = $("<div class='masterdiv'><div class='detailView' style='overflow-y: scroll; text-align: left;'></div></div>");
+        //                div.find('.detailView').append(data.template);
+        //                div.find('#pageCaption').remove();
+        //                var pop = new PopUpBox(div.html(), 'Token Summary', {}, false, true, '90%', '90%');
+        //                appSourceFileload(data);
+        //                pop.show();
+        //            });
+
+    });
+
+
+    $('#HelpDesk').click(function (e) {
+        e.preventDefault();
+        var form = $('<form/>', { action: window.appRoot + '/common/helpdesk/entry', method: "post", target: "helpdesk" });
+        form.append($('<input/>', { type: 'hidden', name: "menuId", value: $('#Help').data('menuid') }));
+        form.append($('<input/>', { type: 'hidden', name: "__RequestVerificationToken", value: $('input[name="__RequestVerificationToken"]').val() }));
+        form.submit(function () {
+            window.open('about:blank', 'helpdesk', 'height=840,width=960,scrollbars=1');
+
+        });
+        $(document.body).append(form);
+        form.submit();
+        form.remove();
+        $('#HelpPopup').hide(200);
+    });
+
+    $('#acdnmenu a').click(function (event) {
+        var urlstr = $(this).attr('href');
+        if ($(this).attr('validateip') == '1') {
+            var macAddress = "";
+            var ipAddress = "";
+            $.ajax({
+                type: "GET",
+                contentType: 'application/x-www-form-urlencoded',
+                url: "http://localhost:12017/get-pc-info",
+                dataType: 'json',
+                success: function (data) {
+                    macAddress = data.MacAddress;
+                    ipAddress = data.IpAddress;
+                    console.log(JSON.stringify(data));
+                    console.log(encodeURI(JSON.stringify(data)));
+                    if (urlstr.split("?").length > 1) {
+                        urlstr = urlstr + "&checkip=1&pcInfoData=" + encodeURI(JSON.stringify(data));
+                    }
+                    else {
+                        urlstr = urlstr + "?checkip=1&pcInfoData=" + encodeURI(JSON.stringify(data));
+                    }
+                    $('#frameContainer iframe').attr('src', urlstr);
+                },
+                error: function () {
+                    MessageBox("Please install the iBAS++ security service.</br> Please click <a target='_blank' href='" + window.appRoot + "/Content/UserDeviceInfoService/getPcInformation.exe'>here</a>", "Network Error!", 'OK');
+                    $('#frameprogress').hide();
+                },
+                global: false
+            });
+        } else {
+            $('#frameContainer iframe').attr('src', urlstr);
+        }
+        $('#frameprogress').show();
+        $('#Help').data('menuid', $(this).closest("li").data("menuid"));
+        event.preventDefault();
+        return false;
+    });
+
+    if (redirectMenuId) {
+        $('.acdnTop li[data-menuid="' + redirectMenuId + '"]').parentsUntil('.acdnTop').filter('ul').show();
+        $('.acdnTop li[data-menuid="' + redirectMenuId + '"] a').trigger('click');
+    }
+
+    const initializeFrame = () => {
+        var oFrame = document.getElementById("ibasframe");
+        oFrame.contentWindow.document.onclick = function () {
+            $("#IDocsPopUp").css("display", "none");
+            $("#HelpPopup").css("display", "none");
+            $("#UserInformationPopup").css("display", "none");
+            $("#ShortMenuPopUp").css("display", "none");
+            $('#NotificationPopUp').css("display", "none");
+        };
+    }
+    $('#frameContainer iframe').load(function () {
+        $('#frameprogress').hide();
+        initializeFrame();
+    });
+
+    $('#hideMenu').click(function () {
+        $('#frameContainer').css({ 'left': '55px' });
+        $('#noMenuContainer').css({ 'display': '' });
+        $('#menuContainer').css({ 'display': 'none' });
+    });
+
+    $('#showMenu').click(function () {
+        $('#frameContainer').css({ 'left': '260px' });
+        $('#menuContainer').css({ 'display': '' });
+        $('#noMenuContainer').css({ 'display': 'none' });
+    });
+
+    $('#changeUserPwd, #enableTotp').live('click', function (e) {
+        e.preventDefault();
+        loadUrlInIframe($(this).attr('href'));
+        $('#Help').data('menuid', $(this).data("menuid"));
+        $('#UserInformationPopup').hide(showHideSpeed);
+    });
+
+    $('.user-login-time,.add-or-change-mobile,.add-or-change-email').live('click', function (e) {
+        e.preventDefault();
+        loadUrlInIframe($(this).attr('href'));
+        $('#Help').data('menuid', $(this).data("menuid"));
+        $('#UserInformationPopup').hide(showHideSpeed);
+    });
+
+    window.getMenuId = function () {
+        return $('#Help').data('menuid');
+    };
+
+    window.popup = function (options) {
+        $.ibasPopup(options);
+    };
+
+    ShowHideShortMenu();
+
+
+
+    $('#frameContainer').on('click', '#ibasframe',
+        function () {
+            alert("clicked");
+        });
+
+    function loadUserQAScreen() {
+        return new Promise(function (res, rej) {
+            $.ibasAjax({
+                url: 'accounts/security/LoadUserQAScreen',
+                successCallback: function (sdata) {
+                    if (+sdata.FLAG === 1) {
+                        MsgBox({
+                            message: sdata.MSG,
+                            messageTitle: 'Error'
+                        });
+                    }
+                    res(sdata);
+                }
+            });
+        });
+    }
+
+    window.onload = function () {
+        initializeFrame();
+
+    };
+});

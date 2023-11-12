@@ -1,0 +1,67 @@
+﻿$(function () {
+
+    var searchContainer, viewContainer;
+
+    function screenMode(mode) {
+        switch (mode) {
+            case "initial":
+                $('#searchContainer').show();
+                $('#btn_search').hide();
+                $('#viewContainer').hide();
+                break;
+            case "entry":
+                $('#searchContainer').hide();
+                $('#btn_search').show();
+                $('#viewContainer').show();
+                break;
+        }
+    }
+    function initialize() {
+
+        searchContainer = $('#searchContainer').ibasPartialView({
+            url: "Accounts/Employee/_SearchEmployeeByNID",
+            itemName: "search",
+            loadedEvent: () => {
+                searchPage.registerEvent({
+                    completedEvent: searchCompletedEvent
+                });
+            }
+        });
+        searchContainer.loadView();
+
+        viewContainer = $('#viewContainer').ibasPartialView({
+            url: "Accounts/Employee/_ViewServiceInfo",
+            itemName: "view",
+            loadedEvent: () => {
+                serviceInfoPage.registerEvent({
+                    completedEvent: viewCompletedEvent
+                });
+            }
+        });
+        viewContainer.loadView();
+    }
+
+    function showSearchContainer() {
+        screenMode("initial");
+    }
+    function searchCompletedEvent(searchedData) {
+        if (+searchedData.referenceStatusId !== 3) {
+            MsgBox({ message: 'Employee is not approved.', messageTitle: 'Error' });
+            return;
+        }
+
+        serviceInfoPage.setData(searchedData);
+        serviceInfoPage.loadData(() => { screenMode("entry"); });
+    }
+
+    function viewCompletedEvent(searchedData) {
+        showSearchContainer();
+    }
+
+    $('#btn_search').unbind('click').click(function () {
+        showSearchContainer();
+    });
+
+    initialize();
+    screenMode("initial");
+});

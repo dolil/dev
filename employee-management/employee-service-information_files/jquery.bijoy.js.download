@@ -1,0 +1,490 @@
+﻿(function ($) {
+    $.fn.bijoy = function (options) {
+        var ie = document.all ? 1 : 0,
+            bijoyKeyboardMap = {
+                "0": "০",
+                "1": "১",
+                "2": "২",
+                "3": "৩",
+                "4": "৪",
+                "5": "৫",
+                "6": "৬",
+                "7": "৭",
+                "8": "৮",
+                "9": "৯",
+                "a": "ৃ",
+                "A": "র্",
+                "d": "ি",
+                "D": "ী",
+                "s": "ু",
+                "S": "ূ",
+                "f": "া",
+                "F": "অ",
+                "g": "্",
+                "G": "।",
+                "h": "ব",
+                "H": "ভ",
+                "j": "ক",
+                "J": "খ",
+                "k": "ত",
+                "K": "থ",
+                "l": "দ",
+                "L": "ধ",
+                "z": "্র",
+                "Z": "্য",
+                "x": "ও",
+                "X": "ৗ",
+                "c": "ে",
+                "C": "ৈ",
+                "v": "র",
+                "V": "ল",
+                "b": "ন",
+                "B": "ণ",
+                "n": "স",
+                "N": "ষ",
+                "m": "ম",
+                "M": "শ",
+                "q": "ঙ",
+                "Q": "ং",
+                "w": "য",
+                "W": "য়",
+                "e": "ড",
+                "E": "ঢ",
+                "r": "প",
+                "R": "ফ",
+                "t": "ট",
+                "T": "ঠ",
+                "y": "চ",
+                "Y": "ছ",
+                "u": "জ",
+                "U": "ঝ",
+                "i": "হ",
+                "I": "ঞ",
+                "o": "গ",
+                "O": "ঘ",
+                "p": "ড়",
+                "P": "ঢ়",
+                "&": "ঁ",
+                "$": "৳",
+                "`": "‌",
+                "~": "‍",
+                "\\": "ৎ",
+                "|": "ঃ"
+            },
+
+            isBanglaPostKar = function (cUni) {
+                if (cUni == 'া' || cUni == 'ো'
+                    || cUni == 'ৌ' || cUni == 'ৗ' || cUni == 'ু'
+                    || cUni == 'ূ' || cUni == 'ী'
+                    || cUni == 'ৃ')
+                    return true;
+                return false;
+            },
+            isBanglaDigit = function (cUni) {
+                if (cUni == '০' || cUni == '১'
+                    || cUni == '২' || cUni == '৩'
+                    || cUni == '৪' || cUni == '৫'
+                    || cUni == '৬' || cUni == '৭'
+                    || cUni == '৮' || cUni == '৯')
+                    return true;
+                return false;
+            },
+            isBanglaHalant = function (cUni) {
+                if (cUni == '্')
+                    return true;
+                return false;
+            },
+            isBanglaNukta = function (cUni) {
+                if (cUni == 'ং' || cUni == 'ঃ' || cUni == 'ঁ')
+                    return true;
+                return false;
+            },
+            isBanglaPreKar = function (cUni) {
+                if (cUni == 'ি' || cUni == 'ৈ'
+                    || cUni == 'ে')
+                    return true;
+                return false;
+            },
+            isBanglaSoroborno = function (cUni) {
+                if (cUni == 'অ' || cUni == 'আ'
+                    || cUni == 'ই' || cUni == 'ঈ'
+                    || cUni == 'উ' || cUni == 'ঊ'
+                    || cUni == 'ঋ' || cUni == 'ঌ'
+                    || cUni == 'এ' || cUni == 'ঐ'
+                    || cUni == 'ও' || cUni == 'ঔ')
+                    return true;
+                return false;
+            },
+            isBanglaBanjonborno = function (cUni) {
+                if (cUni == 'ক' || cUni == 'খ' || cUni == 'গ' || cUni == 'ঘ' || cUni == 'ঙ'
+                    || cUni == 'চ' || cUni == 'ছ' || cUni == 'জ' || cUni == 'ঝ' || cUni == 'ঞ'
+                    || cUni == 'ট' || cUni == 'ঠ' || cUni == 'ড' || cUni == 'ঢ' || cUni == 'ণ'
+                    || cUni == 'ত' || cUni == 'থ' || cUni == 'দ' || cUni == 'ধ' || cUni == 'ন'
+                    || cUni == 'প' || cUni == 'ফ' || cUni == 'ব' || cUni == 'ভ' || cUni == 'ম'
+                    || cUni == 'শ' || cUni == 'ষ' || cUni == 'স' || cUni == 'হ'
+                    || cUni == 'য' || cUni == 'র' || cUni == 'ল' || cUni == 'য়'
+                    || cUni == 'ং' || cUni == 'ঃ' || cUni == 'ঁ'
+                    || cUni == 'ৎ')
+                    return true;
+                return false;
+            },
+            isSpace = function (c) {
+                if (c == ' ' || c == '\t' || c == '\n'
+                    || c == '\r')
+                    return true;
+                return false;
+            },
+
+
+            refModification = function (field) {
+                var len = 1, kar = "", str = "", halantFound = true, ch = "", sel;
+                field.focus();
+                while (true) {
+                    if (document.selection) {
+                        sel = document.selection.createRange();
+                        if (field.value.length >= len) {
+                            sel.moveStart('character', -1 * len);
+                        } else {
+                            ch = "",
+                            len--;
+                            sel.moveStart('character', -1 * len);
+                            break;
+                        }
+                        ch = sel.text.charAt(0);
+                    } else if (field.selectionStart || field.selectionStart == 0) {
+                        var startPos = field.selectionStart - len;
+                        var endPos = field.selectionEnd;
+                        var scrollTop = field.scrollTop;
+
+                        if (startPos < 0) {
+                            ch = "",
+                            len--;
+                            startPos = field.selectionStart - len;
+                            break;
+                        }
+                        ch = field.value.substring(startPos, startPos + 1);
+                    }
+
+                    if (len != 1 && isBanglaKar(ch))
+                        break;
+
+                    if (len == 1 && isBanglaKar(ch))
+                        kar = ch;
+                    else if (isBanglaSoroborno(ch) || isBanglaDigit(ch) || isSpace(ch))
+                        break;
+                    else if (isBanglaBanjonborno(ch)) {
+                        if (halantFound == true) {
+                            str = ch + str;
+                            halantFound = false;
+                        } else
+                            break;
+                    } else if (isBanglaHalant(ch)) {
+                        str = ch + str;
+                        halantFound = true;
+                    }
+                    len++;
+                }
+
+                var line = ch + "র্" + str + kar;
+                if (document.selection) {
+                    sel.text = line;
+                    sel.collapse(true);
+                    sel.select();
+                } else if (field.selectionStart || field.selectionStart == 0) {
+                    field.value = field.value.substring(0, startPos)
+                        + line
+                        + field.value.substring(endPos, field.value.length);
+                    field.focus();
+                    field.selectionStart = startPos + line.length;
+                    field.selectionEnd = startPos + line.length;
+                    field.scrollTop = scrollTop;
+                }
+
+            },
+            oAndOuKarModification = function (field, ch1, ch2) {
+                var sel, startPos, endPos, scrollTop, ch;
+                if (document.selection) {
+                    field.focus();
+                    sel = document.selection.createRange();
+                    if (field.value.length >= 1)
+                        sel.moveStart('character', -1);
+                    if (sel.text.charAt(0) == 'ে')
+                        sel.text = ch1;
+                    else
+                        sel.text = sel.text.charAt(0) + ch2;
+                    sel.collapse(true);
+                    sel.select();
+                } else if (field.selectionStart || field.selectionStart == 0) {
+                    startPos = field.selectionStart - 1;
+                    endPos = field.selectionEnd;
+                    scrollTop = field.scrollTop;
+                    startPos = (startPos == -1 ? field.value.length : startPos);
+                    if (field.value.substring(startPos, startPos + 1) == "ে")
+                        ch = ch1;
+                    else {
+                        startPos = startPos + 1;
+                        ch = ch2;
+                    }
+                    field.value = field.value.substring(0, startPos)
+                        + ch
+                        + field.value.substring(endPos, field.value.length);
+                    field.focus();
+                    field.selectionStart = startPos + ch.length;
+                    field.selectionEnd = startPos + ch.length;
+                    field.scrollTop = scrollTop;
+                }
+            },
+
+            insert = function (field, text) {
+                var sel, scrollTop, startPos, endPos;
+                if (document.selection) {
+                    field.focus();
+                    sel = document.selection.createRange();
+                    sel.text = text;
+                    sel.collapse(true);
+                    sel.select();
+                } else if (field.selectionStart || field.selectionStart == '0') {
+                    startPos = field.selectionStart;
+                    endPos = field.selectionEnd;
+                    scrollTop = field.scrollTop;
+                    startPos = (startPos == -1 ? field.value.length : startPos);
+                    field.value = field.value.substring(0, startPos)
+                        + text
+                        + field.value.substring(endPos, field.value.length);
+                    field.focus();
+                    field.selectionStart = startPos + text.length;
+                    field.selectionEnd = startPos + text.length;
+                    field.scrollTop = scrollTop;
+                } else {
+                    scrollTop = field.scrollTop;
+                    field.value += value;
+                    field.focus();
+                    field.scrollTop = scrollTop;
+                }
+            },
+            isBanglaFola = function (cUni) {
+                if (cUni == "্য" || cUni == "্র")
+                    return true;
+                return false;
+            },
+            removeNInsert = function (field, value, len) {
+                var sel, scrollTop, startPos, endPos;
+                if (document.selection) {
+                    field.focus();
+                    sel = document.selection.createRange();
+                    if (field.value.length >= len) {
+                        sel.moveStart('character', -1 * (len));
+                    }
+                    sel.text = value;
+                    sel.collapse(true);
+                    sel.select();
+                } else if (field.selectionStart || field.selectionStart == 0) {
+                    field.focus();
+                    startPos = field.selectionStart - len;
+                    endPos = field.selectionEnd;
+                    scrollTop = field.scrollTop;
+                    startPos = (startPos == -1 ? field.value.length : startPos);
+                    field.value = field.value.substring(0, startPos)
+                        + value
+                        + field.value.substring(endPos, field.value.length);
+                    field.focus();
+                    field.selectionStart = startPos + value.length;
+                    field.selectionEnd = startPos + value.length;
+                    field.scrollTop = scrollTop;
+                } else {
+                    scrollTop = field.scrollTop;
+                    field.value += value;
+                    field.focus();
+                    field.scrollTop = scrollTop;
+                }
+            },
+            isBanglaKar = function (cUni) {
+                if (isBanglaPreKar(cUni) || isBanglaPostKar(cUni))
+                    return true;
+                return false;
+            },
+            mapKarToSorborno = function (cUni) {
+                var cSorborno = cUni;
+                if (cUni == 'া')
+                    cSorborno = 'আ';
+                else if (cUni == 'ি')
+                    cSorborno = 'ই';
+                else if (cUni == 'ী')
+                    cSorborno = 'ঈ';
+                else if (cUni == 'ু')
+                    cSorborno = 'উ';
+                else if (cUni == 'ূ')
+                    cSorborno = 'ঊ';
+                else if (cUni == 'ৃ')
+                    cSorborno = 'ঋ';
+                else if (cUni == 'ে')
+                    cSorborno = 'এ';
+                else if (cUni == 'ৈ')
+                    cSorborno = 'ঐ';
+                else if (cUni == 'ো')
+                    cSorborno = 'ও';
+                else if (cUni == "ো")
+                    cSorborno = 'ও';
+                else if (cUni == 'ৌ')
+                    cSorborno = 'ঔ';
+                else if (cUni == "ৌ")
+                    cSorborno = 'ঔ';
+                return cSorborno;
+            },
+            functionality = function () {
+                var lcuni = 0, lc = 0, lcKar = 0, lcString = "", englishKeyboard = false, keyBoardLayout = 1,
+                    keyDown = function(ev) {
+                        var k, c;
+                        k = (window.event) ? event.keyCode : ev.which;
+                        c = String.fromCharCode(k);
+
+                        if ((k >= 8 && k <= 13) || k == 27 /*ESC*/ || k == 32 /*SPACE*/ || k == 46/*DEL*/) {
+                            lcuni = 0;
+                            resetKarModifier();
+                        }
+
+                        if (k == 144)
+                            englishKeyboard = !englishKeyboard;
+
+                        if (ev.altKey && ev.ctrlKey && (c == 'E' || c == 'e'))
+                            keyBoardLayout = 1;
+                        else if (ev.altKey && ev.ctrlKey && (c == 'B' || c == 'b'))
+                            keyBoardLayout = (keyBoardLayout == 2 ? 1 : 2);
+                        else if (ev.altKey && ev.ctrlKey && (c == 'P' || c == 'p'))
+                            keyBoardLayout = (keyBoardLayout == 3 ? 1 : 3);
+                        else if (ev.altKey && ev.ctrlKey && (c == 'A' || c == 'a'))
+                            keyBoardLayout = (keyBoardLayout == 4 ? 1 : 4);
+                        else if (ev.altKey && ev.ctrlKey && (c == 'U' || c == 'u'))
+                            keyBoardLayout = (keyBoardLayout == 5 ? 1 : 5);
+
+                        if (k == 27)
+                            return false;
+                        return true;
+                    },
+                    keyPress = function(ev) {
+                        var cUni, field = ev.target, k, c;
+
+                        k = (window.event) ? event.keyCode : ev.which;
+                        c = String.fromCharCode(k);
+
+                        if (ev.altKey && ev.ctrlKey && (c == 'E' || c == 'e'))
+                            return false;
+                        else if (ev.altKey && ev.ctrlKey && (c == 'B' || c == 'b'))
+                            return false;
+                        else if (ev.altKey && ev.ctrlKey && (c == 'P' || c == 'p'))
+                            return false;
+                        else if (ev.altKey && ev.ctrlKey && (c == 'A' || c == 'a'))
+                            return false;
+                        else if (ev.altKey && ev.ctrlKey && (c == 'U' || c == 'u'))
+                            return false;
+                        else if (ev.ctrlKey || ev.altKey)
+                            return true;
+
+                        cUni = mapUnicodeCharacter(c);
+                        if (cUni == null)
+                            return true;
+
+                        processCharacter(field, c, k, cUni);
+
+                        if (ie)
+                            event.keyCode = 0;
+                        lc = c;
+                        if (k > 29) return false;
+                        return true;
+                    },
+                    reset = function() {
+                    },
+                    mapUnicodeCharacter = function(c) {
+                        if (keyBoardLayout == 1)
+                            return bijoyKeyboardMap[c];
+                        return c;
+                    }, resetKarModifier = function() {
+                        lcKar = 0;
+                        lcString = "";
+                    },
+                    karModification = function(field, cUni) {
+                        var len;
+                        if (lcKar == lcuni || isBanglaHalant(lcuni) || cUni == "্র" || cUni == "্য") {
+                            len = lcString.length;
+                            lcString = lcString + cUni;
+                            removeNInsert(field, lcString + lcKar, len + lcKar.length);
+                        } else if (cUni == "র্") {
+                            len = lcString.length;
+                            lcString = cUni + lcString;
+                            removeNInsert(field, lcString + lcKar, len + lcKar.length);
+                        } else if (isBanglaHalant(cUni)) {
+                            lcString = lcString + cUni;
+                            insert(field, cUni);
+                        } else {
+                            insert(field, cUni);
+                            resetKarModifier();
+                        }
+                    },
+                    processCharacter = function(field, c, k, cUni) {
+                        if (lcuni == '‌' && cUni == "্য") {
+                            removeNInsert(field, field.value.charAt(field.value.length - 1) + "‌্য", 1);
+                            resetKarModifier();
+                            return;
+                        }
+
+                        if (isBanglaPostKar(cUni))
+                            resetKarModifier();
+
+                        if (isBanglaDigit(cUni))
+                            resetKarModifier();
+
+                        if (lcuni == 'অ' && cUni == 'া') {
+                            removeNInsert(field, "আ", 1);
+                            resetKarModifier();
+                        } else if (isBanglaHalant(lcuni) && isBanglaKar(cUni)) {
+                            removeNInsert(field, mapKarToSorborno(cUni), 1);
+                            resetKarModifier();
+                        } else if (keyBoardLayout != 4 && isBanglaNukta(lcuni) && isBanglaPostKar(cUni) == true) {
+                            removeNInsert(field, cUni + lcuni, 1);
+                            resetKarModifier();
+                        } else if (keyBoardLayout != 4 && isBanglaNukta(lcuni) && isBanglaFola(cUni)) {
+                            removeNInsert(field, cUni + lcuni, 1);
+                            resetKarModifier();
+                        } else if (keyBoardLayout == 1 && isBanglaPreKar(lcKar))
+                            karModification(field, cUni);
+                        else if (keyBoardLayout != 4 && cUni == "র্")
+                            refModification(field);
+                        else if (keyBoardLayout != 4 && cUni == 'া')
+                            oAndOuKarModification(field, 'ো', 'া');
+                        else if (keyBoardLayout != 4 && cUni == 'ৗ')
+                            oAndOuKarModification(field, 'ৌ', 'ৗ');
+                        else if (k > 29) {
+                            insert(field, cUni);
+                        } else if (k == 13 && ie) {
+                            insert(field, cUni);
+                        }
+                        if ((isBanglaHalant(lcuni) == false && isBanglaPreKar(cUni)))
+                            lcKar = cUni;
+
+                        if (!(isBanglaNukta(lcuni) && isBanglaFola(cUni))) {
+                            lcuni = cUni;
+                        }
+                    };
+
+                return { keyDown: keyDown, keyPress: keyPress, reset: reset };
+            };
+
+        return this.each(function () {
+            var el = $(this);
+
+            var api = el.data('bijoy') || functionality();
+
+            if (typeof (options) === "string" && options === "destroy") {
+                el.unbind('keydown', api.keyDown);
+                el.unbind('keypress', api.keyPress);
+               // functionality.reset();
+                return el.removeData("bijoy");
+            } else {
+                el.bind('keydown', api.keyDown);
+                el.bind('keypress', api.keyPress);
+            }
+
+            return el.data('bijoy', api);
+        });
+    };
+})(jQuery);

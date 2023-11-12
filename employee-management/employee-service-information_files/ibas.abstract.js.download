@@ -1,0 +1,1563 @@
+﻿(function ($) {
+    var design = Cookies.get('design');
+    $.extend({
+        modalajaxbackground: 0,
+        modalajaxprogresscontainer: 0,
+        saveData: function (options) {
+            var defaults = {
+                data: null,
+                url: null,
+                successCallback: function (sdata) {
+                },
+                failCallback: function (err) {
+                    // window.ajaxError(null, err);
+                },
+                fullOverwriteSuccessCallback: false,
+                isAsync: true,
+                progressText: 'Please wait',
+                addProgress: function () {
+                    var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+                    $('body').append(div);
+                    var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+                        + '<img id="progressimg" src="' + window.appRoot + '/Images/ajaxprogress.gif" />'
+                        + '<div>' + options.progressText + '...' + '</div>'
+                        + '</div>';
+
+                    $('body').append(progress);
+                },
+                removeProgress: function () {
+                    var mb = '#modalajaxbackground'; // for avoiding resharper error
+                    var mbc = '#modalajaxprogresscontainer'; // for avoiding resharper error
+                    $(mb).remove();
+                    $(mbc).remove();
+                }
+            };
+
+            options = $.extend(defaults, options);
+
+            var ajxurl = window.appRoot + '/' + options.url;
+
+            var promise = $.ajax({
+                type: 'POST',
+                url: ajxurl,
+                data: options.data ? options.data : null,
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: options.addProgress,
+                complete: options.removeProgress,
+                async: options.isAsync
+            });
+
+            promise.done(function (serverData) {
+                if (!options.fullOverwriteSuccessCallback) {
+                    if (serverData.FLAG) {
+                        if (serverData.FLAG == '0') {
+                            MsgBox({
+                                message: serverData.MSG,
+                                messageTitle: 'Information'
+                            });
+                        } else if (serverData.FLAG == '2') {
+                            var messageBlock = '<p>';
+                            $.each(serverData.MSG, function (key, value) {
+                                messageBlock = messageBlock + '- ' + value + '</br>';
+                            });
+                            messageBlock = messageBlock + '</p>';
+                            MsgBox({
+                                message: messageBlock,
+                                messageTitle: 'Validation Failed'
+                            });
+                        } else {
+                            MsgBox({
+                                message: serverData.MSG,
+                                messageTitle: 'Error'
+                            });
+                        }
+                    }
+                }
+                if (options.successCallback) options.successCallback(serverData);
+            });
+
+            promise.fail(function (err) {
+                //window.ajaxError(null, err);
+                options.failCallback(err);
+            });
+        },
+
+        ibasAjax: function (options) {
+            var mb = 'modalajaxbackground' + this.modalajaxbackground; // to make nested ajax call progress bar persistent
+            var mbc = 'modalajaxprogresscontainer' + this.modalajaxprogresscontainer; // to make nested ajax call progress bar persistent
+            this.modalajaxbackground++;
+            this.modalajaxprogresscontainer++;
+
+            var defaults = {
+                data: null,
+                url: null,
+                successCallback: function (sdata) {
+                },
+                failCallback: function (err) {
+                    // window.ajaxError(null, err);
+                },
+                fullOverwriteSuccessCallback: true,
+                isAsync: true,
+                type: 'POST',
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                progressText: 'Please wait',
+                addProgress: function () {
+                    var div = '<div id="' + mb + '" class="modalajaxbackground"></div>';
+                    $('body').append(div);
+                    var progress = '<div id="' + mbc + '" class="modalajaxprogresscontainer">'
+                        + '<img id="progressimg" src="' + window.appRoot + '/Images/ajaxprogress.gif" />'
+                        + '<div>' + options.progressText + '...' + '</div>'
+                        + '</div>';
+                    $('body').append(progress);
+                },
+                removeProgress: function () {
+                    if ($('#' + mb).length > 0) $('#' + mb).remove();
+                    if ($('#' + mbc).length > 0) $('#' + mbc).remove();
+                },
+                showProgrss: true,
+                disableSelector: null
+            };
+
+            options = $.extend(defaults, options);
+
+            var ajxurl = window.appRoot + '/' + options.url;
+
+            if (options.disableSelector != null) $(options.disableSelector).attr('disabled', 'disabled');
+
+            return new Promise(function (res, rej) {
+                var promise = $.ajax({
+                    type: options.type,
+                    url: ajxurl,
+                    data: options.data ? options.data : null,
+                    contentType: options.contentType,
+                    dataType: options.dataType,
+                    beforeSend: design != 2 && options.showProgrss ? options.addProgress : null,
+                    complete: design != 2 && options.showProgrss ? options.removeProgress : null,
+                    async: options.isAsync
+                });
+
+                promise.done(function (serverData) {
+                    $(options.disableSelector).removeAttr('disabled');
+                    options.removeProgress();
+                    if (options.fullOverwriteSuccessCallback == false) {
+                        if (serverData.FLAG) {
+                            if (serverData.FLAG == '2') {
+                                var messageBlock = '<p>';
+                                $.each(serverData.MSG, function (key, value) {
+                                    messageBlock = messageBlock + '- ' + value + '</br>';
+                                });
+                                messageBlock = messageBlock + '</p>';
+                                MsgBox({
+                                    message: messageBlock,
+                                    messageTitle: 'Validation Failed'
+                                });
+                            }
+                        }
+                    }
+                    if (options.successCallback) options.successCallback(serverData);
+                    res(serverData);
+                });
+
+                promise.fail(function (err) {
+                    options.removeProgress();
+                    $(options.disableSelector).removeAttr('disabled');
+                    //window.ajaxError(null, err);
+                    options.failCallback(err);
+                    rej(err);
+                });
+            });
+        },
+
+        buildObject: function (elementIdCollection) {
+            var obj = {};
+            $.each(elementIdCollection, function (index, item) {
+                var elemId = '#' + item;
+                if ($(elemId).attr('data-modelproperty')) {
+                    try {
+                        obj[$(elemId).attr('data-modelproperty')] = $(elemId).getValue();
+                    } catch (e) {
+                        alert('Unable to get value from the element:' + item + '.');
+                    }
+                }
+            });
+            return obj;
+        },
+
+        buildDictionary: function (elementIdCollection) {
+            var obj = {};
+            $.each(elementIdCollection, function (index, item) {
+                var elemId = '#' + item;
+                if ($(elemId).length > 0) {
+                    if ($(elemId).attr('id')) {
+                        try {
+                            obj[$(elemId).attr('id')] = $(elemId).getValue();
+                        } catch (e) {
+                            alert('Unable to get value from the element:' + item + '.');
+                        }
+                    }
+                }
+            });
+            return obj;
+        },
+
+        keyValueToPropValueArray: function (data) {
+            // var arr = [];
+            // $.each(data, function (index, item) {
+            //    var obj = {};
+            //    $.each(item, function (index1, item1) {
+            //        obj[item1.Key] = item1.Value;
+            //    });
+            //    arr.push(obj);
+            // });
+            // return arr;
+            return data;
+        },
+
+        keyValueToPropValue: function (data) {
+            // var obj = {};
+            // $.each(data, function (index, item) {
+            //    obj[item.Key] = item.Value;
+            // });
+            // return obj;
+            return data;
+        },
+
+        clearModel: function (model, options) {
+            var defaults = { excludeIDs: [] };
+            options = $.extend(defaults, options);
+            $.each(model, function (index, item) {
+                var elem = '#' + item;
+                if ($.inArray(item, options.excludeIDs) < 0) {
+                    if ($(elem).is('input:text')) $(elem).val('');
+                    else if ($(elem).is('input[type=hidden]')) $(elem).val('');
+                    else if ($(elem).is('ul')) $(elem).ibasDropdown().setValue('-1', true);
+                    else if ($(elem).is('span')) $(elem).html('');
+                }
+            });
+        },
+
+        getUrlData: function () {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+
+        getDictionary: function (options) {
+            var defaults = {
+                tableName: ''
+            };
+            var o = $.extend(defaults, options);
+
+            var elems = $('[data-field]').filter(function () { return $(this).attr('data-field').lastIndexOf(o.tableName, 0) === 0; });
+
+            var obj = {};
+
+            elems.each(function () {
+                var elem = $(this);
+                obj[elem.attr('data-field').split('.')[1]] = elem.getValue();
+            });
+
+            return obj;
+        },
+
+        setDictionary: function (options) {
+            var defaults = {
+                tableName: '',
+                data: null
+            };
+            var o = $.extend(defaults, options);
+            var elems = $('[data-field]').filter(function () { return $(this).attr('data-field').lastIndexOf(o.tableName, 0) === 0; });
+            var obj = {};
+            elems.each(function () { $(this).setValue(o.data[$(this).attr('data-field').split('.')[1]]); });
+            return obj;
+        },
+
+        validateDbFields: function (validateModel) {
+            var flag = true;
+            for (var prop in validateModel) {
+                var elem = $('[data-field="' + prop + '"]');
+                var val = elem.getValue();
+                if (val == null || val == '') {
+                    MsgBox({ message: validateModel[prop], messageTitle: 'Error', okMethod: function () { elem.focus(); } });
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        },
+
+        pagedData: function (options) {
+            var defaults = {
+                data: null,
+                rowPerPage: 10
+            };
+            var o = $.extend(defaults, options);
+
+            var paged = [];
+            var dataCount = $(o.data).length;
+            var totalPage = Math.floor(dataCount / o.rowPerPage) + 1;
+
+            if (dataCount > 0) {
+                var j = 0;
+                for (var i = 0; i < totalPage; i++) {
+                    var obj = { pageNo: i + 1, beginIndex: j + 1, endIndex: j + o.rowPerPage + 1 };
+                    obj.data = o.data.slice(j, j + o.rowPerPage);
+                    j = j + o.rowPerPage;
+                    paged.push(obj);
+                }
+            }
+
+            return {
+                data: paged,
+                getDataByPage: function (pageNo) {
+                    return $.grep(paged, function (item, index) { return pageNo == item.pageNo; })[0].data;
+                }
+            };
+        },
+
+        getFormattedDate: function (value) {
+            var str = value;
+            var dateStr = str.split("/");
+            var parsedDate = parseInt(dateStr[1]);
+            switch (parsedDate) {
+                case 1:
+                    return dateStr[0] + '/' + 'Jan/' + dateStr[2];
+                case 2:
+                    return dateStr[0] + '/' + 'Feb/' + dateStr[2];
+                case 3:
+                    return dateStr[0] + '/' + 'Mar/' + dateStr[2];
+                case 4:
+                    return dateStr[0] + '/' + 'Apr/' + dateStr[2];
+                case 5:
+                    return dateStr[0] + '/' + 'May/' + dateStr[2];
+                case 6:
+                    return dateStr[0] + '/' + 'Jun/' + dateStr[2];
+                case 7:
+                    return dateStr[0] + '/' + 'Jul/' + dateStr[2];
+                case 8:
+                    return dateStr[0] + '/' + 'Aug/' + dateStr[2];
+                case 9:
+                    return dateStr[0] + '/' + 'Sep/' + dateStr[2];
+                case 10:
+                    return dateStr[0] + '/' + 'Oct/' + dateStr[2];
+                case 11:
+                    return dateStr[0] + '/' + 'Nov/' + dateStr[2];
+                case 12:
+                    return dateStr[0] + '/' + 'Dec/' + dateStr[2];
+                default:
+                    return '';
+            }
+        },
+
+        getMaxZIndex: function () {
+            return Array.from(document.querySelectorAll('body *'))
+                .map(a => parseFloat(window.getComputedStyle(a).zIndex))
+                .filter(a => !isNaN(a))
+                .sort()
+                .pop();
+        },
+
+        directReport: function (options) {
+            var defaults = {
+                reportUrl: '',
+                spName: '',
+                spParam: {},
+                crName: '',
+                crParam: {},
+                otherParam: { lang: 'bangla' }
+            };
+            options = $.extend(defaults, options);
+
+            var form = $("<form></form>");
+            form.attr("method", "POST").attr("action", options.reportUrl).attr("target", "popup");
+
+            form.append($("<input/>", { name: "sp", value: options.spName }))
+                .append($("<input/>", { name: "cr", value: options.crName }))
+                .append($("<input/>", { name: "spp", value: JSON.stringify(options.spParam) }))
+                .append($("<input/>", { name: "crp", value: JSON.stringify(options.crParam) }))
+                .append($("<input/>", { name: "op", value: JSON.stringify(options.otherParam) }));
+
+            var pop = window.open('', 'popup', 'fullscreen=1,toolbar=no, menubar=no, scrollbars=1');
+
+            if (pop) {
+                $("body").append(form);
+                form.submit();
+                form.remove();
+            } else {
+                MessageBox('You must allow popups for this map to work.', 'Information', 'OK', null, null, null);
+            }
+        },
+
+        add: function (a, b, precision) {
+
+            if (precision > 3) {
+                precision = 3;
+            }
+
+            var x = Math.pow(10, precision || 2);
+            return (parseInt(a * x) + parseInt(b * x)) / x;
+        },
+
+        padString: function (targetString, targetLength, paddingString = ' ', isEmptyValuePad = true) {
+
+            if (!isEmptyValuePad && ($.trim(targetString.toString()).length == 0 || (!isNaN(Number(targetString)) && Number(targetString) <= 0))) return targetString;
+
+            targetLength -= targetString.toString().length;
+            if (targetLength > 0) {
+                return new Array(targetLength + (/\./.test(targetString) ? 2 : 1)).join(paddingString) + targetString;
+            }
+            return targetString + ""; // always return a string
+        }
+    });
+
+    $.fn.bindPartialView = function (options) {
+        var defaults = {
+            data: {},
+            bindToAttribute: 'id'
+        };
+        var opt = $.extend(defaults, options);
+        var $container = $(this);
+        for (var prop in opt.data) {
+            $container.find('[' + opt.bindToAttribute + '="' + prop + '"]').setValue(opt.data[prop]);
+        }
+    };
+
+    $.fn.validateForm = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            onOKCallback: null,
+            onYesCallback: null,
+            onNoCallback: null
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        var checkFlag = true;
+
+        selector.each(function () {
+            if ($(this).is('input:text')) {
+                if ($(this).attr('data-valid-msg') != '' && $.trim($(this).val()) == '') {
+
+                    MessageBox($(this).attr('data-valid-msg'), 'Warning', 'OK', function () {
+                        $(this).focus();
+                        if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                    }, null, null);
+
+                    checkFlag = false;
+                    return false;
+                }
+            } else if ($(this).is('select')) {
+                if ($.trim($(this).attr('data-valid-msg')) != '' && $.trim($(this).val()) == '-1') {
+
+                    MessageBox($(this).attr('data-valid-msg'), 'Warning', 'OK', function () {
+                        $(this).focus();
+                        if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                    }, null, null);
+
+                    checkFlag = false;
+                    return false;
+                }
+            } else if ($(this).is('ul')) {
+                if ($.trim($(this).attr('data-valid-msg')) != '' && $.trim($(this).ibasDropdown().selectedValue()) == '-1') {
+
+                    MessageBox($(this).attr('data-valid-msg'), 'Warning', 'OK', function () {
+                        $(this).ibasDropdown().focus();
+                        if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                    }, null, null);
+
+                    checkFlag = false;
+                    return false;
+                }
+            }
+
+            return checkFlag;
+        });
+
+        return checkFlag;
+    };
+
+    $.fn.getObject = function () {
+
+        var selector = $(this);
+
+        var obj = {};
+
+        selector.each(function () {
+
+            if (!$(this).attr('data-modelproperty')) return;
+
+            if ($(this).is('input:text') || $(this).is('input[type=hidden]') || $(this).is('textarea') || $(this).is('select')) {
+                if ($(this).attr('data-date-attached')) {
+                    obj[$(this).attr('data-modelproperty')] = $(this).getDate();
+                } else {
+                    obj[$(this).attr('data-modelproperty')] = $.trim($(this).val());
+                }
+            } else if ($(this).is('input:checkbox')) {
+                obj[$(this).attr('data-modelproperty')] = $(this).attr('checked') ? 'Y' : 'N';
+            } else if ($(this).is('ul')) {
+                obj[$(this).attr('data-modelproperty')] = $(this).ibasDropdown().selectedValue();
+            }
+        });
+
+        return obj;
+
+    };
+
+    $.fn.enableDisable = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            disable: true,
+            exludeElementIds: {}
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        if (selector.is('table')) {
+
+            selector.find("input, select").each(function () {
+                if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                    $(this).prop("disabled", options.disable);
+            });
+
+            selector.find("ul").each(function () {
+                if (options.disable == true) {
+                    if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                        $(this).find('li:eq(0) button:eq(0)').attr('disabled', 'disabled');
+                } else {
+                    if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                        $(this).find('li:eq(0) button:eq(0)').removeAttr('disabled');
+                }
+            });
+
+        } else {
+
+            selector.each(function () {
+
+                if ($(this).is("input")) {
+                    if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                        $(this).prop("disabled", options.disable);
+                }
+
+                if ($(this).is("select")) {
+                    if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                        $(this).prop("disabled", options.disable);
+                }
+
+                if ($(this).is("ul")) {
+                    if (options.disable == true) {
+                        if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                            $(this).find('li:eq(0) button:eq(0)').attr('disabled', 'disabled');
+                    } else {
+                        if ($.inArray($(this).attr("id"), options.exludeElementIds) < 0)
+                            $(this).find('li:eq(0) button:eq(0)').removeAttr('disabled');
+                    }
+                }
+
+            });
+        }
+    };
+
+    $.fn.clearGroup = function () {
+
+        var selector = $(this);
+
+        var obj = {};
+
+        selector.each(function () {
+            if ($(this).is('input:text') || $(this).is('input[type="hidden"]') || $(this).is('textarea') || $(this).is('select')) {
+                $(this).val('');
+            } else if ($(this).is('input:checkbox')) {
+                $(this).prop("checked", false);
+            } else if ($(this).is('span')) {
+                $(this).html($(this).attr('data-empty') ? $(this).attr('data-empty') : '');
+            } else if ($(this).is('ul')) {
+                $(this).ibasDropdown().setValue('-1');
+            }
+        });
+
+        return obj;
+
+    };
+
+    $.fn.validateGroup = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            onOkCallback: function () {
+            },
+            exludeElementIds: []
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        var checkFlag = true;
+
+        selector.each(function () {
+            var currElem = $(this);
+
+            if ($.inArray(currElem.attr('id'), options.exludeElementIds) < 0) {
+                if (currElem.is('input:text')) {
+                    if (currElem.attr('data-valid-msg') != '' && $.trim(currElem.val()) == '') {
+                        MessageBox($(this).attr('data-valid-msg'), 'Warning', 'OK', function () {
+                            currElem.focus();
+                            if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                        }, null, null);
+                        checkFlag = false;
+                        return false;
+                    }
+                } else if (currElem.is('select')) {
+                    if ($.trim(currElem.attr('data-valid-msg')) != '' && $.trim(currElem.val()) == '-1') {
+                        MessageBox(currElem.attr('data-valid-msg'), 'Warning', 'OK', function () {
+                            currElem.focus();
+                            if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                        }, null, null);
+                        checkFlag = false;
+                        return false;
+                    }
+                } else if (currElem.is('ul')) {
+                    if ($.trim(currElem.attr('data-valid-msg')) != '' && $.trim(currElem.ibasDropdown().selectedValue()) == '-1') {
+                        MessageBox(currElem.attr('data-valid-msg'), 'Warning', 'OK', function () {
+                            currElem.ibasDropdown().focus();
+                            if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                        }, null, null);
+                        checkFlag = false;
+                        return false;
+                    }
+                } else if (currElem.is('input:file')) {
+                    if (currElem.attr('data-valid-msg') != '' && $.trim(currElem.val()) == '') {
+                        MessageBox($(this).attr('data-valid-msg'), 'Warning', 'OK', function () {
+                            currElem.focus();
+                            if ($.isFunction(options.onOkCallback)) options.onOkCallback();
+                        }, null, null);
+                        checkFlag = false;
+                        return false;
+                    }
+                }
+            }
+            return checkFlag;
+        });
+
+        return checkFlag;
+    };
+
+    $.fn.objectToViewBind = function (options) {
+        var defaults = {
+            bindRule: null, //{prop1:elemId1,prop2:elemId2,...}
+            ignoreEventIds: [], //[ELEMENT_ID]
+            ignoreAttributes: [], //[ELEMENT_ID]
+            attrPrefix: null
+        };
+        var opt = $.extend(defaults, options);
+        var data = $(this)[0];
+        var check = { propertyCount: 0, elementCount: 0, notFound: [] };
+        if (opt.bindRule) {
+            for (var prop in data)
+                if (data.hasOwnProperty(prop))
+                    if (opt.ignoreAttributes.indexOf(prop) < 0)
+                        $('#' + opt.bindRule[prop]).setValue(data[prop]);
+
+        } if (opt.attrPrefix) {
+            for (var prop in data)
+                if (data.hasOwnProperty(prop))
+                    if (opt.ignoreAttributes.indexOf(prop) < 0)
+                        $('#' + opt.attrPrefix + prop).setValue(data[prop]);
+        }
+        else {
+            for (var attr in data) {
+                if (data.hasOwnProperty(attr)) {
+                    if (opt.ignoreAttributes.indexOf(attr) < 0) {
+                        check.propertyCount++;
+                        if ($('#' + attr).length > 0) check.elementCount++;
+                        else check.notFound.push(attr);
+                        var x = $.grep(opt.ignoreEventIds, function (item) {
+                            return item.toUpperCase() == attr.toUpperCase();
+                        });
+                        if ($(x).length <= 0) {
+                            var events = $('#' + attr).data('events');
+                            if (events) {
+                                $.each(events, function (i, e) { if (i == 'blur') e[0].handler(); });
+                            }
+                        }
+                        if ($('#' + attr).is('ul')) {
+                            $('#' + attr).ibasDropdown().setValue(data[attr]);
+                        } else if ($('#' + attr).is('span')) {
+                            $('#' + attr).setValue(data[attr]);
+                        } else if ($('#' + attr).is('input:radio')) {
+                            var n = $('#' + attr).attr('name');
+                            $('input[name="' + n + '"][value="' + data[attr] + '"]').prop("checked", true);
+                        } else {
+                            $('#' + attr).setValue(data[attr]);
+                        }
+                    }
+                }
+            }
+        }
+        return check;
+    };
+
+    $.fn.showGroup = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            exludeElementIds: []
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        selector.each(function () {
+            var currElem = this;
+            if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0)
+                $(currElem).css('display', '');
+        });
+    };
+
+    $.fn.hideGroup = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            exludeElementIds: []
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        selector.each(function () {
+            var currElem = this;
+            if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0)
+                $(currElem).css('display', 'none');
+        });
+    };
+
+    $.fn.enableGroup = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            exludeElementIds: []
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        selector.each(function () {
+            var currElem = this;
+
+            if ($(currElem).is('ul')) {
+                if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0) {
+                    $(currElem).find('li:eq(0) button:eq(0)').prop('disabled', false);
+                    return;
+                }
+            }
+
+            if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0)
+                $(currElem).prop('disabled', false);
+        });
+    };
+
+    $.fn.disableGroup = function (options) {
+
+        if (!options) options = {};
+
+        var defaults = {
+            exludeElementIds: []
+        };
+
+        options = $.extend(defaults, options);
+
+        var selector = $(this);
+
+        selector.each(function () {
+            var currElem = this;
+            if ($(currElem).is('ul')) {
+                if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0) {
+                    $(currElem).find('li:eq(0) button:eq(0)').prop('disabled', 'disabled');
+                    return;
+                }
+            }
+            if ($.inArray($(currElem).attr('id'), options.exludeElementIds) < 0)
+                $(currElem).prop('disabled', 'disabled');
+        });
+
+    };
+
+    $.fn.sortLimited = function (sortOptions) {
+
+        if (!sortOptions) sortOptions = {};
+
+        var defaults = {
+            sortOrder: 'asc',
+            startIndex: 0,
+            endIndex: 0,
+            columnIndex: 0
+        };
+
+        var options = $.extend(defaults, sortOptions);
+
+        var grid = $(this);
+
+        var sortAsc = function () {
+            var i, j;
+
+            for (i = options.startIndex; i < options.endIndex; i++) {
+                for (j = i + 1; j <= options.endIndex; j++) {
+                    var lValue = grid.find('tbody tr:eq(' + i + ')').find('td:eq(' + options.columnIndex + ')').text();
+                    var lValuePlus = grid.find('tbody tr:eq(' + (j) + ')').find('td:eq(' + options.columnIndex + ')').text();
+                    if (lValue > lValuePlus) {
+                        var lTempRow = grid.find('tbody tr:eq(' + (j) + ')');
+                        grid.find('tbody tr:eq(' + (j) + ')').remove();
+                        grid.find('tbody tr:eq(' + (i) + ')').before(lTempRow);
+                    }
+                }
+            }
+        };
+
+        var sortDesc = function () {
+            var i, j;
+
+            for (i = options.startIndex; i < options.endIndex; i++) {
+                for (j = i + 1; j <= options.endIndex; j++) {
+                    var lValue = grid.find('tbody tr:eq(' + i + ')').find('td:eq(' + options.columnIndex + ')').text();
+                    var lValuePlus = grid.find('tbody tr:eq(' + (j) + ')').find('td:eq(' + options.columnIndex + ')').text();
+                    if (lValue < lValuePlus) {
+                        var lTempRow = grid.find('tbody tr:eq(' + (j) + ')');
+                        grid.find('tbody tr:eq(' + (j) + ')').remove();
+                        grid.find('tbody tr:eq(' + (i) + ')').before(lTempRow);
+                    }
+                }
+            }
+        };
+
+        if (options.sortOrder == 'asc') {
+            sortAsc();
+            return;
+        }
+
+        if (options.sortOrder == 'desc') {
+            sortDesc();
+            return;
+        }
+
+    };
+
+    $.fn.findValue = function (options) {
+
+        var defaults = {
+            mp: ''
+        };
+
+        options = $.extend(defaults, options);
+
+        var $elem = $(this).find('td[data-modelproperty="' + options.mp + '"]').find('*:first');
+
+        if ($elem.length <= 0) return $(this).find('td[data-modelproperty="' + options.mp + '"]').text();
+
+        if ($elem.attr('data-date-attached')) return $elem.getDate();
+
+        if ($elem.is('input')) return $elem.val();
+
+        if ($elem.is('ul')) return $elem.ibasDropdown().selectedValue();
+
+        return null;
+    };
+
+    $.fn.associateRowValue = function (options) {
+        var defaults = {
+            mp: '',
+            value: ''
+        };
+        options = $.extend(defaults, options);
+        var $elem = $(this).find('td[data-modelproperty="' + options.mp + '"]').find('*:first');
+        if ($elem.length <= 0) $(this).find('td[data-modelproperty="' + options.mp + '"]').text(options.value);
+        else if ($elem.attr('data-date-attached')) $elem.val(options.value);
+        else if ($elem.is('input')) $elem.val(options.value);
+        else if ($elem.is('ul')) $elem.ibasDropdown().setValue(options.value);
+        return null;
+    };
+
+    $.fn.getValue = function () {
+        if ($(this).is('td')) return $.trim($(this).text());
+        if ($(this).is('a')) return $.trim($(this).text());
+        if ($(this).attr('data-date-attached')) return $(this).getDate();
+        if ($(this).attr('data-type') && $(this).attr('data-type') === 'date' && $(this).is('input')) return $(this).getDate();
+        if ($(this).is('ul')) return $(this).ibasDropdown().selectedValue();
+        if ($(this).is('input:text')) return $.trim($(this).val());
+        if ($(this).is('select')) return $(this).val();
+        if ($(this).is('input:checkbox')) return $(this).attr('checked') ? 'Y' : 'N';
+        if ($(this).is('input[type="hidden"]')) return $(this).val();
+        if ($(this).is('input[type="password"]')) return $(this).val();
+        if ($(this).is('textarea')) return $.trim($(this).val());
+        if ($(this).is('input:radio')) return $('input[name="' + $(this).attr('name') + '"]:checked').val();
+        if ($(this).is('span')) return $.trim($(this).text());
+        if ($(this).is('div')) return $.trim($(this).text());
+        if ($(this).is('img')) return $.trim($(this).attr('src'));
+        return null;
+    };
+
+    $.fn.setValue = function (value) {
+        if (value === 'null' || value === null) value = '';
+        var boundEvents, targetElement;
+        if ($(this).is('td')) $(this).text(value);
+        else if ($(this).is('a')) $(this).text(value);
+        else if ($(this).is('ul')) $(this).ibasDropdown().setValue(value);
+        else if ($(this).is('input:text')) $(this).val(value);
+        else if ($(this).is('select')) $(this).val(value);
+        else if ($(this).is('input[type="hidden"]')) $(this).val(value);
+        else if ($(this).is('input[type="password"]')) $(this).val(value);
+        else if ($(this).is('textarea')) $(this).val(value);
+        else if ($(this).is('input:checkbox')) {
+            value === 'Y' ? $(this).prop("checked", true) : $(this).prop("checked", false);
+
+            boundEvents = $._data($(this).get(0), 'events') || [];
+            targetElement = $(this);
+            $.each(boundEvents, function (k, o) {
+                if (k == 'change')
+                    targetElement.triggerHandler(k);
+            });
+        }
+        else if ($(this).is('input:radio')) {
+            var n = $(this).attr('name');
+            $('input[name="' + n + '"][value="' + value + '"]').prop("checked", true);
+
+            boundEvents = $._data($(this).get(0), 'events') || [];
+            targetElement = $(this);
+            $.each(boundEvents, function (k, o) {
+                if (k == 'change')
+                    targetElement.triggerHandler(k);
+            });
+        }
+        else if ($(this).is('span')) {
+            value = (value == null || value === '') ? ($(this).attr('data-empty') || '') : value;
+            $(this).text(value);
+            $(this).attr('data-tipso', value);
+            $(this).attr('title', value);
+        }
+        else if ($(this).is('div')) $(this).text(value);
+        else if ($(this).is('img')) $(this).attr('src', value);
+
+        return $(this);
+    };
+
+    $.fn.bindTableWith = function (options) {
+
+        var defaults = {
+            data: '',
+            viewTemplateId: 'viewTemplate',
+            rowBinding: function (args) {
+            },
+            callback: function () {
+            }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var grid = $(this);
+
+        grid.find('tbody tr').not('[data-id]').remove();
+        $(o.data).each(function (indx, itm) {
+            var tr = grid.find('[data-id="' + o.viewTemplateId + '"]').clone();
+            for (var prop in itm) {
+                if (itm.hasOwnProperty(prop)) {
+                    var td = tr.find('td[data-modelproperty="' + prop + '"]');
+                    if (td.length < 1) continue;
+                    if (!td.attr('data-type')) td.html(itm[prop]);
+                    if (td.attr('data-type') == 'decimal') td.html(Number(itm[prop]).toFixed(2));
+                }
+            }
+            o.rowBinding({ row: tr });
+            grid.find('tbody').append('<tr>' + tr.html() + '</tr>');
+        });
+
+        o.callback();
+    };
+
+    $.fn.bindRow = function (options) {
+        var defaults = {
+            data: [],
+            notRemove: '[data-id="viewTemplate"],[data-id="entryTemplate"]',
+            viewTemplateId: 'viewTemplate',
+            asHtml: false,
+            rowBinding: function (args) {
+
+            },
+            callback: function () {
+            }
+        };
+        var opt = $.extend(defaults, options);
+        var $grid = $(this);
+        $grid.find('tbody tr').not(opt.notRemove).remove();
+
+        $grid.find('[data-id="entryTemplate"]').find('[data-id="add"]').attr('value', 'Add');
+
+        $(opt.data).each(function (index, item) {
+            var $tr = $grid.find('[data-id="' + opt.viewTemplateId + '"]').clone(true);
+            $tr.find('[data-modelproperty]').each(function () {
+                var $td = $(this);
+                if ($td.attr('data-type') && $td.attr('data-type') === 'decimal') {
+                    $td.setValue(item[$td.attr('data-modelproperty')] ? Number(item[$td.attr('data-modelproperty')]).toFixed(2) : '0');
+                } else {
+                    if (opt.asHtml == false)
+                        $td.setValue(
+                            item.hasOwnProperty($td.attr('data-modelproperty')) ?
+                                (item[$td.attr('data-modelproperty')] != null ?
+                                    item[$td.attr('data-modelproperty')] : '') : '');
+                    else
+                        $td.html(item[$td.attr('data-modelproperty')]);
+                }
+            });
+            $tr.removeAttr('data-id');
+            $tr.css('display', '');
+            opt.rowBinding({ $row: $tr });
+            $grid.find('tbody tr[data-id="' + opt.viewTemplateId + '"]').after($tr);
+        });
+
+        opt.callback();
+    };
+
+    $.fn.bindRowInOrder = function (options) {
+        var defaults = {
+            data: [],
+            notRemove: '[data-id="viewTemplate"],[data-id="entryTemplate"]',
+            viewTemplateId: 'viewTemplate',
+            asHtml: false,
+            rowBinding: function (args) {
+
+            },
+            callback: function () {
+            }
+        };
+        var opt = $.extend(defaults, options);
+        var $grid = $(this);
+        $grid.find('tbody tr').not(opt.notRemove).remove();
+
+        //used for loop to fix the issue of showing data not in received order.
+        //issue reason : as <tr> is added aftar viewtemplate.
+        for (var i = opt.data.length - 1; i >= 0; i--) {
+            var item = opt.data[i];
+            //$(opt.data).each(function (index, item) {
+            var $tr = $grid.find('[data-id="' + opt.viewTemplateId + '"]').clone(true);
+            $tr.data("rowdata", item);
+            $tr.find('[data-modelproperty]').each(function () {
+                var $td = $(this);
+                if ($td.attr('data-type') && $td.attr('data-type') === 'number') {
+                    $td.setValue(isNaN(Number(item[$td.attr('data-modelproperty')])) ? item[$td.attr('data-modelproperty')] : Number(item[$td.attr('data-modelproperty')]) );
+                }
+                else if ($td.attr('data-type') && $td.attr('data-type') === 'decimal') {
+                    if (item[$td.attr('data-modelproperty')] == null || item[$td.attr('data-modelproperty')] == 0)
+                        $td.text('0.00');
+                    else
+                        $td.text(isNaN(Number(item[$td.attr('data-modelproperty')])) ? item[$td.attr('data-modelproperty')] : Number(item[$td.attr('data-modelproperty')]).toFixed(2));
+                } else {
+                    if (opt.asHtml == false)
+                        $td.setValue(item[$td.attr('data-modelproperty')] ? item[$td.attr('data-modelproperty')] : '');
+                    else
+                        $td.html(item[$td.attr('data-modelproperty')]);
+                }
+            });
+            $tr.removeAttr('data-id');
+            $tr.css('display', '');
+            opt.rowBinding({ $row: $tr });
+            $grid.find('tbody tr[data-id="' + opt.viewTemplateId + '"]').after($tr);
+        }//)
+
+    };
+
+    $.fn.addTableRows = function (options) {
+
+        var defaults = {
+            data: '',
+            viewTemplateId: 'viewTemplate',
+            rowBinding: function (args) {
+            },
+            callback: function () {
+            }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var grid = $(this);
+
+        $(o.data).each(function (indx, itm) {
+            var tr = grid.find('[data-id="' + o.viewTemplateId + '"]').clone();
+            for (var prop in itm) {
+                if (itm.hasOwnProperty(prop)) {
+                    var td = tr.find('td[data-modelproperty="' + prop + '"]');
+                    if (td.length < 1) continue;
+                    if (!td.attr('data-type')) td.html(itm[prop]);
+                    if (td.attr('data-type') == 'decimal') td.html(Number(itm[prop]).toFixed(2));
+                }
+            }
+            if ($.isFunction(o.rowBinding)) o.rowBinding({ row: tr });
+            grid.find('tbody').append('<tr>' + tr.html() + '</tr>');
+        });
+
+        if ($.isFunction(o.callback)) o.callback();
+    };
+
+    $.fn.extractRowData = function (options) {
+
+        var defaults = {
+            callback: function (args) { }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $row = $(this);
+
+        var obj = {};
+
+        $row.find('td').each(function () {
+            var $td = $(this);
+            if ($td.has('*').length > 0) {
+                if ($td.find(':first-child').attr('data-modelproperty'))
+                    if ($td.find(':first-child').is('ul')) {
+
+                        var selectedIdValue = $td.find(':first-child').ibasDropdown().selectedValue();
+                        obj[$td.find(':first-child').attr('data-modelproperty')] = selectedIdValue === '-1' ? '' : $td.find(':first-child').ibasDropdown().selectedText();
+
+                        if ($td.find(':first-child').attr('data-bind-with'))
+                            obj[$td.find(':first-child').attr('data-bind-with')] = selectedIdValue;
+                        else
+                            obj[$td.find(':first-child').attr('data-modelproperty') + '_ID'] = selectedIdValue;
+                    } else {
+                        if ($td.find(':first-child').attr('data-type') && $td.find(':first-child').attr('data-type') == 'date')
+                            obj[$td.find(':first-child').attr('data-modelproperty')] = $td.find(':first-child').val();
+                        else
+                            obj[$td.find(':first-child').attr('data-modelproperty')] = $td.find(':first-child').getValue();
+                    }
+            } else {
+                if ($td.attr('data-modelproperty'))
+                    obj[$td.attr('data-modelproperty')] = $td.getValue();
+            }
+        });
+
+        return obj;
+    };
+
+    $.fn.getRowData = function (options) {
+        var defaults = {
+            exclude: [],
+            buildCompleted: function (args) { }
+        };
+        var opt = $.extend(defaults, options);
+        var obj = {};
+        var $container = $(this);
+        $container.find('[data-modelproperty]').each(function () {
+            var $elm = $(this);
+            if (opt.exclude.indexOf($elm.attr('data-modelproperty')) === -1) {
+                if ($elm.attr('data-type') && $elm.attr('data-type') === 'date')
+                    obj[$elm.attr('data-modelproperty')] = $.getFormattedDate($elm.getValue());
+                else
+                    obj[$elm.attr('data-modelproperty')] = $elm.getValue();
+            }
+        });
+        var args = { newobj: obj };
+        if ($.isFunction(opt.buildCompleted)) opt.buildCompleted(args);
+        return obj;
+    };
+
+    $.fn.getTableData = function (options) {
+
+        var defaults = {
+            callback: function (args) { }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $table = $(this);
+
+        var arrObj = [];
+
+        $table.find('tbody tr').not('tr[data-id="entryTemplate"]').not('tr[data-id="viewTemplate"]').each(function () {
+            arrObj.push($(this).getRowData());
+        });
+
+        return arrObj;
+    };
+
+    $.fn.getTableDataOnlyModified = function (options) {
+
+        var defaults = {
+            callback: function (args) { }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $table = $(this);
+
+        var arrObj = [];
+
+        $table.find('tbody tr[data-modified="true"]').each(function () {
+            arrObj.push($(this).getRowData());
+        });
+
+        return arrObj;
+    };
+
+    $.fn.extractObjectFromRow = function (options) {
+
+        var defaults = {
+            callback: function (args) { }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $row = $(this);
+
+        var obj = {};
+
+        $row.find('[data-modelproperty]').each(function () {
+            var $elm = $(this);
+            obj[$elm.attr('data-modelproperty')] = $elm.getValue();
+        });
+
+        return obj;
+    };
+
+    $.fn.extractTableData = function (options) {
+
+        var defaults = {
+            callback: function (args) { }
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $table = $(this);
+
+        var arrObj = [];
+
+        $table.find('tbody tr').not('tr[data-id="entryTemplate"]').not('tr[data-id="viewTemplate"]').each(function () {
+            arrObj.push($(this).extractRowData());
+        });
+
+        return arrObj;
+    };
+
+    $.fn.getRows = function (options) {
+        var defaults = {
+            notInclude: '[data-id="viewTemplate"],[data-id="entryTemplate"]'
+        };
+        var opt = $.extend(defaults, options);
+        var $grid = $(this);
+        return $grid.find('tbody tr').not(opt.notInclude);//Array.from(
+    };
+
+    $.fn.setRowToEdit = function (options) {
+
+        var defaults = {
+            entryTemplate: 'entryTemplate'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $editRow = $(this);
+
+        var $table = $editRow.closest('table');
+
+        var $entryRow = $table.find('[data-id="' + o.entryTemplate + '"]');
+
+        $table.find('tbody tr').not('[data-id="entryTemplate"]').not('[data-id="viewTemplate"]').each(function () {
+            $(this).removeAttr('data-edit');
+        });
+
+        $editRow.attr('data-edit', 'true');
+
+        var data = $editRow.extractRowData();
+
+        $table.find('tbody tr[data-id="entryTemplate"]').find('[data-modelproperty]').each(function () {
+            var $elm = $(this);
+            if ($elm.is('ul')) {
+                var modelProperty = $(this).attr('data-modelproperty') + '_ID';
+                if (data[modelProperty] == null)
+                    modelProperty = $(this).attr('data-bind-with');
+
+                $elm.ibasDropdown().setValue(data[modelProperty]);
+                $elm.ibasDropdown().triggerChange();
+            } else {
+                $elm.setValue(data[$elm.attr('data-modelproperty')]);
+            }
+        });
+
+        $entryRow.find('[data-id="add"]').attr('value', 'Update');
+
+        return data;
+    };
+
+    $.fn.setRowData = function (options) {
+
+        var defaults = {
+            entryTemplate: 'entryTemplate'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $editRow = $(this);
+
+        var $table = $editRow.closest('table');
+
+        var $entryRow = $table.find('[data-id="' + o.entryTemplate + '"]');
+
+        $table.find('tbody tr').not('[data-id="entryTemplate"]').not('[data-id="viewTemplate"]').each(function () {
+            $(this).removeAttr('data-edit');
+        });
+
+        $editRow.attr('data-edit', 'true');
+
+        var data = $editRow.extractRowData();
+
+        $table.find('tbody tr[data-id="entryTemplate"]').find('[data-modelproperty]').each(function () {
+            var $elm = $(this);
+            $elm.setValue(data[$elm.attr('data-modelproperty')]);
+        });
+
+        $entryRow.find('[data-id="add"]').attr('value', 'Update');
+
+        return data;
+    };
+
+    $.fn.addUpdateTableRow = function (options) {
+
+        var defaults = {
+            viewTemplate: 'viewTemplate',
+            beforeAddUpdate: function (args) { },
+            extractStrict: false
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $entryRow = $(this);
+
+        var $table = $entryRow.closest('table');
+
+        o.beforeAddUpdate({ $row: $entryRow });
+
+        var data = {};
+
+        if (o.extractStrict == false)
+            data = $entryRow.extractRowData({});
+        else
+            data = $entryRow.extractObjectFromRow({});
+
+        var prop;
+        if ($entryRow.find('[data-id="add"]').attr('value') === 'Add') {
+            var $tr = $table.find('tr[data-id="' + o.viewTemplate + '"]').clone(true);
+            console.log(o.viewTemplate);
+
+            console.log("Prop")
+            for (prop in data) {
+                console.log(prop);
+                if (data.hasOwnProperty(prop)) {
+                    var $td = $tr.find('[data-modelproperty="' + prop + '"]');
+                    if ($td.length < 1)
+                        continue;
+                    $td.setValue(data[prop]);
+
+                }
+            }
+
+            $tr.removeAttr('data-id');
+            $tr.css('display', '');
+            $tr.attr('data-modified', 'true');  //to identify which rows have been inserted/changed
+
+            console.log("Entry ")
+            console.log($entryRow);
+            console.log($tr);
+            $entryRow.after($tr);
+        } else {
+            var $updatedRow = $table.find('tbody tr[data-edit="true"]');
+            for (prop in data) {
+                if (data.hasOwnProperty(prop)) {
+                    $updatedRow.find('[data-modelproperty="' + prop + '"]').setValue(data[prop]);
+                }
+            }
+
+            $updatedRow.removeAttr('data-edit');
+            $updatedRow.attr('data-modified', 'true');    //to identify which rows have been inserted/changed
+            $entryRow.find('[data-id="add"]').attr('value', 'Add');
+        }
+
+        if ($.isFunction(o.callback)) o.callback();
+    };
+
+    $.fn.clearRow = function (options) {
+
+        var defaults = {
+            viewTemplate: 'viewTemplate'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $entryRow = $(this);
+
+        $entryRow.find('[data-modelproperty]').each(function () {
+            var boundEvents, targetElement;
+            
+            if ($(this).is('input:text') || $(this).is('input[type=hidden]') || $(this).is('textarea') || $(this).is('select')) {
+                $(this).val('');
+            } else if ($(this).is('input:radio')) {
+                //$('input[data-modelproperty=' + $(this).data('modelproperty') + ']:first').prop('checked', true);
+                $(this).parent().find('input[data-modelproperty=' + $(this).data('modelproperty') + ']:first').prop('checked', true);
+            } else if ($(this).is('input:checkbox')) {
+                $(this).prop("checked", false);
+                boundEvents = $._data(this, 'events') || [];
+                targetElement = $(this);
+                $.each(boundEvents, function (k, o) {
+                    if (k == 'change')
+                        targetElement.triggerHandler(k);
+                });
+
+            } else if ($(this).is('a')) {
+                $(this).text('');
+            } else if ($(this).is('span')) {
+                $(this).html($(this).attr('data-empty') ? $(this).attr('data-empty') : '');
+            } else if ($(this).is('div')) {
+                $(this).html($(this).attr('data-empty') ? $(this).attr('data-empty') : '');
+            } else if ($(this).is('ul')) {
+                $(this).ibasDropdown().setValue('-1');
+            }
+        });
+
+        $entryRow.find('[data-id="add"]').attr('value', 'Add');
+
+        var $table = $entryRow.closest('table');
+        $table.find('tbody tr').not('[data-id="entryTemplate"]').not('[data-id="viewTemplate"]').each(function () {
+            $(this).removeAttr('data-edit');
+        });
+
+        if ($.isFunction(o.callback)) o.callback();
+    };
+
+    $.fn.clearTable = function (options) {
+
+        var defaults = {
+            viewTemplate: 'viewTemplate'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var $grid = $(this);
+
+        var $entryRow = $(this).find('[data-id="entryTemplate"]');
+
+        $entryRow.clearRow();
+
+        $grid.find('tbody tr').not('[data-id="entryTemplate"],[data-id="viewTemplate"]').remove();
+
+        if ($.isFunction(o.callback)) o.callback();
+    };
+
+    $.fn.getTableDataAsXml = function (options) {
+        var defaults = {
+            tableName: 'Table1',
+            dataSetName: 'DataSet1',
+            rowExtracting: function (args) {
+            }
+        };
+        var o = $.extend(defaults, options);
+        var grid = $(this);
+        var xmlData = '<' + o.dataSetName + '>';
+        grid.find('tbody tr').not('[data-id]').each(function () {
+            var row = '<' + o.tableName + ' ';
+            var tr = $(this);
+            var args = { row: tr, excludeThisRow: false };
+            o.rowExtracting(args);
+
+            if (args.excludeThisRow == true) return;
+
+            tr.find('td').each(function () {
+                if ($(this).attr('data-modelproperty')) row = row + $(this).attr('data-modelproperty') + '="' + $(this).text() + '" ';
+            });
+
+            row = row + '></' + o.tableName + '>';
+            xmlData = xmlData + row;
+        });
+        xmlData = xmlData + '</' + o.dataSetName + '>';
+        return xmlData;
+    };
+
+    $.fn.syncTableWidth = function (options) {
+
+        var defaults = {
+            viewTemplateId: 'viewTemplate'
+        };
+        var o = $.extend(defaults, options);
+
+        var grid = $(this);
+
+        grid.find('[data-id="' + o.viewTemplateId + '"] td').each(function () {
+            var trIdx = grid.find('thead tr').length - 1;
+            var $td = $(this);
+            var $th = grid.find('thead tr:eq(' + trIdx + ') th:eq(' + $td.index() + ')');
+            $td.css({ 'width': $th.css('width') });
+        });
+
+        if (grid.find('[data-id="entryTemplate"]').length > 0) {
+            grid.find('[data-id="entryTemplate"] td').each(function () {
+                var trIdx = grid.find('thead tr').length - 1;
+                var $td = $(this);
+                var $th = grid.find('thead tr:eq(' + trIdx + ') th:eq(' + $td.index() + ')');
+                $td.css({ 'width': $th.css('width') });
+            });
+        }
+
+    };
+
+    $.fn.centerMe = function (options) {
+
+        var defaults = {
+
+        };
+        var o = $.extend(defaults, options);
+
+        var $elm = $(this);
+
+        $elm.css({
+            'position': 'relative',
+            'top': '50%',
+            'left': '50%',
+            'margin-left': -($elm.width() / 2) + 'px',
+            'margin-top': -($elm.width() / 2) + 'px'
+        });
+    };
+
+    $.fn.stringToListView = function (strData, seperator) {
+        if (strData == '') return;
+
+        var $elm = $(this);
+        var listData = strData.split(seperator);
+        var htmlElm = '';
+        if (listData.length == 1) {
+            htmlElm += listData[0];
+            //$elm.text(listData[0]);
+        } else {
+            for (var i = 0; i < listData.length; i++) {
+                htmlElm += '<li>' + listData[i] + '</li>';
+            }
+        }
+        $elm[0].innerHTML = htmlElm;
+    };
+
+})(jQuery);

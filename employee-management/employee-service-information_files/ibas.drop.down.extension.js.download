@@ -1,0 +1,325 @@
+﻿/// <reference path="../jquery-1.6.2.js" />
+/// <reference path="~/Scripts/ibas/message.box.js" />
+/// <reference path="~/Scripts/ibas/ibas.jquery.extension.js" />
+
+jQuery.fn.clearDropDown = function () {
+    var dropDownElement = $(this);
+    dropDownElement.find('option[value!="-1"]').remove();
+    if (!dropDownElement.find('option[value="-1"]').length)
+        $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo(dropDownElement);
+    return this;
+};
+
+jQuery.fn.centerOptions = function () {
+    $($(this).each(function () {
+        var dropDown = this;
+        $(dropDown).find('option').each(function () {
+            var option = this;
+            $(option).css('text-indent', '35px');
+        });
+    }));
+};
+
+jQuery.fn.loadDropDown = function (isAsynchronous, isMultiColumn, deferredSuccess) {
+    function getSubmissionData(dataArray) {
+        var data = {};
+        if ($(dataArray).size() > 0) {
+            $.each(dataArray, function (key, value) {
+
+                if (!value) return;
+                if (value.ParameterType == null) return;
+
+                if (value.ParameterType == ParameterTypeEnum.Text) {
+                    data[key] = value.ParameterValue;
+                } else if (value.ParameterType == ParameterTypeEnum.Number) {
+                    data[key] = value.ParameterValue;
+                }
+            });
+        }
+        return data;
+    }
+
+    var lElement = $(this);
+
+    var disableFlag = $(lElement).attr('disabled');
+
+    $(lElement).unbind('ajaxStart').ajaxStart(DropDown.DropDown_ajaxStart);
+    $(lElement).unbind('ajaxStop').ajaxStop(function () { DropDown.DropDown_ajaxStop($(this), disableFlag); });
+
+    var lWebMethod = $(lElement).data('ajaxWebMethod');
+    $(lElement).removeData('ajaxWebMethod');
+
+    var dataArray = $(lElement).data();
+    var lJsonData = getSubmissionData(dataArray);
+    $(lElement).removeData();
+
+    //if ($(dataArray).size() > 0) {
+    //    lJsonData = lJsonData + '{';
+    //    $.each(dataArray, function (key, value) {
+
+    //        if (!value) return;
+
+    //        if (value.ParameterType == null) return;
+
+    //        if (value.ParameterType == ParameterTypeEnum.Text) {
+    //            lJsonData = lJsonData + '"' + key + '":' + JSON.stringify(value.ParameterValue) + ',';
+    //        } else if (value.ParameterType == ParameterTypeEnum.Number) {
+    //            lJsonData = lJsonData + '"' + key + '":' + value.ParameterValue + ',';
+    //        }
+    //    });
+    //    lJsonData = lJsonData.substring(0, lJsonData.length - 1);
+    //    lJsonData = lJsonData + '}';
+    //    $(lElement).removeData();
+    //}
+
+    //if (lJsonData == '}') {
+    //    lJsonData = '';
+    //}
+
+    $.ajax({
+        type: 'POST',
+        url: lWebMethod,
+        data: lJsonData,
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'json',
+        success: function (serverData) {
+            if (isMultiColumn == true) {
+                DropDown.DropDownLoad_MultiColumn_Success(lElement, serverData);
+            } else {
+                DropDown.DropDownLoad_Success(lElement, serverData);
+            }
+            if ($.isFunction(deferredSuccess)) deferredSuccess(serverData);
+        },
+        async: isAsynchronous
+    });
+};
+
+var DropDown = {};
+
+DropDown.DropDownLoad_Success = function (dropDownElement, serverData) {
+    try {
+        if (!serverData.FLAG) {
+
+            var lServerData;
+
+            if (!serverData.DropDownJson) {
+                lServerData = $.parseJSON(serverData['ReturnJson']);
+                $(dropDownElement).find('option').remove().end();
+                $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo($(dropDownElement));
+                $.each(lServerData, function (key, value) {
+                    $('<option value="' + value.VALUEMEMBER + '">' + value.DISPLAYMEMBER + '</option>').appendTo($(dropDownElement));
+                });
+            } else {
+                lServerData = $.parseJSON(serverData.DropDownJson);
+                $(dropDownElement).find('option').remove().end();
+                $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo($(dropDownElement));
+                $.each(lServerData, function (key, value) {
+                    $('<option value="' + value.VALUEMEMBER + '">' + value.DISPLAYMEMBER + '</option>').appendTo($(dropDownElement));
+                });
+            }
+            if ($(dropDownElement).attr('multiple') == 'multiple') {
+                $(dropDownElement).find('option[value="-1"]"').remove();
+            }
+        } else {
+            MessageBox(serverData.MSG, 'DropDown Load Error', 'OK', null, null, null);
+        }
+    } catch (err) {
+        alert(err.message);
+        throw err;
+    }
+};
+
+DropDown.DropDownLoad_MultiColumn_Success = function (dropDownElement, serverData) {
+    try {
+        if (!serverData.FLAG) {
+            var lServerData = $.parseJSON(serverData.DropDownJson);
+            $(dropDownElement).find('option').remove().end();
+            $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo($(dropDownElement));
+            $.each(lServerData, function (key, value) {
+                $('<option value="' + value.VALUEMEMBER + '" ' + DropDown.AdditionalColumn(value) + '>' + value.DISPLAYMEMBER + '</option>').appendTo($(dropDownElement));
+            });
+            if ($(dropDownElement).attr('multiple') == 'multiple') { $(dropDownElement).find('option[value="-1"]"').remove(); }
+        } else {
+            MessageBox(serverData.MSG, 'DropDown Load Error', 'OK', null, null, null);
+        }
+    } catch (err) {
+        alert(err.message);
+        throw err;
+    }
+}
+
+DropDown.AdditionalColumn = function (columnValuePair) {
+    var attrList = '';
+    $.each(columnValuePair, function (key, value) {
+        if (key.toLowerCase() != 'valuemember' && key.toLowerCase() != 'displaymember') attrList += key + '="' + value + '" ';
+    });
+    return attrList;
+};
+
+DropDown.DropDown_ajaxStart = function () {
+    $(this).find('option').remove().end();
+    $('<option value="' + 0 + '">' + 'Please wait while loading...' + '</option>').appendTo($(this));
+    $(this).attr('disabled', 'disabled');
+}
+
+DropDown.DropDown_ajaxStop = function (dropDown, disableFlag) {
+    if (disableFlag == 'disabled') {
+        $(dropDown).attr('disabled', 'disabled');
+    } else {
+        $(dropDown).removeAttr('disabled');
+    }
+    $(dropDown).unbind('ajaxStart');
+    $(dropDown).unbind('ajaxStop');
+};
+
+jQuery.fn.loadDropDownData = function (isAsynchronous, successCallback, waitMsg) {
+    var element = $(this);
+    var disableFlag = $(element).attr('disabled');
+    var webMethod = $(element).data('ajaxWebMethod');
+    var receivedServerData = null;
+
+    $(element).removeData('ajaxWebMethod');
+
+    function getJsonData(dataArray) {
+        var jsonData = '{';
+
+        if ($(dataArray).size() > 0) {
+            $.each(dataArray, function (key, value) {
+
+                if (!value) return;
+                if (value.ParameterType == null) return;
+
+                if (value.ParameterType == ParameterTypeEnum.Text) {
+                    jsonData = jsonData + '"' + key + '":' + JSON.stringify(value.ParameterValue) + ',';
+                } else if (value.ParameterType == ParameterTypeEnum.Number) {
+                    jsonData = jsonData + '"' + key + '":' + value.ParameterValue + ',';
+                }
+            });
+            jsonData = jsonData.substring(0, jsonData.length - 1);
+            jsonData = jsonData + '}';
+            $(element).removeData();
+        }
+
+        if (jsonData == '}') {
+            jsonData = '';
+        }
+
+        return jsonData;
+    }
+
+    function getSubmissionData(dataArray) {
+        var data = {};
+        if ($(dataArray).size() > 0) {
+            $.each(dataArray, function (key, value) {
+
+                if (!value) return;
+                if (value.ParameterType == null) return;
+
+                if (value.ParameterType == ParameterTypeEnum.Text) {
+                    data[key] = value.ParameterValue;
+                } else if (value.ParameterType == ParameterTypeEnum.Number) {
+                    data[key] = value.ParameterValue;
+                }
+            });
+            $(element).removeData();
+        }
+        return data;
+    }
+
+
+    function dropDownSuccess(serverData) {
+        try {
+            receivedServerData = serverData;
+            element.find('option[value!="-1"]').remove();
+            if (!element.find('option[value="-1"]').length)
+                $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo(element);
+            $(serverData).each(function (index, item) {
+                var displayMember = '', valueMember = '', otherMembers = '';
+                for (var prop in item) {
+                    if (item.hasOwnProperty(prop)) {
+                        if (prop.toUpperCase() == 'VALUEMEMBER') valueMember = item[prop];
+                        else if (prop.toUpperCase() == 'DISPLAYMEMBER') displayMember = item[prop];
+                        else otherMembers = otherMembers + ' ' + prop + '="' + item[prop] + '"';
+                    }
+                }
+                $('<option value="' + valueMember + '"' + otherMembers + ' >' + displayMember + '</option>').appendTo($(element));
+            });
+            if ($(element).attr('multiple') == 'multiple') {
+                $(element).find('option[value="-1"]').remove();
+            }
+            if ($.isFunction(successCallback)) successCallback(serverData);
+        } catch (err) {
+            alert(!err.message ? err : err.message);
+            throw err;
+        }
+    }
+
+    function addProgress() {
+        waitMsg = waitMsg ? waitMsg : 'please wait';
+        var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+        $('body').append(div);
+        var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+            + '<img id="progressimg" src="' + appRoot + '/Images/ajaxprogress.gif" />'
+            + '<div>' + waitMsg + '...' + '</div>'
+            + '</div>';
+
+        $('body').append(progress);
+    }
+
+    function removeProgress() {
+        $('#modalajaxbackground,#modalajaxprogresscontainer').remove();
+    }
+
+    var promise = $.ajax({
+        type: 'POST',
+        url: webMethod,
+        data: getSubmissionData($(element).data()),
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'json',
+        beforeSend: $(document).data('events')['ajaxSend'] ? null : addProgress,
+        complete: $(document).data('events')['ajaxSend'] ? null : removeProgress,
+        async: isAsynchronous
+    });
+
+    promise.done(function (srvData) {
+        dropDownSuccess(srvData);
+        return;
+    });
+
+//    promise.fail(function (err) {
+//        //alert($(element).html());
+//        alert('DropDown Load Error. DropDownID:' + $(element).attr('id') + ' ------- ' + err.responseText);
+//    });
+
+    return promise;
+};
+
+
+//===========================================================
+// This is for list box Operation
+// Date:
+//===========================================================
+//this will move selected items from source list to destination list
+function move_list_items(sourceid, destinationid) {
+    $("#" + sourceid + " option:selected").remove().appendTo("#" + destinationid);
+}
+//this will move all selected items from source list to destination list
+function move_list_items_all(sourceid, destinationid) {
+    $("#" + sourceid + " option").remove().appendTo("#" + destinationid);
+}
+function GetListCollection(Listid, ColumnName) {
+    // get all selected items and loop through each
+    var JSONString = '[';
+    $("#" + Listid + " option").each(function () {
+        var listItem = $(this);
+        JSONString += '{\"' + ColumnName + '\":\"' + listItem.val() + '\"},';
+    });
+    JSONString = JSONString.substring(0, JSONString.length - 1);
+    JSONString += ']';
+    var parseData = $.parseJSON(JSONString);
+    return parseData;
+}
+
+function AddList(sourceid, Val, text) {
+    $("#" + sourceid).append('<option value="' + Val + '">' + text + '</option>');
+}

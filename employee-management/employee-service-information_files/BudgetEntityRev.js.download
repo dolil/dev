@@ -1,0 +1,383 @@
+﻿(function (exports) {
+
+    // simple templating engine for string interpolation
+    var templateEngine = function (tpl, data) {
+        return tpl.replace(/\$\{([^\}]+)?\}/g, function ($1, $2) { return data[$2]; });
+    };
+
+    // id: elementid on which to wrap around, prefix: ddl id prefix for grouping, styles: ddl custom styles
+    var budgetEntity = function (id, prefix, styles, className, loadingFunc) {
+        var self = this,
+            elementSettings = {},
+            firstLevel,
+            lastLevel,
+            modelProperty,
+            reqGroupProperty,
+            reqMessageProperty,
+            clearGroupProperty,
+            initParentId,
+
+        // ddl selection change functionslity. key: child key, fireCustom: true/false if the user defined custom change event to be fired
+            selectionChanged = function (e, key, fireCustom) {
+                var $this = $(this), childElement = child(key);
+                if (fireCustom && elementSettings[key].change) {
+                    var call = elementSettings[key].change.call(this);
+                }
+                $this.attr('title', $this.find("option:selected").text()); //For showing title on the combo
+                if (childElement) {
+                    if ($this.val() == '-1') {
+                        childElement.select.clearDropDown();
+                        childElement.select.change();
+                    } else {
+                        loadData(childElement, $this.val(), true);
+                    }
+                }
+            },
+
+        // generic load fuctionality for ddl 
+            loadData = function (childElement, parentId, callBack, fireCustom, isBackTrack) {
+                var typeIds = [childElement.typeId], k, select, i;
+                var cb = function () {
+                    if (childElement.select.find("option").length == 2) {
+                        childElement.select.find('option:eq(1)').attr("selected", true);
+                    }
+                    if (!isBackTrack) {
+                        if (childElement.loaded)
+                            childElement.loaded.call(childElement);
+                        if (childElement.hidden && childElement.defaultForHidden) {
+                            childElement.select.find('option[value="' + childElement.defaultForHidden + '"]').attr("selected", true);
+                        }
+                        childElement.select.change();
+                        if (fireCustom && childElement.change) {
+                            childElement.change.call(childElement);
+                        }
+                    }
+                    if (typeof callBack == "function")
+                        callBack.apply(childElement);
+                };
+
+                Array.prototype.push.apply(typeIds, childElement.siblingTypeIds);
+                if (Object.prototype.toString.call(self.entitySource) !== "[object Function]") {
+                    var ddl = $(childElement.select)
+                        .ajaxWebMethod(self.entitySource.url);
+                    var param = self.entitySource.param ? self.entitySource.param() : {};
+                    param.parentBudgetEntityId = parentId;
+                    param.budgetEntityTypeIds = typeIds;
+                    for (k in param) {
+                        if (param.hasOwnProperty(k)) {
+                            ddl.addParameter(k, param[k], ParameterTypeEnum.Text);
+                        }
+                    }
+                    if (loadingFunc === 'loadDropDown')
+                        ddl[loadingFunc](false, false, cb);
+                    else
+                        ddl[loadingFunc](false, cb);
+                } else {
+                    self.entitySource(parentId, typeIds, function (data) {
+                        var otherMembers = '', prop;
+                        select = childElement.select;
+                        select.find('option[value!="-1"]').remove();
+                        if (!select.find('option[value="-1"]').length)
+                            $('<option value="' + '-1' + '">' + 'Select From List' + '</option>').appendTo(select);
+                        for (i = 0; i < data.length; i++) {
+                            otherMembers = '';
+                            for (prop in data[i]) {
+                                if (data[i].hasOwnProperty(prop)) {
+                                    if (prop.toUpperCase() != 'VALUEMEMBER' && prop.toUpperCase() != 'DISPLAYMEMBER') {
+                                        otherMembers = otherMembers + ' ' + prop + '="' + data[i][prop] + '"';
+                                    }
+                                }
+                            }
+                            data[i].OTHERMEMBER = otherMembers;
+                            $(templateEngine('<option value="${VALUEMEMBER}" ${OTHERMEMBER}>${DISPLAYMEMBER}</option>', data[i])).appendTo(select);
+                        }
+                        select.data("index1", null);
+                        cb();
+                    });
+
+                }
+            },
+
+        // child element setting search function
+            child = function (key) {
+                return elementSettings["L" + (+key.substring(key.length - 1) + 1)];
+            },
+
+        // set the last level entity and cascade the selection upward
+            backTrack = function (entityId) {
+                var loadAndSet, elId;
+
+                $.ajax({
+                    type: "POST",
+                    url: window.appRoot + '/common/budgetentity/loadparentbudgetentitylist',
+                    data: { childBudgetEntityId: entityId },
+                    success: function (result) {
+                        var meta = {};
+                        $.each(result, function () {
+                            meta[this.BUDGET_ENTITY_TYPE_ID] = this.BUDGET_ENTITY_ID;
+                        });
+                        loadAndSet = function (level, pId) {
+                            var element = elementSettings["L" + level];
+                            if (element) {
+                                loadData(element, pId, function () {
+                                    elId = meta[element.siblingTypeIds[0]] || meta[element.siblingTypeIds[1]] || meta[element.typeId];
+                                    if (elId) {
+                                        element.select.val(elId);
+                                        loadAndSet(++level, elId);
+                                    }
+                                }, false, true);
+                            }
+                        };
+                        // if (meta[lastLevel.siblingTypeIds[0]] || meta[lastLevel.siblingTypeIds[1]] || meta[lastLevel.typeId] == entityId)
+                        loadAndSet(firstLevel.level, initParentId);
+                    },
+                    dataType: 'json',
+                    async: false
+                });
+            };
+
+        loadingFunc = loadingFunc || 'loadDropDownData';
+
+        this.id = id;
+        this.prefix = prefix;
+        this.entitySource = {
+            url: 'common/budgetentity/loadbudgetentity',
+            param: function () {
+                return {};
+            }
+        };
+
+        this.initialize = function (parentId, completed) {
+            initParentId = parentId;
+            loadData(firstLevel, initParentId);
+
+            if (completed) completed();
+        };
+
+        this.template = "<tr><td>${label}</td><td>${elem}</td></tr>";
+
+        this.level1Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L1 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 1, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+
+        this.level2Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L2 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 2, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+
+        this.level3Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L3 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 3, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+
+        this.level4Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L4 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 4, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+        this.level5Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L5 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 5, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+        this.level6Entity = function (entityTypeId, label, onChange, siblingTypeIds, hidden, onLoaded, defaultForHidden) {
+            elementSettings.L6 = { typeId: entityTypeId, label: label, change: onChange, loaded: onLoaded, level: 6, siblingTypeIds: siblingTypeIds || [], hidden: hidden, defaultForHidden: defaultForHidden };
+        };
+        this.modelProperty = function (prop) {
+            modelProperty = prop;
+        };
+        this.reqGroupProperty = function (prop) {
+            reqGroupProperty = prop;
+        };
+        this.reqMessageProperty = function (prop) {
+            reqMessageProperty = prop;
+        };
+        this.clearGroupProperty = function (prop) {
+            clearGroupProperty = prop;
+        };
+        this.budgetEntityId = function (entityId) {
+            if (entityId) {
+                return backTrack(entityId);
+            }
+            if (!lastLevel)
+                return -1;
+            return +lastLevel.select.val();
+        };
+        this.selectedBudgetEntityTypeId = function () {
+            return +lastLevel.select.find('option:selected').attr('type_id') || 0;
+        };
+        this.code = function () {
+            return lastLevel.select.find('option:selected').attr('code') || "";
+        };
+        this.lastSelectedBudgetEntityId = function () {
+            var key, val, keys = $.map(elementSettings, function (e, f) { return f; }).sort().reverse();
+            if (keys.length > 0) {
+                key = keys[0];
+                while ((val = elementSettings[key].select.val()) < 0) {
+                    key = "L" + (+key.substring(key.length - 1) - 1);
+                }
+                return val;
+            }
+            return null;
+        };
+        this.budgetEntityName = function () {
+            if (lastLevel.select.val() > 0)
+                return lastLevel.select.find("option:selected").text();
+            return "";
+        };
+        this.budgetEntityIdWithTypeId = function (typeId) {
+            var keys = $.map(elementSettings, function (e, f) { return f; }), i;
+            for (i = 0; i < keys.length; i++) {
+                if (elementSettings[keys[i]].typeId == typeId)
+                    return elementSettings[keys[i]].select.val();
+            }
+            return null;
+        };
+        this.budgetEntityNameWithTypeId = function (typeId) {
+            var keys = $.map(elementSettings, function (e, f) { return f; }), i;
+            for (i = 0; i < keys.length; i++) {
+                if (elementSettings[keys[i]].typeId == typeId)
+                    return elementSettings[keys[i]].select.find("option:selected").text();
+            }
+            return "";
+        };
+
+        this.budgetEntityTypeId = function () {
+            return lastLevel.typeId;
+        };
+
+        this.render = function (parentId) {
+            var div = $("<div/>"), select, i = 0, keys = $.map(elementSettings, function (e, f) { return f; }).sort(), elem, selects = [];
+
+            for (; i < keys.length; i++) {
+                select = $("<select/>", { id: this.prefix + "_ddl" + keys[i], html: "<option value='-1'>Select From List</option>", style: styles });
+                if (className) select.addClass(className);
+                elem = $(templateEngine(this.template, { label: elementSettings[keys[i]].label, elem: select[0].outerHTML }));
+                div.append(elem);
+                select = elem.find("select");
+                selects.push(select);
+                (function (j, sel) {
+                    sel.change(function (e) {
+                        selectionChanged.call($(this), e, keys[j], true);
+                    });
+                })(i, select);
+                elementSettings[keys[i]].select = select;
+                elementSettings[keys[i]].el = elem;
+                if (elementSettings[keys[i]].hidden) elem.css("display", "none");
+            }
+            firstLevel = elementSettings.L1 || elementSettings.L2 || elementSettings.L3 || elementSettings.L4 || elementSettings.L5 || elementSettings.L6;
+
+            lastLevel = elementSettings.L6 || elementSettings.L5 || elementSettings.L4 || elementSettings.L3 || elementSettings.L2 || elementSettings.L1;
+            if (!firstLevel || !lastLevel)
+                return;
+            lastLevel.isLast = true;
+            lastLevel.select.attr("data-modelproperty", modelProperty);
+            lastLevel.select.attr("data-reqvalidationgroup", reqGroupProperty);
+            lastLevel.select.attr("data-reqvalidationmsg", reqMessageProperty);
+            lastLevel.select.attr("data-cleargroup", clearGroupProperty);
+
+
+            $("#" + this.id).replaceWith(div.find(">*"));
+            for (i = 0; i < selects.length; i++) {
+                if ($.fn.searchable)
+                    selects[i].searchable();
+            }
+            initParentId = parentId;
+            if (typeof initParentId == "number")
+                this.initialize(initParentId);
+        };
+
+        this.destroy = function () {
+            var el, i = 0, keys = $.map(elementSettings, function (e, f) { return f; }), elem;
+
+            elem = (elementSettings.L1 || elementSettings.L2 || elementSettings.L3 || elementSettings.L4 || elementSettings.L5 || {}).el;
+            if (!elem) return;
+            el = $('<' + elem.prop("tagName") + '/>');
+            el.attr("id", this.id);
+            elem.before(el);
+            for (; i < keys.length; i++) {
+                elementSettings[keys[i]].el.remove();
+            }
+            elementSettings = {};
+        };
+
+        this.reset = function (clearFirst) {
+            if (clearFirst) firstLevel.select.clearDropDown();
+            //firstLevel.select.val(-1).change();
+            if (firstLevel.select.find("option").length == 2) {
+                firstLevel.select.find('option:eq(1)').attr("selected", true);
+            } else {
+                firstLevel.select.val(-1).change();
+            }
+            if (firstLevel.hidden && firstLevel.defaultForHidden) {
+                firstLevel.select.find('option[value="' + firstLevel.defaultForHidden + '"]').attr("selected", true);
+            }
+            firstLevel.select.change();
+        };
+
+        this.disable = function () {
+            var key;
+            for (key in elementSettings) {
+                if (elementSettings.hasOwnProperty(key)) {
+                    elementSettings[key].select.prop("disabled", true);
+                }
+            }
+        };
+
+        this.enable = function () {
+            var key;
+            for (key in elementSettings) {
+                if (elementSettings.hasOwnProperty(key)) {
+                    elementSettings[key].select.prop("disabled", false);
+                }
+            }
+        };
+    };
+
+    exports.BudgetEntityBlock = budgetEntity;
+})(window);
+
+
+/* usage******************************
+
+
+var entity = new BudgetEntityBlock("BudgetEntityContainerA", "selection", "width: 250px;");
+entity.level2Entity(2, "Ministry");
+entity.level3Entity(3, "Department");
+entity.level4Entity(4, "Office");
+entity.level5Entity(5, "Field Office", LoadGridData);
+entity.modelProperty("BUDGETENTITYID");
+entity.reqGroupProperty("req");
+entity.reqMessageProperty("Select Field Office");
+entity.entitySource = {
+url: 'Security/Mapping/LoadBudgetEntityWithoutSCP',
+param: function () {
+return {'CATID':$('#catid').val();};
+}
+entity.template = "<tr>\
+<td style='width: 10px;'>\
+&nbsp;\
+</td>\
+<td align='right' style='width: 400px;'>\
+${label} :\
+</td>\
+<td align='left'>\
+${elem}\
+</td>\
+<td style='width: 4px;'>\
+&nbsp;\
+</td>\
+</tr>";
+entity.render();
+
+
+entity.enable();
+
+entity.disable();
+
+entity.reset();
+
+entity.budgetEntityId(); // to get the budget entity id from the last level
+
+entity.budgetEntityId(22); // to set the budget entity id from the last level
+
+
+
+
+*/
+
+// NOTE: url and param are optional

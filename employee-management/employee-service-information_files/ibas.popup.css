@@ -1,0 +1,55 @@
+﻿.popupbackground {
+    background-color: #000;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1001;
+    /*filter: alpha(opacity=40);*/
+    opacity: 0.5;
+}
+
+.popupcontainer
+{
+    background-color:#FFF;
+    z-index:9001;  
+    overflow:auto;
+    position:fixed;
+    display: none;
+}
+
+.popuphead {
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    padding-left: 10px;
+    position:static;
+    left:0;
+    right:0;
+    top:0;
+    background-color: #6B799C;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.popupcross {
+    background-color: transparent;
+    color: #FFF;
+    border: none;
+    font-size: 20px;
+    height: 100%;
+    width: 30px;
+    float: right;
+    cursor: pointer;
+}
+
+.popupcross:hover {
+    color: #000;
+}
+
+.popupbody {
+    height: auto;
+    width: auto;
+}

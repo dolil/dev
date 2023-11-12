@@ -1,0 +1,104 @@
+﻿
+.dropdown 
+{
+    font-family:"Segoe UI",Tahoma,Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+    .dropdown li 
+    {
+        display: inline;
+        position: relative;
+        height: 0px;
+    }
+
+    .dropdown li ul 
+    {   
+        position: absolute;
+        padding: 0px;
+        display: none;
+        z-index: 20;
+        outline:none;
+        border: 2px solid #aaa;
+        box-shadow: 0 0 10px #9ecaed;
+        background-color: #fff;
+    }
+        
+    .dropdown li button 
+    {
+        font-family:"Segoe UI",Tahoma,Arial,Helvetica,sans-serif;
+        font-size: 13px;
+        color: #333;
+        border: 1px solid #aaa;
+        position: relative;
+        display:block;
+        height: 30px;
+        line-height: 1.5em;
+        vertical-align: middle;
+        text-align: left;
+        padding-left: 5px;
+        cursor: pointer;
+        background-color: #fff;
+        white-space: nowrap;
+        z-index: 10;
+        overflow: hidden;
+    }
+
+	.dropdown li button:disabled {
+		border: 1px solid #999;
+		background-color: #E8E7E7;
+		cursor:no-drop;
+	}
+    .dropdown img 
+    {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 100%;
+        border-left: 1px solid #aaa;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+        .dropdown li button:focus, .dropdown li button:active:enabled, .dropdown li button:hover:enabled 
+        {
+            outline: none;
+            color: #ffffff;
+            background-color: #47a3ff;
+        }
+    
+    .dropdown li ul li button 
+    {
+        /*font-family:"Segoe UI",Tahoma,Arial,Helvetica,sans-serif;*/
+        color: #333;
+        z-index: 20;
+        overflow: visible;
+        white-space: nowrap;
+        margin-top: -1px;
+        margin-bottom: -1px;
+        width: 100%;
+    }
+
+        .dropdown li ul li button:hover, 
+        .dropdown li ul li  button:active:enabled,
+        .dropdown li ul li button:focus:enabled
+        {
+            background-color: #47a3ff;
+            color: #fff;
+        }
+
+.dropdowntext
+{
+    font-family:"Segoe UI",Tahoma,Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    border: 1px solid #aaa;
+    width: calc(100% - 10px) !important;
+}
+    
+.dropdowntext:hover
+{
+    cursor: text;
+}

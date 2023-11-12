@@ -1,0 +1,268 @@
+﻿(function ($) {
+
+    $.fn.codeBlock = function (options) {
+
+        var defaults = {
+            menuId: 0,
+            configUrl: '',
+            drCrParam: null,
+            progressText: 'Please Wait',
+            IsAsync: true,
+            debitCreditDeciderUrl: window.appRoot + '/Accounts/AccountsBase/IsDebit'
+        };
+
+        var opt = $.extend(defaults, options);
+
+        var elem = $(this);
+
+        if (elem.attr('attached-data')) {
+            return elem.data('attached-data');
+        }
+
+        var returns = {};
+
+        var workingTable = elem.closest('table');
+
+        elem.css({ 'display': 'none' });
+
+        workingTable.find('thead tr:eq(0) th:eq(' + elem.index() + ')').css({ 'display': 'none' });
+
+        var configDetail;
+
+        var segArr = {};
+
+        var findConfigItemByPosition = function (itmPosition) {
+            var result = {
+                prevItem: function () {
+                    return $.grep(configDetail, function (e) { return e.Position == itmPosition - 1; })[0];
+                },
+                item: function () {
+                    return $.grep(configDetail, function (e) { return e.Position == itmPosition; })[0];
+                },
+                nextItem: function () {
+                    return $.grep(configDetail, function (e) { return e.Position == itmPosition + 1; })[0];
+                }
+            };
+            return result;
+        };
+
+        var configItemByDrCrDecider = function () {
+            return $.grep(configDetail, function (e) { return e.IsDrCrDecider == true; })[0];
+        };
+
+        var prepareSubSegElemPairs = function (itm) {
+            var workingPos = itm.Position - 1;
+            var dataList = [];
+            itm = findConfigItemByPosition(workingPos).item();
+            while (itm) {
+                var data = {};
+                data.SubSegmentId = itm.SubsegmentId;
+                data.ElementDataId = segArr['_' + itm.SubsegmentId].selectedValue();
+                dataList.push(data);
+                workingPos = workingPos - 1;
+                itm = findConfigItemByPosition(workingPos).item();
+            }
+            return dataList;
+        };
+
+        var loadDebitCreditDecider = function (elementDataId) {
+            var enableDr = false;
+            var clientData = { 'elementDataId': elementDataId };
+            clientData = $.extend(clientData, opt.drCrParam());
+            var promise = $.ajax({
+                type: 'POST',
+                url: opt.debitCreditDeciderUrl,
+                data: clientData,
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                async: false
+            });
+
+            promise.done(function (serverData) {
+                if (serverData.FLAG) {
+                    MsgBox({ message: serverData.MSG });
+                    enableDr = null;
+                } else {
+                    enableDr = serverData.enableDr;
+                }
+            });
+
+            return enableDr;
+        };
+
+        var insertRowsToPlaceHolder = function (rowCount) {
+            alert('Function not implemented. Parameter : ' + rowCount);
+        };
+
+        var getChangeEventFunctionality = function (itm, nextItm) {
+            return function () {
+                if (nextItm) {
+                    if (segArr['_' + itm.SubsegmentId].selectedValue() == '-1') {
+                        segArr['_' + nextItm.SubsegmentId].clearList(true);
+                        return;
+                    }
+                    if (returns.selectionChange) {
+                        returns.selectionChange({
+                            thisDdl: segArr['_' + itm.SubsegmentId],
+                            nextDdl: segArr['_' + nextItm.SubsegmentId],
+                            params: prepareSubSegElemPairs(nextItm)
+                        });
+                    }
+                }
+                if (itm.IsDrCrDecider) {
+                    var enableDr = loadDebitCreditDecider(segArr['_' + itm.SubsegmentId].selectedValue());
+                    returns.drCrCallback(enableDr, segArr['_' + configItemByDrCrDecider().SubsegmentId]);
+                }
+            };
+        };
+
+        var insertColumnsToPlaceHolder = function () {
+            var afterIndex = elem.index();
+            var iterationCount = afterIndex + $(configDetail).length;
+            var postn = 1;
+
+            for (var i = afterIndex; i < iterationCount; i++) {
+                var item = findConfigItemByPosition(postn).item();
+                var nextItem = findConfigItemByPosition(postn).nextItem();
+
+                postn = postn + 1;
+
+                workingTable.find('thead tr:eq(0) th:eq(' + i + ')').after('<th style="white-space: nowrap;">' + item.Caption + '</th>');
+                workingTable.find('tbody tr:eq(0) td:eq(' + i + ')').after('<td data-modelproperty="' + item.SubsegmentId + '"><ul id="_' + item.SubsegmentId + '"></ul></td>');
+
+                if (item.Hidden == true) {
+                    workingTable.find('thead tr:eq(0) th:eq(' + (i + 1) + ')').css({ 'display': 'none' });
+                    workingTable.find('tbody tr:eq(0) td:eq(' + (i + 1) + ')').css({ 'display': 'none' });
+                }
+
+                segArr['_' + item.SubsegmentId] = workingTable.find('#_' + item.SubsegmentId).ibasDropdown({
+                    noSelectionText: 'Select ' + item.Caption,
+                    elementHeight: 25,
+                    elementWidth: item.Width ? item.Width : 200,
+                    defaultValue: item.DefaultValue,
+                    dataUrl: 'Accounts/AccountsBase/LoadElement',
+                    isAsync: false,
+                    changeEvent: getChangeEventFunctionality(item, nextItem),
+                    addContextMenu: true,
+                    allowFilter: true
+                });
+            }
+        };
+
+        var addProgress = function () {
+            var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+            $('body').append(div);
+            var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+                + '<img id="progressimg" src="' + window.appRoot + '/Images/ajaxprogress.gif" />'
+                + '<div>' + opt.progressText + '...' + '</div>'
+                + '</div>';
+            $('body').append(progress);
+        };
+
+        var removeProgress = function () {
+            var mb = '#modalajaxbackground', mbc = '#modalajaxprogresscontainer';
+            $(mb).remove();
+            $(mbc).remove();
+        };
+
+        returns = {
+
+            loadConfiguration: function (callback) {
+
+                var promise = $.ajax({
+                    type: 'POST',
+                    url: window.appRoot + '/' + opt.configUrl,
+                    data: { 'menuId': opt.menuId, 'placeHolderName': elem.attr('id') },
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    beforeSend: addProgress,
+                    complete: removeProgress,
+                    async: opt.isAsync
+                });
+
+                promise.done(function (serverData) {
+                    if (!serverData.FLAG) {
+
+                        if ($(serverData.configDetail).length <= 0) {
+                            MsgBox({
+                                message: 'Configuration For This Screen Not Found.',
+                                messageTitle: 'Configuration Error'
+                            });
+                            return;
+                        }
+
+                        configDetail = serverData.configDetail.sort(function (a, b) { return Number(a.Position) - Number(b.Position); });
+
+                        if (configDetail[0].IsHorizontal == true) {
+                            insertRowsToPlaceHolder();
+                        } else {
+                            insertColumnsToPlaceHolder();
+                        }
+                    }
+
+                    if (callback) callback();
+                });
+
+                promise.fail(function (err) {
+                    try {
+                        alert(err ? err.responseText : err);
+                    } catch (err) {
+                        alert(!err.message ? err : err.message);
+                    }
+                });
+
+            },
+
+            subSegRef: function () {
+                return segArr;
+            },
+
+            selectedElements: function () {
+                var segElemPair = [];
+
+                for (var prop in segArr) {
+                    if (segArr.hasOwnProperty(prop)) {
+                        var item = {};
+                        item.SubSegmentId = prop.substr(1);
+                        item.ElementDataId = segArr[prop].selectedValue();
+                        segElemPair.push(item);
+                    }
+                }
+
+                return segElemPair;
+            },
+
+            getDebitCreditDeciderSubsegmentId: function () {
+                var itm = configItemByDrCrDecider();
+                return itm.SubsegmentId;
+            },
+
+            isDebit: function (elementId) {
+                return loadDebitCreditDecider(elementId);
+            },
+
+            getElementAtPosition: function (position) {
+                return segArr['_' + findConfigItemByPosition(position).item().SubsegmentId];
+            },
+
+            firstVisibleDropDown: function () {
+                var itemCount = $(configDetail).length;
+                for (var i = 0; i < itemCount; i++) {
+                    if (configDetail[i].Hidden == false) return segArr['_' + configDetail[i].SubsegmentId];
+                }
+                return null;
+            },
+
+            drCrCallback: null,
+
+            firstElementCallback: null,
+
+            selectionChange: null
+        };
+
+        elem.data('attached-data', returns);
+
+        return returns;
+    };
+
+})(jQuery);

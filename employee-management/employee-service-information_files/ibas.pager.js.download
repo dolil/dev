@@ -1,0 +1,224 @@
+﻿/// <reference path="jquery-1.6.2.js" />
+/// <reference path="ibas.jquery.extension.js" />
+/// <reference path="ibas.pager.js" />
+/// <reference path="../../../Scripts/jquery-1.6.2.js" />
+
+
+var IbasPager = function () {
+
+    var thisInstance = this;
+
+    var _workingTable;
+    var _pageStyle;
+    var _totalRow;
+    var _rowPerPage;
+    var _totalPage;
+    var _pagePerScreen;
+    var _pagerID = false;
+    var _topPager;
+    var _topPagerID;
+
+    var _current = {
+        pageNo: 0,
+        startIndex: -1,
+        endIndex: -1
+    };
+
+    this.DataPopulationCallback = null;
+
+    this.ButtonStyle = '';
+
+    this.InitiatePager = function (pagerId, workingTable, rowPerPage, pagePerScreen, pageStyle, topPager) {
+        _workingTable = '#' + workingTable;
+        _rowPerPage = rowPerPage;
+        _pagePerScreen = pagePerScreen;
+        _pageStyle = pageStyle;
+        _pagerID = pagerId;
+        _topPager = (topPager != null) ? topPager : false;
+        if (topPager) _topPagerID = pagerId + "2";
+    };
+
+    this.OverWriteItemPerPage = function (value) {
+        _rowPerPage = value;
+        //DrawPager(1, _rowPerPage, false, showLast, null);
+    };
+
+    this.RemovePager = function () {
+        $('#' + _pagerID).remove();
+        if (_topPager)
+            $('#' + _topPagerID).remove();
+    };
+
+    this.SetTotalRows = function (totalRows, draw) {
+        var prevTotalRow = _totalRow;
+        _totalRow = totalRows;
+
+        if (totalRows === 0) {
+            drawPager(0, 0, false, false, null);
+        }
+        _totalPage = Math.ceil(_totalRow / _rowPerPage);
+
+        var showLast = true;
+
+        var endPage;
+        if (_pagePerScreen >= _totalPage) {
+            showLast = false;
+            endPage = _totalPage;
+        } else {
+            endPage = _pagePerScreen;
+        }
+
+        if (prevTotalRow !== _totalRow || draw) {
+            drawPager(1, endPage, false, showLast, null);
+            $('#' + _pagerID).find('input[type="button"][value="1"]').addClass('active');
+            $('#' + _pagerID).find('input[type="button"][value!="' + '1' + '"]').removeClass('active');
+            _current.pageNo = 1;
+            _current.startIndex = 1;
+            _current.endIndex = _rowPerPage;
+        }
+    };
+
+    this.getCurrent = function () {
+        return _current;
+    };
+
+    this.ClearPage = function () {
+        drawPager(0, 0, false, false);
+    };
+
+    this.Hide = function () {
+        $('#' + _pagerID).hide();
+    };
+
+    this.Show = function () {
+        $('#' + _pagerID).show();
+    };
+
+    function pagerContent(startPage, endPage, showFirst, showLast, id) {
+        var content = '<div id="' + id + '" class="' + _pageStyle + '">';
+        content = content + (showFirst === true ?
+            '<input id="btn" type="button" value="<<" /><input id="btn" type="button" value="<" />' :
+            '<input id="btn" disabled="disabled" type="button" value="<<" /><input id="btn" disabled="disabled" type="button" value="<" />');
+
+        if (startPage > 0 && endPage > 0) {
+            for (var i = startPage; i <= endPage; i++) {
+                content = content + '<input id="btn" type="button" value="' + i + '" />'; ;
+            }
+        }
+
+        content = content + (showLast === true ?
+            '<input id="btn" type="button" value=">" /><input id="btn" type="button" value=">>" />' :
+            '<input id="btn" disabled="disabled" type="button" value=">" /><input id="btn" disabled="disabled" type="button" value=">>" />');
+
+        content = content + '</div>';
+        return content;
+    }
+
+    function drawPager(startPage, endPage, showFirst, showLast) {
+
+        var content = pagerContent(startPage, endPage, showFirst, showLast, _pagerID);
+
+        $('#' + _pagerID).remove();
+
+        $(_workingTable).after(content);
+
+        $('#' + _pagerID).addClass(_pageStyle);
+
+        $('#' + _pagerID).width($(_workingTable).width());
+
+        $('#' + _pagerID + ' input').unbind('click').click(function (event) { pageButtonClicked(event, $(this)); });
+
+        $('#' + _pagerID).find('input[type="button"]').attr('style', thisInstance.ButtonStyle);
+
+        if (_topPager) {
+
+            var content2 = pagerContent(startPage, endPage, showFirst, showLast, _topPagerID);
+
+            $('#' + _topPagerID).remove();
+
+            $(_workingTable).before(content2);
+
+            $('#' + _topPagerID).addClass(_pageStyle);
+
+            $('#' + _topPagerID).width($(_workingTable).width());
+
+            $('#' + _topPagerID + ' input').unbind('click').click(function (event) { pageButtonClicked(event, $(this)); });
+
+            $('#' + _topPagerID).find('input[type="button"]').attr('style', thisInstance.ButtonStyle);
+        }
+
+    }
+
+    function pageButtonClicked(event, button) {
+
+        var value = $(button).val();
+        $('#' + _pagerID).find('input[type="button"][value="' + value + '"]').addClass('active');
+        $('#' + _pagerID).find('input[type="button"][value!="' + value + '"]').removeClass('active');
+
+        if (_topPager) {
+            $('#' + _topPagerID).find('input[type="button"][value="' + value + '"]').addClass('active');
+            $('#' + _topPagerID).find('input[type="button"][value!="' + value + '"]').removeClass('active');
+        }
+
+        if ($.isFunction(thisInstance.DataPopulationCallback) === false) {
+            throw 'You must set DataPopulationCallback properly.';
+        }
+
+        var startPage, endPage;
+        var startIndex, endIndex;
+        var showFirst = true, showLast = true;
+
+        if ($(button).val() === '>') {
+            startPage = Number($(button).prev().val()) + 1;
+            endPage = Number($(button).prev().val()) + _pagePerScreen;
+            if (_totalPage <= endPage) {
+                endPage = _totalPage;
+            }
+        } else if ($(button).val() === '>>') {
+            startPage = (Math.floor(_totalPage / _pagePerScreen) * _pagePerScreen) + 1;
+            endPage = _totalPage;
+            if (startPage > _totalPage) startPage = startPage - _pagePerScreen;
+        } else if ($(button).val() === '<') {
+            startPage = Number($(button).next().val()) - _pagePerScreen;
+            endPage = Number($(button).next().val()) - 1;
+            if (_totalPage <= endPage) {
+                endPage = _totalPage;
+            }
+        } else if ($(button).val() === '<<') {
+            startPage = 1;
+            endPage = _pagePerScreen;
+            if (_totalPage <= endPage) {
+                endPage = _totalPage;
+            }
+        } else {
+            endIndex = _rowPerPage * Number($(button).val());
+            startIndex = endIndex - _rowPerPage + 1;
+            _current.pageNo = Number($(button).val());
+            _current.startIndex = startIndex;
+            _current.endIndex = endIndex;
+            thisInstance.DataPopulationCallback(startIndex, endIndex, { pageNo: value });
+        }
+        if ($(button).val() === '>' || $(button).val() === '>>' || $(button).val() === '<' || $(button).val() === '<<') {
+            if (startPage === 1) {
+                showFirst = false;
+            }
+            if (endPage === _totalPage) {
+                showLast = false;
+            }
+            drawPager(startPage, endPage, showFirst, showLast);
+            loadFirstPageInScreenItem(startPage);
+        }
+    }
+
+    function loadFirstPageInScreenItem(startPage) {
+        $('#' + _pagerID).find('input[type="button"][value="' + startPage + '"]').addClass('active');
+        $('#' + _pagerID).find('input[type="button"][value!="' + startPage + '"]').removeClass('active');
+        var endIndex = _rowPerPage * Number(startPage);
+        var startIndex = endIndex - _rowPerPage + 1;
+        _current.pageNo = Number(startPage);
+        _current.startIndex = startIndex;
+        _current.endIndex = endIndex;
+        thisInstance.DataPopulationCallback(startIndex, endIndex, { pageNo: startPage });
+    }
+
+}

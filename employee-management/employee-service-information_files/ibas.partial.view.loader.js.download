@@ -1,0 +1,104 @@
+﻿/* By ferdous
+ * This is to load partial view
+ */
+
+(function ($) {
+
+
+    $.fn.ibasPartialView = function (options) {
+
+        var defaults = {
+            url: "",
+            data: {},
+            itemName: "",	// unique id
+            loadedEvent: null
+        };
+
+        var _options = $.extend(defaults, options);
+        var _element = $(this);
+
+        var returnObj = {
+            loadView: function () {
+                loadPartialView();
+            }
+        };
+
+        function loadPartialView() {
+
+            if (_element.data(_options.itemName) && $('.' + _options.itemName + 'Script').length > 0) { //Check view and script already loaded or not            
+                _options.loadedEvent();
+
+            } else {
+                $.ibasAjax({
+                    data: _options.data,
+                    url: _options.url,
+                    dataType: 'html',
+                    successCallback: function (sdata) {
+                        if (sdata.FLAG) {
+                            MsgBox({ message: sdata.MSG });
+                            return;
+                        }
+
+                        _element.html(sdata); // render partial view
+                        //remove previously appended script with same id
+                        $('.' + _options.itemName + 'Script').remove();
+
+                        //Start appending fresh script into head
+
+                        var head = document.getElementsByTagName('head')[0];
+                        let jsFiles = _element.find('[data-script-file]').attr("data-script-file").split(';');
+                        let lastScript;
+                        let fileLoadedCount = 0;
+
+                        jsFiles.forEach((item, index) => {
+
+                            var script = document.createElement('script');
+                            script.className = _options.itemName + 'Script';
+                            script.type = 'text/javascript';
+                            script.src = window.appRoot + '/' + item;
+
+                            script.onload = function () {
+                                ++fileLoadedCount;
+
+                                /**
+                                 * Appending last\main script.
+                                 */
+                                if (fileLoadedCount == (jsFiles.length - 1)) {
+                                    head.appendChild(lastScript);
+                                }
+
+                                /**
+                                 * Callback method when all scripts are loaded.
+                                 */
+                                if (fileLoadedCount == jsFiles.length) {
+                                    _options.loadedEvent();
+                                }
+
+                            }
+
+
+                            if (jsFiles.length == 1 ||  index < (jsFiles.length - 1)) {
+
+                                /**
+                                 *  Appending n-1 scripts.
+                                 */
+                                head.appendChild(script);
+                            } else {
+
+                                /**
+                                 *   Storing last\main script to load after all scripts have been loaded.
+                                 */
+                                lastScript = script;
+                            }
+                        })
+                        //End appending fresh script into head.
+
+                    }
+                });
+            }
+        }
+
+        return returnObj;
+    };
+
+})(jQuery);

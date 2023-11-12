@@ -1,0 +1,55 @@
+﻿(function ($) {
+
+    $.fn.ibasCheckbox = function (options) {
+
+        var defaults = {
+            chkTableId : '',
+            chkOpenIndex : 1
+        };
+
+        var o = $.extend(defaults, options);
+
+        var checkbox = $(this);
+
+        var chkAll_Change = function () {
+            var tableId = '#' + o.chkTableId + ' tbody tr';
+
+            if (checkbox[0].checked) {
+                $(tableId).not('tr[data-id="viewTemplate"]').each(function () {
+                    var row = $(this);
+                    $(row).find("input[type=checkbox]").attr("checked", true);
+
+                    /*if (callback != null) {
+                        callback(row,true);
+                    }*/
+                });
+            }
+            else {
+                $(tableId).each(function () {
+                    var row = $(this);
+                    var isOpen = $(row).find('td:eq(1)').html();
+                    if (isOpen == '1') {
+                        $(row).find('input[type=checkbox]').attr('checked', true);
+                        $(row).find('input[type=checkbox]').attr('disabled', 'disabled');
+                    }
+                    else {
+                        $(row).find("input[type=checkbox]").attr("checked", false);
+                    }
+                    /*if (callback != null) {
+                        callback(row,false);
+                    }*/
+                });
+            }
+        }
+
+        var returns = {
+            bindChkAllEvent: function(callback) {
+                //checkbox.unbind('change').change(chkAll_Change(callback));
+                checkbox.unbind('change').change(chkAll_Change);
+            }
+        };
+
+        return returns;
+    };
+
+})(jQuery);

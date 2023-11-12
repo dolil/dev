@@ -1,0 +1,74 @@
+﻿$.ajaxSetup({
+    statusCode: {
+        403: function () {
+            window.location.reload();
+            return;
+        }
+    }
+});
+
+setTimeout(function () {
+    $('link[rel="preload"][as="style"]').attr('rel', 'stylesheet');
+}, 0);
+
+window.getMenuId = function () {
+    return $('#Help').data('menuid');
+};
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": false,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": true,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "10000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
+function parseParams(str) {
+    var obj = {};
+    str.replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
+        obj[decodeURIComponent(key)] = decodeURIComponent(value);
+    });
+    return obj;
+}
+
+var ajaxError = function (event, xhr) {
+    var data;
+    if (xhr.status === 0 && xhr.statusText != 'abort') {
+        MessageBox("Communication with the server is lost! Please try again", "Network Error!", 'OK');
+    }
+    if (xhr.status === 403) {
+        data = JSON.parse(xhr.responseText);
+        MessageBox(data.Message, data.Error, 'OK', function () {
+            window.top.location = data.LogOnUrl;
+        }, null, null);
+    }
+    if (xhr.status === 500) {
+        if (xhr.getResponseHeader("content-type").indexOf("text/html") >= 0) {
+            MessageBox(xhr.responseText, "Error", "OK");
+        } else {
+            data = JSON.parse(xhr.responseText);
+            if (data && data.FLAG)
+                MessageBox(data.MSG, "Error", "OK");
+        }
+    }
+};
+
+var ajaxSend = function (event, xhr, settings) {
+    var param;
+    if (settings.type != "GET") {
+        xhr.setRequestHeader('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val())
+    }
+    return true;
+};
+
+$(document).ajaxSend(ajaxSend);
+$(document).ajaxError(ajaxError);

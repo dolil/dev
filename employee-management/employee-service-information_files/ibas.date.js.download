@@ -1,0 +1,265 @@
+﻿(function ($) {
+
+    $.fn.ibasDate = function (options) {
+
+        var defaults = {
+            dateFormat: 'dd/mm/yy',
+            yearRange: '1900:2150',
+            beforeShowDay: function (date) { return [true, '']; },
+            defaultDate: new Date()
+        };
+
+        var opt = $.extend(defaults, options);
+
+        return this.each(function () {
+
+            var input = $(this);
+            
+            input.attr('data-date-attached', 'true');
+
+            var checkValidDate = function (dateStr) {
+                var slash1 = dateStr.indexOf("/");
+                if (slash1 == -1) {
+                    slash1 = dateStr.indexOf("-");
+                }
+                if (slash1 == -1) {
+                    return false;
+                }
+                var dateDay = dateStr.substring(0, slash1);
+                var dateMonthAndYear = dateStr.substring(slash1 + 1, dateStr.length);
+                var slash2 = dateMonthAndYear.indexOf("/");
+                if (slash2 == -1) {
+                    slash2 = dateMonthAndYear.indexOf("-");
+                }
+                if (slash2 == -1) {
+                    return false;
+                }
+                var dateMonth = dateMonthAndYear.substring(0, slash2);
+                var dateYear = dateMonthAndYear.substring(slash2 + 1, dateMonthAndYear.length);
+                if ((dateMonth == "") || (dateDay == "") || (dateYear == "")) {
+                    return false;
+                }
+                var x;
+                for (x = 0; x < dateMonth.length; x++) {
+                    var digit = dateMonth.substring(x, x + 1);
+                    if ((digit < "0") || (digit > "9")) {
+                        return false;
+                    }
+                }
+
+                var numMonth = 0;
+                for (x = 0; x < dateMonth.length; x++) {
+                    digit = dateMonth.substring(x, x + 1);
+                    numMonth *= 10;
+                    numMonth += parseInt(digit);
+                }
+                if ((numMonth <= 0) || (numMonth > 12)) {
+                    return false;
+                }
+                for (x = 0; x < dateDay.length; x++) {
+                    digit = dateDay.substring(x, x + 1);
+                    if ((digit < "0") || (digit > "9")) {
+                        return false;
+                    }
+                }
+
+                var numDay = 0;
+                for (x = 0; x < dateDay.length; x++) {
+                    digit = dateDay.substring(x, x + 1); numDay *= 10;
+                    numDay += parseInt(digit);
+                }
+
+                if ((numDay <= 0) || (numDay > 31)) { return false; }
+
+                if ((numMonth == 2) && (numDay > 29)) { return false; }
+
+                if ((numMonth == 4) || (numMonth == 6) || (numMonth == 9) || (numMonth == 11)) {
+                    if (numDay > 30) {
+                        return false;
+                    }
+                }
+
+                for (x = 0; x < dateYear.length; x++) {
+                    digit = dateYear.substring(x, x + 1);
+                    if ((digit < "0") || (digit > "9")) {
+                        return false;
+                    }
+                }
+
+                var numYear = 0;
+                for (x = 0; x < dateYear.length; x++) {
+                    digit = dateYear.substring(x, x + 1); numYear *= 10;
+                    numYear += parseInt(digit);
+                }
+                if ((dateYear.length != 2) && (dateYear.length != 4)) {
+                    return false;
+                }
+                if ((numYear < 50) && (dateYear.length == 2)) {
+                    numYear += 2000;
+                }
+                if ((numYear < 100) && (dateYear.length == 2)) {
+                    numYear += 1900;
+                }
+
+                var yearOpt = opt.yearRange.split(':');
+                if (yearOpt[0].startsWith('+') || yearOpt[0].startsWith('-'))
+                    yearOpt[0] = new Date().getFullYear() + (+yearOpt[0]);
+
+                if (yearOpt[1].startsWith('+') || yearOpt[1].startsWith('-'))
+                    yearOpt[1] = new Date().getFullYear() + (+yearOpt[1]);
+
+                if (numYear <= 0 || (numYear > 9999  || numYear < yearOpt[0] || numYear > yearOpt[1])) {
+                    return false;
+                }
+                if ((numMonth == 2) && (numDay == 29)) {
+                    var div4 = numYear % 4;
+                    var div100 = numYear % 100;
+                    var div400 = numYear % 400;
+                    if (div4 != 0) { return false; }
+                    if ((div100 == 0) && (div400 != 0)) { return false; }
+                }
+
+                return true;
+            };
+
+            input.keypress(function (event) {
+
+                var keyCode = (event.keyCode) ? event.keyCode : event.which;
+                //console.log('keyCode:' + keyCode);
+                if (keyCode == 9 || keyCode == 8 || keyCode == 46) {
+                    return true;
+                }
+
+                var value = $(input).val();
+                var valuelen = value.length;
+
+                var slash1 = value.indexOf("/");
+                var slash2 = value.lastIndexOf("/");
+
+                if (((valuelen == 2 && slash1 == -1) || (valuelen == 5 && slash2 == slash1)) && keyCode != 47) {
+                    $(input).val($(input).val() + '/');
+                }
+
+                if (valuelen > 9) {
+                    event.stopPropagation();
+                    return false;
+                }
+
+                if ((keyCode >= 48 && keyCode <= 57) || keyCode == 47) {
+                    if (keyCode == 47) {
+                        if (slash1 != slash2) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            input.blur(function (event) {
+                if ($(input).val().length == 0) return false;
+                var retvalue = checkValidDate($(input).val());
+                if (retvalue) {
+                    return true;
+                } else {
+                    MessageBox('Invalid Date.', 'Error', 'OK', function () {
+                        $(input).val('');
+                        $(input).focus();
+                    }, null, null);
+                    event.stopPropagation();
+                    return false;
+                }
+            });
+
+            input.datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: opt.dateFormat,
+                yearRange: opt.yearRange,
+                beforeShowDay: opt.beforeShowDay
+            });
+            
+        });
+    };
+
+    $.fn.getDate = function (dateStr) {
+
+        var str = dateStr ? dateStr : $(this).val();
+
+        var dateStr = str.split("/");
+        var parsedDate = parseInt(dateStr[1]);
+
+        switch (parsedDate) {
+            case 1:
+                return dateStr[0] + '/' + 'Jan/' + dateStr[2];
+            case 2:
+                return dateStr[0] + '/' + 'Feb/' + dateStr[2];
+            case 3:
+                return dateStr[0] + '/' + 'Mar/' + dateStr[2];
+            case 4:
+                return dateStr[0] + '/' + 'Apr/' + dateStr[2];
+            case 5:
+                return dateStr[0] + '/' + 'May/' + dateStr[2];
+            case 6:
+                return dateStr[0] + '/' + 'Jun/' + dateStr[2];
+            case 7:
+                return dateStr[0] + '/' + 'Jul/' + dateStr[2];
+            case 8:
+                return dateStr[0] + '/' + 'Aug/' + dateStr[2];
+            case 9:
+                return dateStr[0] + '/' + 'Sep/' + dateStr[2];
+            case 10:
+                return dateStr[0] + '/' + 'Oct/' + dateStr[2];
+            case 11:
+                return dateStr[0] + '/' + 'Nov/' + dateStr[2];
+            case 12:
+                return dateStr[0] + '/' + 'Dec/' + dateStr[2];
+            default:
+                return '';
+        }
+    };
+
+    $.fn.toDate = function () {
+        var str = $(this).getValue();
+        var dateStr = str.split("/");
+        return new Date(dateStr[2], +dateStr[1] - 1, dateStr[0]);
+    };
+
+})(jQuery);
+
+//$(function () {
+    function stringToDate(str) {
+        var dateStr = str.split(/[ ,-/]/);
+        if (dateStr[1].length === 3) {
+            return new Date( dateStr[2],
+                ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"].indexOf(dateStr[1].toLowerCase()),
+                dateStr[0]);
+        }
+        return new Date(dateStr[2], +dateStr[1] - 1, dateStr[0]);
+    };
+
+    function dateToString(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+        return day + '/' + month + '/' + year;
+    };
+
+    function getDays(startDateStr, endDateStr) {
+        var dateStr = startDateStr.split("/");
+        var startDate = new Date(dateStr[2], +dateStr[1] - 1, dateStr[0]);
+        dateStr = endDateStr.split("/");
+        var endDate = new Date(dateStr[2], +dateStr[1] - 1, dateStr[0]);
+
+        var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        return Math.ceil(timeDiff / (1000 * 3600 * 24));
+    };
+//});

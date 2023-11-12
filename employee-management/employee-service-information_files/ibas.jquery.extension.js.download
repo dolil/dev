@@ -1,0 +1,1494 @@
+﻿/// <reference path="../jquery-1.6.2.js" />
+/// <reference path="../json2.js" />
+/// <reference path="message.box.js" />
+/// <reference path="../../Areas/Common/Scripts/jquery.caret.js" />
+/// <reference path="ibas.drop.down.extension.js" />
+//var appRoot;
+//$(function() {
+//    appRoot = appRoot;
+//});
+
+//var appRoot = location.protocol + '//' + location.host + '/ibas/';
+/*
+var getApplicationRoot = function () {
+function getCookie(cname) {
+var name = cname + "=";
+window.cookie = "";
+var ca = document.cookie.split(';');
+for (var i = 0; i < ca.length; i++) {
+var c = ca[i];
+while (c.charAt(0) == ' ') c = c.substring(1);
+if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+}
+return "";
+}
+return getCookie('AppRoot');
+};
+*/
+
+var ParameterTypeEnum = { Text: 0, Number: 1 };
+
+jQuery.fn.addParameter = function (ParameterName, ParameterValue, ParameterType) {
+    var ParameterStructure = { ParameterValue: '', ParameterType: -1 };
+    ParameterStructure.ParameterType = ParameterType;
+    ParameterStructure.ParameterValue = ParameterValue;
+    $(this).data(ParameterName, ParameterStructure);
+    return this;
+};
+
+jQuery.fn.callServerMethod = function (IsAsynchronous, waitMsg) {
+    var lElement = $(this);
+
+    var lWebMethod = $(lElement).data('ajaxWebMethod');
+    $(lElement).removeData('ajaxWebMethod');
+
+    var lSuccessMethod = $(lElement).data('ajaxSuccessMethod');
+    $(lElement).removeData('ajaxSuccessMethod');
+
+    var lFailedMethod = $(lElement).data('ajaxFailedMethod');
+    $(lElement).removeData('ajaxFailedMethod');
+
+    var lJsonData = '';
+    var DataArray = $(lElement).data();
+
+    lJsonData = lJsonData + '{';
+    $.each(DataArray, function (key, value) {
+
+        if (!value) return;
+        if (value.ParameterType == null) return;
+
+        if (value.ParameterType == ParameterTypeEnum.Text) {
+            lJsonData = lJsonData + '"' + key + '":' + JSON.stringify(value.ParameterValue) + ',';
+        } else if (value.ParameterType == ParameterTypeEnum.Number) {
+            lJsonData = lJsonData + '"' + key + '":' + JSON.stringify(value.ParameterValue) + ',';
+        }
+    });
+    lJsonData = lJsonData.substring(0, lJsonData.length - 1);
+    lJsonData = lJsonData + '}';
+    $(lElement).removeData();
+
+    if (lJsonData == '}') {
+        lJsonData = '';
+    }
+
+    if (!lFailedMethod) {
+        lFailedMethod = function (ServerData) {
+            //alert(ServerData.responseText);
+        };
+    }
+
+    function addProgress() {
+
+        //if ($('#modalajaxprogresscontainer').size() > 0) return;
+        if (waitMsg == '__noprogress__') return;
+
+        waitMsg = waitMsg ? waitMsg : 'please wait';
+        var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+        $('body').append(div);
+        var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+            + '<img id="progressimg" src="' + appRoot + '/Images/ajaxprogress.gif" />'
+            + '<div>' + waitMsg + '...' + '</div>'
+            + '</div>';
+
+        $('body').append(progress);
+    }
+
+    function removeProgress() {
+        $('#modalajaxbackground,#modalajaxprogresscontainer').remove();
+    }
+
+    var promise = $.ajax({
+        type: 'POST',
+        url: lWebMethod,
+        data: lJsonData,
+        contentType: 'application/json;charset=utf-8',
+        dataType: 'json',
+        beforeSend: addProgress,
+        complete: removeProgress,
+        async: IsAsynchronous
+    });
+
+    promise.done(function (data) {
+        lSuccessMethod(data);
+    });
+
+    promise.fail(function (err) {
+        //window.ajaxError(null, err);
+        lFailedMethod(err);
+    });
+};
+
+jQuery.fn.ajaxWebMethod = function (methodName) {
+    $(this).data('ajaxWebMethod', appRoot + '/' + methodName);
+    return this;
+};
+
+jQuery.fn.ajaxSuccessMethod = function (functionReference) {
+    $(this).data('ajaxSuccessMethod', functionReference);
+    return this;
+};
+
+jQuery.fn.ajaxFailedMethod = function (functionReference) {
+    $(this).data('ajaxFailedMethod', functionReference);
+    return this;
+};
+
+jQuery.fn.centerWindow = function () {
+    var lTop = ($(window).height() - $(this).height()) / 2 + 'px';
+    var lLeft = ($(window).width() - $(this).width()) / 2 + 'px';
+    $(this).css('position', 'fixed');
+    $(this).css('top', lTop);
+    $(this).css('left', lLeft);
+};
+
+jQuery.fn.centerTo = function (parentID) {
+    var lTop = ($('#' + parentID).height() - $(this).height()) / 2 + "px";
+    var lLeft = ($('#' + parentID).width() - $(this).width()) / 2 + "px";
+    $(this).css('position', 'relative');
+    $(this).css('top', lTop);
+    $(this).css('left', lLeft);
+};
+
+jQuery.fn.alternateRowColor = function (HexCode, AlternateHexCode) {
+    var TableName = $(this).attr('id');
+    var iRowTracker = 0;
+    var iTotalRow = $('#' + TableName + ' tbody tr').size();
+    var iOddFlag = false;
+    while (iRowTracker < iTotalRow) {
+        if ($('#' + TableName + '  tbody tr:eq(' + iRowTracker + ')').css('visibility') != 'hidden') {
+            var lColor;
+            if (iOddFlag == false) {
+                lColor = HexCode;
+                iOddFlag = true;
+            } else {
+                lColor = AlternateHexCode;
+                iOddFlag = false;
+            }
+            $('#' + TableName + '  tbody tr:eq(' + iRowTracker + ')').find('td').each(function () {
+                $(this).css('background-color', lColor);
+            });
+        }
+        iRowTracker = iRowTracker + 1;
+    }
+};
+
+jQuery.fn.sortSelectOptions = function () {
+    var my_options = $("#" + this.attr('id') + ' option');
+    my_options.sort(function (a, b) {
+        if (a.text > b.text) return 1;
+        else if (a.text < b.text) return -1;
+        else return 0;
+    });
+    $(this).empty().append(my_options);
+    $("#" + this.attr('id') + " option").attr('selected', false);
+};
+
+jQuery.fn.jsDateFromJSONDate = function (InputValue) {
+    var DayEnum = {
+        '1': '01',
+        '2': '02',
+        '3': '03',
+        '4': '04',
+        '5': '05',
+        '6': '06',
+        '7': '07',
+        '8': '08',
+        '9': '09',
+        '10': '10',
+        '11': '11',
+        '12': '12',
+        '13': '13',
+        '14': '14',
+        '15': '15',
+        '16': '16',
+        '17': '17',
+        '18': '18',
+        '19': '19',
+        '20': '20',
+        '21': '21',
+        '22': '22',
+        '23': '23',
+        '24': '24',
+        '25': '25',
+        '26': '26',
+        '27': '27',
+        '28': '28',
+        '29': '29',
+        '30': '30',
+        '31': '31'
+    };
+    var MonthEnum = {
+        '0': '01',
+        '1': '01',
+        '2': '03',
+        '3': '04',
+        '4': '05',
+        '5': '06',
+        '6': '07',
+        '7': '08',
+        '8': '09',
+        '9': '10',
+        '10': '11',
+        '11': '12'
+    };
+    var Result = new Date(parseInt(InputValue.replace("/Date(", "").replace(")/", ""), 10));
+    return DayEnum[Result.getDate()] + '/' + MonthEnum[Result.getMonth()] + '/' + Result.getFullYear();
+};
+
+jQuery.fn.jsObjectDataBindToElement = function (containerTable) {
+    var lJSObject = this;
+    if (containerTable) {
+        $.each(lJSObject, function (key, value) {
+            $.each(value, function (key1, value1) {
+                if (value1) {
+                    if (value1.toString().toLowerCase().indexOf('/date(') < 0) {
+                        $(containerTable).find('#' + key1 + '').val(value1);
+                        if ($(containerTable).find('#' + key1 + '').attr('cascade')) {
+                            $(containerTable).find('#' + key1 + '').trigger('change');
+                        }
+                    } else {
+                        $(containerTable).find('#' + key1 + '').val($(this).jsDateFromJSONDate(value1));
+                    }
+                }
+            });
+        });
+    } else {
+        $.each(lJSObject, function (key, value) {
+            $.each(value, function (key1, value1) {
+                if (value1) {
+                    if (value1.toString().toLowerCase().indexOf('/date(') < 0) {
+                        $('#' + key1 + '').val(value1);
+                        if ($('#' + key1 + '').attr('cascade')) {
+                            $('#' + key1 + '').trigger('change');
+                        }
+                    } else {
+                        $('#' + key1 + '').val($(this).jsDateFromJSONDate(value1));
+                    }
+                }
+            });
+        });
+    }
+};
+
+jQuery.fn.createJsonFromElementArray = function () {
+    var ElementArray = this;
+    var ClientData = '{';
+    $.each(ElementArray, function () {
+        ClientData = ClientData + '"' + $(this).attr('id') + '":"' + $(this).val() + '",';
+    });
+    ClientData = ClientData.substring(0, ClientData.length - 1);
+    ClientData = ClientData + '}';
+    return ClientData;
+};
+
+jQuery.fn.datePostbackFormat = function () {
+    var tem;
+    var str = $(this).val();
+
+    var dateStr = str.split("/");
+    var parsedDate = parseInt(dateStr[1]);
+
+    switch (parsedDate) {
+        case 1:
+            return dateStr[0] + '/' + 'Jan/' + dateStr[2];
+        case 2:
+            return dateStr[0] + '/' + 'Feb/' + dateStr[2];
+        case 3:
+            return dateStr[0] + '/' + 'Mar/' + dateStr[2];
+        case 4:
+            return dateStr[0] + '/' + 'Apr/' + dateStr[2];
+        case 5:
+            return dateStr[0] + '/' + 'May/' + dateStr[2];
+        case 6:
+            return dateStr[0] + '/' + 'Jun/' + dateStr[2];
+        case 7:
+            return dateStr[0] + '/' + 'Jul/' + dateStr[2];
+        case 8:
+            return dateStr[0] + '/' + 'Aug/' + dateStr[2];
+        case 9:
+            return dateStr[0] + '/' + 'Sep/' + dateStr[2];
+        case 10:
+            return dateStr[0] + '/' + 'Oct/' + dateStr[2];
+        case 11:
+            return dateStr[0] + '/' + 'Nov/' + dateStr[2];
+        case 12:
+            return dateStr[0] + '/' + 'Dec/' + dateStr[2];
+        default:
+            return '';
+    }
+};
+
+jQuery.fn.trimmedValue = function () {
+    return $.trim($(this).val());
+};
+
+jQuery.fn.padString = function (targetLength, paddingString = ' ', isEmptyValuePad = true) {
+    var targetString = $(this).val().toString();
+    $(this).val($.padString(targetString, targetLength, paddingString, isEmptyValuePad));
+};
+
+jQuery.fn.adjustPopupHeightWidth = function () { // Not tested yet
+    if ($(this).height() >= $(window).height()) {
+        $(this).css({ 'position': 'fixed', 'top': '10px', 'bottom': '10px' });
+    }
+    if ($(this).width() >= $(window).width()) {
+        $(this).css({ 'position': 'fixed', 'left': '10px', 'right': '10px' });
+    }
+};
+
+jQuery.fn.makeTextBoxDecimal = function (_BeforeDecimal, _AfterDecimal, _HandleNegative = false) {
+    _BeforeDecimal = _BeforeDecimal || 12, _AfterDecimal = _AfterDecimal || 2;
+    var prevVal = this.value;
+    var regexp = _HandleNegative ?
+        new RegExp('^-?[0-9]{0,' + _BeforeDecimal + '}(\\.[0-9]{0,' + _AfterDecimal + '})?$')
+        : new RegExp('^[0-9]{0,' + _BeforeDecimal + '}(\\.[0-9]{0,' + _AfterDecimal + '})?$');
+    $(this).on('input', function (e) {
+        var val = this.value;
+        var validValue = val.search(regexp) == 0 ? true : false;
+        if (val !== "" && !validValue && e.keyCode !== 46 && e.keyCode !== 8) {
+            $(this).val(prevVal);
+        } else {
+            prevVal = val;
+        }
+    });
+
+    //$(this).unbind('keydown').keydown(function (event) {
+    //    var key = event.keyCode ? event.keyCode : event.charCode;
+
+    //    if (key == 8 || key == 37 || key == 39 || key == 9 || key == 46 || key == 35 || key == 36) return true;
+
+    //    var lValue = new String();
+    //    if ((key >= 48) && (key <= 57) && !event.shiftKey) {
+    //        lValue = $(this).val();
+    //        if ($(lValue.split('.')).size() <= 1) {
+    //            return ($(this).val().length >= _BeforeDecimal) ? false : true;
+    //        } else {
+    //            var lValue_arr = lValue.split('.');
+    //            return (lValue_arr[1].length >= _AfterDecimal) ? false : true;
+    //        }
+    //    } else if ((key >= 96) && (key <= 105)) {
+    //        lValue = $(this).val();
+    //        if ($(lValue.split('.')).size() <= 1) {
+    //            return ($(this).val().length >= _BeforeDecimal) ? false : true;
+    //        } else {
+    //            var lValue_arr = lValue.split('.');
+    //            return (lValue_arr[1].length >= _AfterDecimal) ? false : true;
+    //        }
+    //    } else if ((key == 48 && !event.shiftKey) || (key == 96)) {
+    //        if ($(this).val().length <= 0) {
+    //            return false;
+    //        }
+    //        lValue = $(this).val();
+    //        if ($(lValue.split('.')).size() <= 1) {
+    //            return ($(this).val().length >= _BeforeDecimal) ? false : true;
+    //        } else {
+    //            var lValue_arr = lValue.split('.');
+    //            return (lValue_arr[1].length >= _AfterDecimal) ? false : true;
+    //        }
+    //    } else if (key == 8) {
+    //        return true;
+    //    } else if (key == 46) {
+    //        return true;
+    //    } else if (key == 9) {
+    //        return true;
+    //    } else if (key == 190 || key == 110) {
+    //        lValue = $(this).val();
+    //        if ($(this).val().length <= 0) {
+    //            return false;
+    //        } else if ($(lValue.split('.')).size() > 1) {
+    //            return false;
+    //        } else {
+    //            return true;
+    //        }
+    //    } else {
+    //        return false;
+    //    }
+    //});
+};
+/*
+jQuery.fn.makeDecimalWithLength = function (beforeDecimal, afterDecimal) {
+
+function LengthValidate(numToBe) {
+var s = new String();
+s = s.concat(numToBe);
+if (s.indexOf('.') === -1) {
+if (s.length > beforeDecimal) return false;
+return true;
+}
+var s_arr = s.split('.');
+if (s_arr[0].length > beforeDecimal) return false;
+if (s_arr[1].length > afterDecimal) return false;
+return true;
+}
+
+function NumberToBe(val, charToAdd, atPosition) {
+var curVal = new String();
+curVal = curVal.concat(val);
+return numToBe = curVal.slice(0, atPosition) + charToAdd + curVal.slice(atPosition);
+}
+
+$(this).unbind('keypress').keypress(function (evt) {
+if (event.shiftKey) return false;
+var key = (evt.which) ? evt.which : event.keyCode;
+if (key == 8 || key == 37 || key == 39 || key == 9 || key == 46 || key == 35 || key == 36) return true;
+var chr = String.fromCharCode(event.keyCode ? event.keyCode : event.charCode);
+if ((key == 190 || key == 110)) chr = '.';
+var numToBe = NumberToBe($(this).val(), chr, $(this).caret());
+//var rx = /^(\d+\.?\d*)$/;
+var rx = /^\d+(\.\d*)?$/;
+        
+if (rx.test(numToBe) && LengthValidate(numToBe)) return true;
+return false;
+});
+        
+};
+*/
+jQuery.fn.makeDecimalWithLength = function (beforeDecimal, afterDecimal) {
+
+    function lengthValidate(numToBe) {
+        var s = new String();
+        s = s.concat(numToBe);
+        if (s.indexOf('.') === -1) {
+            if (s.length > beforeDecimal) return false;
+            return true;
+        }
+        var s_arr = s.split('.');
+        if (s_arr[0].length > beforeDecimal) return false;
+        if (s_arr[1].length > afterDecimal) return false;
+        return true;
+    }
+
+    function numberToBe(val, charToAdd, atPosition) {
+        var curVal = new String();
+        curVal = curVal.concat(val);
+        return numToBe = curVal.slice(0, atPosition) + charToAdd + curVal.slice(atPosition);
+    }
+
+    function isNumber(evt, element) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode == 8) return true;
+
+        if ((charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+            (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+            (charCode < 48 || charCode > 57))
+            return false;
+
+        var chr = String.fromCharCode(charCode);
+        if ((charCode == 190 || charCode == 110)) chr = '.';
+        var numToBe = numberToBe($(element).val(), chr, $(element).caret());
+        //var rx = /^\d+(\.\d*)?$/;   //THIS REG-EXP CHECK NUMBER VALUE ONLY
+        //if (rx.test(numToBe) && lengthValidate(numToBe)) return true;
+        if (lengthValidate(numToBe)) return true;
+        return false;
+
+    }
+
+    $(this).unbind('keypress').keypress(function (event) {
+        if (event.shiftKey) return false;
+        return isNumber(event, this);
+    });
+
+};
+
+
+jQuery.fn.makeNumberWithLength = function (length) {
+
+    function LengthValidate(numToBe, length) {
+        var s = new String();
+        s = s.concat(numToBe);
+        if (s.length > length) return false;
+        return true;
+    }
+
+    function NumberToBe(val, charToAdd, atPosition) {
+        var curVal = new String();
+        curVal = curVal.concat(val);
+        return numToBe = curVal.slice(0, atPosition) + charToAdd + curVal.slice(atPosition);
+    }
+
+    $(this).unbind('keypress').keypress(function (event) {
+        if (event.shiftKey) return false;
+        var key = event.keyCode ? event.keyCode : event.charCode;
+        if (key == 8 || key == 37 || key == 39 || key == 9) return true;
+        var chr = String.fromCharCode(event.keyCode ? event.keyCode : event.charCode);
+        if ((key == 190 || key == 110)) chr = '.';
+        var numToBe = NumberToBe($(this).val(), chr, $(this).caret());
+        var rx = /^(\d+)$/;
+        if (rx.test(numToBe) && LengthValidate(numToBe, length)) return true;
+        return false;
+    });
+};
+
+jQuery.fn.makeDateBox = function () {
+    $(this).unbind('keypress').keypress(function (event) {
+        if (event.shiftKey) return false;
+        var key = event.keyCode ? event.keyCode : event.charCode;
+        if (key == 8 || key == 37 || key == 39) return true;
+        var chr = String.fromCharCode(event.keyCode ? event.keyCode : event.charCode);
+    });
+};
+
+jQuery.fn.makeNonNumericTextBox = function () {
+    $(this).unbind('keypress').keypress(function (event) {
+        var key = event.keyCode ? event.keyCode : event.charCode;
+        return ((key >= 48) && (key <= 57)) ? false : true;
+    });
+};
+
+jQuery.fn.textAreaMaxlength = function (event) {
+    $('textarea[data-maxlength]').keyup(function () {
+        //get the limit from maxlength attribute  
+        var limit = parseInt($(this).attr('data-maxlength'));
+        //get the current text inside the textarea  
+        var text = $(this).val();
+        //count the number of characters in the text  
+        var chars = text.length;
+        //check if there are more characters then allowed  
+        if (chars > limit) {
+            //and if there are use substr to get the text before the limit  
+            var new_text = text.substr(0, limit);
+            //and change the current text with the new text  
+            $(this).val(new_text);
+        }
+    });
+};
+
+jQuery.fn.makeTextBoxNumber = function (_Length) {
+    $(this).unbind('keydown').keydown(function (e) {
+        //var key = e.keyCode ? e.keyCode : e.charCode;
+        //console.log(e.keyCode, e.shiftKey);
+        var key = (e.keyCode) ? e.keyCode : event.which;
+        if (key == 9 || key == 8 || key == 46 || key == 39) {
+            return true;
+        }
+        if ((key >= 48) && (key <= 57)) {
+            return ($(this).val().length >= _Length) ? false : (true && !e.shiftKey);
+        } else if ((key >= 96) && (key <= 105)) {
+            return ($(this).val().length >= _Length) ? false : (true && !e.shiftKey);
+        } else if ((key == 8) || (key == 46) || (key == 39) || (key == 9)) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+};
+
+jQuery.fn.makeTextBoxAccordingToRegularExpression = function (expression) {
+    $(this).unbind('keydown').keydown(function (e) {
+        if (expression) {
+            var key = e.key;
+            return key.match(expression) ? true : false;
+        }
+        return false;
+    });
+};
+
+jQuery.fn.clearData = function (groupNumber) {
+    $('input[groupname="' + groupNumber + '"]').not('[type="button"]').each(function () { $(this).attr('value', ''); });
+    $('select[groupname="' + groupNumber + '"]').each(function () { $(this + "option[value=-1]").attr('selected', 'selected'); });
+    $('textarea[groupname="' + groupNumber + '"]').each(function () { $(this).attr('value', ''); });
+
+    $('input[data-gn="' + groupNumber + '"]').each(function () { $(this).attr('value', ''); });
+    //$('select[data-gn="' + groupNumber + '"]').each(function () { $(this).find("option[value=-1]").attr('selected', 'selected'); });
+    $('textarea[data-gn="' + groupNumber + '"]').each(function () { $(this).attr('value', ''); });
+    //$('select[data-gn="' + groupNumber + '"]').each(function () { $(this).prop('selectedIndex', 0); });    
+    $('select[data-gn="' + groupNumber + '"]').each(function () { $(this).val(-1); });
+    $('input[data-gn="' + groupNumber + '"][type="checkbox"]').each(function () { $(this).prop('checked', false); });
+    $('select').find('data-clear-dropdown').clearDropDown();
+    return this;
+};
+
+jQuery.fn.disableElements = function (groupNumber) {
+    $('input[groupname="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+    $('select[groupname="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+    $('textarea[groupname="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+
+    $('input[data-gn="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+    $('select[data-gn="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+    $('textarea[data-gn="' + groupNumber + '"]').each(function () { $(this).attr('disabled', 'disabled'); });
+    return this;
+};
+
+jQuery.fn.enableElements = function (groupNumber) {
+    $('input[groupname="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+    $('select[groupname="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+    $('textarea[groupname="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+
+    $('input[data-gn="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+    $('select[data-gn="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+    $('textarea[data-gn="' + groupNumber + '"]').each(function () { $(this).removeAttr('disabled'); });
+    return this;
+};
+
+jQuery.fn.hideElements = function (groupNumber) {
+    $('input[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').hide(); });
+    $('select[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').hide(); });
+    $('textarea[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').hide(); });
+};
+
+jQuery.fn.showElements = function (groupNumber) {
+    $('input[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').show(); });
+    $('select[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').show(); });
+    $('textarea[groupname="' + groupNumber + '"]').each(function () { $(this).closest('tr').show(); });
+};
+
+jQuery.fn.serializeObject = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+jQuery.fn.getFromArray = function (key, value) {
+    var array = this;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][key] == value) {
+            return array[i];
+        }
+    }
+    return null;
+};
+
+jQuery.fn.makeFiscalYear = function () {
+    $(this).unbind('keypress').keypress(function (event) {
+        var keyCode = (event.keyCode) ? event.keyCode : event.which;
+        var value = this.value;
+        var valuelen = value.length;
+        var slash1 = value.indexOf("-");
+
+        if ((valuelen == 4 && slash1 == -1 && keyCode != 45)) {
+            this.value = this.value + "-";
+        }
+
+        if ((valuelen > 4 && keyCode == 45)) return false;
+        if (valuelen > 6) return false;
+
+        if ((keyCode >= 48 && keyCode <= 57) || keyCode == 45) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    $(this).unbind('focusout').focusout(function (event) {
+        var value = this.value;
+        var valuelen = value.length;
+
+        if (valuelen > 0) {
+            var FirstFY = value.substring(2, 4);
+            var lastFY = value.substring(5, 7);
+
+            if (+FirstFY + 1 != +lastFY || valuelen != 7) {
+                MessageBox("Enter Valid Fiscal Year", "Input Validation", 'OK', null, null, null);
+                this.value = "";
+                this.focus();
+                return false;
+            } else {
+                return true;
+            }
+        }
+    });
+};
+
+jQuery.fn.optionValueByText = function (textToMatch) {
+    var retValue = -1;
+    var select = $(this);
+    $(select).find('option').each(function () {
+        if ($(this).html() == textToMatch) {
+            retValue = $(this).val();
+            return;
+        }
+    });
+    return retValue;
+};
+
+jQuery.fn.makeTextBoxDateOnly = function () {
+    var _TextBox = $(this);
+    $(_TextBox).unbind('blur').blur(function (event) { return ibasDate.DateTextBox_LostFocus(event, _TextBox); });
+    $(_TextBox).unbind('keypress').keypress(function (event) { return ibasDate.DateTextBox_KeyPress(event, _TextBox); });
+    _TextBox.datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'dd/mm/yy'
+    });
+};
+
+var ibasDate = {};
+
+ibasDate.DateTextBox_KeyPress = function (event, _TextBox) {
+    var keyCode = (event.keyCode) ? event.keyCode : event.which;
+    //    if (keyCode == 9 || keyCode == 8 || keyCode == 46) {
+    //        return false;
+    //    }
+    if (keyCode == 9 || keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39) {
+        return true;
+    }
+    var value = $(_TextBox).val();
+    var valuelen = value.length;
+    var slash1 = value.indexOf("/");
+    var slash2 = value.lastIndexOf("/");
+    if (((valuelen == 2 && slash1 == -1) || (valuelen == 5 && slash2 == slash1)) && keyCode != 47) {
+        $(_TextBox).val($(_TextBox).val() + '/');
+    }
+
+    if (valuelen > 9) {
+        event.preventDefault();
+        return false;
+    }
+
+    if ((keyCode >= 48 && keyCode <= 57) || keyCode == 47) {
+        if (keyCode == 47) {
+            if (slash1 != slash2) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+};
+
+ibasDate.DateTextBox_LostFocus = function (event, _TextBox) {
+    if ($(_TextBox).val().length == 0) return false;
+    var retvalue = ibasDate.CheckValidDate($(_TextBox).val());
+    if (retvalue) {
+        //$(_TextBox).val($(_TextBox).datePostbackFormat());
+        return true;
+    } else {
+        MessageBox('Invalid Date.', 'Error', 'OK', function () {
+            $(_TextBox).val('');
+            $(_TextBox).focus();
+        }, null, null);
+        event.preventDefault();
+        return false;
+    }
+};
+
+ibasDate.CheckValidDate = function (dateStr) {
+    var slash1 = dateStr.indexOf("/");
+    if (slash1 == -1) {
+        slash1 = dateStr.indexOf("-");
+    }
+    if (slash1 == -1) {
+        return false;
+    }
+    var dateDay = dateStr.substring(0, slash1);
+    var dateMonthAndYear = dateStr.substring(slash1 + 1, dateStr.length);
+    var slash2 = dateMonthAndYear.indexOf("/");
+    if (slash2 == -1) {
+        slash2 = dateMonthAndYear.indexOf("-");
+    }
+    if (slash2 == -1) {
+        return false;
+    }
+    var dateMonth = dateMonthAndYear.substring(0, slash2);
+    var dateYear = dateMonthAndYear.substring(slash2 + 1, dateMonthAndYear.length);
+    if ((dateMonth == "") || (dateDay == "") || (dateYear == "")) {
+        return false;
+    }
+
+    for (var x = 0; x < dateMonth.length; x++) {
+        var digit = dateMonth.substring(x, x + 1);
+        if ((digit < "0") || (digit > "9")) {
+            return false;
+        }
+    }
+    var numMonth = 0;
+    for (var x = 0; x < dateMonth.length; x++) {
+        digit = dateMonth.substring(x, x + 1);
+        numMonth *= 10;
+        numMonth += parseInt(digit);
+    }
+    if ((numMonth <= 0) || (numMonth > 12)) {
+        return false;
+    }
+    for (var x = 0; x < dateDay.length; x++) {
+        digit = dateDay.substring(x, x + 1);
+        if ((digit < "0") || (digit > "9")) {
+            return false;
+        }
+    }
+    var numDay = 0;
+    for (var x = 0; x < dateDay.length; x++) {
+        digit = dateDay.substring(x, x + 1);
+        numDay *= 10;
+        numDay += parseInt(digit);
+    }
+
+    if ((numDay <= 0) || (numDay > 31)) {
+        return false;
+    }
+
+    if ((numMonth == 2) && (numDay > 29)) {
+        return false;
+    }
+
+    if ((numMonth == 4) || (numMonth == 6) || (numMonth == 9) || (numMonth == 11)) {
+        if (numDay > 30) {
+            return false;
+        }
+    }
+
+    for (var x = 0; x < dateYear.length; x++) {
+        digit = dateYear.substring(x, x + 1);
+        if ((digit < "0") || (digit > "9")) {
+            return false;
+        }
+    }
+    var numYear = 0;
+    for (var x = 0; x < dateYear.length; x++) {
+        digit = dateYear.substring(x, x + 1);
+        numYear *= 10;
+        numYear += parseInt(digit);
+    }
+    if ((dateYear.length != 2) && (dateYear.length != 4)) {
+        return false;
+    }
+    if ((numYear < 50) && (dateYear.length == 2)) {
+        numYear += 2000;
+    }
+    if ((numYear < 100) && (dateYear.length == 2)) {
+        numYear += 1900;
+    }
+    if ((numYear <= 0) || (numYear > 9999)) {
+        return false;
+    }
+    if ((numMonth == 2) && (numDay == 29)) {
+        var div4 = numYear % 4;
+        var div100 = numYear % 100;
+        var div400 = numYear % 400;
+        if (div4 != 0) {
+            return false;
+        }
+        if ((div100 == 0) && (div400 != 0)) {
+            return false;
+        }
+    }
+    return true;
+};
+
+var ElementType = { TextBox: 'TextBox', NumericTextBox: 'NumericTextBox', DropDown: 'DropDown', CheckBox: 'CheckBox', Span: 'Span' };
+
+jQuery.fn.getElementType = function () {
+    try {
+        // must fix this method
+        alert($(this).attr('id'));
+        if ($(this).attr('type')) {
+            if ($(this).attr('type') == 'text') {
+                return ElementType.TextBox;
+            }
+            if ($(this).attr('type') == 'checkbox') {
+                return ElementType.CheckBox;
+            }
+        } else {
+            return ElementType.DropDown;
+        }
+
+        if ($(this).prop('tagName').toLowerCase() == 'span') {
+            return ElementType.Span;
+        }
+        if (!$(this).attr('type')) {
+            return ElementType.DropDown;
+        }
+        if ($(this).attr('type') == 'checkbox') {
+            return ElementType.CheckBox;
+        }
+        return ElementType.TextBox;
+    } catch (err) {
+        MessageBox(err.message, 'jQuery.fn.getElementType', null, null, null);
+    }
+};
+
+jQuery.fn.validateData = function (ValidateGroup) { //not yet tested
+    var elementList = this;
+
+    $.each(elementList, function (index, item) {
+        if (!$(item).attr('AV')) {
+            return;
+        }
+
+        var ValidatePropertyKeyValue = $().parseValidateData($(item).attr('AV').toString());
+
+        var GRP = ValidatePropertyKeyValue.GRP;
+        var MSG = ValidatePropertyKeyValue.MSG;
+        var ELEM_TYPE = ValidatePropertyKeyValue.ELEM_TYPE;
+
+        if (GRP != ValidateGroup) {
+            return;
+        }
+
+        switch (ELEM_TYPE) {
+            case ElementType.TextBox:
+                {
+                    if ($(item).trimmedValue() == '') {
+                        MessageBox(MSG, 'Validation', 'OK', function () { $(item).focus(); }, null, null);
+                        return false;
+                    }
+                    break;
+                }
+            case ElementType.NumericTextBox:
+                {
+                    if ($(item).trimmedValue() == '' || $(item).trimmedValue() == '0') {
+                        MessageBox(MSG, 'Validation', 'OK', function () { $(item).focus(); }, null, null);
+                        return false;
+                    }
+                    break;
+                }
+            case ElementType.DropDown:
+                {
+                    if ($(item).val() == '-1') {
+                        MessageBox(MSG, 'Validation', 'OK', function () { $(item).focus(); }, null, null);
+                        return false;
+                    }
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+    });
+
+    return true;
+};
+
+jQuery.fn.parseValidateData = function (data) {
+    var tempData = data.split(',');
+    var dataDictionary = {};
+    $.each(tempData, function (index, item) {
+        var tempItem = item.split('=');
+        dataDictionary[$.trim(tempItem[0])] = $.trim(tempItem[1]);
+    });
+
+    return dataDictionary;
+};
+
+jQuery.fn.createMasterObject = function () {
+    var elementList = this;
+    var masterData = {};
+
+    $.each(elementList, function (index, item) {
+        if ($(item).find('option').size() > 0) {
+            masterData[$(item).attr('id')] = $(item).val();
+        } else if ($(item).attr('type') == 'text' || $(item).attr('type') == 'hidden') {
+            masterData[$(item).attr('id')] = $(item).trimmedValue();
+        } else if ($(item).attr('type') == 'radio' && $(item).attr('checked') == 'checked') {
+            masterData[$(item).attr('id')] = $(item).val();
+        } else if ($(item).attr('type') == 'checkbox') {
+            if ($(item).attr('checked') == 'checked') {
+                masterData[$(item).attr('id')] = true;
+            } else {
+                masterData[$(item).attr('id')] = false;
+            }
+        }
+    });
+    return masterData;
+};
+
+jQuery.fn.buildMasterObject = function () {
+    var elementList = this;
+    var masterData = {};
+
+    var itemWithDot = new Array();
+    var itemWithoutDot = new Array();
+
+    $(elementList).each(function (index, item) {
+        if ($(item).attr('data-modelproperty').toString().indexOf('.') === -1) {
+            itemWithoutDot.push(item);
+        } else {
+            itemWithDot.push(item);
+        }
+    });
+
+    $.each(itemWithoutDot, function (index, item) {
+        if ($(item).find('option').size() > 0) {
+            masterData[$(item).attr('data-modelproperty')] = $(item).val();
+        } else if ($(item).attr('type') == 'text' || $(item).attr('type') == 'hidden') {
+            if ($(item).attr('data-modelproperty-type') == 'datetime')
+                masterData[$(item).attr('data-modelproperty')] = $(item).datePostbackFormat();
+            else
+                masterData[$(item).attr('data-modelproperty')] = $(item).trimmedValue();
+        } else if ($(item).is('TEXTAREA')) {
+            masterData[$(item).attr('data-modelproperty')] = $(item).trimmedValue();
+        } else if ($(item).attr('type') == 'radio' && $(item).attr('checked') == 'checked') {
+            masterData[$(item).attr('data-modelproperty')] = $(item).val();
+        } else if ($(item).attr('type') == 'checkbox') {
+            if ($(item).attr('checked') == 'checked') {
+                masterData[$(item).attr('data-modelproperty')] = true;
+            } else {
+                masterData[$(item).attr('data-modelproperty')] = false;
+            }
+        }
+    });
+
+    //    childelementList = $("[data-modelproperty*='.']");
+    if (itemWithDot.length > 0) { //**************************has child object*******************************
+        var childElement = new Array();
+        $.each(itemWithDot, function (index, item) {
+            childElement.push($(item).attr('data-modelproperty').toString().split('.', 1).toString());
+        });
+        childElement = $.unique(childElement);
+        for (i = 0; i < childElement.length; i++) {
+            masterData[childElement[i]] = {};
+            $.each(itemWithDot, function (index, item) {
+                var arrayChildItem = $(item).attr('data-modelproperty').toString().split('.', 2);
+                if (childElement[i] == arrayChildItem[0])
+                    masterData[childElement[i]][arrayChildItem[1]] = $(item).val();
+            });
+        }
+        ;
+
+    }
+    ; //**************************build child object complete*******************************
+
+
+    return masterData;
+};
+
+jQuery.fn.buildSearchParam = function () {
+    var elementList = this;
+    var masterData = {};
+
+    $.each(elementList, function (index, item) {
+        if ($(item).find('option').size() > 0) {
+            masterData[$(item).attr('data-searchparam')] = $(item).val();
+        } else if ($(item).attr('type') == 'text' || $(item).attr('type') == 'hidden') {
+            masterData[$(item).attr('data-searchparam')] = $(item).trimmedValue();
+        } else if ($(item).attr('type') == 'radio' && $(item).attr('checked') == 'checked') {
+            masterData[$(item).attr('data-searchparam')] = $(item).val();
+        } else if ($(item).attr('type') == 'checkbox') {
+            if ($(item).attr('checked') == 'checked') {
+                masterData[$(item).attr('data-searchparam')] = true;
+            } else {
+                masterData[$(item).attr('data-searchparam')] = false;
+            }
+        }
+    });
+    return masterData;
+};
+
+var DetailObjectType = { NotFirst: '1', NotLast: '2', NotFirstNotLast: '3' };
+
+jQuery.fn.createDetailObject = function (detailObjectType) {
+    var Table = this;
+
+    var DetailObject = [];
+    var rowCollection;
+
+    switch (detailObjectType) {
+        case DetailObjectType.NotFirst:
+            rowCollection = $(Table).find('tbody tr').not(':first');
+            break;
+        case DetailObjectType.NotLast:
+            rowCollection = $(Table).find('tbody tr').not(':last');
+            break;
+        case DetailObjectType.NotFirstNotLast:
+            rowCollection = $(Table).find('tbody tr').not(':first').not(':last');
+            break;
+        default:
+            rowCollection = $(Table).find('tbody tr');
+            break;
+    }
+
+
+    $.each(rowCollection, function () {
+        var Detail = {};
+        var RowItem = this;
+        $(RowItem).find('td').each(function () {
+            if ($(this).attr('PBID') == 'true') {
+                Detail[$(this).attr('dbfieldname')] = $(this).html();
+            }
+        });
+        DetailObject.push(Detail);
+    });
+    return DetailObject;
+};
+
+jQuery.fn.showModalBackground = function () {
+    var lModalBackground = '';
+    lModalBackground = lModalBackground + '<div id="divModalBackground"></div>';
+    $(document.body).append(lModalBackground);
+    $('#divModalBackground').addClass('ModalBackground');
+};
+
+jQuery.fn.sortTable = function (columnIndex) {
+    var _tableID = '#' + $(this).attr('id');
+    var i = 1, j = 1;
+    var lTotalRows = $(_tableID + ' tbody tr').size();
+    for (i = 1; i < lTotalRows; i++) {
+        for (j = i + 1; j <= lTotalRows; j++) {
+            var lValue = $(_tableID + ' tr:eq(' + i + ')').find('td:eq(' + columnIndex + ')').html();
+            var lValuePlus = $(_tableID + ' tr:eq(' + (j) + ')').find('td:eq(' + columnIndex + ')').html();
+            if (lValue > lValuePlus) {
+                var lTempRow = $(_tableID + ' tr:eq(' + (j) + ')');
+                $(_tableID + ' tr:eq(' + (j) + ')').remove();
+                $(_tableID + ' tr:eq(' + i + ')').before(lTempRow);
+            }
+        }
+    }
+};
+
+jQuery.fn.sortTable1 = function (columnIndex) {
+    var $this = $(this), $body = $this.find('tbody'),
+        i,
+        data = $body.find('tr').map(function (i, el) {
+            var $el = $(el);
+            return { val: $el.find('td:eq(' + columnIndex + ')').html(), el: $el }
+        }).toArray().sort(function (a, b) {
+            return (a.val < b.val) ? -1 : (a.val > b.val) ? 1 : 0;
+        });
+    $body.empty();
+    for (i = 0; i < data.length; i++) {
+        $body.append(data[i].el);
+    }
+};
+
+jQuery.expr[':'].containsIgnoreCase = function (n, i, m) {
+    return jQuery(n).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+};
+
+if (!Array.prototype.map) {
+    Array.prototype.map = function (callback) {
+        var arr = this;
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = callback(arr[i]);
+        }
+        return arr;
+    };
+}
+
+jQuery.fn.modifyTableColumnData = function (columnName, lookForArray, replaceWithArray) {
+    lookForArray = ($.isArray(lookForArray)) ? lookForArray.map(function (elem) { return elem.toLowerCase(); }) : [lookForArray].map(function (elem) { return elem.toLowerCase(); });
+    replaceWithArray = ($.isArray(replaceWithArray)) ? replaceWithArray : [replaceWithArray];
+
+    var colIndex = $(this).find('thead tr:visible th:containsIgnoreCase("' + columnName + '")').index();
+
+    if ((colIndex != -1) && (lookForArray.length == replaceWithArray.length)) {
+        $(this).find('tbody tr:visible').each(function () {
+            $(this).find('td:eq(' + colIndex + ')').each(function () {
+                var i = $.inArray($(this).text().toLowerCase(), lookForArray);
+                if (i != -1) {
+                    $(this).html(replaceWithArray[i]);
+                }
+            });
+        });
+    }
+};
+
+jQuery.fn.modifyRowColumnData = function (columnName, lookForArray, replaceWithArray) {
+    lookForArray = ($.isArray(lookForArray)) ? lookForArray.map(function (elem) { return elem.toLowerCase(); }) : [lookForArray].map(function (elem) { return elem.toLowerCase(); });
+    replaceWithArray = ($.isArray(replaceWithArray)) ? replaceWithArray : [replaceWithArray];
+
+    var refTable = $(this).parents('table');
+    var clone = $(this).clone();
+
+    var colIndex = $(refTable).find('thead tr:visible th:containsIgnoreCase("' + columnName + '")').index();
+
+    if ((colIndex != -1) && (lookForArray.length == replaceWithArray.length)) {
+        $(clone).find('td:eq(' + colIndex + ')').each(function () {
+            var i = $.inArray($(this).text().toLowerCase(), lookForArray);
+            if (i != -1) {
+                $(this).html(replaceWithArray[i]);
+            }
+        });
+    }
+
+    return clone;
+};
+
+jQuery.fn.modifyRowColumnDataWithTable = function (columnName, lookForArray, replaceWithArray, table) {
+    lookForArray = ($.isArray(lookForArray)) ? lookForArray.map(function (elem) { return elem.toLowerCase(); }) : [lookForArray].map(function (elem) { return elem.toLowerCase(); });
+    replaceWithArray = ($.isArray(replaceWithArray)) ? replaceWithArray : [replaceWithArray];
+
+    var refTable = table;
+    var clone = $(this).clone();
+
+    var colIndex = $(refTable).find('thead tr:visible th:containsIgnoreCase("' + columnName + '")').index();
+
+    if ((colIndex != -1) && (lookForArray.length == replaceWithArray.length)) {
+        $(clone).find('td:eq(' + colIndex + ')').each(function () {
+            var i = $.inArray($(this).text().toLowerCase(), lookForArray);
+            if (i != -1) {
+                $(this).html(replaceWithArray[i]);
+            }
+        });
+    }
+
+    return clone;
+};
+
+jQuery.fn.extend({
+    enable: function () {
+        return this.each(function () {
+            this.disabled = false;
+        });
+    },
+    disable: function () {
+        return this.each(function () {
+            this.disabled = true;
+        });
+    },
+    toggleDisabled: function () {
+        return this.each(function () {
+            this.disabled = !this.disabled;
+        });
+    }
+});
+
+(function (fn) {
+    if (!fn.trim) {
+        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        fn.trim = function () {
+            return this.replace(rtrim, '');
+        };
+    }
+})(String.prototype);
+
+(function (fn) {
+    fn.findWithkey = function (key, val) {
+        var i;
+        for (i = 0; i < this.length; i++) {
+            if (this[i][key] == val) {
+                return this[i];
+            }
+        }
+        return null;
+    };
+
+    if (!fn.last) {
+        fn.last = function () {
+            return this[this.length - 1];
+        };
+    }
+
+    if (!fn.map) {
+        fn.map = function (fun) {
+            "use strict";
+            var t = Object(this);
+            var len = t.length >>> 0;
+            if (typeof fun !== "function")
+                throw new TypeError();
+
+            var res = new Array(len);
+            var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+            for (var i = 0; i < len; i++) {
+                if (i in t)
+                    res[i] = fun.call(thisArg, t[i], i, t);
+            }
+            return res;
+        };
+    }
+
+    if (!fn.filter) {
+        fn.filter = function (fun) {
+            "use strict";
+            var t = Object(this);
+            var len = t.length >>> 0;
+            if (typeof fun !== "function")
+                throw new TypeError();
+
+            var res = [];
+            var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+            for (var i = 0; i < len; i++) {
+                if (i in t) {
+                    var val = t[i];
+                    if (fun.call(thisArg, val, i, t))
+                        res.push(val);
+                }
+            }
+            return res;
+        };
+    }
+
+    if (!fn.reduce) {
+        fn.reduce = function (fun) {
+            'use strict';
+            if ('function' !== typeof fun) {
+                throw new TypeError(fun + ' is not a function');
+            }
+            var t = Object(this), len = t.length >>> 0, k = 0, value;
+            if (arguments.length >= 2) {
+                value = arguments[1];
+            } else {
+                while (k < len && !k in t) k++;
+                if (k >= len)
+                    throw new TypeError('Reduce of empty array with no initial value');
+                value = t[k++];
+            }
+            for (; k < len; k++) {
+                if (k in t) {
+                    value = fun(value, t[k], k, t);
+                }
+            }
+            return value;
+        };
+    }
+
+    if (!fn.indexOf) {
+        fn.indexOf = function (searchElement, fromIndex) {
+            var length = this.length >>> 0; // Hack to convert object.length to a UInt32
+
+            fromIndex = +fromIndex || 0;
+
+            if (Math.abs(fromIndex) === Infinity) {
+                fromIndex = 0;
+            }
+
+            if (fromIndex < 0) {
+                fromIndex += length;
+                if (fromIndex < 0) {
+                    fromIndex = 0;
+                }
+            }
+
+            for (; fromIndex < length; fromIndex++) {
+                if (this[fromIndex] === searchElement) {
+                    return fromIndex;
+                }
+            }
+
+            return -1;
+        };
+    }
+
+    if (!fn.remove) {
+        fn.remove = function (x) {
+            var i;
+
+            for (i = 0; i < this.length; i++) {
+                if (this[i] === x) {
+                    this.splice(i, 1);
+                    i--;
+                }
+
+            }
+
+        }
+    }
+
+})(Array.prototype);
+
+(function (fn) {
+    if (!fn.toIbasFormat) {
+        fn.toIbasFormat = function () {
+            return this.toLocaleDateString('en-GB');
+        }
+    }
+})(Date.prototype);
+
+jQuery.expr[':'].regex = function (elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ?
+                matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels, '')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g, ''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+}
+
+var TextBoxRegEx = {
+    Number: /[0-9]/,
+    Decimal: /[0-9\.]/,
+    AlphaNumeric: /[A-Za-z0-9]/,
+    NameEn: /[A-Za-z\.\-\s]/,
+    NameBn: /[\u0980-\u09E6\-\s]/,
+    //NameEnCapRegEx: /[A-Z\.\-\s]/,
+    Email: /[a-z0-9\.@_\s]/,
+    BankAccountName: /[A-Za-z0-9\.\s]/
+};
+
+jQuery.fn.formatTextBox = function (regEx) {// parameter optional
+    var selector = $(this);
+    if (!selector.is('input:text'))
+        return;
+
+    var dataType = selector.data('type');   //if no dada-type then type is undefined. Not ''
+    if (regEx == null) {
+        if (dataType === 'number') regEx = TextBoxRegEx.Number;
+        else if (dataType === 'decimal') regEx = TextBoxRegEx.Decimal;
+        else if (dataType === 'alphaNumeric') regEx = TextBoxRegEx.AlphaNumeric;
+        else if (dataType === 'nameEn') regEx = TextBoxRegEx.NameEn;
+        //else if (type === 'nameEnCap') regEx = TextBoxRegEx.NameEnCap;
+        else if (dataType === 'nameBn') regEx = TextBoxRegEx.NameBn;
+        else if (dataType === 'email') regEx = TextBoxRegEx.Email;
+        else if (dataType === 'bankAccountName') regEx = TextBoxRegEx.BankAccountName;
+    }
+
+    if (dataType === 'date') {
+        selector.ibasDate();
+        return;
+    }
+    else if (dataType === 'decimal') {
+        selector.makeTextBoxDecimal(18, 2);
+    }
+    else {
+        selector.unbind('keydown').keydown(function (e) {
+            if (e.keyCode === 8  //backspace
+                || e.keyCode === 9 //tab
+                || e.keyCode === 16 //shift
+                || e.keyCode === 17 //ctrl
+                || e.keyCode === 18 //alt
+                || e.keyCode === 35 //end
+                || e.keyCode === 36 //home
+                || e.keyCode === 37 //left arrow
+                || e.keyCode === 39 //right arrow
+                || e.keyCode === 46 //delete
+                || ((e.ctrlKey === true || e.metaKey === true)
+                    && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86)) // ctrl/command+A/C/V
+            ) {
+                return true;
+            }
+            if (e.key)
+                return e.key.match(regEx) ? true : false;
+        });
+    }
+
+    selector.unbind('paste').on('paste', function (e) {
+        var $this = $(this);
+        setTimeout(function () {
+            var rx = regEx.toString();
+            if (rx[0] === '/')
+                rx = rx.slice(1, -1);
+            rx = rx.substr(0, rx.length - 1) + "]*";   //as pasted input can be "", for which showing error is not logical. so '*' used instead of '+'
+
+            var data = $this.val().trim();
+            var matchedData = data.match(new RegExp(rx))[0];
+            if (data.length !== matchedData.length) {
+                MsgBox({
+                    message: 'Sorry, it contains invalid character(s).',
+                    messageTitle: 'Error',
+                    okMethod: function () { $this.val(""); }
+                });
+            } else
+                $this.val(data);
+        }, 100);
+    });
+};
+
+jQuery.fn.formatTextBoxes = function () {
+    $('[data-type]').each(function () {
+        $(this).formatTextBox();
+    });
+};
+
+jQuery.fn.getQueryParameter = function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) { return pair[1]; }
+    }
+    return null;
+}

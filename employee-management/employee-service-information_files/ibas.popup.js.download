@@ -1,0 +1,125 @@
+﻿(function ($) {
+
+    $.extend({
+        ibasPopup: function (options) {
+
+            var defaults = {
+                htmlContent: null,
+                htmlObject:null,
+                title: 'Detail Information',
+                iframeSrc: null,
+                speed: 500,
+                showCompleted: null,
+                removeSidePadding: false,
+                showWithEvents: false
+            };
+
+            var o = $.extend(defaults, options);
+
+            var popupbackground = '#popupBackground', popupcontainer = '#popupContainer';
+
+            function show() {
+                $('body').find('div').attr('disabled', 'disabled');
+                var popupBack = '<div id="popupBackground" class="popupbackground"></div>';
+                var popupHead = '<div class="popuphead">' + o.title + '<input type="button" class="popupcross" value="X" /></div>';
+                var popupBody = '<div class="popupbody"><table><tr><td style="width:20px;"></td><td>' + o.htmlContent + '</td><td style="width:20px;"></td></tr></table></div>';
+                var popupContainer = '<div id="popupContainer" class="popupcontainer">' + popupHead + popupBody + '</div>';
+
+                $('body').append(popupBack);
+                $('body').append(popupContainer);
+                
+                if (o.removeSidePadding == true) {
+                    $('.popupbody table tr td:eq(2)').remove();
+                    $('.popupbody table tr td:eq(0)').remove();
+                }
+
+                if (o.iframeSrc) $('.popupbody iframe').attr('src', o.iframeSrc);
+
+                setPosition();
+
+                $(popupcontainer).draggable({ handle: '.popuphead' });
+
+                $(popupcontainer).fadeIn(o.speed);
+
+                if (o.showCompleted) o.showCompleted({ rootBody: $('body'), resetPosition: setPosition, hide: hide });
+            }
+
+            function showWithEvents() {
+                $('body').find('div').attr('disabled', 'disabled');
+                var popupBack = '<div id="popupBackground" class="popupbackground"></div>';
+                var popupHead = '<div class="popuphead">' + o.title + '<input type="button" class="popupcross" value="X" /></div>';
+                var popupBody = '<div class="popupbody"><table><tr><td style="width:20px;"></td><td><div id="showWithEvents"></div></td><td style="width:20px;"></td></tr></table></div>';
+                var popupContainer = '<div id="popupContainer" class="popupcontainer">' + popupHead + popupBody + '</div>';
+
+                $('body').append(popupBack);
+                $('body').append(popupContainer);
+
+                alert(o.htmlObject.html());
+
+                var displayIn = '#popupContainer #showWithEvents';
+                $(displayIn).replaceWith(o.htmlObject);
+
+                if (o.removeSidePadding == true) {
+                    $('.popupbody table tr td:eq(2)').remove();
+                    $('.popupbody table tr td:eq(0)').remove();
+                }
+
+                if (o.iframeSrc) $('.popupbody iframe').attr('src', o.iframeSrc);
+
+                setPosition();
+
+                $(popupcontainer).draggable({ handle: '.popuphead' });
+
+                $(popupcontainer).fadeIn(o.speed);
+
+                if (o.showCompleted) o.showCompleted({ rootBody: $('body') });
+            }
+            
+            function hide() {
+                $(popupbackground).remove();
+                $(popupcontainer).remove();
+            }
+
+            function setPosition() {
+                var windowHeight = $(window).height() - 90;
+                var popupHeight = $(popupcontainer).height();
+                var windowWidth = $(window).width() - 90;
+                var popupWidth = $(popupcontainer).width();
+
+                if (popupHeight > windowHeight) {
+                    $('.popupbody').css({
+                        'height': windowHeight,
+                        'overflow': 'scroll'
+                    });
+                }
+
+                if (popupWidth > windowWidth) {
+                    $('.popupbody').css({
+                        'width': windowWidth,
+                        'overflow': 'scroll'
+                    });
+                }
+
+                $(popupcontainer).css({
+                    'left': '50%',
+                    'top': '50%',
+                    'margin-left': -($(popupcontainer).width() / 2),
+                    'margin-top': -($(popupcontainer).height() / 2)
+                });
+            }
+
+            if (!o.showWithEvents) {
+                show();
+            } else {
+                showWithEvents();
+            }
+            
+
+            $(document).keyup(function (e) { if (e.keyCode == 27) hide(); });
+
+            $('.popupcross').unbind('click').click(function () { hide(); });
+        }
+
+    });
+
+})(jQuery);

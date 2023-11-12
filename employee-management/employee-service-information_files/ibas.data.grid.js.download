@@ -1,0 +1,627 @@
+﻿/// <reference path="jquery-1.6.2.js" />
+/// <reference path="ibas.jquery.extension.js" />
+/// <reference path="message.box.js" />
+/// <reference path="../../../Scripts/ibas/message.box.js" />
+/// <reference path="../../../Scripts/ibas/ibas.jquery.extension.js" />
+
+var IbasGrid = function () {
+    var thisInstance = this;
+
+    this.ButtonOption = { None: 0, AddCancel: 1, SaveCancel: 2 };
+    this.ElementType = { None: 0, TextBox: 1, DateBox: 2, NumericBox: 3, DropDown: 4, CheckBox: 5, RadioButton: 6, DecimalBox: 7, Hidden: 8 };
+
+    var _webMethod = '';
+
+    this.BeforeAddClick = null;
+    this.AfterAddClick = null;
+
+    this.BeforeSaveClick = null;
+    this.AfterSaveClick = null;
+
+    this.BeforeUpdateClick = null;
+    this.AfterUpdateClick = null;
+
+    this.BeforeCancelClick = null;
+    this.AfterCancelClick = null;
+
+    this.BeforeEditClick = null;
+    this.AfterEditClick = null;
+
+    this.BeforeRemoveClick = null;
+    this.AfterRemoveClick = null;
+
+    this.AddUpdateValueChange = function (value, modelProperty) { return value; };
+    this.EditValueChange = function (value, modelProperty) { return value; };
+
+    this.CancelDefault = false;
+    this.AllowDuplicateRow = false;
+    this.GridRowClick = null;
+
+    var _buttonOption = thisInstance.ButtonOption.ViewOnly;
+
+    var _tableID = null;
+
+    var WebMethodParameter = new Object();
+
+    var AddUpdateValueChanger = function (value, modelProperty) {
+        var newValue = null;
+        if ($.isFunction(thisInstance.AddUpdateValueChange)) newValue = thisInstance.AddUpdateValueChange(value, modelProperty);
+        if (!newValue)
+            return value;
+        else
+            return newValue;
+    };
+
+    var EditValueChanger = function (value, modelProperty) {
+        var newValue = null;
+        if ($.isFunction(thisInstance.EditValueChange)) newValue = thisInstance.EditValueChange(value, modelProperty);
+        if (!newValue)
+            return value;
+        else
+            return newValue;
+    };
+
+    this.SetWebMethodParameter = function (parameterName, parameterValue) {
+        WebMethodParameter[parameterName] = parameterValue;
+    };
+
+    this.InitiateTable = function (tableID, className, toBeReplacedElementID, buttonOption) {
+        if (tableID == null) {
+            throw 'InitiateTable() parameter "tableID" cannot be null.';
+        }
+        if ($.trim(tableID) == '') {
+            throw 'InitiateTable() parameter "tableID" cannot be empty.';
+        }
+        if ($('#' + toBeReplacedElementID).size() <= 0) {
+            throw 'Element with id "' + toBeReplacedElementID + '" not found.';
+        }
+
+        _tableID = '#' + tableID;
+        _buttonOption = buttonOption;
+
+        BuildTableStructure(tableID, className, toBeReplacedElementID, buttonOption);
+
+        BindDefaultEvents(1);
+    };
+
+    this.SetWebMethod = function (webMethod) {
+        _webMethod = webMethod;
+    };
+
+    this.GetData = function () {
+        var arr_of_obj = new Array();
+        $(_tableID + ' tbody tr').not(':first').each(function () {
+            var obj = new Object();
+            $(this).find('td').each(function () {
+                if ($(this).attr('data-getdata') == 'true') {
+                    obj[$(this).attr('data-modelproperty')] = $(this).html();
+                }
+            });
+            arr_of_obj.push(obj);
+        });
+        return arr_of_obj;
+    };
+
+    this.AddColumn = function (columnHeader, columnHeaderStyle, columnStyle, modelProperty, elementType, elementStyle, ddlInitiate, dropDownValueMember, eventCallbacks, getDataFlag) {
+        if (_tableID == null) {
+            throw 'You must call InitiateTable(...) before calling AddColumn()';
+        }
+
+        var thPart = '<th>' + columnHeader + '</th>';
+        var tdPart = '';
+
+        var lastColumnIndex = ($(_tableID).find('thead tr th').size() - 2);
+        var styleSetIndex = lastColumnIndex;
+
+        tdPart = '<td data-getdata="' + getDataFlag + '" data-modelproperty="' + modelProperty + '">' + generateElement(modelProperty, elementType, elementStyle, dropDownValueMember) + '</td>';
+
+        if (lastColumnIndex == 0) {
+            $(_tableID).find('thead tr th:eq(' + lastColumnIndex + ')').before(thPart);
+            $(_tableID).find('tbody tr td:eq(' + lastColumnIndex + ')').before(tdPart);
+        } else {
+            $(_tableID).find('thead tr th:eq(' + (lastColumnIndex - 1) + ')').after(thPart);
+            $(_tableID).find('tbody tr td:eq(' + (lastColumnIndex - 1) + ')').after(tdPart);
+        }
+
+        if (columnHeaderStyle != null) $(_tableID).find('thead tr th:eq(' + (styleSetIndex) + ')').css(columnHeaderStyle);
+        if (columnStyle != null) $(_tableID).find('tbody tr td:eq(' + (styleSetIndex) + ')').css(columnStyle);
+
+        var elementRef = $(_tableID + ' tbody tr:eq(0) #' + modelProperty);
+
+        if ($.isFunction(ddlInitiate)) {
+            ddlInitiate(elementRef);
+        }
+
+        if (elementType == ElementType.NumericBox) {
+            $(elementRef).makeNumberWithLength(2);
+        }
+
+        if (eventCallbacks) {
+            $.each(eventCallbacks, function (eventName, eventCallback) {
+                $(elementRef).attr('data-trigger-' + eventName, 'change');
+                $(elementRef).bind(eventName, function (e) { eventCallback(e, $(elementRef).closest('tr')); });
+            });
+        }
+    };
+
+    this.columns = function () {
+        var _columnHeader_, _columnHeaderStyle_, _columnStyle_,
+            _modelProperty_, _elementType_, _elementStyle_,
+            _ddlInitiate_, _dropDownValueMember_, _eventCallbacks_,
+            _getDataFlag_ = false;
+
+        var internalLibrary = {
+            add: function (columnHeader, modelProperty, elementType) {
+                _columnHeader_ = columnHeader;
+                _modelProperty_ = modelProperty;
+                _elementType_ = elementType;
+                return this;
+            },
+            styles: function (columnHeaderStyle, columnStyle, elementStyle) {
+                _columnHeaderStyle_ = columnHeaderStyle;
+                _columnStyle_ = columnStyle;
+                _elementStyle_ = elementStyle;
+                return this;
+            },
+            datasource: function (ddlInitiate, dropDownValueMember) {
+                _ddlInitiate_ = ddlInitiate;
+                _dropDownValueMember_ = dropDownValueMember;
+                return this;
+            },
+            events: function (eventCallbacks) {
+                _eventCallbacks_ = eventCallbacks;
+                return this;
+            },
+            getInObject: function (getDataFlag) {
+                _getDataFlag_ = getDataFlag;
+                return this;
+            },
+            hide: function () {
+                _columnHeaderStyle_ = { 'display': 'none' };
+                _columnStyle_ = { 'display': 'none' };
+                return this;
+            },
+            end: function () {
+                thisInstance.AddColumn(
+                    _columnHeader_, _columnHeaderStyle_, _columnStyle_,
+                    _modelProperty_, _elementType_, _elementStyle_,
+                    _ddlInitiate_, _dropDownValueMember_, _eventCallbacks_,
+                    _getDataFlag_);
+            }
+        };
+        return internalLibrary;
+    };
+
+    this.SortDataGrid = function (sortColumnIndex) {
+        var i = 1, j = 1;
+        var lTotalRows = $(_tableID + ' tbody tr').not('tr:first').size();
+        for (i = 1; i < lTotalRows; i++) {
+            for (j = i + 1; j <= lTotalRows; j++) {
+                var lValue = $(_tableID + ' tbody tr:eq(' + i + ')').find('td:eq(' + sortColumnIndex + ')').html();
+                var lValuePlus = $(_tableID + ' tbody tr:eq(' + (j) + ')').find('td:eq(' + sortColumnIndex + ')').html();
+                if (lValue > lValuePlus) {
+                    var lTempRow = $(_tableID + ' tbody tr:eq(' + (j) + ')');
+                    $(_tableID + ' tbody tr:eq(' + (j) + ')').remove();
+                    $(_tableID + ' tbody tr:eq(' + i + ')').before(lTempRow);
+                }
+            }
+        }
+        BindDefaultEvents(2);
+    };
+
+    this.SortDataGridNumeric = function (sortColumnIndex) {
+        var i = 1, j = 1;
+        var lTotalRows = $(_tableID + ' tbody tr').not('tr:first').size();
+        for (i = 1; i < lTotalRows; i++) {
+            for (j = i + 1; j <= lTotalRows; j++) {
+                var lValue = Number($(_tableID + ' tbody tr:eq(' + i + ')').find('td:eq(' + sortColumnIndex + ')').html());
+                var lValuePlus = Number($(_tableID + ' tbody tr:eq(' + (j) + ')').find('td:eq(' + sortColumnIndex + ')').html());
+                if (lValue > lValuePlus) {
+                    var lTempRow = $(_tableID + ' tbody tr:eq(' + (j) + ')');
+                    $(_tableID + ' tbody tr:eq(' + (j) + ')').remove();
+                    $(_tableID + ' tbody tr:eq(' + i + ')').before(lTempRow);
+                }
+            }
+        }
+        BindDefaultEvents(2);
+    };
+
+    this.PopulateData = function (isAsync, waitMsg) {
+
+        isAsync = isAsync ? isAsync : false;
+        waitMsg = waitMsg ? waitMsg : 'processing';
+
+        $(_tableID).ajaxWebMethod(_webMethod);
+
+        $.each(WebMethodParameter, function (key, value) {
+            $(_tableID).addParameter(key, value, ParameterTypeEnum.Text);
+            delete WebMethodParameter[key];
+        });
+
+        var totalRows = 0;
+        var serverObject = null;
+        $(_tableID).ajaxSuccessMethod(function (serverData) {
+
+            if (serverData.FLAG)
+                if (serverData.FLAG < 0)
+                    MessageBox(serverData.MSG, 'Error', 'OK', null, null, null);
+
+            for (var prop in serverData) {
+                if (prop == 'TotalRows') {
+                    totalRows = serverData[prop];
+                }
+                serverObject = $.parseJSON(serverData[prop]);
+                if (!serverObject) {
+                    serverObject = serverData;
+                }
+            }
+            if ($(serverObject).size() > 0)
+                serverDataBind(serverObject);
+        }).callServerMethod(isAsync, waitMsg);
+
+        return totalRows;
+    };
+
+    this.DisableGrid = function () {
+        $(_tableID + ' input').attr('disabled', 'disabled');
+        $(_tableID + ' select').attr('disabled', 'disabled');
+    };
+
+    this.EnableGrid = function () {
+        $(_tableID + ' input').removeAttr('disabled');
+        $(_tableID + ' select').removeAttr('disabled');
+    };
+
+    this.ClearGrid = function () {
+        $(_tableID).find('tbody tr').not(':first').remove();
+        $(_tableID).find('#btnCancelGrid').trigger('click');
+    };
+
+    this.ManualDataBind = function (dataArray) {
+        serverDataBind(dataArray);
+    };
+
+    this.rowCount = function () {
+        return $(_tableID).find('tbody tr').not(':first').size();
+    };
+
+    var serverDataBind = function (DataList) {
+        try {
+
+            clearFirstRow();
+
+            $(_tableID).find('tbody tr').not(':first').remove();
+
+            $.each(DataList, function (key1, value1) {
+                var newRow = $(_tableID).find('tbody tr:first').clone();
+                $.each(value1, function (key2, value2) {
+
+                    $(newRow).find('td').each(function () {
+                        if (!$(this).attr('data-modelproperty')) return;
+                        if ($(this).attr('data-modelproperty').toLowerCase() == key2.toLowerCase()) {
+                            $(this).html(value2);
+                            return;
+                        }
+                    });
+
+                });
+                $(newRow).css({ 'display': 'inline', 'visibility': 'visible' });
+
+                $(newRow).find('#btnAddGrid').attr('id', 'btnEditGrid').attr('value', 'Edit');
+                $(newRow).find('#btnCancelGrid').attr('id', 'btnRemoveGrid').attr('value', 'Remove');
+
+                $(_tableID).find('tbody tr:eq(0)').after('<tr>' + $(newRow).html() + '</tr>');
+            });
+
+            BindDefaultEvents(2);
+        } catch (err) {
+            alert(_tableID + ' :: ' + err.message);
+        }
+    };
+
+    var BuildTableStructure = function (tableID, className, toBeReplacedElementID, buttonOption) {
+        var table = '<table id="' + tableID + '" class="' + className + '">';
+        var thPart = '<th></th><th></th>';
+        var tdPart = '';
+        if (thisInstance.ButtonOption.AddCancel == buttonOption) {
+            tdPart = '<td><input id="btnAddGrid" type="button" value="Add" ></td>';
+        } else {
+            tdPart = '<td><input id="btnSaveGrid" type="button" value="Save" ></td>';
+        }
+        tdPart = tdPart + '<td><input id="btnCancelGrid" type="button" value="Cancel" ></td>';
+
+        table = table + '<thead ><tr>' + thPart + '</tr></thead>';
+        table = table + '<tbody><tr>' + tdPart + '</tr></tbody>';
+        table = table + '</table>';
+        $('#' + toBeReplacedElementID).replaceWith(table);
+    };
+
+    var BindDefaultEvents = function (bindContext) {
+        switch (bindContext) {
+            case 1:
+                $(_tableID).find('#btnAddGrid').unbind('click').click(btnAddGridClick);
+                $(_tableID).find('#btnCancelGrid').unbind('click').click(btnCancelGridClick);
+                break;
+            case 2:
+                $(_tableID).find('#btnEditGrid').unbind('click').click(btnEditGridClick);
+                $(_tableID).find('#btnRemoveGrid').unbind('click').click(btnRemoveGridClick);
+                break;
+            default:
+                break;
+        }
+    };
+
+    var btnAddGridClick = function (event) {
+
+        var isAdd = $(_tableID).find('#btnAddGrid').val() == 'Add' ? true : false;
+
+        var newRow = $(_tableID).find('tbody tr:eq(0)').clone();
+        $(newRow).find('td').each(function (index, item) {
+            var elementID = $(this).attr('data-modelproperty');
+            var elemType = getElementType($(_tableID + ' #' + elementID));
+            switch (elemType) {
+                case thisInstance.ElementType.DropDown:
+                    var ddl = $(_tableID + ' #' + elementID);
+                    $(this).html(AddUpdateValueChanger($(ddl).find('option:selected').text(), elementID));
+                    $(newRow).find('td[data-modelproperty="' + $(ddl).attr('data-valuebind') + '"]').html($(ddl).val());
+                    break;
+                case thisInstance.ElementType.CheckBox:
+                    $(this).html(AddUpdateValueChanger($(_tableID + ' #' + elementID).attr('checked') == 'checked' ? 'Y' : 'N', elementID));
+                    break;
+                case thisInstance.ElementType.RadioButton:
+                    $(this).html(AddUpdateValueChanger($(_tableID + ' #' + elementID).attr('checked') == 'checked' ? 'Y' : 'N', elementID));
+                    break;
+                case thisInstance.ElementType.TextBox:
+                    $(this).html(AddUpdateValueChanger($(_tableID + ' #' + elementID).val(), elementID));
+                    break;
+                case thisInstance.ElementType.Hidden:
+                    $(this).html(AddUpdateValueChanger($(_tableID + ' #' + elementID).val(), elementID));
+                    break;
+                default:
+                    break;
+            }
+        });
+        $(newRow).find('#btnAddGrid').attr('id', 'btnEditGrid').attr('value', 'Edit');
+            
+        $(newRow).find('#btnCancelGrid').attr('id', 'btnRemoveGrid').attr('value', 'Remove');
+
+        event.isDuplicate = false;
+
+        if (thisInstance.AllowDuplicateRow == false) {
+            event.isDuplicate = checkDuplicate(newRow); //true : duplicate found.
+            event.rowAction = isAdd ? 'add' : 'update';
+        }
+
+        if (isAdd) {
+            if ($.isFunction(thisInstance.BeforeAddClick)) {
+                thisInstance.BeforeAddClick(event);
+                if (thisInstance.CancelDefault == true) {
+                    thisInstance.CancelDefault = false;
+                    return;
+                }
+            }
+        } else {
+            if ($.isFunction(thisInstance.BeforeUpdateClick)) {
+                thisInstance.BeforeUpdateClick(event);
+                if (thisInstance.CancelDefault == true) {
+                    thisInstance.CancelDefault = false;
+                    return;
+                }
+            }
+        }
+
+        if (isAdd)
+            $(_tableID).find('tbody tr:eq(0)').after('<tr>' + $(newRow).html() + '</tr>');
+        else {
+            $(_tableID).find('tbody tr[edit="true"]').replaceWith('<tr>' + $(newRow).html() + '</tr>');
+            $(_tableID + ' #btnAddGrid').attr('value', 'Add');
+        }
+        
+        if (event.isDuplicate == false)
+            clearFirstRow();
+
+        BindDefaultEvents(2);
+
+        if (isAdd) {
+            if ($.isFunction(thisInstance.AfterAddClick))
+                thisInstance.AfterAddClick(event);
+        } else {
+            if ($.isFunction(thisInstance.AfterUpdateClick))
+                thisInstance.AfterUpdateClick(event);
+        }
+
+        thisInstance.CancelDefault = false;
+    };
+
+    var btnCancelGridClick = function (event) {
+        if ($.isFunction(thisInstance.BeforeCancelClick)) {
+            thisInstance.BeforeCancelClick(event);
+            if (thisInstance.CancelDefault == true)
+                return;
+        }
+
+        clearFirstRow();
+
+        BindDefaultEvents(2);
+
+        if ($.isFunction(thisInstance.AfterCancelClick))
+            thisInstance.AfterCancelClick(event);
+    };
+
+    var btnEditGridClick = function (event) {
+        if ($.isFunction(thisInstance.BeforeEditClick)) {
+            thisInstance.BeforeEditClick(event);
+            if (thisInstance.CancelDefault == true)
+                return;
+        }
+
+        var editingRow = $(this).closest('tr').clone();
+        $(editingRow).find('td').each(function () {
+            var modelProperty = $(this).attr('data-modelproperty');
+            if (modelProperty == '') {
+                return;
+            }
+            var elemType = getElementType($(_tableID + ' #' + modelProperty));
+            switch (elemType) {
+
+                case thisInstance.ElementType.DropDown:
+                    var ddlRef = $(_tableID).find('#' + modelProperty);
+                    var valueBind = $(ddlRef).attr('data-valuebind');
+                    $(ddlRef).val(EditValueChanger($(editingRow).find('td[data-modelproperty="' + valueBind + '"]').html(), modelProperty));
+                    if ($(ddlRef).attr('data-trigger-change')) $(ddlRef).trigger('change');
+                    break;
+                case thisInstance.ElementType.TextBox:
+                    $(_tableID).find('#' + modelProperty + '').val(thisInstance.EditValueChange($(this).html(), modelProperty));
+                    break;
+                case thisInstance.ElementType.Hidden:
+                    $(_tableID).find('#' + modelProperty + '').val($(this).html());
+                    break;
+                case thisInstance.ElementType.CheckBox:
+                    if (EditValueChanger($(this).html(), modelProperty) == 'Y') {
+                        $(_tableID).find('#' + modelProperty + '').attr('checked', 'checked');
+                    } else {
+                        $(_tableID).find('#' + modelProperty + '').removeAttr('checked');
+                    }
+                    break;
+                case thisInstance.ElementType.RadioButton:
+                    if (EditValueChanger($(this).html(), modelProperty) == 'Y') {
+                        $(_tableID).find('#' + modelProperty + '').attr('checked', 'checked');
+                    } else {
+                        $(_tableID).find('#' + modelProperty + '').removeAttr('checked');
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        });
+
+        $(_tableID).find('#btnAddGrid').attr('value', 'Update');
+        $(_tableID + ' tr').removeAttr('edit');
+        $(this).closest('tr').attr('edit', 'true');
+        if ($.isFunction(thisInstance.AfterEditClick))
+            thisInstance.AfterEditClick(event);
+    };
+
+    var btnRemoveGridClick = function (event) {
+        if ($.isFunction(thisInstance.BeforeRemoveClick)) {
+            thisInstance.BeforeRemoveClick(event);
+            if (thisInstance.CancelDefault == true) return;
+        }
+        $(this).closest('tr').attr('remove', 'true');
+
+        MessageBox('Remove this information?', 'Confirmation', 'YesNo', null, function () {
+            $(_tableID).find('#btnCancelGrid').trigger('click');
+            $(_tableID + ' tr[remove="true"]').remove();
+        }, function () {
+            $(_tableID + ' tr[remove="true"]').removeAttr('remove');
+        });
+
+        if ($.isFunction(thisInstance.AfterRemoveClick)) {
+            thisInstance.AfterRemoveClick(event);
+        }
+    };
+
+    var generateElement = function (elementID, elementType, elementStyle, dropDownValueMember) {
+        if (elementType == thisInstance.ElementType.None)
+            return '';
+        if (elementType == thisInstance.ElementType.TextBox || elementType == thisInstance.ElementType.NumericBox)
+            return '<input id="' + elementID + '" type="text" style="' + setElementStyle(elementStyle) + '"/>';
+        if (elementType == thisInstance.ElementType.Hidden)
+            return '<input id="' + elementID + '" type="hidden"/>';
+        if (elementType == thisInstance.ElementType.DropDown)
+            return '<select id="' + elementID + '" data-valuebind="' + dropDownValueMember + '"  style="' + setElementStyle(elementStyle) + '"><option value="-1">Select From List</option></select>';
+        if (elementType == thisInstance.ElementType.CheckBox)
+            return '<input id="' + elementID + '" type="checkbox" style="' + setElementStyle(elementStyle) + '"/>';
+        if (elementType == thisInstance.ElementType.RadioButton)
+            return '<input id="' + elementID + '" type="radio" name="' + _tableID + '" style="' + setElementStyle(elementStyle) + '"/>';
+    };
+
+    var setElementStyle = function (elementStyle) {
+        var retStyleValue = '';
+        for (var style in elementStyle)
+            retStyleValue = retStyleValue + style + ':' + elementStyle[style] + ';';
+        return retStyleValue;
+    };
+
+    var getElementType = function (element) {
+        if ($(element).is('input')) {
+            if ($(element).attr('type') == 'text') {
+                return thisInstance.ElementType.TextBox;
+            }
+            if ($(element).attr('type') == 'hidden') {
+                return thisInstance.ElementType.Hidden;
+            }
+            if ($(element).attr('type') == 'checkbox') {
+                return thisInstance.ElementType.CheckBox;
+            }
+            if ($(element).attr('type') == 'radio') {
+                return thisInstance.ElementType.RadioButton;
+            }
+        } else if ($(element).is('select')) {
+            return thisInstance.ElementType.DropDown;
+        }
+        return 'problem';
+    };
+
+    var clearFirstRow = function () {
+        $(_tableID).find('tbody tr:eq(0) td').each(function (index, item) {
+
+            var modelProperty = $(this).attr('data-modelproperty');
+
+            if (!modelProperty) {
+                return;
+            }
+
+            var elemType = getElementType($(_tableID + ' #' + modelProperty));
+
+            switch (elemType) {
+                case thisInstance.ElementType.DropDown:
+                    $(_tableID).find('#' + modelProperty).val('-1');
+                    break;
+                case thisInstance.ElementType.TextBox:
+                    $(_tableID).find('#' + modelProperty).val('');
+                    break;
+                case thisInstance.ElementType.CheckBox:
+                    $(_tableID).find('#' + modelProperty).removeAttr('checked');
+                    break;
+                case thisInstance.ElementType.Hidden:
+                    $(_tableID).find('#' + modelProperty).val('');
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        $(_tableID + ' #btnAddGrid').attr('value', 'Add');
+    };
+
+    var checkDuplicate = function (tr) {
+        var retVal = false;
+        $(_tableID).find('tbody tr').not(':first').each(function () {
+
+            if ($(this).attr('edit')) return;
+            var isDuplicate = true;
+
+            $(this).find('td').each(function () {
+                if ($(this).css('display').toUpperCase() != 'NONE') {
+                    var modelProperty = $(this).attr('data-modelproperty');
+                    if (!modelProperty) return;
+
+                    var newValue = $(tr).find('td[data-modelproperty="' + modelProperty + '"]').html();
+                    var existingValue = $(this).html();
+                    if (newValue != existingValue) {
+                        isDuplicate = false;
+                        return;
+                    }
+                }
+            });
+
+            if (isDuplicate == true) {
+                retVal = true;
+                return;
+            }
+        });
+        return retVal;
+    };
+}

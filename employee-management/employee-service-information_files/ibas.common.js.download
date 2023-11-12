@@ -1,0 +1,85 @@
+﻿
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+function getBdFormatNumber(str) {
+    if (str == null) return "0";
+    if (typeof str !== 'string') {
+        str = str.toString();
+    }
+    str = str.split(".");
+    return str[0].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,") + (str[1] ? ("." + str[1]) : "");
+}
+
+function getNumberFromCommaSeperatedValue(str) {
+    if (str == null) return 0;
+    if (typeof str !== 'string') {
+        str = str.toString();
+    }
+    str = str.split(',').join('');
+    if (isEmpty(str) || isNaN(+str)) return 0;
+    return +str;
+}
+
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+
+function leftPadZero(number, paddingLength) {
+    return leftPad(0, number, paddingLength);
+}
+
+function leftPad(paddingValue, number, paddingLength) {
+    return (String(paddingValue).repeat(paddingLength) + number).slice(-paddingLength);
+}
+
+function round(value, decimals) {
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
+
+function convertTimeFormatToDecimal(timeData) {
+    if (isEmpty(timeData)) {
+        return '';
+    }
+
+    let tArray = timeData.split(":");
+
+    if (!tArray[1]) {
+        tArray[1] = 0;
+    }
+
+    return round(Number(tArray[0]) + Number(tArray[1]) / 60, 2);
+}
+
+function convertDecimalToTimeFormat(timeDataAsDecimal) {
+    timeDataAsDecimal = timeDataAsDecimal.toString();
+    if (isEmpty(timeDataAsDecimal)) {
+        return '';
+    }
+
+    let tArray = timeDataAsDecimal.split(".");
+
+    if (!tArray[1]) {
+        //tArray[1] = 0;
+        return Number(tArray[0]) + ":00";
+    }
+    else {
+        if (tArray[1].length == 1) {
+            tArray[1] = tArray[1] + '0';
+        }
+    }
+
+    return Number(tArray[0]) + ":" + round(Number(tArray[1]) * 60 / 100, 0);
+}

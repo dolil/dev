@@ -1,0 +1,41 @@
+﻿/// <reference path="../../../Scripts/jquery-1.6.2.js" />
+/// <reference path="../../../Scripts/ibas/ibas.jquery.extension.js" />
+/// <reference path="../../../Scripts/splitter.js" />
+
+function SetWidthOfContainers(tableIDWidthCollection) {
+    try {
+        for (var prop in tableIDWidthCollection) {
+            $('#' + prop).css('width', tableIDWidthCollection[prop]);
+        }
+    } catch(err) {
+        alert('SetWidthOfContainers : ' + !err.message ? err : err.message);
+    }
+}
+
+function SetTDAlignmentAndWidth(tableID, tdIndex, align, width) {
+    try {
+        $('#' + tableID + ' tbody tr').each(function() {
+            $(this).find('td:eq(' + tdIndex + ')').css({ 'text-align': align, 'width': width });
+        });
+    } catch(err) {
+        alert('SetTDAlignmentAndWidth : ' + !err.message ? err : err.message);
+    }
+}
+
+function SetMasterPageTheme() {
+
+};
+
+function BrowserDetection() {
+    if (navigator.userAgent.search("MSIE") >= 0)
+        return "IE";
+    else if (navigator.userAgent.search("Chrome") >= 0)
+        return "Chrome";
+    else if (navigator.userAgent.search("Firefox") >= 0)
+        return "Firefox";
+    else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0)
+        return "Safari";
+    else if (navigator.userAgent.search("Opera") >= 0)
+        return "Opera";
+}
+

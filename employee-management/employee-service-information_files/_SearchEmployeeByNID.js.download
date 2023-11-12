@@ -1,0 +1,261 @@
+﻿
+var searchPage = new function () {
+
+    var scpId, scpType, payeeTypeFilter, isAutonomous,
+        payeeId, employeeId, employeeNameEn, referenceStatusId, budgetEntityId, ddoId, firstJoiningDate, isNIDByPassed,
+        officeListData;
+    var completedEvent;
+    var regExpNID = /^(\d{10}|\d{17})$/;
+    var passedNid, passedTypeId, passedTaskKey;
+    var selfNid, selfPayeeId, isForSelf, type;
+    var payeeTypes = [];
+
+    let hasInputEmployeeCode = false;
+
+    function initialize() {
+        scpId = $('#SYSTEM_CONTROL_POINT_ID').getValue();
+        scpType = $('#SYSTEM_CONTROL_POINT_TYPE').getValue();
+
+        isForSelf = $('#IS_FOR_SELF').getValue();
+        selfNid = $('#SELF_NID').getValue();
+        selfPayeeId = $('#SELF_PAYEE_TYPE_ID').getValue();
+        type = $('#TYPE').getValue();
+
+        $().formatTextBoxes();
+    }
+
+    function initializeDropdown() {
+
+        let payeeTypeUrl = 'Accounts/Employee/LoadEmployeeTypeByTypeAndScp';
+
+        if (type == 'cgdf') {
+            payeeTypeUrl = 'Accounts/Employee/LoadEmployeeTypeByTypeAndScpCgdf';
+        }
+        else if (type == 'housing') {
+            payeeTypeUrl = 'Accounts/EmployeeHousing/LoadGovtEmployeeType';
+        } else {
+            payeeTypeUrl = 'Accounts/Employee/LoadEmployeeTypeByTypeAndScp';
+        }
+
+        payeeTypeFilter = $('#EMPLOYEE_TYPE_ID_FILTER').ibasDropdown({
+            noSelectionText: 'Select Employee Type',
+            elementWidth: 326,
+            dataUrl: payeeTypeUrl,
+            changeEvent: function (args) {
+                if ($.inArray(parseInt(payeeTypeFilter.selectedValue()), [15, 19, 27, 28, 29]) !== -1) {
+                    isAutonomous = true;
+                } else {
+                    isAutonomous = false;
+                }
+                if (type == 'cgdf' && $.inArray(parseInt(payeeTypeFilter.selectedValue()), [7, 10, 11, 14, 16, 17]) !== -1) {
+                    $('#LABEL_EMPLOYEE_INPUT').html('Employee Code :');
+                    $('#NID_NO').hide();
+                    $('#EMPLOYEE_CODE').show();
+                    hasInputEmployeeCode = true;
+                } else {
+                    $('#LABEL_EMPLOYEE_INPUT').html('National ID Number :');
+                    $('#EMPLOYEE_CODE').hide();
+                    $('#NID_NO').show();
+                    hasInputEmployeeCode = false;
+                }
+
+            }
+        });
+
+        loadOfficeList();
+    }
+
+    function loadOfficeList() {
+        var authorizedOfficeByScpUrl = 'Accounts/Bill/LoadAuthorizedOfficeBySCP';
+
+        var employeeType = $("#EmployeeType").text();
+        if (employeeType === "Staff") {
+            var authorizedOfficeByScpUrl = 'Accounts/Bill/LoadOTPVerifiedUserAuthorizedOfficeBySCP';
+        }
+
+        $.ibasAjax({
+            data: {
+                taskKey: passedTaskKey
+            },
+            url: authorizedOfficeByScpUrl,
+            successCallback: function (sdata) {
+
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                officeListData = sdata;
+
+                if (isForSelf == "Y") {
+                    payeeTypes.push({ VALUEMEMBER: selfPayeeId, DISPLAYMEMBER: 'Self' });
+                    payeeTypeFilter.bindData(payeeTypes, () => {
+                        $('#NID_NO').setValue(selfNid);
+                        $('#NID_NO').disable();
+                        $('#btnCancel').hide();
+                        payeeTypeFilter.setValue(selfPayeeId);
+                        search();
+                    });
+                } else {
+                    payeeTypeFilter.refreshData({ type: "E", scpId: scpId },
+                        () => {
+                            if (passedNid != null && passedNid !== "") {
+                                $('#NID_NO').setValue(passedNid);
+                                payeeTypeFilter.setValue(passedTypeId);
+                                search();
+                            }
+                        }
+                    );
+                }
+            }
+        });
+    }
+
+
+    function getData() {
+        var data = {
+            scpId: scpId,
+            scpType: scpType,
+            nid: $('#NID_NO').getValue(),
+            employeeCode: $('#EMPLOYEE_CODE').getValue(),
+            employeeId: employeeId,
+            employeeNameEn: employeeNameEn,
+            payeeId: payeeId,
+            payeeTypeId: payeeTypeFilter.selectedValue(),
+            referenceStatusId: referenceStatusId,
+            budgetEntityId: budgetEntityId,
+            ddoId: ddoId,
+            firstJoiningDate: firstJoiningDate,
+            isAutonomous: isAutonomous,
+            isNIDByPassed: isNIDByPassed
+        };
+
+        return data;
+    }
+
+    function search() {
+        if (payeeTypeFilter.selectedValue() == '-1') {
+            MsgBox({
+                message: 'Please select employee type',
+                messageTitle: 'Error',
+                okMethod: function () { payeeTypeFilter.focus() }
+            });
+            return;
+        }
+        if (!hasInputEmployeeCode && $('#NID_NO').getValue().match(regExpNID) == null) {
+            MsgBox({
+                message: 'National id length not valid. It has to be 10 or 17 digits.',
+                messageTitle: 'Error',
+                okMethod: function () { $('#NID_NO').focus() }
+            });
+            return;
+        }
+        if (hasInputEmployeeCode && $('#EMPLOYEE_CODE').getValue() == '') {
+            MsgBox({
+                message: 'Employee code cannot be empty.',
+                messageTitle: 'Error',
+                okMethod: function () { $('#EMPLOYEE_CODE').focus() }
+            });
+            return;
+        }
+
+        var employeeType = $("#EmployeeType").text();
+
+        var existanceInfoUrl = 'Accounts/Employee/GetExistanceInfo';
+
+        if (employeeType !== null &&
+            employeeType !== undefined &&
+            employeeType === "Staff") {
+            existanceInfoUrl = 'Accounts/Employee/GetOTPVerifiedUserExistanceInfo';
+        }
+
+        $.ibasAjax({
+            data: {
+                nid: hasInputEmployeeCode ? '' : $('#NID_NO').getValue(),
+                employeeCode: hasInputEmployeeCode ? $('#EMPLOYEE_CODE').getValue() : '',
+                payeeTypeId: payeeTypeFilter.selectedValue()
+            },
+            url: existanceInfoUrl,
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+
+                var data = sdata.Data[0];
+                payeeId = data.PAYEE_ID;
+                employeeId = data.EMPLOYEE_ID;
+                employeeNameEn = data.EMPLOYEE_NAME_EN;
+                referenceStatusId = data.REFERENCE_STATUS_ID;
+                budgetEntityId = data.BUDGET_ENTITY_ID;
+                ddoId = data.DDO_ID;
+                firstJoiningDate = data.FIRST_JOINING_DATE;
+                isNIDByPassed = data.BY_PASSED === 'Y' ? true : false;
+
+                if (data.BUDGET_SOURCE == 2) {
+                    $("#pedp4").prop("checked", true);
+                }
+                else {
+                    $("#revenue").prop("checked", true);
+                }
+
+                $("#radio_1").prop("checked", true);
+
+
+                if (+employeeId === -1) {
+                    MsgBox({ message: "Employee not found.", messageTitle: 'Error' });
+                    return;
+                }
+                if (+referenceStatusId !== 3) {
+                    MsgBox({ message: 'Employee is not approved.', messageTitle: 'Error' });
+                    return;
+                }
+                var matchedOffice = officeListData.find(x => x.VALUEMEMBER == budgetEntityId);
+                if (+budgetEntityId !== -1 && matchedOffice == null) {
+                    MsgBox({ message: 'You are not authorized to view this employee.', messageTitle: 'Error' });
+                    return;
+                }
+                $('#NID_NO').setValue(data.NID_NO);
+                $('#EMPLOYEE_CODE').setValue(data.EMPLOYEE_CODE);
+
+                if (completedEvent)
+                    completedEvent(getData());
+            }
+        });
+    }
+
+    $('#btnGo').unbind('click').click(function () {
+        search();
+    });
+
+    $('#btnCancel').unbind('click').click(function () {
+        $('#NID_NO').setValue("");
+        $('#EMPLOYEE_CODE').setValue("");
+    });
+
+    this.setData = function (data) {
+        passedNid = data.nid;
+        passedTypeId = data.employeeTypeId;
+        passedTaskKey = data.taskKey;
+
+        if (!!passedTaskKey) {
+            loadOfficeList();
+        }
+
+    }
+
+
+    this.registerEvent = function (events) {
+        completedEvent = events.completedEvent;
+    }
+
+    this.init = function () {
+        initialize();
+        initializeDropdown();
+    }
+
+
+}
+
+$(function () {
+    searchPage.init();
+});

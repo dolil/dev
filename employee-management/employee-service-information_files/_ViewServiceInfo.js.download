@@ -1,0 +1,779 @@
+﻿
+var serviceInfoPage = new function () {
+
+    var modelServiceInfo = ['EMPLOYEE_ID', 'SYSTEM_CONTROL_POINT_ID', 'DDO_ID',
+        'FIRST_BUDGET_ENTITY_ID', 'FIRST_JOINING_DATE', 'FIRST_DESIGNATION_ID', 'FIRST_GRADE_ID', 'FIRST_SCALE_ID',
+        'BUDGET_ENTITY_ID', 'JOINING_DATE', 'DESIGNATION_ID', 'PRESENT_GRADE_ID', 'PRESENT_SCALE_ID', 'PRESENT_EMPLOYEE_LEVEL_ID',
+        'SUB_DIVISION_ID', 'EMPLOYEE_CODE', 'GOV_SERVICE_ENTRY_TYPE_ID', 'BUDGET_SOURCE'
+    ];
+
+    var segmentGroups = {
+        "serviceInfo": ["presentService", "firstJoining", "scaleHistory"]
+    };
+    var ibasSegments, currentTab = "serviceInfo";
+    var completedEvent;
+    var employeeId, budgetEntityId, isAutonomous, payeeTypeId, tmpDdoId, tmpDdoName, firstJoiningDate, isNIDByPassed;
+    var scaleHistory, currentDate,
+        presentDesignation, presentGrade, presentScale, presentLevel,
+        office, ddo,
+        firstDesignation, firstGrade, firstScale, serviceEntryType, isNationalized,
+        scaleType, historyGrade, historyScale,
+        subDivision, deleteList = [], officeListData = [],
+        rendered,
+        budgetEnityControl = new BudgetEntityBlock("BudgetEntityControl", "be", "width:100%; height:32px");
+
+    var ibasTagElements;
+    var entityGroupId = 1, isDefensePerson = false;
+
+    function initialize() {
+
+        $('[data-grp="auto"]').disable();
+
+        var today = new Date();
+        currentDate = $.getFormattedDate(today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear());
+
+        ibasSegments = new IbasSegmentGroups(segmentGroups);
+        $().formatTextBoxes();
+
+        $('#OfficeSelectionPopup table').draggable({ handle: 'thead' });
+        $("#tr_budget_source").hide();
+
+    }
+
+    function initializeDropdown() {
+
+        presentDesignation = $('#DESIGNATION_ID').ibasDropdown({
+            noSelectionText: 'Select Present Designation',
+            elementWidth: 326,
+            allowFilter: true,
+            changeEvent: function () {
+                isPEDP4Teacher(presentGrade.selectedValue(), office.selectedText(), presentDesignation.selectedValue());
+            }
+        });
+        firstDesignation = $('#FIRST_DESIGNATION_ID').ibasDropdown({
+            noSelectionText: 'Select First Designation',
+            elementWidth: 326,
+            allowFilter: true
+        });
+        $.ibasAjax({
+            url: 'Accounts/EmployeeSingleStep/LoadDesignation',
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                presentDesignation.bindData(sdata);
+                firstDesignation.bindData(sdata);
+            }
+        });
+
+        presentGrade = $('#PRESENT_GRADE_ID').ibasDropdown({
+            noSelectionText: 'Select Present Grade',
+            elementWidth: 326,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadGradeStaffByEntityGroup',
+            changeEvent: function () {
+                if ($('#JOINING_DATE').getValue() != '') {
+                    presentScale.refreshData({
+                        gradeId: presentGrade.selectedValue(),
+                        dateTime: $('#JOINING_DATE').getValue(),
+                        entityGroupId: entityGroupId
+                    });
+                    isPEDP4Teacher(presentGrade.selectedValue(), office.selectedText(), presentDesignation.selectedValue());
+                }
+            }
+        });
+        presentScale = $('#PRESENT_SCALE_ID').ibasDropdown({
+            noSelectionText: 'Select Present Scale',
+            elementWidth: 326,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadScaleStaffByEntityGroup'
+        });
+        presentLevel = $('#PRESENT_EMPLOYEE_LEVEL_ID').ibasDropdown({
+            noSelectionText: 'Select Present Class',
+            elementWidth: 326,
+            allowFilter: true,
+            dataUrl: 'Accounts/EmployeeSingleStep/GetEmployeeLevelsByType'
+        });
+
+        office = $('#OFFICE_ID').ibasDropdown({
+            noSelectionText: 'Select Office',
+            elementWidth: 326,
+            allowFilter: true,
+            changeEvent: function () {
+                $("#ddo_msg").setValue("");
+                $.ibasAjax({
+                    url: 'Accounts/EmployeeSingleStep/LoadDdoByBudgetEntityByPost',
+                    data: { budgetEntityId: office.selectedValue() },
+                    successCallback: function (sdata) {
+                        if (sdata.hasOwnProperty('FLAG')) {
+                            MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                            return;
+                        }
+
+                        ddo.bindData(sdata, () => {
+                            if (sdata.filter(x => x.VALUEMEMBER == tmpDdoId).length > 0)
+                                ddo.setValue(tmpDdoId);
+                            else if (tmpDdoName)
+                                $("#ddo_msg").setValue("*Current ddo: " + tmpDdoName);
+                        });
+                    }
+                });
+
+                loadTagList(office.selectedValue());
+
+                if (payeeTypeId == 2 &&
+                    (office.selectedText().startsWith('1240209'))// || office.selectedText().startsWith('109'))   // primary school
+                ) {
+                    presentLevel.disable();
+                    presentLevel.setValue(3);
+                    $('#tr_service_entry_type').show();
+                } else if ([27, 28, 29].includes(+payeeTypeId)) {
+                    $('#tr_service_entry_type').show();
+                } else {
+                    presentLevel.enable();
+                    $('#tr_service_entry_type').hide();
+                }
+
+                if (office.selectedText().startsWith('1220201')) {  //police
+                    $('#tr_employee_code').show();
+                } else {
+                    if (isDefensePerson == false)  // IF NOT ARMY
+                        $('#EMPLOYEE_CODE').setValue('');
+                    $('#tr_employee_code').hide();
+                }
+            }
+        });
+        $.ibasAjax({
+            url: 'Accounts/Bill/LoadAuthorizedOfficeBySCP',
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                officeListData = sdata;
+                office.bindData(officeListData);
+            }
+        });
+
+        ddo = $('#DDO_ID').ibasDropdown({
+            noSelectionText: 'Select DDO',
+            elementWidth: 326,
+            allowFilter: true,
+            autoSetForSingleData: false
+            //dataUrl: 'Accounts/EmployeeSingleStep/LoadDdoByBudgetEntityByPost'
+        });
+
+        firstGrade = $('#FIRST_GRADE_ID').ibasDropdown({
+            noSelectionText: 'Select First Grade',
+            elementWidth: 326,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadGradeStaffByEntityGroup',
+            changeEvent: function () {
+                if ($('#FIRST_JOINING_DATE').getValue() != '') {
+                    firstScale.refreshData({
+                        gradeId: firstGrade.selectedValue(),
+                        dateTime: $('#FIRST_JOINING_DATE').getValue(),
+                        entityGroupId: entityGroupId
+                    });
+                }
+            }
+        });
+        firstScale = $('#FIRST_SCALE_ID').ibasDropdown({
+            noSelectionText: 'Select First Scale',
+            elementWidth: 326,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadScaleStaffByEntityGroup'
+        });
+
+        scaleType = $('#SCALE_TYPE_ID').ibasDropdown({
+            noSelectionText: 'Select Type',
+            elementHeight: 25,
+            elementWidth: 130,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadScaleType',
+            changeEvent: function () {
+                if (+scaleType.selectedValue() === 5) {
+                    scaleHistory.find('#OTHER_REASON').removeAttr('disabled');
+                } else {
+                    scaleHistory.find('#OTHER_REASON').attr('disabled', 'disabled');
+                }
+            }
+        });
+        scaleType.refreshData();
+        historyGrade = $('#HISTORY_GRADE_ID').ibasDropdown({
+            noSelectionText: 'Select Grade',
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadGradeStaffByEntityGroup',
+            elementHeight: 25,
+            elementWidth: 200,
+            changeEvent: function () {
+                if ($('#PROMOTION_DATE').getValue() != '') {
+                    historyScale.refreshData({
+                        gradeId: historyGrade.selectedValue(),
+                        dateTime: $('#PROMOTION_DATE').getValue() == '' ? currentDate : $('#PROMOTION_DATE').getValue(),
+                        entityGroupId: entityGroupId
+                    });
+                }
+            }
+        });
+        historyScale = $('#HISTORY_SCALE_ID').ibasDropdown({
+            noSelectionText: 'Select Scale',
+            elementHeight: 25,
+            elementWidth: 200,
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadScaleStaffByEntityGroup'
+        });
+
+        serviceEntryType = $('#GOV_SERVICE_ENTRY_TYPE_ID').ibasDropdown({
+            noSelectionText: 'Select service entry type',
+            elementWidth: 326,
+            dataUrl: 'Accounts/Employee/LoadServiceEntryTypes'
+        });
+        serviceEntryType.refreshData({ empType: 'E' });
+
+        subDivision = $('#SUB_DIVISION_ID').ibasDropdown({
+            dataUrl: 'Accounts/EmployeeSingleStep/LoadSubDivision',
+            noSelectionText: 'Select Sub-Division',
+            elementHeight: 25,
+            elementWidth: 150
+        });
+
+    }
+
+    function initializeGrid() {
+
+        scaleHistory = $('#ScaleHistory');
+
+        initializeGridEvent(scaleHistory, ($this, rowData) => {
+            if (rowData['SCALE_TYPE_ID'] === '-1') {
+                MsgBox({ message: 'Please select scale type.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="SCALE_TYPE"]').focus(); } });
+                return;
+            }
+            if (rowData['PROMOTION_DATE'] === '' || stringToDate(rowData['PROMOTION_DATE']) < stringToDate(firstJoiningDate)) {
+                MsgBox({ message: 'Please enter valid promotion date and it should not be earlier than first joining date.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="PROMOTION_DATE"]').focus(); } });
+                return;
+            } else if (isAutonomous === false && isNIDByPassed === false && stringToDate(rowData['PROMOTION_DATE']) >= new Date('2015-07-01')) {
+                MsgBox({
+                    message: 'Date should be earlier than 01-July-2015 for gov employee.' +
+                        ' Data from 01-July-2015 will be shown here automatically.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="PROMOTION_DATE"]').focus(); }
+                });
+                return;
+            }
+
+            if (rowData['HISTORY_GRADE_ID'] === '-1') {
+                MsgBox({ message: 'Please select pay grade.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="HISTORY_GRADE"]').focus(); } });
+                return;
+            }
+            if (rowData['HISTORY_SCALE_ID'] === '-1') {
+                MsgBox({ message: 'Please select pay scale.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="HISTORY_SCALE"]').focus(); } });
+                return;
+            }
+            if (rowData['BASIC_PAY'] === '') {
+                MsgBox({ message: 'Please enter basic pay.', messageTitle: 'Error', okMethod: function () { scaleHistory.find('input[data-modelproperty="BASIC_PAY"]').focus(); } });
+                return;
+            }
+
+            $this.closest('tr').addUpdateTableRow({});
+            $this.closest('tr').clearRow();
+        }, ($this, rowData) => {
+            historyGrade.refreshData({
+                dateTime: $('#PROMOTION_DATE').getValue(),
+                entityGroupId: entityGroupId
+            }, function () {
+                scaleType.setValue(rowData['SCALE_TYPE_ID']);
+                historyGrade.setValue(rowData['HISTORY_GRADE_ID']);
+                historyScale.refreshData({
+                    dateTime: $('#PROMOTION_DATE').getValue(),
+                    gradeId: historyGrade.selectedValue(),
+                    entityGroupId: entityGroupId
+                }, function () {
+                    historyScale.setValue(rowData['HISTORY_SCALE_ID']);
+                });
+            });
+        });
+    }
+
+    function initializeGridEvent($this, addCallBack, editCallBack) {
+        $this.find('tbody tr[data-id="entryTemplate"]').find('[data-id="add"]').unbind('click').click(function () {
+            var rowData = $(this).closest('tr').extractRowData({});
+            if (addCallBack)
+                addCallBack($(this), rowData);
+        });
+        $this.find('tbody tr[data-id="entryTemplate"]').find('[data-id="cancel"]').unbind('click').click(function () {
+            $(this).closest('tr').clearRow();
+        });
+        $this.find('tbody tr[data-id="viewTemplate"]').find('[data-id="edit"]').unbind('click').click(function () {
+            var rowData = $(this).closest('tr').setRowToEdit({});
+            if (editCallBack)
+                editCallBack($(this), rowData);
+        });
+        $this.find('tbody tr[data-id="viewTemplate"]').find('[data-id="remove"]').unbind('click').click(function () {
+            var $removeRow = $(this).closest('tr');
+            MsgBox({
+                messageTitle: 'Confirmation',
+                message: 'Remove this information?',
+                button: 'YesNo',
+                yesMethod: function () {
+                    var rowData = $removeRow.extractRowData({});
+                    if (+rowData['EMPLOYEE_SCALE_ID'] > 0)
+                        deleteList.push({ EMPLOYEE_SCALE_ID: rowData['EMPLOYEE_SCALE_ID'] });
+
+                    $removeRow.remove();
+                }
+            });
+        });
+    }
+
+    function populateData(dataCollection, callback) {
+        if (dataCollection == null)
+            return;
+
+        var data = dataCollection.Data ? dataCollection.Data[0] : null;
+
+        if (data)
+            $(data).objectToViewBind();
+
+        entityGroupId = data['ENTITY_GROUP_ID'] == null ? 1 : data['ENTITY_GROUP_ID'];
+
+        if (data['JOINING_DATE'] == null || data['JOINING_DATE'] == '') {
+        } else {
+            presentGrade.refreshData({
+                dateTime: $('#JOINING_DATE').getValue(),
+                entityGroupId: entityGroupId
+            }, function () {
+                presentGrade.setValue(data['PRESENT_GRADE_ID']);
+                isPEDP4Teacher(presentGrade.selectedValue(), office.selectedText(), presentDesignation.selectedValue());
+                presentScale.refreshData({
+                    dateTime: $('#JOINING_DATE').getValue(),
+                    gradeId: presentGrade.selectedValue(),
+                    entityGroupId: entityGroupId
+                }, function () {
+                    presentScale.setValue(data['PRESENT_SCALE_ID']);
+                });
+            });
+        }
+        if (data['FIRST_BUDGET_ENTITY_ID'] == -1)
+            $('#SelectFJOffice').show();
+        else
+            $('#SelectFJOffice').hide();
+
+
+        if (data['FIRST_JOINING_DATE'] == null || data['FIRST_JOINING_DATE'] == '') {
+            if (isDefensePerson === true || isNIDByPassed === true)
+                $('#FIRST_JOINING_DATE').enable();
+        } else {
+            $('#FIRST_JOINING_DATE').disable();
+            firstGrade.refreshData({
+                dateTime: $('#FIRST_JOINING_DATE').getValue(),
+                entityGroupId: entityGroupId
+            }, function () {
+                firstGrade.setValue(data['FIRST_GRADE_ID']);
+                firstScale.refreshData({
+                    dateTime: $('#FIRST_JOINING_DATE').getValue(),
+                    gradeId: firstGrade.selectedValue(),
+                    entityGroupId: entityGroupId
+                }, function () {
+                    firstScale.setValue(data['FIRST_SCALE_ID']);
+                });
+            });
+        }
+
+        tmpDdoId = data['DDO_ID'];
+        tmpDdoName = data['DDO_NAME_EN'];
+        office.setValue(data.BUDGET_ENTITY_ID, true);
+
+
+        $('#CURRENT_SERVER_DATE').val(dataCollection.CurrentDate);
+
+        scaleHistory.bindRow({
+            data: dataCollection.ScaleHistory,
+            rowBinding: function (args) {
+                if (isAutonomous === true || isNIDByPassed === true)
+                    return;
+
+                var minDate = new Date('2015-07-01');
+                var promotionDate = args.$row.find('td[data-modelproperty="PROMOTION_DATE"]').toDate();
+                if (+promotionDate >= +minDate) {
+                    args.$row.find('[data-id="edit"]').attr('disabled', 'disabled');
+                    args.$row.find('[data-id="remove"]').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        if (data['FIXATION_TYPE_ID'] == 23) {   //primary edu
+            isNationalized = true;
+            $('#FIRST_JOINING_BASIC').parent().parent().show();
+            $($('#FIRST_GRADE_ID').parent().parent().children()[0]).text('Grade at First Joining (Optional) :');
+            $($('#FIRST_SCALE_ID').parent().parent().children()[0]).text('Scale at First Joining (Optional) :');
+        } else {
+            isNationalized = false;
+            $('#FIRST_JOINING_BASIC').parent().parent().hide();
+            $($('#FIRST_GRADE_ID').parent().parent().children()[0]).text('Grade at First Joining :');
+            $($('#FIRST_SCALE_ID').parent().parent().children()[0]).text('Scale at First Joining :');
+        }
+
+        if (callback)
+            callback();
+    }
+
+    function isPEDP4Teacher(presentGrade, office, presentDesignation) {
+        if (office.startsWith("1240209")) {
+            if ($("#txtEnv").val() == "DEVELOPMENT") {
+                if (presentGrade === "13" && presentDesignation === "7587") {
+                    $("#tr_budget_source").show();
+                }
+                else {
+                    $("#revenue").prop("checked", true);
+                    $("#tr_budget_source").hide();
+                }
+            }
+            else {
+                if (presentGrade === "13" && presentDesignation === "7587") {
+                    $("#tr_budget_source").show();
+                }
+                else {
+                    $("#revenue").prop("checked", true);
+                    $("#tr_budget_source").hide();
+                }
+
+            }
+        }
+        else {
+            $("#revenue").prop("checked", true);
+            $("#tr_budget_source").hide();
+        }
+    }
+
+
+    function clearData() {
+        deleteList = [];
+        tmpDdoId = -1;
+
+        $('[data-group="service"]').clearGroup();
+        $('[data-grp="auto"]').disableGroup();
+        scaleHistory.find('tbody tr').not('[data-id="viewTemplate"],[data-id="entryTemplate"]').remove();
+
+    }
+
+    function getData() {
+        var data = { EMPLOYEE_ID: employeeId };
+        modelServiceInfo.forEach((item) => {
+            if ($('#' + item).length > 0)
+                data[item] = $('#' + item).getValue();
+        });
+        data.BUDGET_ENTITY_ID = office.selectedValue();
+        data.BUDGET_SOURCE = $('input[name="radPEDP4"]:checked').val()==="PEDP4"?2:1;
+        return data;
+    }
+
+    function validate(segment, callback) {
+
+        var data = getData();
+        var result = false;
+
+        switch (segment) {
+            case "presentService":
+                if (data.JOINING_DATE === '') {
+                    MsgBox({ message: 'Enter valid joining date.', okMethod: function () { $('#JOINING_DATE').focus(); } });
+                }
+                /*else if (isAutonomous === false && isNIDByPassed === false
+                        && stringToDate(data.JOINING_DATE) < stringToDate(firstJoiningDate) // check for gov employee, cause others dont have first joining date yet
+                ) {
+                    MsgBox({ message: 'Enter valid joining date and it should not be earlier than first joining date.', okMethod: function () { $('#JOINING_DATE').focus(); } });
+                }*/
+                else if (data.PRESENT_GRADE_ID === '' || data.PRESENT_GRADE_ID === '-1') {
+                    MsgBox({ message: 'Select Present grade.', okMethod: function () { presentGrade.focus(); } });
+                }
+                else if (data.PRESENT_SCALE_ID === '' || data.PRESENT_SCALE_ID === '-1') {
+                    MsgBox({ message: 'Select Present scale.', okMethod: function () { presentScale.focus(); } });
+                }
+                else if (data.DESIGNATION_ID === '' || data.DESIGNATION_ID === '-1') {
+                    MsgBox({ message: 'Select Present designation.', okMethod: function () { presentDesignation.focus(); } });
+                }
+                else if (isAutonomous === false && isNIDByPassed === false && (data.PRESENT_EMPLOYEE_LEVEL_ID === '' || data.PRESENT_EMPLOYEE_LEVEL_ID === '-1')) {
+                    MsgBox({ message: 'Select Present class.', okMethod: function () { presentLevel.focus(); } });
+                }
+                else if (data.DDO_ID === '' || data.DDO_ID === '-1') {
+                    MsgBox({ message: 'Select DDO.', okMethod: function () { ddo.focus(); } });
+                }
+                //else if (ibasTagElements.getValues().filter(x => x.TAG_VALUE_ID == -1).length > 0
+                //    || ibasTagElements.getValues().filter(x => x.TAG_VALUE_ID == '').length > 0) {
+                //    MsgBox({ message: 'Input not completed.'});
+                //}
+                else
+                    result = true;
+                break;
+
+            case "firstJoining":
+                if (data.FIRST_JOINING_DATE === '') {
+                    MsgBox({ message: 'Enter first joining date.', okMethod: function () { $('#FIRST_JOINING_DATE').focus(); } });
+                }
+                else if (stringToDate(data.JOINING_DATE) < stringToDate(data.FIRST_JOINING_DATE)) {
+                    MsgBox({ message: 'First joining date should not be later than joining date of present service.' });
+                }
+                else if (data.FIRST_DESIGNATION_ID === '' || data.FIRST_DESIGNATION_ID === '-1') {
+                    MsgBox({ message: 'Select designation.' });
+                }
+                else if (isNationalized === false && data.FIRST_GRADE_ID === '-1') {
+                    MsgBox({ message: 'Select first joining grade.', okMethod: function () { firstGrade.focus(); } });
+                }
+                else if (isNationalized === false && data.FIRST_SCALE_ID === '-1') {
+                    MsgBox({ message: 'Select first joining scale.', okMethod: function () { firstScale.focus(); } });
+                }
+                else if (data.FIRST_BUDGET_ENTITY_ID === '' || data.FIRST_BUDGET_ENTITY_ID === '-1') {
+                    MsgBox({ message: 'Select Office.' });
+                }
+                else
+                    result = true;
+                break;
+
+            default:
+                result = true;
+                break;
+        }
+
+        if (callback)
+            callback(result);
+    }
+
+    $('#btn_save').unbind('click').click(function () {
+
+        var data = getData();
+
+        validate(ibasSegments.getCurrentSegmentName(), (result) => {
+            if (result === false)
+                return;
+
+            var reqUrl = 'Accounts/Employee/SaveServiceInfo';
+            var reqData = {
+                data: data,
+                modifiedList: scaleHistory.getTableDataOnlyModified(),
+                deleteList: deleteList
+            }
+         
+            $.ibasAjax({
+                data: reqData,
+                url: reqUrl,
+                successCallback: function (sdata) {
+                    if (sdata.hasOwnProperty('FLAG')) {
+                        MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                        return;
+                    }
+                    if (sdata[0].hasOwnProperty('FLAG')) {
+                        if (sdata[0].FLAG == -1) {
+                            MsgBox({ message: sdata[0].MSG, messageTitle: 'Error' });
+                            return;
+                        }
+                    }
+
+                    ibasTagElements.saveValues(employeeId, () => {
+                        MsgBox({ message: 'Information saved successfully.', messageTitle: 'Information' });
+                        if (completedEvent)
+                            completedEvent();
+                    });
+
+                }
+            });
+
+        });
+    });
+
+    $('#btn_prev').unbind('click').click(function () {
+        ibasSegments.showPrev(currentTab);
+    });
+
+    $('#btn_next').unbind('click').click(function () {
+
+        validate(ibasSegments.getCurrentSegmentName(), (result) => {
+            if (result)
+                ibasSegments.showNext(currentTab);
+        });
+    });
+
+    $('#JOINING_DATE').unbind('change').change(function () {
+        if ($('#JOINING_DATE').getValue() != '') {
+            presentGrade.refreshData({
+                dateTime: $('#JOINING_DATE').getValue(),
+                entityGroupId: entityGroupId
+            });
+        }
+    });
+
+    $('#FIRST_JOINING_DATE').unbind('change').change(function () {
+        if ($('#FIRST_JOINING_DATE').getValue() != '') {
+            firstGrade.refreshData({
+                dateTime: $('#FIRST_JOINING_DATE').getValue(),
+                entityGroupId: entityGroupId
+            });
+        }
+    });
+
+    $('#PROMOTION_DATE').unbind('change').change(function () {
+        if ($('#PROMOTION_DATE').getValue() != '') {
+            historyGrade.refreshData({
+                dateTime: $('#PROMOTION_DATE').getValue(),
+                entityGroupId: entityGroupId
+            });
+        }
+    });
+
+
+    $('#SelectFJOffice').unbind('click').click(function () {
+        showPopup();
+    });
+
+    $('#btnOfficeSelectionOk').click(function () {
+        var id = budgetEnityControl.budgetEntityId();
+        var text = budgetEnityControl.budgetEntityName();
+
+        $('#FIRST_BUDGET_ENTITY_FULL_CODE').val(text.split('-')[0]);
+        $('#FIRST_BUDGET_ENTITY_ID').val(id);
+        $('#FIRST_BUDGET_ENTITY_NAME_EN').text(text);
+        hidePopup();
+    });
+
+    $('#btnOfficeSelectionCancel').click(function () {
+        hidePopup();
+    });
+
+    function showPopup() {
+        $('#OfficeSelectionPopupBackground').show();
+        $('#OfficeSelectionPopup').show();
+        $('.MessageTable').centerTo('OfficeSelectionPopupBackground');
+
+        var bEntityId = parseInt($('#FIRST_BUDGET_ENTITY_ID').getValue());
+        if (!rendered) {
+
+            budgetEnityControl.template = "<tr>\
+            <td style='width: 150px; text-align: right !important;'>\
+                ${label} :\
+            </td>\
+            <td align='left'>\
+                ${elem}\
+            </td>\
+            </tr>";
+            budgetEnityControl.entitySource = {
+                url: 'security/mapping/loadBudgetentitywithoutscp',
+                param: function () {
+                    return {
+                        //scpid: $('#SYSTEM_CONTROL_POINT_ID').getValue()
+                    };
+                }
+            };
+            budgetEnityControl.level1Entity(1, "Public Entity", null, null, true, null, 1);
+            budgetEnityControl.level2Entity(2, "Ministry/Division");
+            budgetEnityControl.level3Entity(3, "Department/Directorate", null, [8]);
+            budgetEnityControl.level4Entity(4, "Office/Unit Group", null, [6, 7, 9, 11]);
+            budgetEnityControl.level5Entity(5, "Field Office/Unit", null, [10, 12, 13, 14]);
+            budgetEnityControl.render();
+            budgetEnityControl.initialize(0, function () {
+                if (bEntityId && bEntityId > 0) {
+                    budgetEnityControl.budgetEntityId(bEntityId);
+                }
+            });
+            rendered = true;
+        }
+    }
+
+    function hidePopup() {
+        $('#OfficeSelectionPopupBackground').hide();
+        $('#OfficeSelectionPopup').hide();
+    }
+
+    function loadTagList(beId) {
+        if (ibasTagElements)
+            ibasTagElements.removeUI();
+
+        ibasTagElements = new IbasTagElements({
+            parentElmObj: $('#PresentService').find('tbody'),
+            dataGroup: 'service',
+            budgetEntityId: beId,
+            tagPurposeId: 2
+        });
+
+        ibasTagElements.loadUI(() => {
+            if (+employeeId > 0)
+                ibasTagElements.loadValues(employeeId);
+        });
+    }
+
+    this.loadData = function (callback) {
+
+        if (employeeId == null)
+            return;
+
+        var matchedOffice = officeListData.find(x => x.VALUEMEMBER == budgetEntityId);
+        if (matchedOffice == null) {
+            MsgBox({ message: 'You are not authorized to view this employee.', messageTitle: 'Error' });
+            return;
+        }
+
+        var reqUrl = 'Accounts/Employee/GetServiceInfo';
+        var reqData = {
+            employeeId: employeeId
+        }
+
+
+        $.ibasAjax({
+            data: reqData,
+            url: reqUrl,
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                clearData();
+                populateData(sdata, () => {
+                    ibasSegments.showFirst(currentTab);
+                });
+
+                if (callback)
+                    callback();
+            }
+        });
+    }
+
+    this.setData = function (data) {
+        employeeId = data.employeeId;
+        budgetEntityId = data.budgetEntityId;
+        isAutonomous = data.isAutonomous;
+        payeeTypeId = data.payeeTypeId;
+        firstJoiningDate = data.firstJoiningDate;
+        isNIDByPassed = data.isNIDByPassed;
+
+        $('#employeeName').setValue(data.employeeNameEn);
+
+        if (isAutonomous === false && isNIDByPassed === false) {
+            presentLevel.refreshData({ employeeTypeId: payeeTypeId });
+        }
+
+        if (data.scpType == 'X') {
+            $('#SUB_DIVISION_ID').closest('tr').show();
+            subDivision.refreshData({ budgetEntityId: budgetEntityId });
+        }
+
+        if ([7, 10, 11, 14, 16, 17].indexOf(+payeeTypeId) != -1)  // IF  ARMY
+            isDefensePerson = true;
+        else
+            isDefensePerson = false;
+
+        if (isAutonomous === true) {
+            $('[data-grp="gov"]').hide();
+            $('[data-grp="autonomous"]').show();
+        } else if (isNIDByPassed === true) {
+            $('[data-grp="gov"]').hide();
+            $('[data-grp="autonomous"]').hide();
+        } else {
+            $('[data-grp="gov"]').show();
+            $('[data-grp="autonomous"]').hide();
+        }
+    }
+
+    this.registerEvent = function (events) {
+        completedEvent = events.completedEvent;
+    }
+
+    this.init = function () {
+        initialize();
+        initializeDropdown();
+        initializeGrid();
+    }
+}
+
+$(function () {
+    serviceInfoPage.init();
+});

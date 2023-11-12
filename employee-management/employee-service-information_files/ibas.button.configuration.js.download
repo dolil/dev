@@ -1,0 +1,293 @@
+﻿
+/// <reference path="../../../Scripts/ibas/ibas.jquery.extension.js" />
+/// <reference path="../../../Scripts/jquery-1.6.2.js" />
+
+var ButtonConfiguration = function () {
+
+    var thisBtnConfig = this;
+    //var ibasButtonConfiguration = function (options) {
+
+    this.AdditionalData = new Object();
+
+    this.PlaceholderId = ""; // Div ID where the buttons will be placed
+    this.ReqValidationGroup = ""; // Name of the group (data-reqvalidationgroup property value)that Makes the associated input control a required field
+    this.ClearGroup = ""; //Name of the group (data-cleargroup property value)that Makes the associated input control to be cleared
+    this.saveAction = ""; // Name of the controller action for Save
+    this.searchAction = ""; // Name of the controller action for Search
+    this.btnDeteleAction = ""; // Name of the controller action for Delete
+    this.btnSave = false; // Detemines whether Save Button will be placed on the screen or not
+    this.btnClear = false; // Detemines whether Clear Button will be placed on the screen or not
+    this.btnSearch = false; // Detemines whether Search Button will be placed on the screen or not
+    this.btnDelete = false; // Detemines whether Delete Button will be placed on the screen or not
+    this.searchParam = ""; // Defines the search parameters
+    this.searchCallback = null; // Defines the Callback funtion to work with Search result.   
+    this.beforeSaveCallback = null;
+    this.afterSaveCallback = null;
+    this.beforeClearCallback = null;
+    this.afterClearCallback = null;
+    this.btnSearchText = "Search";
+    this.btnClearText = "Clear";
+    this.btnGo = false;
+    this.goAction = "";
+    this.goCallback = null; // Defines the Callback funtion to work with Go result.   
+    this.CancelDefault = false;
+
+    var WebMethodParameter = new Object();
+    this.SetWebMethodParameter = function (parameterName, parameterValue) {
+        WebMethodParameter[parameterName] = parameterValue;
+    }
+    // Render each Button (which is true) at the Given Place(PlaceholderId)
+    this.render = function (cssClassName) {
+        var holder = $("#" + thisBtnConfig.PlaceholderId), btn;
+        if (thisBtnConfig.btnSave) {
+            btn = $('<input id="btnSave" type="button" value="Save" />');
+            btn.addClass('btn btn-primary submit');
+            btn.click(saveClick);
+            holder.append(btn);
+        }
+
+        if (thisBtnConfig.btnDelete) {
+            btn = $('<input id="btnDelete" type="button" value="Delete" />');
+            btn.addClass('btn btn-primary delete');
+            btn.click(deleteClick);
+            holder.append(btn);
+        }
+
+        if (thisBtnConfig.btnClear) {
+            btn = $('<input id="btnClear" type="button" value="' + thisBtnConfig.btnClearText + '"/>');
+            btn.addClass('btn btn-primary clear');
+            btn.click(clearClick);
+            holder.append(btn);
+        }
+
+        if (thisBtnConfig.btnSearch) {
+            btn = $('<input id="btnSearch" type="button" value="' + thisBtnConfig.btnSearchText + '"/>');
+            btn.addClass('btn btn-primary submit');
+            btn.click(searchClick);
+            holder.append(btn);
+        }
+
+        if (thisBtnConfig.btnGo) {
+            btn = $('<input id="btnGo" type="button" value="Go"/>');
+            btn.addClass('btn btn-primary submit');
+            btn.click(goClick);
+            holder.append(btn);
+        }
+
+        $('#' + thisBtnConfig.PlaceholderId).addClass(cssClassName);
+
+    }
+
+    var CountWebMethodParameter = function () {
+        for (var obj in WebMethodParameter) { return true; }
+        return false
+    }
+
+    var saveClick = function () {
+        if (typeof thisBtnConfig.saveAction === "function") {
+            thisBtnConfig.saveAction.call(this);
+        }
+        else {
+            if (validateSave()) {
+
+                if (typeof (thisBtnConfig.beforeSaveCallback) === 'function') { thisBtnConfig.beforeSaveCallback(); if (thisBtnConfig.CancelDefault == true) return; }
+
+                $('#btnSave').ajaxWebMethod(thisBtnConfig.saveAction);
+
+                if (WebMethodParameter && CountWebMethodParameter() == true) {
+                    $.each(WebMethodParameter, function (key, value) {
+                        $('#btnSave').addParameter(key, value, ParameterTypeEnum.Text);
+                        delete WebMethodParameter[key];
+                    });
+
+                    $('#btnSave').ajaxSuccessMethod(function (serverData) {
+                        try {
+                            $(serverData).processServerMessage(function (IsSuccess) {
+                                if ($.isFunction(thisBtnConfig.afterSaveCallback)) {
+                                    thisBtnConfig.afterSaveCallback(serverData);
+                                }
+                            });
+                        } catch (err) {
+                            alert(err.message);
+                        }
+                    }).callServerMethod(false);
+                } else {
+                    $.post(thisBtnConfig.saveAction, thisBtnConfig.buildMasterObject($(document).find('[data-modelproperty]')), function (serverData) {
+                        try {
+                            $(serverData).processServerMessage(function (IsSuccess) {
+                                if (thisBtnConfig.afterSaveCallback && typeof thisBtnConfig.afterSaveCallback === "function") {
+                                    thisBtnConfig.afterSaveCallback(serverData);
+                                }
+                            });
+                        } catch (err) {
+                            alert(err.message);
+                        }
+                    });
+                }
+            }
+        }
+    },
+
+     validateSave = function () {
+
+         var IsSuccess = true;
+         
+         $('[data-reqvalidationgroup="' + thisBtnConfig.ReqValidationGroup + '"]').each(function () {
+             if ($.trim($(this).attr('data-reqvalidationmsg')) != '' && $(this).trimmedValue() == '') {
+                 MessageBox($(this).attr('data-reqvalidationmsg'), 'Warning', 'OK', function () { $(this).focus(); }, null, null);
+                 IsSuccess = false;
+                 return false;
+             }
+             else if ($.trim($(this).attr('data-reqvalidationmsg')) != '' && $(this).trimmedValue() == '-1') {
+                 MessageBox($(this).attr('data-reqvalidationmsg'), 'Warning', 'OK', function () { $(this).focus(); }, null, null);
+                 IsSuccess = false;
+                 return false;
+             }
+         });
+
+         return IsSuccess;
+     },
+
+     validateDelete = function () {
+         return true;
+     },
+
+     prepareObject = function () {
+         return thisBtnConfig.buildMasterObject($(document).find('[data-modelproperty]'))
+         //         return $(document).find('[data-modelproperty]').buildMasterObject();
+     },
+
+     prepareSearchParamObject = function () {
+         return $(document).find('[data-searchparam]').buildSearchParam();
+     },
+
+   clearClick = function () {
+       if (thisBtnConfig.beforeClearCallback && typeof (thisBtnConfig.beforeClearCallback) === 'function') { thisBtnConfig.beforeClearCallback(); }
+       thisBtnConfig.ClearGroupData(thisBtnConfig.ClearGroup);
+       if (thisBtnConfig.afterClearCallback && typeof (thisBtnConfig.afterClearCallback) === 'function') { thisBtnConfig.afterClearCallback(); }
+   };
+
+    this.ClearGroupData = function (ClearGroup) {
+        $('input[data-cleargroup="' + ClearGroup + '"][type="text"]').each(function () { $(this).attr('value', ''); });
+        $('input[data-cleargroup="' + ClearGroup + '"][type="password"]').each(function () { $(this).attr('value', ''); });
+        $('input[data-cleargroup="' + ClearGroup + '"][type="hidden"]').each(function () { $(this).attr('value', ''); });
+        //        $('select[data-cleargroup="' + ClearGroup + '"]').each(function () { $(this + "option[value=-1]").attr('selected', 'selected'); });
+        $('select[data-cleargroup="' + ClearGroup + '"]').each(function () { $(this).prop('selectedIndex', 0); });
+        $('textarea[data-cleargroup="' + ClearGroup + '"]').each(function () { $(this).attr('value', ''); });
+        $('input[data-cleargroup="' + ClearGroup + '"][type="checkbox"]').each(function () { $(this).prop('checked', false); });
+        $('input[data-cleargroup="' + ClearGroup + '"][type="radio"]').each(function () { $(this).prop('checked', false); });
+        $('span[data-cleargroup="' + ClearGroup + '"]').each(function () { $(this).text(''); });
+        return this;
+    };
+
+    var deleteClick = function () {
+        if (validateDelete()) {
+            $.post(thisBtnConfig.deleteAction, prepareObject(), function (serverData) {
+                try {
+                    $(serverData).processServerMessage(null);
+
+                } catch (err) { alert(err.message); }
+            });
+        }
+    },
+
+    searchClick = function () {
+        if (typeof thisBtnConfig.searchAction === "function") {
+            thisBtnConfig.searchAction.call(this);
+        }
+        else {
+            $.post(thisBtnConfig.searchAction, prepareSearchParamObject(), function (result) {
+                if (thisBtnConfig.searchCallback) {
+                    thisBtnConfig.searchCallback(result);
+                }
+            });
+        }
+    }
+
+    this.buildMasterObject = function (elementList) {
+        //var elementList = this;
+        var masterData = {};
+
+        var itemWithDot = new Array();
+        var itemWithoutDot = new Array();
+
+        $(elementList).each(function (index, item) {
+            if ($(item).attr('data-modelproperty').toString().indexOf('.') === -1) {
+                itemWithoutDot.push(item);
+            } else {
+                itemWithDot.push(item);
+            }
+        });
+
+        $.each(itemWithoutDot, function (index, item) {
+            if ($(item).find('option').length > 0) {
+                masterData[$(item).attr('data-modelproperty')] = $(item).val();
+            } else if ($(item).attr('type') == 'text' || $(item).attr('type') == 'hidden') {
+                if ($(item).attr('data-modelproperty-type') == 'datetime')
+                    masterData[$(item).attr('data-modelproperty')] = $(item).datePostbackFormat();
+                else
+                    masterData[$(item).attr('data-modelproperty')] = $(item).trimmedValue();
+            } else if ($(item).is('TEXTAREA')) {
+                masterData[$(item).attr('data-modelproperty')] = $(item).trimmedValue();
+            } else if ($(item).attr('type') == 'radio' && $(item).attr('checked') == 'checked') {
+                masterData[$(item).attr('data-modelproperty')] = $(item).val();
+            } else if ($(item).attr('type') == 'checkbox') {
+                if ($(item).attr('checked') == 'checked') {
+                    masterData[$(item).attr('data-modelproperty')] = true;
+                } else {
+                    masterData[$(item).attr('data-modelproperty')] = false;
+                }
+            }
+        });
+
+        //    childelementList = $("[data-modelproperty*='.']");
+        if (itemWithDot.length > 0) {//**************************has child object*******************************
+            var childElement = new Array();
+            $.each(itemWithDot, function (index, item) {
+                childElement.push($(item).attr('data-modelproperty').toString().split('.', 1).toString());
+            });
+            childElement = $.unique(childElement);
+            for (i = 0; i < childElement.length; i++) {
+                masterData[childElement[i]] = {};
+                $.each(itemWithDot, function (index, item) {
+                    var arrayChildItem = $(item).attr('data-modelproperty').toString().split('.', 2);
+                    if (childElement[i] == arrayChildItem[0])
+                        masterData[childElement[i]][arrayChildItem[1]] = $(item).val();
+                });
+            };
+
+        }; //**************************build child object complete*******************************
+
+
+        return masterData;
+    }
+
+    jQuery.fn.buildSearchParam = function () {
+        var elementList = this;
+        var masterData = {};
+
+        $.each(elementList, function (index, item) {
+            if ($(item).find('option').length > 0) {
+                masterData[$(item).attr('data-searchparam')] = $(item).val();
+            } else if ($(item).attr('type') == 'text' || $(item).attr('type') == 'hidden') {
+                masterData[$(item).attr('data-searchparam')] = $(item).trimmedValue();
+            } else if ($(item).attr('type') == 'radio' && $(item).attr('checked') == 'checked') {
+                masterData[$(item).attr('data-searchparam')] = $(item).val();
+            } else if ($(item).attr('type') == 'checkbox') {
+                if ($(item).attr('checked') == 'checked') {
+                    masterData[$(item).attr('data-searchparam')] = true;
+                } else {
+                    masterData[$(item).attr('data-searchparam')] = false;
+                }
+            }
+        });
+
+        return masterData;
+    }
+
+}
+
+
+
+    
+    

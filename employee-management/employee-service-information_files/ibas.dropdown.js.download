@@ -1,0 +1,508 @@
+﻿(function ($) {
+
+    $.fn.ibasDropdown = function (options) {
+
+        var defaults = {
+            className: 'dropdown',
+            elementWidth: '95%',
+            elementHeight: 34,
+            imageElement: '<img src="' + window.appRoot + '/Images/downarrow.png" />',
+            noSelectionText: 'Select From List',
+            noSelectionTextInList: '...',
+            defaultValue: -1,
+            autoSetForSingleData: true,
+            triggerChangeForDefaultValue: false,
+            allowFilter: true,
+            dataSource: null,
+            dataUrl: null,
+            changeEvent: null,
+            isAsync: true,
+            progressText: 'Please Wait',
+            addContextMenu: false,
+            dataFormatter: null,
+            type: 'POST'
+        };
+
+        var o = $.extend(defaults, options);
+
+        var dropdown = $(this);
+
+        if (dropdown.data('attached-data')) return dropdown.data('attached-data');
+
+        var boundData = [];
+
+        var textWidth = function (txt) {
+            var tempElement = '#dropButtonWidth';
+            var s = '<span id="dropButtonWidth" style="display:none;">' + txt + '</span>';
+            $('body').append(s);
+            var width = $(tempElement).width();
+            $(tempElement).remove();
+            return width;
+        };
+
+        var maxWidth = 0;
+
+        var addProgress = function () {
+            var div = '<div id="modalajaxbackground" class="modalajaxbackground"></div>';
+            $('body').append(div);
+            var progress = '<div id="modalajaxprogresscontainer" class="modalajaxprogresscontainer">'
+                + '<img id="progressimg" src="' + window.appRoot + '/Images/ajaxprogress.gif" />'
+                + '<div>' + o.progressText + '...' + '</div>'
+                + '</div>';
+            $('body').append(progress);
+        };
+
+        var removeProgress = function () {
+            var mb = '#modalajaxbackground', mbc = '#modalajaxprogresscontainer';
+            $(mb).remove();
+            $(mbc).remove();
+        };
+
+        var returns = {
+
+            getId: function () {
+                return dropdown.attr('id');
+            },
+
+            disable: function () {
+                dropdown.find('li:eq(0) button:eq(0)').attr('disabled', 'disabled');
+            },
+
+            enable: function () {
+                dropdown.find('li:eq(0) button:eq(0)').removeAttr('disabled');
+            },
+
+            show: function () {
+                dropdown.show();
+            },
+
+            hide: function () {
+                dropdown.hide();
+            },
+
+            focus: function () {
+                dropdown.find('li button:eq(0)').focus();
+            },
+
+            selectedValue: function () {
+                return dropdown.find('li button:eq(0)').attr('data-value');
+            },
+
+            selectedText: function () {
+                return dropdown.find('li button:eq(0)').text();
+            },
+
+            setValue: function (value, triggerChange, callback) {
+                if (value == '-1') {
+                    dropdown.find('button:eq(0)').attr('data-value', '-1');
+                    dropdown.find('button:eq(0)').text(o.noSelectionText).append(o.imageElement).data('obj', {});
+                } else {
+                    var matched = false;
+                    dropdown.find('ul li:gt(1)').each(function () {
+                        var btn = $(this).find('button');
+                        if (btn.attr('data-value') == value) {
+                            matched = true;
+                            dropdown.find('button:eq(0)')
+                                .attr('data-value', btn.attr('data-value'))
+                                .text(btn.text())
+                                .append(o.imageElement)
+                                .data('obj', $(this).data('obj'));
+
+                            if (callback) callback();
+                            return;
+                        }
+                    });
+                    if (matched == false) {
+                        dropdown.find('button:eq(0)').attr('data-value', '-1');
+                        dropdown.find('button:eq(0)').text(o.noSelectionText).append(o.imageElement).data('obj', {});
+                    }
+                }
+
+                if (triggerChange === true) {
+                    if (o.changeEvent) {
+                        o.changeEvent.bind(returns)({
+                            valuemember: dropdown.find('button:eq(0)').attr('data-value'),
+                            displaymember: dropdown.find('button:eq(0)').text(),
+                            callback: callback
+                        });
+                    }
+                }
+            },
+
+            setValueUsingLowerCase: function (value, triggerChange, callback) {
+
+                if (value == '-1') {
+                    dropdown.find('button:eq(0)').attr('data-value', '-1');
+                    dropdown.find('button:eq(0)').text(o.noSelectionText).append(o.imageElement).data('obj', {});
+                } else {
+                    dropdown.find('ul li:gt(1)').each(function () {
+                        var btn = $(this).find('button');
+                        if (btn.attr('data-value').toLowerCase() == value.toLowerCase()) {
+                            dropdown.find('button:eq(0)')
+                                .attr('data-value', btn.attr('data-value'))
+                                .text(btn.text())
+                                .append(o.imageElement)
+                                .data('obj', $(this).data('obj'));
+                            if (callback) callback();
+                            return;
+                        }
+                    });
+                }
+
+                if (triggerChange === true) {
+                    if (o.changeEvent) {
+                        o.changeEvent.bind(returns)({
+                            valuemember: dropdown.find('button:eq(0)').attr('data-value'),
+                            displaymember: dropdown.find('button:eq(0)').text(),
+                            callback: callback
+                        });
+                    }
+                }
+            },
+
+            setFirstItem: function (triggerChange, callback) {
+                returns.setValue(dropdown.find('ul li:eq(2)').find('button').attr('data-value'), triggerChange, callback);
+            },
+
+            setLastItem: function (triggerChange, callback) {
+                returns.setValue(dropdown.find('ul li:last').find('button').attr('data-value'), triggerChange, callback);
+            },
+
+            getOtherValue: function (key) {
+                var obj = dropdown.find('button:eq(0)').data('obj');
+                return obj == null ? null : obj[Object.keys(obj).filter(k => k.toLowerCase() == key.toLowerCase())[0]] || null;
+
+                /*var selectedVal = dropdown.find('button:eq(0)').attr('data-value');
+                var retVal;
+                dropdown.find('ul li:gt(1)').each(function () {
+                    var btn = $(this).find('button');
+                    if (btn.attr('data-value') === selectedVal) {
+                        //retVal = btn.attr(key) ? btn.attr(key) : null;
+                        //return;
+                        var obj = $(this).data('obj');
+                        retVal = obj[Object.keys(obj).filter(k => k.toLowerCase() == key.toLowerCase())[0]] || null;
+                        return;
+                    }
+                });
+                return retVal;
+                */
+            },
+
+            getOtherValues: function (key) {
+                var selectedVal = dropdown.find('button:eq(0)').attr('data-value');
+                var allValues = $.grep(boundData, function (item, index) {
+                    return +item['VALUEMEMBER'] === +selectedVal;
+                });
+                var retVals = [];
+                $(allValues).each(function (indx, itm) {
+                    retVals.push(itm[key]);
+                });
+                return retVals;
+            },
+
+            clearList: function (triggerChange) {
+                if (!triggerChange) triggerChange = false;
+                returns.setValue('-1', triggerChange);
+                dropdown.find('ul li:gt(1)').remove();
+            },
+
+            count: function () {
+                return dropdown.find('ul li:gt(1)').length;
+            },
+
+            getAllData: function () {
+                return boundData;
+            },
+
+            triggerChange: function (callback) {
+                if (o.changeEvent) {
+                    o.changeEvent.bind(returns)({
+                        valuemember: dropdown.find('button:eq(0)').attr('data-value'),
+                        displaymember: dropdown.find('button:eq(0)').text(),
+                        callback: callback
+                    });
+                }
+            },
+
+            refreshData: function (parameters, callback, noTriggerForSingleItem) {
+                return new Promise(function (res, rej) {
+                    var ajxurl = window.appRoot + '/' + (o.dataUrl ? o.dataUrl : '');
+
+                    var promise = $.ajax({
+                        type: o.type,
+                        url: ajxurl,
+                        data: parameters ? parameters : null,
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        beforeSend: addProgress,
+                        complete: removeProgress,
+                        async: o.isAsync
+                    });
+
+                    promise.done(function (serverData) {
+                        if (serverData.FLAG) {
+                            MsgBox({
+                                message: serverData.MSG,
+                                messageTitle: serverData.FLAG == '0' ? 'Information' : 'Error'
+                            });
+                        }
+                        returns.bindData(o.dataFormatter ? o.dataFormatter(serverData, parameters) : serverData, callback, noTriggerForSingleItem);
+                        res();
+                    });
+
+                    promise.fail(function (jqXhr) {
+                        //window.ajaxError(null, jqXhr);
+                        rej();
+                    });
+                });
+            },
+
+            bindData: function (data, callback, noTriggerForSingleItem) {
+                //var key = +new Date();
+                boundData = data;
+
+                dropdown.find('ul li:gt(1)').remove();
+
+                var workObj = data.data ? data.data : data;
+                var tmpWidth = 0;
+                if (workObj) {
+                    for (var i = 0; i < workObj.length; i++) {
+                        var listItem = $(`<li><button data-value="${workObj[i].VALUEMEMBER}">${workObj[i].DISPLAYMEMBER}</button></li>`);
+                        var { VALUEMEMBER, DISPLAYMEMBER, ...otherProps } = workObj[i];
+                        listItem.data('obj', otherProps);
+                        dropdown.find('ul').append(listItem);
+                    }
+                }
+                attachEvents();
+
+                if (!o.defaultValue) o.defaultValue = -1;
+
+                if (o.defaultValue !== -1) {
+                    returns.setValue(o.defaultValue, !noTriggerForSingleItem);
+                } else {
+                    if (workObj.length === 1 && o.autoSetForSingleData) {
+                        returns.setValue(dropdown.find('ul li:eq(2) button').attr('data-value'), !noTriggerForSingleItem);
+                    } else {
+                        returns.setValue('-1', noTriggerForSingleItem === undefined ? o.triggerChangeForDefaultValue : !noTriggerForSingleItem);
+                    }
+                }
+                if (callback) callback(data);
+            },
+
+            modifyUrl: function (url) {
+                o.dataUrl = url;
+            }
+        };
+
+        dropdown.html('<li>'
+            + '<button data-value="-1"></button></li>'
+            + '<li><ul>'
+            + '<li><input type="text"/></li>'
+            + '<li><button data-value="-1">'
+            + o.noSelectionTextInList
+            + '</button></li>'
+            + '</ul>'
+            + '</li>');
+
+        function prepareAppearance() {
+
+            dropdown.addClass(o.className);
+
+            dropdown.find('button:eq(0)').css({ width: o.elementWidth, height: o.elementHeight });
+
+            dropdown.find('li ul').css({ 'min-width': o.elementWidth - 4 });
+
+
+            dropdown.find('button:eq(0)').html(o.noSelectionText).append(o.imageElement);
+
+            var $txt = dropdown.find('ul input[type="text"]');
+            $txt.addClass('dropdowntext');
+
+            $txt.attr('style', 'padding:0px;margin:5px;line-height:25px;height:25px;');
+
+            //if (o.elementWidth > maxWidth) {
+            //    dropdown.find('ul button').css({ 'width': o.elementWidth });
+            //    $txt.css({ 'width': o.elementWidth - 10 });
+            //} else {
+            //    dropdown.find('ul button').css({ 'width': maxWidth + 30 });
+            //    $txt.css({ 'width': maxWidth + 20 });
+            //}
+        }
+
+        prepareAppearance();
+
+        function setDropPosition() {
+            dropdown.find('ul').offset({ left: dropdown.offset().left, top: dropdown.offset().top + o.elementHeight });
+            var screenHeight = $(window).height();
+            var ulHeight = dropdown.find('ul').height();
+            var currOffset = dropdown.find('ul').offset();
+            var offsetAndUlHeight = (currOffset.top < screenHeight ? currOffset.top : screenHeight) + ulHeight + 10;
+            if (offsetAndUlHeight > screenHeight) {
+                dropdown.find('ul').offset({ left: currOffset.left, top: currOffset.top - (offsetAndUlHeight - screenHeight) });
+            }
+            var newOffset = dropdown.find('ul').offset();
+            if (newOffset.top <= 10) {
+                dropdown.find('ul').offset({ left: newOffset.left, top: 10 });
+            }
+            if (ulHeight >= (screenHeight - 30)) {
+                dropdown.find('ul').css({ 'overflow-y': 'scroll' });
+                dropdown.find('ul').height(screenHeight - 60);
+                setDropPosition();
+            }
+        }
+
+        function focusPrevItem(listItem) {
+            if (listItem.prev().is('li')) {
+                if (listItem.prev().css('display').toUpperCase() == 'NONE') {
+                    focusPrevItem(listItem.prev());
+                } else {
+                    listItem.prev().find('button:first').focus();
+                }
+            }
+        }
+
+        function focusNextItem(listItem) {
+            if (listItem.next().is('li')) {
+                if (listItem.next().css('display').toUpperCase() == 'NONE') {
+                    focusNextItem(listItem.next());
+                } else {
+                    listItem.next().find('button:first').focus();
+                }
+            }
+        }
+
+        function attachEvents() {
+
+            dropdown.bind("clickoutside", function () { dropdown.find('ul').css({ 'display': 'none' }); });
+
+            dropdown.bind("mousedownoutside", function () { dropdown.find('ul').css({ 'display': 'none' }); });
+
+            dropdown.find('button:eq(0)').unbind('keyup').keyup(function (event) {
+                if (event.which == 40) {
+                    dropdown.find('ul').css({ display: 'block' });
+                    setDropPosition();
+                    if (o.allowFilter == true) {
+                        dropdown.find('input').unbind('keyup').keyup(function (e1) {
+                            if (e1.which == 40) {
+                                dropdown.find('ul button:eq(0)').focus();
+                            } else if (e1.which == 38) {
+                                dropdown.find('ul').css({ display: 'none' });
+                                dropdown.find('button:eq(0)').focus();
+                            }
+                        });
+                        dropdown.find('input').focus();
+                    } else {
+                        dropdown.find('ul button:eq(0)').focus();
+                    }
+                }
+                event.stopPropagation();
+                return false;
+            });
+
+            //dropdown.find('ul button').unbind('keyup').keyup(function (event) {
+            dropdown.on('keyup', 'ul button', function (event) {
+                switch (event.which) {
+                    case 38:
+                        if ($(this).closest('li').prev().find('input:first').length > 0)
+                            $(this).closest('li').prev().find('input:first').focus();
+                        else
+                            focusPrevItem($(this).parent());
+                        break;
+                    case 40:
+                        if ($(this).closest('li').next().find('input:first').length > 0)
+                            $(this).closest('li').next().find('input:first').focus();
+                        else
+                            focusNextItem($(this).parent());
+                        break;
+                    default:
+                        break;
+                }
+                event.stopPropagation();
+                return false;
+            });
+
+            dropdown.find('button:eq(0)').unbind('click').click(function (event) {
+                if (dropdown.find('li ul').css('display').toUpperCase() == 'BLOCK') {
+                    dropdown.find('li ul').css({ display: 'none' });
+                } else {
+                    dropdown.find('li ul').css({ display: 'block' });
+                    setDropPosition();
+                    dropdown.find('input').focus();
+                }
+                event.stopPropagation();
+                return false;
+            });
+
+            dropdown.find('button:eq(0)').unbind('hover').hover(function (event) {
+                $(this).attr('title', $(this).text());
+                event.stopPropagation();
+                return false;
+            });
+
+            dropdown.on('click', 'ul button', function (event) {
+
+                var prevVal = dropdown.find('li button:eq(0)').attr('data-value');
+
+                if ($(this).attr('data-value') == '-1')
+                    dropdown.find('li button:eq(0)')
+                        .attr('data-value', $(this).attr('data-value'))
+                        .text(o.noSelectionText)
+                        .append(o.imageElement)
+                        .data('obj', {});
+                else
+                    dropdown.find('li button:eq(0)')
+                        .attr('data-value', $(this).attr('data-value'))
+                        .text($(this).text())
+                        .append(o.imageElement)
+                        .data('obj', $(this).parent('li').data('obj'));
+
+                dropdown.find('li button:eq(0)').focus();
+
+                dropdown.find('li ul').css({ display: 'none' });
+
+                dropdown.focus();
+
+                var currVal = dropdown.find('li button:eq(0)').attr('data-value');
+
+                if (o.changeEvent && prevVal != currVal) {
+                    o.changeEvent.bind(returns)({
+                        valuemember: currVal,
+                        displaymember: dropdown.find('li button:eq(0)').text(),
+                        $element: dropdown
+                    });
+                }
+
+                event.stopPropagation();
+                return false;
+            });
+
+            dropdown.find('ul input[type="text"]').unbind('keyup').keyup(function (event) {
+                var srchStr = $(this).val().toUpperCase();
+                dropdown.find('ul li:gt(1)').each(function () {
+                    var li = $(this);
+                    var val = li.find('button').html().toString().toUpperCase();
+                    if (val.toUpperCase().indexOf(srchStr) == -1)
+                        li.css('display', 'none');
+                    else
+                        li.css('display', 'inline');
+                });
+                setDropPosition();
+                if (event.which == 40) focusNextItem($(this).parent());
+                event.stopPropagation();
+                return false;
+            });
+
+            if (o.allowFilter == false) {
+                dropdown.find('ul li:eq(0)').css({ display: 'none' });
+            }
+
+        };
+
+        if (o.dataSource) returns.bindData(o.dataSource);
+
+        dropdown.data('attached-data', returns);
+
+        return returns;
+    };
+
+})(jQuery);

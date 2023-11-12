@@ -1,0 +1,156 @@
+﻿
+
+var IbasTagElements = function (options) {
+
+    var defaults = {
+        parentElmObj: '',
+        dataGroup: '',
+        budgetEntityId: 0,
+        tagPurposeId: 0
+    };
+
+    var o = $.extend(defaults, options);
+    var tagElements = [];
+    var $this = this;
+
+    this.loadUI = function (callback) {
+        $.ibasAjax({
+            data: {
+                data: {
+                    BE_ID: o.budgetEntityId,
+                    TAG_PURPOSE_ID: o.tagPurposeId
+                }
+            },
+            url: 'Accounts/TagElement/LoadUIElements',
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                drawUI(sdata['TAG_ELEMENTS'], sdata['TAG_VALUES']);
+                if (callback)
+                    callback();
+            }
+        });
+    }
+
+    this.removeUI = function (callback) {
+        for (var i = 0; i < tagElements.length; i++) {
+            $('#tr_tag'+i).remove();
+        }
+    }
+
+    this.loadValues = function (employeeId, callback) {
+        if (tagElements.length === 0)
+            return;
+
+        $.ibasAjax({
+            data: {
+                employeeId: employeeId,
+                tagIds: $this.getTagIds(),
+                tagPurposeId: o.tagPurposeId
+            },
+            url: 'Accounts/TagElement/GetTagValuesByEmp',
+            successCallback: function(sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+                for (var i = 0; i < sdata.length; i++) {
+                    $this.setValue(sdata[i].TAG_ID, sdata[i].TAG_VALUE_ID);
+                }
+                if (callback)
+                    callback();
+            }
+        });
+    }
+
+    this.saveValues = function (employeeId, callback) {
+        $.ibasAjax({
+            data: {
+                employeeId: employeeId,
+                tagValues: $this.getValues(),
+                tagPurposeId: o.tagPurposeId
+            },
+            url: 'Accounts/TagElement/SaveTagValuesByEmp',
+            successCallback: function (sdata) {
+                if (sdata.hasOwnProperty('FLAG')) {
+                    MsgBox({ message: sdata.MSG, messageTitle: 'Error' });
+                    return;
+                }
+
+                if (callback)
+                    callback();
+            }
+        });
+    }
+
+    this.getTagIds = function () {
+        var tagIds = [];
+        console.log(tagElements.length);
+        for (var i = 0; i < tagElements.length; i++) {
+            tagIds.push(tagElements[i].tagData.TAG_ID);
+        }
+        return tagIds;
+    }
+
+    this.getValues = function () {
+        var tagValues = [];
+        for (var i = 0; i < tagElements.length; i++) {
+            tagValues.push({
+                TAG_ID: tagElements[i].tagData.TAG_ID,
+                TAG_VALUE_ID: tagElements[i].tagElmObj.selectedValue()
+            });
+        }
+        return tagValues;
+    }
+
+    this.setValue = function (tagId, tagValue) {
+        for (var i = 0; i < tagElements.length; i++) {
+            if (tagElements[i].tagData.TAG_ID === tagId)
+                tagElements[i].tagElmObj.setValue(tagValue);
+        }
+    }
+
+    function drawUI(tagItems, tagItemValues) {
+        tagElements = [];
+        for (var i = 0; i < tagItems.length; i++) {
+            var tagData = tagItems[i];
+
+            var htmlElm =
+                '<tr id="tr_tag' + i + '">' +
+                '<td>' + tagData.UI_LABEL_MSG + ' (Optional) :</td>' +
+                '<td>' + '<ul id="tag' + i + '" data-group="' + o.dataGroup + '"></ul>' + '</td>' +
+                '</tr>';
+
+            o.parentElmObj.append(htmlElm);
+
+            var tagElmObj = $('#tag' + i).ibasDropdown({
+                elementHeight: 25,
+                elementWidth: 150
+            });
+
+            var tagValues = [];
+            for (var j = 0; j < tagItemValues.length; j++) {
+                var valueData = tagItemValues[j];
+                if (valueData.TAG_ID === tagData.TAG_ID) {
+                    tagValues.push({
+                        VALUEMEMBER: valueData.TAG_VALUE_ID,
+                        DISPLAYMEMBER: valueData.TAG_VALUE_NAME_EN
+                    });
+                }
+            }
+            tagElmObj.bindData(tagValues);
+
+
+            tagElements.push({
+                tagData: tagData,
+                tagElmObj: tagElmObj
+            });
+            //$('#td_tag' + i).setValue(tagData.UI_LABEL_MSG + ' :');
+        }
+    }
+
+
+    return this;
+}

@@ -1,0 +1,40 @@
+﻿
+
+(function($) {
+
+    $.fn.makeCollapsible = function(options) {
+        var defaults = {
+            allowSmartCollapse: false
+        };
+
+        var opt = $.extend(defaults, options);
+
+        return this.each(function () {
+            var elm = $(this);
+            var showHideSpeed = 200;
+
+            // elm.width($(document).width());
+
+            $(window).resize(function () { elm.width($(document).width()); });
+
+            elm.find('div').unbind('click').click(function () {
+                var workingDiv = $(this);
+                var nxtDiv = opt.controlledElementId == null ? elm.next() : $('#' + opt.controlledElementId);
+
+                if ($(workingDiv).html().trim() == '-') {
+                    $(nxtDiv).slideUp(showHideSpeed, function () { $(workingDiv).html('+'); });
+                } else {
+                    if (opt.allowSmartCollapse) {
+                        $('.collapsiblediv').not(workingDiv).each(function () {
+                            var headDiv = $(this).find('div');
+                            var bodyDiv = $(this).next();
+                            $(bodyDiv).slideUp(showHideSpeed, function () { $(headDiv).html('+'); });
+                        });
+                    }
+                    $(nxtDiv).slideDown(showHideSpeed, function () { $(workingDiv).html('-'); });
+                }
+            });
+        }); 
+    };
+
+})(jQuery);

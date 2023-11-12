@@ -1,0 +1,421 @@
+﻿
+/* By ferdous
+ * This uses animate.css
+ */
+
+(function ($) {
+
+    function animate($this, animationName, speed, isInfinite) {
+
+        var classStr = 'animated ' + animationName;
+        if (speed)
+            classStr += ' ' + speed;
+        if (isInfinite == true)
+            classStr += ' infinite';
+
+        //console.log("animation started for : " + $this.attr('id'));
+        $this.removeClass(classStr).addClass(classStr).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            $(this).removeClass(classStr);
+            //console.log("animation ended for : " + $(this).attr('id'));          
+            });
+    };
+
+    $.fn.animateFadeIn = function () {
+        animate($(this), 'fadeIn');
+    }
+
+    $.fn.ibasTab = function () {
+
+        var element = $(this);
+        
+        var returnObj = {
+            show: function () {
+                animate(element, 'fadeIn');
+            },
+            showAsNext: function () {
+                animate(element,'fadeInRight', 'slow');
+            },
+            hideToPrev: function () {
+                animate(element, 'fadeOutLeft', '');
+            },
+            showAsPrev: function () {
+                animate(element, 'fadeInLeft', 'slow');
+            },
+            hideToNext: function () {
+                animate(element, 'fadeOutRight', '');
+            }
+        };
+
+        return returnObj;
+    };
+    
+    $.fn.ibasSegment = function () {
+
+        var element = $(this);
+
+        var returnObj = {
+            show: function () {
+                animate(element, 'fadeIn');
+            },
+            showAsNext: function () {
+                //animate(element, 'fadeInUp', 'slow');
+                animate(element, 'fadeIn');
+            },
+            hideToPrev: function () {
+                //animate(element, 'fadeOutUp', '');
+                animate(element, 'fadeOut');
+            },
+            showAsPrev: function () {
+                //animate(element, 'fadeInDown', 'slow');
+                animate(element, 'fadeIn');
+            },
+            hideToNext: function () {
+                //animate(element, 'fadeOutDown', '');
+                animate(element, 'fadeOut');
+            }
+        };
+
+        return returnObj;
+    };
+
+})(jQuery);
+
+
+/*
+ * param tabList: is the list of ids which will work as tabname
+ * where tab (button) names are in "btn_{tabname}" pattern
+ */
+var IbasTabGroups = function (tabList, options) {
+    var defaults = {
+        replaceTab: [],  //e.g. [['item2','item1'], ['item4', 'item3']]
+        tabHideList: [],
+        onDemandList:[] // intially hide. show only when needed.
+    };
+
+    options = $.extend(defaults, options);
+
+    if (tabList == null || tabList.length === 0)
+        return null;
+    
+    var tabGroups = {};
+
+    tabList.forEach((item) => {
+        tabGroups[item] = $('#' + item).ibasTab();
+        $('#' + item).hide();
+        $('#btn_' + item).css('background-color', 'rgb(87, 142, 190)');
+    });
+
+    options.onDemandList.forEach((item) => {
+        $('#' + item).hide();
+        $('#btn_' + item).hide();
+    });
+
+    var selectedTabName = ''; //tabList[0];
+
+    this.getCurrentTabName = function () {
+        return selectedTabName;
+    };
+    this.getNextTabName = function () {
+        //var index = tabList.indexOf(selectedTabName);
+        //if (index < tabList.length - 1)
+        //    return tabList[index + 1];
+        for (var index = tabList.indexOf(selectedTabName) + 1; index < tabList.length; index++) {
+            var tabToShow = tabList[index];
+            if ($.inArray(tabToShow, options.tabHideList) !== -1)
+                continue;
+            return tabToShow;
+        }
+        return null;
+    };
+    this.isLastTab = function () {
+        for (var index = tabList.indexOf(selectedTabName) + 1; index < tabList.length; index++) {
+            var tabToShow = tabList[index];
+            if ($.inArray(tabToShow, options.tabHideList) !== -1)
+                continue;
+            return false;
+        }
+        return true;
+
+        //var index = tabList.indexOf(selectedTabName);
+        //if (index === tabList.length - 1)
+        //    return true;
+        //return false;
+    };
+    this.show = function (tabToShow) {
+        if (selectedTabName === tabToShow)
+            return; 
+
+        updateTab(selectedTabName, tabToShow);
+        selectedTabName = tabToShow;
+        tabGroups[selectedTabName].show();
+    };
+    this.showNext = function () {
+        //var index = tabList.indexOf(selectedTabName);
+        //if (index < tabList.length - 1) {
+        for (var index = tabList.indexOf(selectedTabName) + 1; index < tabList.length; index++) {
+            var tabToShow = tabList[index];
+            if ($.inArray(tabToShow, options.tabHideList) !== -1)
+                continue;
+            updateTab(selectedTabName, tabToShow);
+            selectedTabName = tabToShow;
+            tabGroups[selectedTabName].showAsNext();
+            break;
+        }
+    };
+    this.showPrev = function () {
+        //var index = tabList.indexOf(selectedTabName);
+        //if (index > 0) {
+        //    var tabToShow = tabList[index - 1];
+        //    updateTab(selectedTabName, tabToShow);
+        //    selectedTabName = tabToShow;
+        //    tabGroups[selectedTabName].showAsPrev();
+        //}
+        for (var index = tabList.indexOf(selectedTabName) - 1; index >= 0; index--) {
+            var tabToShow = tabList[index];
+            if ($.inArray(tabToShow, options.tabHideList) !== -1)
+                continue;
+            updateTab(selectedTabName, tabToShow);
+            selectedTabName = tabToShow;
+            tabGroups[selectedTabName].showAsPrev();
+            break;
+        }
+    };
+
+    this.showAllTabs = function(isEnabled) {
+        tabList.forEach((item) => {
+
+            if ($.inArray(item, options.onDemandList) !== -1 || $.inArray(item, options.tabHideList) !== -1)
+                return;
+
+            if (isEnabled) {
+                $('#btn_' + item).show();
+            }
+            else {
+                $('#btn_' + item).hide();
+            }
+        });
+    }
+
+    this.setHideList = function (list) {
+        options.tabHideList = list;
+    };
+
+    function updateTab(lastTab, currentTab) {
+        updateTabContent(lastTab, currentTab);
+        updateTabButton(lastTab, currentTab);
+    }
+    function updateTabContent(lastTab, currentTab) {
+        //$('[data-grp="' + lastTab + '"]').hideGroup();
+        //$('[data-grp="' + currentTab + '"]').showGroup();
+        //console.log(currentTab);
+        //console.log(lastTab);
+        if (lastTab !== "") {
+            $('#' + lastTab).hide();
+        }
+        var actualTab = options.replaceTab.reduce((preVal, curVal) =>
+            preVal += (curVal[0] === currentTab ? curVal[1] : ""), "");
+        
+        if (actualTab === "")
+            $('#' + currentTab).show();
+        else 
+            $('#' + actualTab).show();
+    }
+    function updateTabButton(lastTab, currentTab) {
+        if ($.inArray(lastTab, options.onDemandList) !== -1)
+            $('#btn_' + lastTab).hide();
+        if ($.inArray(currentTab, options.onDemandList) !== -1)
+            $('#btn_' + currentTab).show();
+
+        $('#btn_' + lastTab).css('background-color', 'rgb(87, 142, 190)');
+        //$('#btn_' + currentTab).show();
+        $('#btn_' + currentTab).enable();
+        $('#btn_' + currentTab).css('opacity', '1');
+        $('#btn_' + currentTab).css('background-color', 'rgb(43, 181, 96)');
+    }
+
+    return this;
+}
+
+/*
+ * param tabVsSegements: tabname as key; array of data-group name as segment names
+ * where "btn_prev", "btn_next", "btn_save" (buttons) for traverse segment
+ * options for overwritting defaults
+ */
+var IbasSegmentGroups = function (tabVsSegements, options) {
+
+    var defaults = {
+        nextTabButtonName: "Save & Continue",
+        lastNextTabButtonName: "Save & Exit",
+        excludeButtonsFor: [],
+        lastTabName: "" //optional. use when u need to exit early.
+    };
+
+    options = $.extend(defaults, options);
+
+    var tabVsSegmentGroups = {};
+    var tabs = Object.keys(tabVsSegements);
+    tabs.forEach((tabname) => {
+        var segmentGroups = {};
+        tabVsSegements[tabname].forEach((item) => {
+            var arr = [];
+            var selector = $('[data-segment-grp="' + item + '"]');
+            selector.each((index, element) => arr.push($(element).ibasSegment()));
+            selector.hideGroup();
+            segmentGroups[item] = arr;
+        });
+        tabVsSegmentGroups[tabname] = segmentGroups;
+    });
+
+    var selectedSegmentName = tabVsSegements[tabs[0]][0];
+
+    this.getCurrentSegmentName = function () {
+        return selectedSegmentName;
+    };
+    this.show = function (tabname, segmentToShow) {
+        var index = tabVsSegements[tabname].indexOf(segmentToShow);
+        if (index >= 0) {
+            updateSegment(tabname, selectedSegmentName, segmentToShow);
+            selectedSegmentName = segmentToShow;
+            tabVsSegmentGroups[tabname][selectedSegmentName].forEach((item) => item.show());
+        }
+    };
+    this.showFirst = function (tabname) {
+        var segmentToShow = tabVsSegements[tabname][0];
+        updateSegment(tabname, selectedSegmentName, segmentToShow);
+        selectedSegmentName = segmentToShow;
+        tabVsSegmentGroups[tabname][selectedSegmentName].forEach((item) => item.show());
+    };
+    this.showNext = function (tabname) {
+        var index = tabVsSegements[tabname].indexOf(selectedSegmentName);
+        if (index < tabVsSegements[tabname].length - 1) {
+            var segmentToShow = tabVsSegements[tabname][index + 1];
+            updateSegment(tabname, selectedSegmentName, segmentToShow);
+            selectedSegmentName = segmentToShow;
+            tabVsSegmentGroups[tabname][selectedSegmentName].forEach((item) => item.showAsNext());
+        }
+    };
+    this.showPrev = function (tabname) {
+        var index = tabVsSegements[tabname].indexOf(selectedSegmentName);
+        if (index > 0) {
+            var segmentToShow = tabVsSegements[tabname][index - 1];
+            updateSegment(tabname, selectedSegmentName, segmentToShow);
+            selectedSegmentName = segmentToShow;
+            tabVsSegmentGroups[tabname][selectedSegmentName].forEach((item) => item.showAsPrev());
+        }
+    };
+    this.setNextTabButtonName = function (name) {
+        options.nextTabButtonName = name;
+    };
+    this.setLastNextTabButtonName = function (name) {
+        options.lastNextTabButtonName = name;
+    };
+    this.setLastTabName = function (name) {
+        options.lastTabName = name;
+    };
+
+    function updateSegment(tabname, lastSegment, currentSegment) {
+        updateSegmentContent(lastSegment, currentSegment);
+        updateSegmentButton(tabname, currentSegment);
+    }
+    function updateSegmentContent(lastSegment, currentSegment) {
+        $('[data-segment-grp="' + lastSegment + '"]').hideGroup();
+        $('[data-segment-grp="' + currentSegment + '"]').showGroup();
+    }
+    function updateSegmentButton(currentTab, currentSegment) {
+       
+        var tabs = Object.keys(tabVsSegements);
+        var index = tabs.indexOf(currentTab);
+        if (index < 0)
+            return;
+
+        if (options.lastTabName === currentTab || index === tabs.length - 1)
+            $('#btn_save').prop('value', options.lastNextTabButtonName);
+        else
+            $('#btn_save').prop('value', options.nextTabButtonName);
+
+        var segments = tabVsSegements[currentTab];
+        index = segments.indexOf(currentSegment);
+        if (index < 0)
+            return;
+
+        if (options.excludeButtonsFor.indexOf(currentTab) >= 0)
+            hideAllButton();
+        else if (segments.length === 1)   //only 1 segment
+            showSaveButtonOnly();
+        else if (index === 0)       //1st of multiple segment
+            showNextButtonOnly();
+        else if (index === segments.length - 1) //last of multiple segment
+            showPrevSaveButton();
+        else
+            showPrevNextButton();
+    }
+
+    function showNextButtonOnly() {
+        //$('#btn_prev').css('visibility', 'hidden');
+        $('#btn_prev').hide();
+        $('#btn_next').show();
+
+        $('#btn_save').hide();
+        $('#btn_cancel').hide();
+    }
+    function showPrevNextButton() {
+        //$('#btn_prev').css('visibility', 'visible');
+        $('#btn_prev').show();
+        $('#btn_next').show();
+
+        $('#btn_save').hide();
+        $('#btn_cancel').hide();
+    }
+    function showPrevSaveButton() {
+        //$('#btn_prev').css('visibility', 'visible');
+        $('#btn_prev').show();
+        $('#btn_next').hide();
+
+        $('#btn_save').show();
+        $('#btn_cancel').show();
+    }
+    function showSaveButtonOnly() {
+        //$('#btn_prev').css('visibility', 'hidden');
+        $('#btn_prev').hide();
+        $('#btn_next').hide();
+
+        $('#btn_save').show();
+        $('#btn_cancel').show();
+    }
+    function hideAllButton() {
+        //$('#btn_prev').css('visibility', 'hidden');
+        $('#btn_prev').hide();
+        $('#btn_next').hide();
+
+        $('#btn_save').hide();
+        $('#btn_cancel').hide();
+    }
+
+    return this;
+}
+
+
+
+var IbasButtonGroups = function (groupName) {
+
+    var buttonList = [];
+
+    var selector = $('[data-grp="' + groupName + '"]');
+    selector.each((index, element) => buttonList.push($(element)));
+
+    buttonList.forEach((item) => {
+        item.css('background-color', 'rgb(87, 142, 190)');
+    });
+
+    this.select = function (button) {
+        buttonList.forEach((item) => {
+            item.css('background-color', 'rgb(87, 142, 190)');
+        });
+
+        if(button)
+            button.css('background-color', 'rgb(43, 181, 96)');
+    }
+
+    return this;
+}
+

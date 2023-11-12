@@ -1,0 +1,177 @@
+﻿
+.ModalBackground
+{
+    background-color: #000000;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1001;
+    filter: alpha(opacity=40);
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+}
+
+.MessageDiv
+{
+    background-color: transparent;
+    z-index: 1002;
+    overflow: auto;
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+}
+
+.MessageTable
+{
+    /*z-index:3000;*/
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 2px solid #6B799C;
+    width: 400px;
+    box-shadow: 10px 10px 5px #646363;
+}
+
+.MessageTable th
+{
+    cursor: move;
+    height: 35px;
+    background-color: #6B799C;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 0px 10px 0px 10px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.MessageTable td {
+    background-color: #FFFFFF;
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.MessageTable input[type="button"]
+{
+    background-image: none !important;
+    border-width: 0;
+    box-shadow: none;
+    filter: none;
+    font-size: 12px;
+    outline: medium none !important;
+    padding: 5px 10px;
+    text-shadow: none;
+    color: #FFFFFF;
+    background-color: #578ebe;
+    border-color: "";
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.MessageTable input[type="button"]:hover
+{
+    color: #FFFFFF;
+    background-color: #437cae;
+}
+
+.messagediv
+{
+    margin-top: 0px;
+}
+
+#popup #popupTitle
+{
+    background-color: #6B799C;
+    line-height: 35px;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 14px;
+}
+
+.PopupTable
+{
+    z-index: 3000;
+    border-collapse: collapse;
+    border: 2px solid #26466D;
+}
+
+.PopupTable th
+{
+    cursor: move;
+    height: 25px;
+    background-color: #EEEEEE;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 0px 10px 0px 10px;
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+.PopupTable td
+{
+    background-color: #FFFFFF;
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 8pt;
+    font-weight: lighter;
+}
+
+.PopupTable input[type="button"]
+{
+    border: 1px solid #808080;
+    background-color: #D0D0D0;
+    color: #000000;
+    height: auto;
+    padding: 5px 5px 5px 5px;
+    font-size: 8pt;
+    font-weight: lighter;
+    margin-bottom: 10px;
+    margin-right: 2px;
+}
+
+.PopupTable input[type="button"]:hover
+{
+    border: 1px solid #808080;
+    background-color: #26466D;
+    color: #FFFFFF;
+    height: auto;
+    padding: 5px 5px 5px 5px;
+    font-size: 8pt;
+    font-weight: lighter;
+    margin-bottom: 10px;
+    margin-right: 2px;
+}
+
+.MessageDiv1
+{
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,0.5);
+}
+
+.MessageDiv1 .MessageTable
+{
+    max-width: 90%;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 2px solid #6B799C;
+    border-width: 1px 2px 2px 2px;
+}
