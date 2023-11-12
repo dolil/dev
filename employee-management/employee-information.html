@@ -39,21 +39,22 @@
                     <h4>Employee Basic Information [db: employee_basic_info]</h4>
                 </div>
                 <div class="row mb-3">
-                    <label for="employee_gender" class="col-sm-2 col-form-label">Employee Type</label>
+                    <label for="employee_type" class="col-sm-2 col-form-label">Employee Type</label>
                     <div class="col-sm-6">
-                        <select class="form-select select2bs4" id="employee_gender">
+                        <select class="form-select select2bs4" id="employee_type">
                             <option selected="">Choose...</option>
                             <option value="1">GoB</option>
                             <option value="2">TC</option>
                             <option value="2">Copyist</option>
+                            <option value="2">Wages Based</option>
                             <option value="2">Deed Writer</option>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="employee_name" class="col-sm-2 col-form-label">Employee NID</label>
+                    <label for="employee_nid" class="col-sm-2 col-form-label">Employee NID</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control" id="employee_name">
+                        <input type="number" class="form-control" id="employee_nid">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -183,106 +184,107 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="employee_name_en" class="col-sm-2 col-form-label">Joining Date at Present Position</label>
+                    <label for="current_post_joining_date" class="col-sm-2 col-form-label">Joining Date at Present Position</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" id="employee_name_en">
+                        <input type="date" class="form-control" id="current_post_joining_date">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="employee_gender" class="col-sm-2 col-form-label">Present Grade</label>
+                    <label for="present_grade" class="col-sm-2 col-form-label">Present Grade</label>
                     <div class="col-sm-6">
-                        <select class="form-select select2bs4" id="employee_gender">
+                        <select class="form-select select2bs4" id="present_grade">
                             <option selected="">Choose...</option>
-                                <option><button data-value="1">GRADE-I</button></option>
-                                <option><button data-value="2">GRADE-II</button></option>
-                                <option><button data-value="3">GRADE - III</button></option>
-                                <option><button data-value="4">GRADE-IV</button></option>
-                                <option><button data-value="5">GRADE-V</button></option>
-                                <option><button data-value="6">GRADE-VI</button></option>
-                                <option><button data-value="7">GRADE-VII</button></option>
-                                <option><button data-value="8">GRADE-VIII</button></option>
-                                <option><button data-value="9">GRADE-IX</button></option>
-                                <option><button data-value="10">GRADE-X</button></option>
-                                <option><button data-value="11">GRADE-XI</button></option>
-                                <option><button data-value="12">GRADE-XII</button></option>
-                                <option><button data-value="13">GRADE-XIII</button></option>
-                                <option><button data-value="14">GRADE-XIV</button></option>
-                                <option><button data-value="15">GRADE-XV</button></option>
-                                <option><button data-value="16">GRADE-XVI</button></option>
-                                <option><button data-value="17">GRADE-XVII</button></option>
-                                <option><button data-value="18">GRADE-XVIII</button></option>
-                                <option><button data-value="19">GRADE-XIX</button></option>
-                                <option><button data-value="20">GRADE-XX</button></option>
+                            <option data-value="1">GRADE-I</option>
+                            <option data-value="2">GRADE-II</option>
+                            <option data-value="3">GRADE - III</option>
+                            <option data-value="4">GRADE-IV</option>
+                            <option data-value="5">GRADE-V</option>
+                            <option data-value="6">GRADE-VI</option>
+                            <option data-value="7">GRADE-VII</option>
+                            <option data-value="8">GRADE-VIII</option>
+                            <option data-value="9">GRADE-IX</option>
+                            <option data-value="10">GRADE-X</option>
+                            <option data-value="11">GRADE-XI</option>
+                            <option data-value="12">GRADE-XII</option>
+                            <option data-value="13">GRADE-XIII</option>
+                            <option data-value="14">GRADE-XIV</option>
+                            <option data-value="15">GRADE-XV</option>
+                            <option data-value="16">GRADE-XVI</option>
+                            <option data-value="17">GRADE-XVII</option>
+                            <option data-value="18">GRADE-XVIII</option>
+                            <option data-value="19">GRADE-XIX</option>
+                            <option data-value="20">GRADE-XX</option>
+                            <option data-value="20">N/A</option>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="employee_dob" class="col-sm-2 col-form-label">Present Scale</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="employee_dob">
-                    </div>
+    <label for="employee_dob" class="col-sm-2 col-form-label">Present Scale</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" id="employee_dob">
+    </div>
+</div>
+<div class="row mb-3">
+    <label for="employee_fathers_name" class="col-sm-2 col-form-label">Present Office</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" id="employee_fathers_name">
+    </div>
+</div>
+<div class="row mb-3">
+    <label for="employee_fathers_name_en" class="col-sm-2 col-form-label">Present DDO</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" id="employee_fathers_name_en">
+    </div>
+</div>
+<div class="row mb-3">
+    <label for="employee_mothers_name" class="col-sm-2 col-form-label">Present Class</label>
+    <div class="col-sm-6">
+        <select class="form-select select2bs4" id="employee_present_post">
+            <option selected="">Choose...</option>
+            <option value="1">Get data from super admin orgonogram setup</option>>
+        </select>
+    </div>
+</div>
+<div class="row mb-3">
+    <label for="employee_name_en" class="col-sm-2 col-form-label">Date of First Joining</label>
+    <div class="col-sm-6">
+        <input type="date" class="form-control" id="employee_name_en">
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label for="employee_name_en" class="col-sm-2 col-form-label">License Number (For Deed Writer)</label>
+    <div class="col-sm-6">
+        <input type="text" class="form-control" id="employee_name_en">
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-sm-3">
+        <button type="submit" class="btn btn-success btn-lg"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1536 1792" style="display: inline-block; vertical-align: middle;"><path d="M384 1536h768v-384h-768v384zM1280 1536h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zM896 608v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zM1536 640v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z"></path></svg></i>&nbsp;সংরক্ষণ করুন</button>
+    </div>
+</div>
+
+</div>
+</form>
+
+<hr> 
+
+<form method="post" accept-charset="utf-8" id="form" class="mt-4">
+    
+    <div class="form-group row">                
+        <div class="row mb-3">
+            <h4>Employee Salary Information<br> [db: employee_salary_info] [note: get all this fields from http://178.128.60.59/treasury-bill-setup/allocations > খাতের ধরণ > বেতন] </h4>
+        </div>
+        
+        <form method="post" accept-charset="utf-8" id="form"><div class="form-group row"><div class="col-md-4 mb-4"><label for="place"><strong>মূল বেতন (অফিসার)</strong></label><input type="number" name="3111101" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১১০১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ছুটি নগদায়ন বেতন (অফিসার)</strong></label><input type="number" name="3111110" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১১১০ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>মূল বেতন (কর্মচারী)</strong></label><input type="number" name="3111201" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১২০১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ছুটি নগদায়ন বেতন (কর্মচারী)</strong></label><input type="number" name="3111209" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১২০৯ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>যাতায়াত ভাতা</strong></label><input type="number" name="3111302" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩০২ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>শিক্ষা ভাতা</strong></label><input type="number" name="3111306" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩০৬ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>বাড়ি ভাড়া ভাতা</strong></label><input type="number" name="3111310" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১০ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>চিকিৎসা ভাতা</strong></label><input type="number" name="3111311" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>টিফিন ভাতা</strong></label><input type="number" name="3111314" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১৪ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ধোলাই ভাতা</strong></label><input type="number" name="3111316" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১৬ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>test</strong></label><input type="number" name="abc123" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - abc১২৩ </small></p></div></div></form>
+        
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-success btn-lg"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1536 1792" style="display: inline-block; vertical-align: middle;"><path d="M384 1536h768v-384h-768v384zM1280 1536h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zM896 608v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zM1536 640v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z"></path></svg></i>&nbsp;সংরক্ষণ করুন</button>
                 </div>
-                <div class="row mb-3">
-                    <label for="employee_fathers_name" class="col-sm-2 col-form-label">Present Office</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="employee_fathers_name">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="employee_fathers_name_en" class="col-sm-2 col-form-label">Present DDO</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="employee_fathers_name_en">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="employee_mothers_name" class="col-sm-2 col-form-label">Present Class</label>
-                    <div class="col-sm-6">
-                        <select class="form-select select2bs4" id="employee_present_post">
-                            <option selected="">Choose...</option>
-                            <option value="1">Get data from super admin orgonogram setup</option>>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="employee_name_en" class="col-sm-2 col-form-label">Date of First Joining</label>
-                    <div class="col-sm-6">
-                        <input type="date" class="form-control" id="employee_name_en">
-                    </div>
-                </div>
-                
-                <div class="row mb-3">
-                    <label for="employee_name_en" class="col-sm-2 col-form-label">License Number (For Deed Writer)</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="employee_name_en">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-success btn-lg"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1536 1792" style="display: inline-block; vertical-align: middle;"><path d="M384 1536h768v-384h-768v384zM1280 1536h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zM896 608v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zM1536 640v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z"></path></svg></i>&nbsp;সংরক্ষণ করুন</button>
-                    </div>
-                </div>
-                
             </div>
-        </form>
-        
-        <hr> 
-        
-        <form method="post" accept-charset="utf-8" id="form" class="mt-4">
             
-            <div class="form-group row">                
-                <div class="row mb-3">
-                    <h4>Employee Salary Information<br> [db: employee_salary_info] [note: get all this fields from http://178.128.60.59/treasury-bill-setup/allocations > খাতের ধরণ > বেতন] </h4>
-                </div>
-                
-                <form method="post" accept-charset="utf-8" id="form"><div class="form-group row"><div class="col-md-4 mb-4"><label for="place"><strong>মূল বেতন (অফিসার)</strong></label><input type="number" name="3111101" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১১০১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ছুটি নগদায়ন বেতন (অফিসার)</strong></label><input type="number" name="3111110" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১১১০ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>মূল বেতন (কর্মচারী)</strong></label><input type="number" name="3111201" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১২০১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ছুটি নগদায়ন বেতন (কর্মচারী)</strong></label><input type="number" name="3111209" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১২০৯ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>যাতায়াত ভাতা</strong></label><input type="number" name="3111302" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩০২ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>শিক্ষা ভাতা</strong></label><input type="number" name="3111306" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩০৬ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>বাড়ি ভাড়া ভাতা</strong></label><input type="number" name="3111310" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১০ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>চিকিৎসা ভাতা</strong></label><input type="number" name="3111311" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১১ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>টিফিন ভাতা</strong></label><input type="number" name="3111314" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১৪ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>ধোলাই ভাতা</strong></label><input type="number" name="3111316" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - ৩১১১৩১৬ </small></p></div><div class="col-md-4 mb-4"><label for="place"><strong>test</strong></label><input type="number" name="abc123" id="year" class="form-control shadow-none" disabled><p class="text-muted"><small>অর্থনৈতিক কোড (রাজস্ব ব্যয়) - abc১২৩ </small></p></div></div></form>
-                
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-success btn-lg"><i fill="currentColor" class="text-white " style="display: inline-block;"><svg fill="currentColor" height="22" width="22" viewBox="0 0 1536 1792" style="display: inline-block; vertical-align: middle;"><path d="M384 1536h768v-384h-768v384zM1280 1536h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zM896 608v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zM1536 640v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z"></path></svg></i>&nbsp;সংরক্ষণ করুন</button>
-                    </div>
-                </div>
-                
             </div>
-        </form>
-        
-    </div></div></div></div></div></section></div></div><div class="Toastify"></div></div></div><script src="./view-bill_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script><script src="./view-bill_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script><script src="./view-bill_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script></body></html>        
+            </form>
+            
+            </div></div></div></div></div></section></div></div><div class="Toastify"></div></div></div><script src="./view-bill_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script><script src="./view-bill_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script><script src="./view-bill_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script></body></html>                    
